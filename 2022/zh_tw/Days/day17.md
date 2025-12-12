@@ -2,84 +2,85 @@
 title: '#90DaysOfDevOps - Text Editors - nano vs vim - Day 17'
 published: false
 description: 90DaysOfDevOps - Text Editors - nano vs vim
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048703
 ---
-## Text Editors - nano vs vim
 
-The majority of your Linux systems are going to be servers and these are not going to have a GUI. I also mentioned in the last session that Linux is mostly made up of configuration files, to make changes you are going to need to be able to edit those configuration files to change anything on the system. 
+## 文本編輯器 - nano vs vim
 
-There are lots of options out there but I think we should cover probably the two most common terminal text editors. I have used both of these editors and for me, I find `nano` the easy button when it comes to quick changes but `vim` has such a broad set of capabilities. 
+你的大多數 Linux 系統都將是服務器，這些服務器不會有 GUI。我在上一節中也提到，Linux 主要由配置文件組成，要進行更改，你需要能夠編輯這些配置文件以更改系統上的任何內容。
 
-### nano 
+那裡有很多選項，但我認為我們應該涵蓋可能是兩個最常見的終端文本編輯器。我使用過這兩個編輯器，對我來說，我發現 `nano` 在進行快速更改時是簡單按鈕，但 `vim` 具有如此廣泛的功能集。
 
-- Not available on every system. 
-- Great for getting started.
+### nano
 
-If you run `nano 90DaysOfDevOps.txt` we will create a new file with nothing in, from here we can add our text and we have our instructions below for what we want to do with that file. 
+- 並非在所有系統上都可用。
+- 非常適合入門。
+
+如果你運行 `nano 90DaysOfDevOps.txt`，我們將創建一個空的新文件，從這裡我們可以添加我們的文本，我們在下面有說明，說明我們想對該文件做什麼。
 
 ![](Images/Day17_Linux1.png)
 
-We can now use `control x + enter` and then run `ls` you can now see our new text file. 
+我們現在可以使用 `control x + enter`，然後運行 `ls`，你現在可以看到我們的新文本文件。
 
 ![](Images/Day17_Linux2.png)
 
-We can now run `cat` against that file to read our file. We can then use that same `nano 90DaysOfDevOps.txt` to add additional text or modify your file. 
+我們現在可以對該文件運行 `cat` 來讀取我們的文件。然後我們可以使用相同的 `nano 90DaysOfDevOps.txt` 來添加其他文本或修改你的文件。
 
-For me, nano is super easy when it comes to getting small changes done on configuration files. 
+對我來說，在配置文件上進行小更改時，nano 非常簡單。
 
-### vim 
+### vim
 
-Possibly the most common text editor around? A sibling of the UNIX text editor vi from 1976 we get a lot of functionality with vim. 
+可能是最常見的文本編輯器？UNIX 文本編輯器 vi 的兄弟，從 1976 年開始，我們在 vim 中獲得了很多功能。
 
-- Pretty much supported on every single Linux distribution. 
-- Incredibly powerful! You can likely find a full 7-hour course just covering vim. 
+- 幾乎在所有 Linux 發行版上都支持。
+- 功能強大！你可能會找到一個完整的 7 小時課程，只涵蓋 vim。
 
-We can jump into vim with the `vim` command or if we want to edit our new txt file we could run `vim 90DaysOfDevOps.txt` but you are going to first see the lack of help menus at the bottom. 
+我們可以使用 `vim` 命令進入 vim，或者如果我們想編輯新的 txt 文件，我們可以運行 `vim 90DaysOfDevOps.txt`，但你首先會看到底部缺少幫助菜單。
 
-The first question might be "How do I exit vim?" that is going to be `escape` and if we have not made any changes then it will be `:q`  
+第一個問題可能是"我如何退出 vim？"這將是 `escape`，如果我們沒有進行任何更改，那麼它將是 `:q`
 
 ![](Images/Day17_Linux3.png)
 
-You start in `normal` mode, there are other modes `command, normal, visual, insert` , if we want to add the text we will need to switch from `normal` to `insert` we need to press `i` if you have added some text and would like to save these changes then you would hit escape and then `:wq` 
+你從 `normal` 模式開始，還有其他模式 `command, normal, visual, insert`，如果我們想添加文本，我們需要從 `normal` 切換到 `insert`，我們需要按 `i`，如果你添加了一些文本並想保存這些更改，那麼你會按 escape 然後 `:wq`
 
 ![](Images/Day17_Linux4.png)
 
 ![](Images/Day17_Linux5.png)
 
-You can confirm this with the `cat` command to check you have saved those changes. 
+你可以使用 `cat` 命令確認這一點，以檢查你是否已保存這些更改。
 
-There is some cool fast functionality with vim that allows you to do menial tasks very quickly if you know the shortcuts which is a lecture in itself. Let's say we have added a list of repeated words and we now need to change that, maybe it's a configuration file and we repeat a network name and now this has changed and we quickly want to change this. I am using the word day for this example. 
+vim 有一些很酷的快速功能，如果你知道快捷方式，它可以讓你非常快速地完成瑣碎的任務，這本身就是一門課程。假設我們添加了一個重複單詞列表，現在我們需要更改它，也許這是一個配置文件，我們重複了一個網絡名稱，現在這已經改變了，我們想快速更改它。我在這個例子中使用單詞 day。
 
 ![](Images/Day17_Linux6.png)
 
-Now we want to replace that word with 90DaysOfDevOps, we can do this by hitting `esc` and typing `:%s/Day/90DaysOfDevOps`
+現在我們想用 90DaysOfDevOps 替換那個單詞，我們可以通過按 `ESC` 並鍵入 `:%s/Day/90DaysOfDevOps` 來做到這一點
 
 ![](Images/Day17_Linux7.png)
 
-The outcome when you hit enter is that the word day is then replaced with 90DaysOfDevOps. 
+當你按 Enter 時的結果是單詞 day 然後被替換為 90DaysOfDevOps。
 
 ![](Images/Day17_Linux8.png)
 
-Copy and Paste was a big eye-opener for me. Copy is not copy it is yank. we can copy using `yy` on our keyboard in normal mode. `p` paste on the same line, `P` paste on a new line. 
+複製和粘貼對我來說是一個大開眼界的時刻。複製不是複製，它是拉取。我們可以在正常模式下使用鍵盤上的 `yy` 進行複製。`p` 在同一行粘貼，`P` 在新行粘貼。
 
-You can also delete these lines by choosing the number of lines you wish to delete followed by `dd` 
+你也可以通過選擇要刪除的行數後跟 `dd` 來刪除這些行
 
-There is also likely a time you will need to search a file, now we can use `grep` as mentioned in a previous session but we can also use vim. we can use `/word` and this will find the first match, to navigate through to the next you will use the `n` key and so on. 
+還可能有時候你需要搜索文件，現在我們可以使用 `grep`，如前一節中提到的，但我們也可以使用 vim。我們可以使用 `/word`，這將找到第一個匹配項，要導航到下一個，你將使用 `n` 鍵，依此類推。
 
-For vim this is not even touching the surface, the biggest advice I can give is to get hands-on and use vim wherever possible. 
+對於 vim，這甚至沒有觸及表面，我能給出的最大建議是親自動手並盡可能多地使用 vim。
 
-A common interview question is what is your favourite text editor in Linux and I would make sure you have at least this knowledge of both so you can answer, it is fine to say nano because it's simple. At least you show competence in understanding what a text editor is. But get hands-on with them to be more proficient. 
+一個常見的面試問題是你在 Linux 中最喜歡的文本編輯器是什麼，我會確保你至少對兩者都有這些知識，這樣你就可以回答，說 nano 是因為它很簡單是可以的。至少你表現出理解文本編輯器是什麼的能力。但親自動手使用它們以更熟練。
 
-Another pointer to navigate around in vim we can use `H,J,K,L` as well as our arrow keys. 
+在 vim 中導航的另一個提示是我們可以使用 `H,J,K,L` 以及我們的箭頭鍵。
 
-## Resources 
+## 資源
 
 - [Vim in 100 Seconds](https://www.youtube.com/watch?v=-txKSRn0qeA)
 - [Vim tutorial](https://www.youtube.com/watch?v=IiwGbcd8S7I)
 - [Learn the Linux Fundamentals - Part 1](https://www.youtube.com/watch?v=kPylihJRG70)
 - [Linux for hackers (don't worry you don't need to be a hacker!)](https://www.youtube.com/watch?v=VbEx7B_PTOE)
 
-See you on [Day18](day18.md)
+我們[Day18](day18.md)見

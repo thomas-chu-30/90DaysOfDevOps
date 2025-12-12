@@ -2,164 +2,165 @@
 title: '#90DaysOfDevOps - Managing your Linux System, Filesystem & Storage - Day 16'
 published: false
 description: '90DaysOfDevOps - Managing your Linux System, Filesystem & Storage'
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048702
 ---
-## Managing your Linux System, Filesystem & Storage
 
-So far we have had a brief overview of Linux and DevOps and then we got our lab environment set up using vagant [(Day 14)](day14.md), we then touched on a small portion of commands that will be in your daily toolkit when in the terminal and getting things done [(Day 15)](day15.md). 
+## 管理你的 Linux 系統、文件系統和存儲
 
-Here we are going to look into three key areas of looking after your Linux systems with updates, installing software, understanding what system folders are used for and we will also take a look at storage. 
+到目前為止，我們已經簡要概述了 Linux 和 DevOps，然後使用 Vagrant [(Day 14)](day14.md) 設置了我們的實驗環境，然後我們觸及了當你在終端中完成工作時將在你的日常工具包中的一小部分命令 [(Day 15)](day15.md)。
 
-## Managing Ubuntu & Software
+在這裡，我們將研究維護 Linux 系統的三個關鍵領域：更新、安裝軟體、了解系統文件夾的用途，我們還將查看存儲。
 
-The first thing we are going to look at is how we update our operating system. Most of you will be familiar with this process in a Windows OS and macOS, this looks slightly different on a Linux desktop and server.  
+## 管理 Ubuntu 和軟體
 
-We are going to be looking at the apt package manager, this is what we are going to use on our Ubuntu VM for updates and software installation. 
+我們要查看的第一件事是如何更新我們的操作系統。你們中的大多數人會熟悉 Windows OS 和 macOS 中的這個過程，這在 Linux 桌面和服務器上看起來略有不同。
 
-Generally, at least on dev workstations, I run this command to make sure that I have the latest available updates from the central repositories, before any software installation.  
+我們將查看 apt 包管理器，這是我們將在 Ubuntu VM 上用於更新和軟體安裝的工具。
+
+一般來說，至少在開發工作站上，我在任何軟體安裝之前運行此命令，以確保我擁有來自中央存儲庫的最新可用更新。
 
 `sudo apt-get update`
 
 ![](Images/Day16_Linux1.png)
 
-Now we have an updated Ubuntu VM with the latest OS updates installed. We now want to get some software installed here. 
+現在我們有一個更新的 Ubuntu VM，並安裝了最新的 OS 更新。我們現在想在此處安裝一些軟體。
 
-Let's choose `figlet` which is a program that generates text banners.
+讓我們選擇 `figlet`，這是一個生成文本橫幅的程序。
 
-If we type `figlet` in our terminal you are going to see that we do not have it installed on our system. 
+如果我們在終端中鍵入 `figlet`，你會看到我們在系統上沒有安裝它。
 
 ![](Images/Day16_Linux2.png)
 
-You will see from the above though that it does give us some `apt` install options that we could try. This is because in the default repositories there is a program called figlet.  Let's try `sudo apt install figlet`
+不過，你會從上面看到它確實為我們提供了一些可以嘗試的 `apt` 安裝選項。這是因為在默認存儲庫中有一個名為 figlet 的程序。讓我們嘗試 `sudo apt install figlet`
 
 ![](Images/Day16_Linux3.png)
 
-We can now use our `figlet` app as you can see below. 
+我們現在可以使用我們的 `figlet` 應用程序，如下所示。
 
 ![](Images/Day16_Linux4.png)
 
-If we want to remove that or any of our software installations we can also do that via the `apt` package manager. 
+如果我們想刪除它或任何軟體安裝，我們也可以通過 `apt` 包管理器來做到這一點。
 
 `sudo apt remove figlet`
 
 ![](Images/Day16_Linux5.png)
 
-There are third party repositories that we can also add to our system, the ones we have access to out of the box are the Ubuntu default repositories. 
+還有第三方存儲庫，我們也可以添加到我們的系統中，我們開箱即用的是 Ubuntu 默認存儲庫。
 
-If for example, we wanted to install vagrant on our Ubuntu VM we would not be able to right now and you can see this below on the first command issued. We then add the key to trust the HashiCorp repository, then add the repository to our system.  
+例如，如果我們想在 Ubuntu VM 上安裝 vagrant，我們現在無法做到，你可以在下面看到第一個命令。然後我們添加密鑰以信任 HashiCorp 存儲庫，然後將存儲庫添加到我們的系統。
 
 ![](Images/Day16_Linux6.png)
 
-Once we have the HashiCorp repository added we can go ahead and run `sudo apt install vagrant` and get vagrant installed on our system. 
+一旦我們添加了 HashiCorp 存儲庫，我們就可以繼續運行 `sudo apt install vagrant` 並在我們的系統上安裝 vagrant。
 
 ![](Images/Day16_Linux7.png)
 
-There are so many options when it comes to software installation, different options for package managers, built into Ubuntu we could also use snaps for our software installations. 
+在軟體安裝方面有很多選項，包管理器的不同選項，內置於 Ubuntu 中，我們也可以使用 snaps 進行軟體安裝。
 
-Hopefully, this gives you a feel about how to manage your OS and software installations on Linux. 
+希望這能讓你了解如何在 Linux 上管理 OS 和軟體安裝。
 
-## File System Explained 
+## 文件系統說明
 
-Linux is made up of configuration files, if you want to change anything then you change these configuration files. 
+Linux 由配置文件組成，如果你想更改任何內容，那麼你更改這些配置文件。
 
-On Windows, you have C: drive and that is what we consider the root. On Linux we have `/` this is where we are going to find the important folders on our Linux system. 
+在 Windows 上，你有 C: 驅動器，這就是我們認為的根。在 Linux 上，我們有 `/`，這是我們將在 Linux 系統上找到重要文件夾的地方。
 
 ![](Images/Day16_Linux8.png)
 
-- `/bin` - Short for binary, the bin folder is where our binaries that your system needs, executables and tools will mostly be found here.  
+- `/bin` - binary 的簡稱，bin 文件夾是系統需要的二進制文件所在的位置，可執行文件和工具大多會在這裡找到。
 
 ![](Images/Day16_Linux9.png)
 
-- `/boot` - All the files your system needs to boot up. How to boot up, and what drive to boot from. 
+- `/boot` - 系統啟動所需的所有文件。如何啟動，以及從哪個驅動器啟動。
 
 ![](Images/Day16_Linux10.png)
 
-- `/dev` - You can find device information here, this is where you will find pointers to your disk drives `sda` will be your main OS disk. 
+- `/dev` - 你可以在這裡找到設備信息，這是你可以找到磁盤驅動器指針的地方，`sda` 將是你的主 OS 磁盤。
 
 ![](Images/Day16_Linux11.png)
 
-- `/etc` Likely the most important folder on your Linux system, this is where the majority of your configuration files. 
+- `/etc` 可能是 Linux 系統上最重要的文件夾，這是大多數配置文件所在的位置。
 
 ![](Images/Day16_Linux12.png)
 
-- `/home` - this is where you will find your user folders and files. We have our vagrant user folder. This is where you will find your `Documents` and `Desktop` folders that we worked in for the commands section. 
+- `/home` - 這是你可以找到用戶文件夾和文件的地方。我們有我們的 vagrant 用戶文件夾。這是你可以找到 `Documents` 和 `Desktop` 文件夾的地方，我們在命令部分中使用了這些文件夾。
 
 ![](Images/Day16_Linux13.png)
 
-- `/lib` - We mentioned that `/bin` is where our binaries and executables live, `/lib` is where you will find the shared libraries for those. 
+- `/lib` - 我們提到 `/bin` 是二進制文件和可執行文件所在的位置，而 `/lib` 是你將找到這些共享庫的位置。
 
 ![](Images/Day16_Linux14.png)
 
-- `/media` - This is where we will find removable devices. 
+- `/media` - 這是我們將找到可移動設備的地方。
 
 ![](Images/Day16_Linux15.png)
 
-- `/mnt` - This is a temporary mount point. We will cover more here in the next storage section. 
+- `/mnt` - 這是一個臨時掛載點。我們將在下一個存儲部分中更詳細地介紹這一點。
 
 ![](Images/Day16_Linux16.png)
 
-- `/opt` - Optional software packages. You will notice here that we have some vagrant and virtual box software stored here. 
+- `/opt` - 可選軟體包。你會注意到這裡我們有一些 vagrant 和 virtual box 軟體存儲在這裡。
 
 ![](Images/Day16_Linux17.png)
 
-- `/proc` - Kernel & process information, similar to `/dev`
+- `/proc` - 內核和進程信息，類似於 `/dev`
 
 ![](Images/Day16_Linux18.png)
 
-- `/root` - To gain access you will need to sudo into this folder. The home folder for root. 
+- `/root` - 要獲得訪問權限，你需要 sudo 進入此文件夾。root 的主文件夾。
 
 ![](Images/Day16_Linux19.png)
 
-- `/run` -Placeholder for application states.
+- `/run` - 應用程序狀態的佔位符。
 
 ![](Images/Day16_Linux20.png)
 
-- `/sbin` - Sudo bin, similar to the bin folder but these tools are intended for elevated superuser privileges on the system.
+- `/sbin` - Sudo bin，類似於 bin 文件夾，但這些工具旨在用於系統上的提升超級用戶權限。
 
 ![](Images/Day16_Linux21.png)
 
-- `/tmp` - temporary files. 
+- `/tmp` - 臨時文件。
 
 ![](Images/Day16_Linux22.png)
 
-- `/usr` - If we as a standard user have installed software packages it would generally be installed in the `/usr/bin` location. 
+- `/usr` - 如果我們作為標準用戶安裝了軟體包，它通常會安裝在 `/usr/bin` 位置。
 
 ![](Images/Day16_Linux23.png)
 
-- `/var` - Our applications get installed in a `bin` folder. We need somewhere to store all of the log files this is `/var`   
+- `/var` - 我們的應用程序安裝在 `bin` 文件夾中。我們需要某個地方來存儲所有日誌文件，這就是 `/var`
 
 ![](Images/Day16_Linux24.png)
 
-## Storage 
+## 存儲
 
-When we come to a Linux system or any system we might want to know the available disks and how much free space we have on those disks. The next few commands will help us identify and use and manage storage. 
+當我們來到 Linux 系統或任何系統時，我們可能想知道可用的磁盤以及這些磁盤上有多少可用空間。接下來的幾個命令將幫助我們識別、使用和管理存儲。
 
-- `lsblk` List Block devices. `sda` is our physical disk and then `sda1, sda2, sda3` are our partitions on that disk. 
+- `lsblk` 列出塊設備。`sda` 是我們的物理磁盤，然後 `sda1, sda2, sda3` 是該磁盤上的分區。
 
 ![](Images/Day16_Linux25.png)
 
-- `df` gives us a little more detail about those partitions, total, used and available. You can parse other flags here I generally use `df -h` to give us a human output of the data. 
+- `df` 為我們提供有關這些分區的更多詳細信息，總計、已使用和可用。你可以在這裡解析其他標誌，我通常使用 `df -h` 來為我們提供數據的人類可讀輸出。
 
 ![](Images/Day16_Linux26.png)
 
-If you were adding a new disk to your system and this is the same in Windows you would need to format the disk in disk management, in the Linux terminal you can do this by using the `sudo mkfs -t ext4 /dev/sdb` with sdb relating to our newly added disk. 
+如果你要向系統添加新磁盤，這與 Windows 相同，你需要在磁盤管理中格式化磁盤，在 Linux 終端中，你可以通過使用 `sudo mkfs -t ext4 /dev/sdb` 來做到這一點，其中 sdb 與我們新添加的磁盤相關。
 
-We would then need to mount our newly formatted disk so that it was useable. We would do this in our `/mnt` folder previously mentioned and we would create a directory there with `sudo mkdir NewDisk` we would then use `sudo mount /dev/sdb newdisk` to mount the disk to that location. 
+然後我們需要掛載我們新格式化的磁盤，以便它可以使用。我們將在之前提到的 `/mnt` 文件夾中執行此操作，我們將在那裡創建一個目錄 `sudo mkdir NewDisk`，然後我們將使用 `sudo mount /dev/sdb newdisk` 將磁盤掛載到該位置。
 
-It is also possible that you will need to unmount storage from your system safely vs just pulling it from the configuration. We can do this with `sudo umount /dev/sdb` 
+還可能你需要安全地從系統中卸載存儲，而不是僅僅從配置中拉出它。我們可以使用 `sudo umount /dev/sdb` 來做到這一點
 
-If you did not want to unmount that disk and you were going to be using this disk for a database or some other persistent use case then you want it to be there when you reboot your system. For this to happen we need to add this disk to our `/etc/fstab` configuration file for it to persist, if you don't it won't be useable when the machine reboots and you would manually have to go through the above process. The data will still be there on the disk but it won't automount unless you add the configuration to this file. 
+如果你不想卸載該磁盤，並且你將使用此磁盤進行數據庫或其他持久性用例，那麼你希望它在重新啟動系統時存在。為了實現這一點，我們需要將此磁盤添加到我們的 `/etc/fstab` 配置文件中以使其持久化，如果你不這樣做，當機器重新啟動時它將不可用，你必須手動完成上述過程。數據仍將在磁盤上，但除非你將配置添加到此文件，否則它不會自動掛載。
 
-Once you have edited the `fstab` configuration file you can check your workings with `sudo mount -a` if no errors then your changes will now be persistent across restarts. 
+一旦你編輯了 `fstab` 配置文件，你可以使用 `sudo mount -a` 檢查你的工作，如果沒有錯誤，那麼你的更改現在將在重啟後持久化。
 
-We will cover how you would edit a file using a text editor in a future session. 
+我們將在未來的會話中介紹如何使用文本編輯器編輯文件。
 
-## Resources 
+## 資源
 
 - [Learn the Linux Fundamentals - Part 1](https://www.youtube.com/watch?v=kPylihJRG70)
 - [Linux for hackers (don't worry you don't need to be a hacker!)](https://www.youtube.com/watch?v=VbEx7B_PTOE)
 
-See you on [Day17](day17.md)
+我們[Day17](day17.md)見

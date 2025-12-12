@@ -2,107 +2,110 @@
 title: '#90DaysOfDevOps - Automate tasks with bash scripts - Day 19'
 published: false
 description: 90DaysOfDevOps - Automate tasks with bash scripts
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048774
 ---
-## Automate tasks with bash scripts
 
-The shell that we are going to use today is the bash but we will cover another shell tomorrow when we dive into ZSH. 
+## 使用 bash 腳本自動化任務
+
+我們今天要使用的 shell 是 bash，但當我們深入探討 ZSH 時，我們明天會介紹另一個 shell。
 
 BASH - **B**ourne **A**gain **Sh**ell
 
-We could almost dedicate a whole section of 7 days to shell scripting much like the programming languages, bash gives us the capability of working alongside other automation tools to get things done. 
+我們幾乎可以將整個 7 天的部分專門用於 shell 腳本，就像程式語言一樣，bash 為我們提供了與其他自動化工具一起工作的能力來完成工作。
 
-I still speak to a lot of people where they have set up some complex shell scripts to make something happen and they rely on this script for some of the most important things in the business, I am not saying we need to understand shell/bash scripting for this purpose, this is not the way. But we should learn shell/bash scripting to work alongside our automation tools and for ad-hoc tasks. 
+我仍然與很多人交談，他們設置了一些複雜的 shell 腳本來使某些事情發生，他們依賴此腳本來處理業務中一些最重要的事情，我不是說我們需要理解 shell/bash 腳本用於此目的，這不是方法。但我們應該學習 shell/bash 腳本，以與我們的自動化工具一起工作並用於臨時任務。
 
-An example of this that we have used in this section could be the VAGRANTFILE we used to create our VM, we could wrap this into a simple bash script that deleted and renewed this every Monday morning so that we have a fresh copy of our Linux VM every week, we could also add all the software stack that we need on said Linux machine and so on all through this one bash script. 
+我們在本節中使用的一個例子可能是我們用來創建 VM 的 VAGRANTFILE，我們可以將其包裝到一個簡單的 bash 腳本中，每週一早上刪除並更新它，以便我們每週都有一個新的 Linux VM 副本，我們還可以添加我們在所述 Linux 機器上需要的所有軟體堆棧，等等，所有這些都通過這一個 bash 腳本。
 
-I think another thing I am at least hearing is that hands-on scripting questions are becoming more and more apparent in all lines of interviews. 
+我認為我至少聽到的另一件事是，在所有面試中，動手腳本問題變得越來越明顯。
 
-### Getting started 
+### 開始
 
-As with a lot of things we are covering in this whole 90 days, the only real way to learn is through doing. Hands-on experience is going to help soak all of this into your muscle memory. 
+就像我們在這 90 天中涵蓋的許多事情一樣，唯一真正的學習方式是通過實踐。實踐經驗將幫助將所有這些吸收到你的肌肉記憶中。
 
-First of all, we are going to need a text editor. On [Day 17](Day17.md) we covered probably the two most common text editors and a little on how to use them. 
+首先，我們需要一個文本編輯器。在 [Day 17](day17.md) 中，我們涵蓋了可能是兩個最常見的文本編輯器以及如何使用它們的一點。
 
-Let's get straight into it and create our first shell script. 
+讓我們直接開始創建我們的第一個 shell 腳本。
 
 `touch 90DaysOfDevOps.sh`
 
-Followed by `nano 90DaysOfDevOps.sh` this will open our new blank shell script in nano. Again you can choose your text editor of choice here. 
+然後是 `nano 90DaysOfDevOps.sh`，這將在 nano 中打開我們的新空白 shell 腳本。同樣，你可以在這裡選擇你選擇的文本編輯器。
 
-The first line of all bash scripts will need to look something like this `#!/usr/bin/bash` this is the path to your bash binary. 
+所有 bash 腳本的第一行都需要看起來像這樣 `#!/usr/bin/bash`，這是你的 bash 二進制文件的路徑。
 
-You should however check this in the terminal by running `which bash` if you are not using Ubuntu then you might also try `whereis bash` from the terminal. 
+但是，你應該通過運行 `which bash` 在終端中檢查這一點，如果你不使用 Ubuntu，那麼你也可以從終端嘗試 `whereis bash`。
 
-However, you may see other paths listed in already created shell scripts which could include: 
+但是，你可能會在已創建的 shell 腳本中看到其他列出的路徑，可能包括：
 
 - `#!/bin/bash`
 - `#!/usr/bin/env bash`
 
-In the next line in our script, I like to add a comment and add the purpose of the script or at least some information about me. You can do this by using the `#` This allows us to comment out particular lines in our code and provide descriptions for what the upcoming commands will be doing. I find the more notes the better for the user experience especially if you are sharing this. 
+在我們腳本的下一行中，我喜歡添加註釋並添加腳本的目的或至少一些關於我的信息。你可以通過使用 `#` 來做到這一點，這允許我們在代碼中的特定行上註釋並提供即將到來的命令將做什麼的描述。我發現註釋越多，用戶體驗越好，特別是如果你要分享這個。
 
-I sometimes use figlet, a program we installed earlier in the Linux section to create some asci art to kick things off in our scripts. 
+我有時使用 figlet，這是我們在 Linux 部分早期安裝的程序，在我們的腳本中創建一些 ascii 藝術來開始。
 
 ![](Images/Day19_Linux1.png)
 
-All of the commands we have been through earlier in this Linux section ([Day15](Day15.md)) could be used here as a simple command to test our script. 
+我們在 Linux 部分早期經歷的所有命令（[Day15](day15.md)）都可以在這裡用作測試腳本的簡單命令。
 
-Let's add a simple block of code to our script. 
+讓我們向腳本添加一個簡單的代碼塊。
 
-``` 
+```
 mkdir 90DaysOfDevOps
 cd 90DaysOfDevOps
 touch Day19
-ls 
+ls
 ```
-You can then save this and exit your text editor, if we run our script with `./90DaysOfDevOps.sh` you should get a permission denied message. You can check the permissions of this file using the `ls -al` command and you can see highlighted we do not have executable rights on this file. 
+
+然後你可以保存並退出文本編輯器，如果我們使用 `./90DaysOfDevOps.sh` 運行腳本，你應該收到權限被拒絕的消息。你可以使用 `ls -al` 命令檢查此文件的權限，你可以看到突出顯示我們在此文件上沒有可執行權限。
 
 ![](Images/Day19_Linux2.png)
 
-We can change this using `chmod +x 90DaysOfDevOps.sh` and then you will see the `x` meaning we can now execute our script. 
+我們可以使用 `chmod +x 90DaysOfDevOps.sh` 更改此設置，然後你會看到 `x` 意味著我們現在可以執行腳本。
 
 ![](Images/Day19_Linux3.png)
 
-Now we can run our script again using `./90DaysOfDevOps.sh` after running the script has now created a new directory, changed into that directory and then created a new file. 
+現在我們可以使用 `./90DaysOfDevOps.sh` 再次運行腳本，運行腳本後，現在已創建新目錄，更改為該目錄，然後創建新文件。
 
 ![](Images/Day19_Linux4.png)
 
-Pretty basic stuff but you can start to see hopefully how this could be used to call on other tools as part of ways to make your life easier and automate things. 
+非常基本的東西，但你可以開始看到希望這如何用於調用其他工具，作為使你的生活更輕鬆和自動化事情的方法的一部分。
 
-### Variables, Conditionals
-A lot of this section is really a repeat to what we covered when we were learning Golang but I think its worth us diving in here again. 
+### 變量、條件
 
-- ### Variables 
+本節的很多內容是我們在學習 Golang 時涵蓋的內容的重複，但我認為值得我們在這裡再次深入探討。
 
-Variables enable us to define once a particular repeated term that is used throughout a potentially complex script. 
+- ### 變量
 
-To add a variable you simply add it like this to a clean line in your script. 
+變量使我們能夠定義一次在可能複雜的腳本中使用的特定重複術語。
+
+要添加變量，你只需將其添加到腳本中的乾淨行，如下所示。
 
 `challenge="90DaysOfDevOps"`
 
-This way when and where we use `$challenge` in our code, if we change the variable it will be reflected throughout.
+這樣，當我們在代碼中使用 `$challenge` 時，如果我們更改變量，它將在整個過程中反映出來。
 
 ![](Images/Day19_Linux5.png)
 
-If we now run our `sh` script you will see the printout that was added to our script. 
+如果我們現在運行 `sh` 腳本，你會看到添加到腳本中的打印輸出。
 
-![](Images/Day19_Linux5.png)
+![](Images/Day19_Linux6.png)
 
-We can also ask for user input that can set our variables using the following: 
+我們還可以要求用戶輸入，可以使用以下方式設置變量：
 
-``` 
+```
 echo "Enter your name"
 read name
 ```
 
-This would then define the input as the variable `$name` We could then use this later on. 
+這將把輸入定義為變量 `$name`，然後我們可以在以後使用它。
 
-- ### Conditionals 
+- ### 條件
 
-Maybe we want to find out who we have on our challenge and how many days they have completed, we can define this using `if` `if-else` `else-if` conditionals, this is what we have defined below in our script. 
+也許我們想找出誰在我們的挑戰中以及他們完成了多少天，我們可以使用 `if` `if-else` `else-if` 條件來定義這一點，這是我們在腳本中定義的內容。
 
 ```
 #!/bin/bash
@@ -138,62 +141,64 @@ else
   echo "You have entered the wrong amount of days"
 fi
 ```
-You can also see from the above that we are running some comparisons or checking values against each other to move on to the next stage. We have different options here worth noting. 
 
-- `eq` - if the two values are equal will return TRUE
-- `ne` - if the two values are not equal will return TRUE
-- `gt` - if the first value is greater than the second value will return TRUE
-- `ge` - if the first value is greater than or equal to the second value will return TRUE
-- `lt` - if the first value is less than the second value will return TRUE
-- `le` - if the first value is less than or equal to the second value will return TRUE
+你還可以從上面看到我們正在運行一些比較或相互檢查值以進入下一階段。我們在這裡有不同的選項值得注意。
 
-We might also use bash scripting to determine information about files and folders, this is known as file conditions. 
+- `eq` - 如果兩個值相等，將返回 TRUE
+- `ne` - 如果兩個值不相等，將返回 TRUE
+- `gt` - 如果第一個值大於第二個值，將返回 TRUE
+- `ge` - 如果第一個值大於或等於第二個值，將返回 TRUE
+- `lt` - 如果第一個值小於第二個值，將返回 TRUE
+- `le` - 如果第一個值小於或等於第二個值，將返回 TRUE
 
-- `-d file` True if the file is a directory
-- `-e file` True if the file exists
-- `-f file` True if the provided string is a file 
-- `g file` True if the group id is set on a file
-- `-r file` True if the file is readable
-- `-s file` True if the file has a non-zero size
+我們也可能使用 bash 腳本來確定有關文件和文件夾的信息，這稱為文件條件。
+
+- `-d file` 如果文件是目錄，則為 True
+- `-e file` 如果文件存在，則為 True
+- `-f file` 如果提供的字符串是文件，則為 True
+- `-g file` 如果在文件上設置了組 id，則為 True
+- `-r file` 如果文件可讀，則為 True
+- `-s file` 如果文件具有非零大小，則為 True
 
 ```
 FILE="90DaysOfDevOps.txt"
 if [ -f "$FILE" ]
-then 
+then
   echo "$FILE is a file"
-else 
+else
   echo "$FILE is not a file"
 fi
 ```
 
 ![](Images/Day19_Linux7.png)
 
-Providing we have that file still in our directory we should get the first echo command back. But if we remove that file then we should get the second echo command. 
+如果我們仍然在目錄中有該文件，我們應該得到第一個 echo 命令返回。但如果我們刪除該文件，那麼我們應該得到第二個 echo 命令。
 
 ![](Images/Day19_Linux8.png)
 
-You can hopefully see how this can be used to save you time when searching through a system for specific items. 
+希望你可以看到這如何在搜索系統中的特定項目時為你節省時間。
 
-I found this amazing repository on GitHub that has what seems to be an endless amount of scripts [DevOps Bash Tools](https://github.com/HariSekhon/DevOps-Bash-tools/blob/master/README.md)
+我在 GitHub 上發現了這個令人驚嘆的存儲庫，它有似乎無窮無盡的腳本 [DevOps Bash Tools](https://github.com/HariSekhon/DevOps-Bash-tools/blob/master/README.md)
 
-### Example 
+### 示例
 
-**Scenario**: We have our company called "90DaysOfDevOps" and we have been running a while and now it is time to expand the team from 1 person to lots more over the coming weeks, I am the only one so far that knows the onboarding process so we want to reduce that bottleneck by automating some of these tasks. 
+**場景**：我們有一家名為"90DaysOfDevOps"的公司，我們已經運行了一段時間，現在是時候在未來幾週內將團隊從 1 人擴展到更多人，到目前為止，我是唯一一個知道入職流程的人，所以我們想通過自動化其中一些任務來減少瓶頸。
 
-**Requirements**: 
-- A user can be passed in as a command line argument. 
-- A user is created with the name of command line argument. 
-- A password can be parsed in as a command line argument. 
-- The password is set for the user 
-- A message of successful account creation is displayed. 
+**要求**：
 
-Let's start with creating our shell script with `touch create_user.sh`
+- 用戶可以作為命令行參數傳入。
+- 使用命令行參數的名稱創建用戶。
+- 密碼可以解析為命令行參數。
+- 為用戶設置密碼
+- 顯示成功創建帳戶的消息。
 
-Before we move on lets also make this executable using `chmod +x create_user.sh`
+讓我們從使用 `touch create_user.sh` 創建 shell 腳本開始
 
-then we can use `nano create_user.sh` to start editing our script for the scenario we have been set. 
+在我們繼續之前，讓我們還使用 `chmod +x create_user.sh` 使其可執行
 
-We can take a look at the first requirement "A user can be passed in as a command line argument" we can use the following 
+然後我們可以使用 `nano create_user.sh` 開始編輯我們為已設置的場景編寫的腳本。
+
+我們可以查看第一個要求"用戶可以作為命令行參數傳入"，我們可以使用以下內容
 
 ```
 #! /usr/bin/bash
@@ -204,11 +209,11 @@ echo "$1"
 
 ![](Images/Day19_Linux9.png)
 
-Go ahead and run this using `./create_user.sh Michael` replace Michael with your name when you run the script. 
+繼續使用 `./create_user.sh Michael` 運行此命令，當你運行腳本時，用你的名字替換 Michael。
 
 ![](Images/Day19_Linux10.png)
 
-Next up we can take that second requirement "A user is created with the name of command line argument" this can be done with the `useradd` command. The `-m` option is to create the user home directory as /home/username
+接下來，我們可以採用第二個要求"使用命令行參數的名稱創建用戶"，這可以通過 `useradd` 命令完成。`-m` 選項是創建用戶主目錄為 /home/username
 
 ```
 #! /usr/bin/bash
@@ -216,18 +221,18 @@ Next up we can take that second requirement "A user is created with the name of 
 #A user can be passed in as a command line argument
 echo "$1 user account being created."
 
-#A user is created with the name of command line argument
+#A user is created with the name of the command line argument
 sudo useradd -m "$1"
 
 ```
 
-Warning: If you do not provide a user account name then it will error as we have not filled the variable `$1`
+警告：如果你不提供用戶帳戶名稱，它會出錯，因為我們沒有填充變量 `$1`
 
-We can then check this account has been created with the `awk -F: '{ print $1}' /etc/passwd` command. 
+然後我們可以使用 `awk -F: '{ print $1}' /etc/passwd` 命令檢查此帳戶是否已創建。
 
 ![](Images/Day19_Linux11.png)
 
-Our next requirement is "A password can be parsed in as a command line argument." First of all we are not going to ever do this in production it is more for us to work through a list of requirements in the lab to understand. 
+我們的下一個要求是"密碼可以解析為命令行參數。"首先，我們永遠不會在生產中這樣做，這更多是為了讓我們在實驗室中完成一系列要求以理解。
 
 ```
 #! /usr/bin/bash
@@ -235,24 +240,24 @@ Our next requirement is "A password can be parsed in as a command line argument.
 #A user can be passed in as a command line argument
 echo "$1 user account being created."
 
-#A user is created with the name of command line argument
+#A user is created with the name of the command line argument
 sudo useradd -m "$1"
 
-#A password can be parsed in as a command line argument.
+#A password can be parsed as a command line argument.
 sudo chpasswd <<< "$1":"$2"
 ```
 
-If we then run this script with the two parameters `./create_user.sh 90DaysOfDevOps password`
+如果我們然後使用兩個參數運行此腳本 `./create_user.sh 90DaysOfDevOps password`
 
-You can see from the below image that we executed our script it created our user and password and then we manually jumped into that user and confirmed with the `whoami` command. 
+你可以從下面的圖像中看到，我們執行了腳本，它創建了我們的用戶和密碼，然後我們手動跳轉到該用戶並使用 `whoami` 命令確認。
 
 ![](Images/Day19_Linux12.png)
 
-The final requirement is "A message of successful account creation is displayed." We actually already have this in the top line of our code and we can see on the above screen shot that we have `90DaysOfDevOps user account being created` is shown. This was left from our testing with the `$1` parameter. 
+最後一個要求是"顯示成功創建帳戶的消息。"我們已經在代碼的頂行有了這個，我們可以在上面的屏幕截圖中看到我們有一個 `90DaysOfDevOps user account being created` 顯示。這是我們使用 `$1` 參數進行測試時留下的。
 
-Now this script can be used to quickly onboard and set up new users on to our Linux systems. But maybe instead of a few of the historic people having to work through this and then having to get other people their new usernames or passwords we could add some user input that we have previously covered earlier on to capture our variables. 
+現在，此腳本可用於快速入職並在 Linux 系統上設置新用戶。但也許不是一些歷史人員必須完成此工作，然後必須為其他人提供新的用戶名或密碼，我們可以添加一些我們之前早些時候涵蓋的用戶輸入來捕獲我們的變量。
 
-``` 
+```
 #! /usr/bin/bash
 
 echo "What is your intended username?"
@@ -263,36 +268,36 @@ read  password
 #A user can be passed in as a command line argument
 echo "$username user account being created."
 
-#A user is created with the name of command line argument
+#A user is created with the name of the command line argument
 sudo useradd -m $username
 
-#A password can be parsed in as a command line argument.
+#A password can be parsed as a command line argument.
 sudo chpasswd <<< $username:$password
 ```
 
-With the steps being more interactive, 
+隨著步驟變得更加互動，
 
 ![](Images/Day19_Linux14.png)
 
-Just to finish this off maybe we do want to output a successful output to say that our new user account has finished being created.
+只是為了完成這個，也許我們確實想輸出一個成功的輸出來說我們的新用戶帳戶已經完成創建。
 
 ![](Images/Day19_Linux15.png)
 
-One thing I did notice was that we are displaying the password on our input we can hide this by using the `-s` flag in the line of code `read -s password`
+我確實注意到的一件事是我們在輸入時顯示密碼，我們可以通過在代碼行中使用 `-s` 標誌來隱藏它 `read -s password`
 
 ![](Images/Day19_Linux16.png)
 
-If you do want to delete the user you have created for lab purposes then you can do that with `sudo userdel test_user`
+如果你確實想刪除你為實驗室目的創建的用戶，那麼你可以使用 `sudo userdel test_user` 來做到這一點
 
 [Example Script](Linux/create-user.sh)
 
-Once again I am not saying this is going to be something that you do create in your day to day but it was something I thought of that would highlight the flexibility of what you could use shell scripting for. 
+再次，我不是說這將是你在日常工作中創建的內容，但這是我想到的，它會突出顯示你可以使用 shell 腳本的靈活性。
 
-Think about any repeatable tasks that you do every day or week or month and how could you better automate that, first option is likely going to be using a bash script before moving into more complex territory. 
+考慮一下你每天、每週或每月做的任何可重複任務，以及你如何更好地自動化它，第一個選項可能是在進入更複雜的領域之前使用 bash 腳本。
 
-I have created a very simple bash file that helps me spin up a Kubernetes cluster using minikube on my local machine along with data services and Kasten K10 to help demonstrate the requirements and needs around data management. [Project Pace](https://github.com/MichaelCade/project_pace/blob/main/singlecluster_demo.sh) But I did not feel this appropriate to raise here as we have not covered Kubernetes yet. 
+我創建了一個非常簡單的 bash 文件，幫助我在本地機器上使用 minikube 啟動 Kubernetes 集群，以及數據服務和 Kasten K10，以幫助演示圍繞數據管理的需求和需求。[Project Pace](https://github.com/MichaelCade/project_pace/blob/main/singlecluster_demo.sh) 但我覺得在這裡提出這不合適，因為我們還沒有涵蓋 Kubernetes。
 
-## Resources 
+## 資源
 
 - [Bash in 100 seconds](https://www.youtube.com/watch?v=I4EWvMFj37g)
 - [Bash script with practical examples - Full Course](https://www.youtube.com/watch?v=TPRSJbtfK4M)
@@ -303,4 +308,4 @@ I have created a very simple bash file that helps me spin up a Kubernetes cluste
 - [Learn the Linux Fundamentals - Part 1](https://www.youtube.com/watch?v=kPylihJRG70)
 - [Linux for hackers (don't worry you don't need to be a hacker!)](https://www.youtube.com/watch?v=VbEx7B_PTOE)
 
-See you on [Day20](day20.md)
+我們[Day20](day20.md)見

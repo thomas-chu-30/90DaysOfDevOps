@@ -2,152 +2,155 @@
 title: '#90DaysOfDevOps - Dev workstation setup - All the pretty things - Day 20'
 published: false
 description: 90DaysOfDevOps - Dev workstation setup - All the pretty things
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048734
 ---
-## Dev workstation setup - All the pretty things
 
-Not to be confused with us setting Linux servers up this way but I wanted to also show off the choice and flexibility that we have within the Linux desktop. 
+## 開發工作站設置 - 所有漂亮的東西
 
-I have been using a Linux Desktop for almost a year now and I have it configured just the way I want from a look and feel perspective. Using our Ubuntu VM on Virtual Box we can run through some of the customisations I have made to my daily driver. 
+不要與我們以這種方式設置 Linux 服務器混淆，但我也想展示我們在 Linux 桌面中擁有的選擇和靈活性。
 
-I have put together a YouTube video walking through the rest as some people might be able to better follow along: 
+我已經使用 Linux 桌面將近一年了，我已經按照我想要的方式從外觀和感覺的角度配置了它。使用我們在 Virtual Box 上的 Ubuntu VM，我們可以運行我對日常驅動器進行的一些定制。
+
+我已經整理了一個 YouTube 視頻來完成其餘部分，因為有些人可能能夠更好地跟隨：
 
 [![Click to access YouTube Video](Images/Day20_YouTube.png)](https://youtu.be/jeEslAtHfKc)
 
-Out of the box our system will look something like the below: 
+開箱即用，我們的系統看起來像下面這樣：
 
 ![](Images/Day20_Linux1.png)
 
-We can also see our default bash shell below, 
+我們還可以在下面看到我們的默認 bash shell，
 
 ![](Images/Day20_Linux2.png)
 
-A lot of this comes down to dotfiles something we will cover in this final Linux session of the series. 
+這很多都歸結為 dotfiles，我們將在本系列的最後一個 Linux 會話中涵蓋這一點。
 
-### dotfiles 
-First up I want to dig into dotfiles, I have said in a previous day that Linux is made up of configuration files. These dotfiles are configuration files for your Linux system and applications. 
+### dotfiles
 
-I will also add that dotfiles are not just used to customise and make your desktop look pretty, there are also dotfile changes and configurations that will help you with productivity. 
+首先，我想深入研究 dotfiles，我在之前的一天說過，Linux 由配置文件組成。這些 dotfiles 是 Linux 系統和應用程序的配置文件。
 
-As I mentioned many software programs store their configurations in these dotfiles. These dotfiles assist in managing functionality. 
+我還想補充一點，dotfiles 不僅用於定制和使桌面看起來漂亮，還有一些 dotfile 更改和配置可以幫助你提高生產力。
 
-Each dotfile starts with a `.` You can probably guess where the naming came from? 
+正如我提到的，許多軟體程序將它們的配置存儲在這些 dotfiles 中。這些 dotfiles 有助於管理功能。
 
-So far we have been using bash as our shell which means you will have a .bashrc and .bash_profile in our home folder. You can see below a few dotfiles we have on our system. 
+每個 dotfile 都以 `.` 開頭。你可能可以猜測命名來自哪裡？
+
+到目前為止，我們一直在使用 bash 作為我們的 shell，這意味著你將在主文件夾中有一個 .bashrc 和 .bash_profile。你可以在下面看到我們系統上的一些 dotfiles。
 
 ![](Images/Day20_Linux3.png)
 
-We are going to be changing our shell, so we will later be seeing a new `.zshrc` configuration dotfile. 
+我們將更改我們的 shell，所以我們稍後會看到一個新的 `.zshrc` 配置 dotfile。
 
-But now you know if we refer to dotfiles you know they are configuration files. We can use them to add aliases to our command prompt as well as paths to different locations. Some people publish their dotfiles so they are publicly available. You will find mine here on my GitHub [MichaelCade/dotfiles](https://github.com/MichaelCade/dotfiles) here you will find my custom `.zshrc` file, my terminal of choice is terminator which also has some configuration files in the folder and then also some background options. 
+但現在你知道如果我們提到 dotfiles，你知道它們是配置文件。我們可以使用它們向命令提示符添加別名以及不同位置的路徑。有些人發布他們的 dotfiles，以便它們公開可用。你可以在我的 GitHub [MichaelCade/dotfiles](https://github.com/MichaelCade/dotfiles) 上找到我的，在這裡你會找到我的自定義 `.zshrc` 文件，我選擇的終端是 terminator，它在文件夾中也有一些配置文件，然後還有一些背景選項。
 
-### ZSH 
-As I mentioned throughout our interactions so far we have been using a bash shell the default shell with Ubuntu. ZSH is very similar but it does have some benefits over bash.  
+### ZSH
 
-Zsh has features like interactive Tab completion, automated file searching, regex integration, advanced shorthand for defining command scope, and a rich theme engine.
+正如我在整個互動中提到的，到目前為止我們一直在使用 bash shell，這是 Ubuntu 的默認 shell。ZSH 非常相似，但它確實比 bash 有一些好處。
 
-We can use our `apt` package manager to get zsh installed on our system. Let's go ahead and run `sudo apt install zsh` from our bash terminal. I am going to do this from within the VM console vs being connected over SSH. 
+Zsh 具有交互式 Tab 完成、自動文件搜索、正則表達式集成、定義命令範圍的高級簡寫以及豐富的主題引擎等功能。
 
-When the installation command is complete you can run `zsh` inside your terminal, this will then start a shell configuration script. 
+我們可以使用 `apt` 包管理器在系統上安裝 zsh。讓我們繼續從 bash 終端運行 `sudo apt install zsh`。我將從 VM 控制台內執行此操作，而不是通過 SSH 連接。
+
+當安裝命令完成時，你可以在終端內運行 `zsh`，這將啟動 shell 配置腳本。
 
 ![](Images/Day20_Linux4.png)
 
-I selected `1` to the above question and now we have some more options. 
+我選擇了 `1` 來回答上述問題，現在我們有更多選項。
 
 ![](Images/Day20_Linux5.png)
 
-You can see from this menu you we can make some out of the box edits to make ZSH configured to our needs. 
+你可以從此菜單中看到，我們可以進行一些開箱即用的編輯，以使 ZSH 配置為我們的需求。
 
-If you exit the wizard with a `0` and then use the `ls -al | grep .zshrc` you should see we have a new configuration file. 
+如果你用 `0` 退出嚮導，然後使用 `ls -al | grep .zshrc`，你應該看到我們有一個新的配置文件。
 
-Now we want to make zsh our default shell every time we open our terminal, we can do this by running the following command to change our shell `chsh -s $(which zsh)` we then need to log out and back in again for the changes to take place. 
+現在我們想使 zsh 成為每次打開終端時的默認 shell，我們可以通過運行以下命令來更改 shell `chsh -s $(which zsh)`，然後我們需要註銷並重新登錄以使更改生效。
 
-When you log back and open a terminal it should look something like this. We can also confirm our shell has now been changed over by running `which $SHELL`
+當你重新登錄並打開終端時，它應該看起來像這樣。我們還可以通過運行 `which $SHELL` 確認我們的 shell 現在已更改。
 
 ![](Images/Day20_Linux6.png)
 
-I generally perform this step on each Ubuntu desktop I spin up and find in general without going any further that the zsh shell is a little faster than bash. 
+我通常在每個我啟動的 Ubuntu 桌面上執行此步驟，並且總體上發現，不進一步，zsh shell 比 bash 快一點。
 
-### OhMyZSH 
+### OhMyZSH
 
-Next up we want to make things look a little better and also add some functionality to help us move around within the terminal. 
+接下來，我們想讓事情看起來更好一點，並添加一些功能來幫助我們在終端內移動。
 
-OhMyZSH is a free and open source framework for managing your zsh configuration. There are lots of plugins, themes and other things that just make interacting with the zsh shell a lot nicer. 
+OhMyZSH 是一個免費開源的框架，用於管理你的 zsh 配置。有很多插件、主題和其他東西，只是讓與 zsh shell 的交互變得更加愉快。
 
-You can find out more about [ohmyzsh](https://ohmyz.sh/)
+你可以了解更多關於 [ohmyzsh](https://ohmyz.sh/) 的信息
 
-Let's get Oh My ZSH installed, we have a few options with `curl` `wget` or `fetch` we have the first two available on our system but I will lead with `curl`
+讓我們安裝 Oh My ZSH，我們有幾個選項，`curl` `wget` 或 `fetch`，我們在系統上有前兩個可用，但我將使用 `curl` 引導
 
 `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
 
-When you have run the above command you should see some output like below.
+當你運行上述命令時，你應該看到類似下面的輸出。
 
 ![](Images/Day20_Linux7.png)
 
- Now we can move on to start putting a theme in for our experience, there are well over 100 bundled with Oh My ZSH but my go to for all of my applications and everything is the dracula theme. 
+現在我們可以繼續開始為我們的體驗放置主題，Oh My ZSH 附帶了 100 多個，但我所有應用程序和所有內容的首選是 Dracula 主題。
 
- I also want to add that these two plugins are a must when using Oh My ZSH. 
+我還想補充一點，在使用 Oh My ZSH 時，這兩個插件是必須的。
 
- `git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions`
+`git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions`
 
- `git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting`
+`git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting`
 
- `nano ~/.zshrc`
+`nano ~/.zshrc`
 
- edit the plugins to now include `plugins=(git zsh-autosuggestions zsh-syntax-highlighting)`
+編輯插件以現在包括 `plugins=(git zsh-autosuggestions zsh-syntax-highlighting)`
 
-## Gnome Extensions
+## Gnome 擴展
 
-I also use Gnome extensions, and in particular the list below 
+我還使用 Gnome 擴展，特別是下面的列表
 
 [Gnome extensions](https://extensions.gnome.org)
 
-    - Caffeine 
+    - Caffeine
     - CPU Power Manager
-    - Dash to Dock 
-    - Desktop Icons 
-    - User Themes 
+    - Dash to Dock
+    - Desktop Icons
+    - User Themes
 
-## Software Installation
+## 軟體安裝
 
-A short list of the programs I install on the machine using `apt` 
+我使用 `apt` 在機器上安裝的程序簡短列表
 
-    - VSCode 
-    - azure-cli 
+    - VSCode
+    - azure-cli
     - containerd.io
     - docker
-    - docker-ce 
-    - google-cloud-sdk 
-    - insomnia 
+    - docker-ce
+    - google-cloud-sdk
+    - insomnia
     - packer
     - terminator
-    - terraform 
+    - terraform
     - vagrant
 
-### Dracula theme
+### Dracula 主題
 
-This site is the only theme I am using at the moment. Looks clear, clean and everything looks great. [Dracula Theme](https://draculatheme.com/) It also has you covered when you have lots of other programs you use on your machine. 
+這個網站是我目前唯一使用的主題。看起來清晰、乾淨，一切看起來都很棒。[Dracula Theme](https://draculatheme.com/) 當你在機器上使用許多其他程序時，它也會為你提供支持。
 
-From the link above we can search for zsh on the site and you will find at least two options. 
+從上面的鏈接，我們可以在網站上搜索 zsh，你會找到至少兩個選項。
 
-Follow the instructions listed to insall either manually or using git. Then you will need to finally edit your `.zshrc` configuration file as per below. 
+按照列出的說明手動安裝或使用 git。然後你最終需要按照以下方式編輯 `.zshrc` 配置文件。
 
 ![](Images/Day20_Linux8.png)
 
-You are next going to want the [Gnome Terminal Dracula theme](https://draculatheme.com/gnome-terminal) with all instructions available here as well. 
+接下來你想要 [Gnome Terminal Dracula theme](https://draculatheme.com/gnome-terminal)，這裡也有所有說明。
 
-It would actually take a long time for me to document each and every step so I created a video walkthrough of the process. (**Click on the image below**)
+對我來說，記錄每一步需要很長時間，所以我創建了一個視頻演練過程。（**點擊下面的圖像**）
 
 [![](Images/Day20_YouTube.png)](https://youtu.be/jeEslAtHfKc)
 
-If you made it this far, then we have now finished our Linux section of the #90DaysOfDevOps. Once again I am open for feedback and additions to resources here. 
+如果你走到這一步，那麼我們現在已經完成了 #90DaysOfDevOps 的 Linux 部分。再次，我對這裡的反饋和資源添加持開放態度。
 
-I also thought on this it was easier to show you a lot of the steps through video vs writing them down here, what do you think to this? I do have a goal to work back through these days and where possible creating video walkthroughs to add in and better maybe explain and show some of the things we have covered. What do you think? 
+我也認為通過視頻向你展示很多步驟比在這裡寫下來更容易，你對此有何看法？我確實有一個目標，就是回顧這些日子，並在可能的情況下創建視頻演練來添加，並更好地解釋和展示我們涵蓋的一些內容。你怎麼看？
 
-## Resources 
+## 資源
 
 - [Bash in 100 seconds](https://www.youtube.com/watch?v=I4EWvMFj37g)
 - [Bash script with practical examples - Full Course](https://www.youtube.com/watch?v=TPRSJbtfK4M)
@@ -158,6 +161,6 @@ I also thought on this it was easier to show you a lot of the steps through vide
 - [Learn the Linux Fundamentals - Part 1](https://www.youtube.com/watch?v=kPylihJRG70)
 - [Linux for hackers (don't worry you don't need to be a hacker!)](https://www.youtube.com/watch?v=VbEx7B_PTOE)
 
-Tomorrow we start our 7 days of diving into Networking, we will be looking to give ourselves the foundational knowledge and understanding of Networking around DevOps. 
+明天我們開始 7 天的網絡深入探討，我們將尋求為自己提供圍繞 DevOps 的網絡基礎知識和理解。
 
-See you on [Day21](day21.md)
+我們[Day21](day21.md)見
