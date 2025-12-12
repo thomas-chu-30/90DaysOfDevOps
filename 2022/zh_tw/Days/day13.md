@@ -7,54 +7,59 @@ cover_image: null
 canonical_url: null
 id: 1048865
 ---
-## Tweet your progress with our new App
 
-On the final day of looking into this programming language, we have only just touched the surface here of the language but it is that start that I think we need to get interested and excited and want to dive more into it. 
+## 使用我們的新應用程序發布你的進度
 
-Over the last few days, we have taken a small idea for an application and we have added functionality to it, in this session I want to take advantage of those packages we mentioned and create the functionality for our app to not only give you the update of your progress on screen but also send a tweet with the details of the challenge and your status. 
+在查看這種程式語言的最後一天，我們只是觸及了這種語言的表面，但我認為正是在這個開始階段，我們需要感興趣和興奮，並想要更深入地研究它。
 
-## Adding the ability to tweet your progress 
-The first thing we need to do is set up our developer API access with Twitter for this to work. 
+在過去的幾天裡，我們為應用程序提出了一個小想法，並為其添加了功能，在本節中，我想利用我們提到的那些包，為我們的應用程序創建功能，不僅在屏幕上為你提供進度更新，還發送一條包含挑戰詳情和你的狀態的推文。
 
-Head to the [Twitter Developer Platform](https://developer.twitter.com) and sign in with your Twitter handle and details. Once in you should see something like the below without the app that I already have created. 
+## 添加發布進度的能力
+
+我們需要做的第一件事是設置我們的開發者 API 訪問 Twitter 以使其工作。
+
+前往 [Twitter Developer Platform](https://developer.twitter.com) 並使用你的 Twitter 帳號和詳細信息登錄。進入後，你應該看到類似下面的內容，但沒有我已經創建的應用程序。
 
 ![](Images/Day13_Go1.png)
 
-From here you may also want to request elevated access, this might take some time but it was very fast for me. 
+從這裡，你可能還想請求提升訪問權限，這可能需要一些時間，但對我來說非常快。
 
-Next, we should select Projects & Apps and create our App. Limits are depending on the account access you have, with essential you only have one app and one project and with elevated you can have 3 apps. 
+接下來，我們應該選擇 Projects & Apps 並創建我們的應用程序。限制取決於你擁有的帳戶訪問權限，使用基本訪問權限你只有一個應用程序和一個項目，使用提升訪問權限你可以有 3 個應用程序。
 
 ![](Images/Day13_Go2.png)
 
-Give your application a name 
+為你的應用程序命名
 
 ![](Images/Day13_Go3.png)
 
-You will be then given these API tokens, it is important that you save these somewhere secure. (I have since deleted this app) We will need these later with our Go Application. 
+然後你將獲得這些 API 令牌，你必須將它們保存在安全的地方。（我已經刪除了這個應用程序）我們稍後將在 Go 應用程序中使用這些。
 
 ![](Images/Day13_Go4.png)
 
-Now we have our app created,(I did have to change my app name as the one in the screenshot above was already taken, these names need to be unique) 
+現在我們已經創建了我們的應用程序，（我確實必須更改我的應用程序名稱，因為上面截圖中的名稱已被使用，這些名稱需要是唯一的）
 
 ![](Images/Day13_Go5.png)
 
-The keys that we gathered before are known as our consumer keys and we will also need our access token and secrets. We can gather this information using the "Keys & Tokens" tab. 
+我們之前收集的密鑰被稱為我們的消費者密鑰，我們還需要我們的訪問令牌和密鑰。我們可以使用"Keys & Tokens"選項卡收集此信息。
 
 ![](Images/Day13_Go6.png)
 
-Ok, we are done in the Twitter developer portal for now. Make sure you keep your keys safe because we will need them later. 
+好的，我們現在在 Twitter 開發者門戶中完成了。確保你保持密鑰安全，因為我們稍後會需要它們。
 
-## Go Twitter Bot 
+## Go Twitter Bot
 
-Remember the code we are starting within our application as well [day13_example1](Go/day13_example1.go) but first, we need to check we have the correct code to make something tweet 
+記住我們在應用程序中開始的代碼 [day13_example1](Go/day13_example1.go)，但首先，我們需要檢查我們有正確的代碼來讓某些東西發布推文
 
-We now need to think about the code to get our output or message to Twitter in the form of a tweet. We are going to be using [go-twitter](https://github.com/dghubble/go-twitter) This is a Go client library for the Twitter API. 
+我們現在需要考慮代碼，以將我們的輸出或消息以推文的形式發送到 Twitter。我們將使用 [go-twitter](https://github.com/dghubble/go-twitter)，這是 Twitter API 的 Go 客戶端庫。
 
-To test this before putting this into our main application, I created a new directory in our `src` folder called go-twitter-bot, issued the `go mod init github.com/michaelcade/go-twitter-bot` on the folder which then created a `go.mod` file and then we can start writing our new main.go and test this out. 
+在將其放入我們的主應用程序之前測試這個，我在我們的 `src` 文件夾中創建了一個名為 go-twitter-bot 的新目錄，在文件夾上發出 `go mod init github.com/michaelcade/go-Twitter-bot`，然後創建了一個 `go.mod` 文件，然後我們可以開始編寫我們的新 main.go 並測試這個。
 
-We now need those keys, tokens and secrets we gathered from the Twitter developer portal. We are going to set these in our environment variables. This will depend on the OS you are running: 
+我們現在需要從 Twitter 開發者門戶收集的那些密鑰、令牌和密鑰。我們將在環境變量中設置這些。這將取決於你運行的操作系統：
+
+我收到了一些關於環境變量的問題，這裡有一篇博客文章更詳細地介紹了這一點，以便你可以理解正在發生的事情。[How To Set Environment Variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
 
 Windows
+
 ```
 set CONSUMER_KEY
 set CONSUMER_SECRET
@@ -63,17 +68,19 @@ set ACCESS_TOKEN_SECRET
 ```
 
 Linux / macOS
+
 ```
 export CONSUMER_KEY
 export CONSUMER_SECRET
 export ACCESS_TOKEN
 export ACCESS_TOKEN_SECRET
 ```
-At this stage, you can take a look at [day13_example2](Go/day13_example2.go) at the code but you will see here that we are using a struct to define our keys, secrets and tokens. 
 
-We then have a `func` to parse those credentials and make that connection to the Twitter API 
+在這個階段，你可以查看 [day13_example2](Go/day13_example2.go) 的代碼，但你會看到這裡我們使用結構來定義我們的密鑰、密鑰和令牌。
 
-Then based on the success we will then send a tweet. 
+然後我們有一個 `func` 來解析這些憑據並與 Twitter API 建立連接
+
+然後根據成功，我們將發送一條推文。
 
 ```
 package main
@@ -152,13 +159,14 @@ func main() {
 }
 
 ```
-The above will either give you an error based on what is happening or it will succeed and you will have a tweet sent with the message outlined in the code. 
 
-## Pairing the two together - Go-Twitter-Bot + Our App 
+根據正在發生的事情，上面的代碼會給你一個錯誤，或者它會成功，你將發送一條包含代碼中概述的消息的推文。
 
-Now we need to merge these two in our `main.go` I am sure someone out there is screaming that there is a better way of doing this and please comment on this as you can have more than one `.go` file in a project it might make sense but this works. 
+## 將兩者配對 - Go-Twitter-Bot + 我們的應用程序
 
-You can see the merged codebase [day13_example3](Go/day13_example3.go) but I will also show it below. 
+現在我們需要在 `main.go` 中合併這兩個，我確信有人在大喊有更好的方法來做到這一點，請對此發表評論，因為你可以在項目中擁有多個 `.go` 文件，這可能有意義，但這有效。
+
+你可以看到合併的代碼庫 [day13_example3](Go/day13_example3.go)，但我也會在下面顯示它。
 
 ```
 package main
@@ -261,26 +269,28 @@ func main() {
 
 }
 ```
-The outcome of this should be a tweet but if you did not supply your environment variables then you should get an error like the one below. 
+
+這應該會產生一條推文，但如果你沒有提供環境變量，那麼你應該會收到如下錯誤。
 
 ![](Images/Day13_Go7.png)
 
-Once you have fixed that or if you choose not to authenticate with Twitter then you can use the code we finished with yesterday. The terminal output on success will look similar to this: 
+一旦你修復了這個問題，或者如果你選擇不與 Twitter 進行身份驗證，那麼你可以使用我們昨天完成的代碼。成功時的終端輸出將類似於：
 
 ![](Images/Day13_Go8.png)
 
-The resulting tweet should look something like this: 
+生成的推文應該看起來像這樣：
 
 ![](Images/Day13_Go9.png)
 
-## How to compile for multiple OSs
+## 如何為多個操作系統編譯
 
-I next want to cover the question, "How do you compile for multiple Operating Systems?" The great thing about Go is that it can easily compile for many different Operating Systems. You can get a full list by running the following command: 
+接下來我想介紹這個問題，"你如何為多個操作系統編譯？" Go 的優點是它可以輕鬆地為許多不同的操作系統編譯。你可以通過運行以下命令獲得完整列表：
 
 ```
 go tool dist list
 ```
-Using our `go build` commands so far is great and it will use the `GOOS` and `GOARCH` environment variables to determine the host machine and what the build should be built for. But we can also create other binaries by using the code below as an example. 
+
+到目前為止使用我們的 `go build` 命令很好，它將使用 `GOOS` 和 `GOARCH` 環境變量來確定主機以及應該為其構建構建。但我們也可以使用下面的代碼作為示例創建其他二進制文件。
 
 ```
 GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}_0.1_darwin main.go
@@ -290,26 +300,26 @@ GOARCH=arm64 GOOS=linux go build -o ${BINARY_NAME}_0.1_linux_arm64 main.go
 GOARCH=arm64 GOOS=darwin go build -o ${BINARY_NAME}_0.1_darwin_arm64 main.go
 ```
 
-This will then give you binaries in your directory for all of the above platforms. You can then take this and create a makefile to build these binaries whenever you add new features and functionality to your code. I have included the [makefile](Go/makefile)
+這將為你提供上述所有平台的目錄中的二進制文件。然後你可以使用這個並創建一個 makefile，每當你向代碼添加新功能和特性時構建這些二進制文件。我已經包含了 [makefile](Go/makefile)
 
-This is what I have used to create the releases you can now see on the [repository](https://github.com/MichaelCade/90DaysOfDevOps/releases)
+這是我用來創建你現在可以在[存儲庫](https://github.com/MichaelCade/90DaysOfDevOps/releases)上看到的發布版本。
 
-## Resources
+## 資源
 
 - [StackOverflow 2021 Developer Survey](https://insights.stackoverflow.com/survey/2021)
 - [Why we are choosing Golang to learn](https://www.youtube.com/watch?v=7pLqIIAqZD4&t=9s)
-- [Jake Wright - Learn Go in 12 minutes](https://www.youtube.com/watch?v=C8LgvuEBraI&t=312s) 
-- [Techworld with Nana - Golang full course - 3 hours 24 mins](https://www.youtube.com/watch?v=yyUHQIec83I) 
-- [**NOT FREE** Nigel Poulton Pluralsight - Go Fundamentals - 3 hours 26 mins](https://www.pluralsight.com/courses/go-fundamentals) 
-- [FreeCodeCamp -  Learn Go Programming - Golang Tutorial for Beginners](https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1025s) 
-- [Hitesh Choudhary - Complete playlist](https://www.youtube.com/playlist?list=PLRAV69dS1uWSR89FRQGZ6q9BR2b44Tr9N) 
+- [Jake Wright - Learn Go in 12 minutes](https://www.youtube.com/watch?v=C8LgvuEBraI&t=312s)
+- [Techworld with Nana - Golang full course - 3 hours 24 mins](https://www.youtube.com/watch?v=yyUHQIec83I)
+- [**NOT FREE** Nigel Poulton Pluralsight - Go Fundamentals - 3 hours 26 mins](https://www.pluralsight.com/courses/go-fundamentals)
+- [FreeCodeCamp - Learn Go Programming - Golang Tutorial for Beginners](https://www.youtube.com/watch?v=YS4e4q9oBaU&t=1025s)
+- [Hitesh Choudhary - Complete playlist](https://www.youtube.com/playlist?list=PLRAV69dS1uWSR89FRQGZ6q9BR2b44Tr9N)
 - [A great repo full of all things DevOps & exercises](https://github.com/bregman-arie/devops-exercises)
 - [GoByExample - Example based learning](https://gobyexample.com/)
 - [go.dev/tour/list](https://go.dev/tour/list)
 - [go.dev/learn](https://go.dev/learn/)
 
-This wraps up the Programming language for 7 days! So much more that can be covered and I hope you have been able to continue through the content above and be able to understand some of the other aspects of the Go programming language. 
+這結束了 7 天的程式語言學習！還有很多可以涵蓋的內容，我希望你能夠繼續完成上述內容，並能夠理解 Go 程式語言的其他一些方面。
 
-Next, we take our focus into Linux and some of the fundamentals that we should all know there. 
+接下來，我們將重點轉向 Linux 以及我們都應該知道的一些基礎知識。
 
-See you on [Day 14](day14.md).
+我們[Day 14](day14.md)見.
