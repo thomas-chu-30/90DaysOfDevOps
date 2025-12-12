@@ -7,170 +7,168 @@ cover_image: null
 canonical_url: null
 id: 1049039
 ---
-## Microsoft Azure Security Models
 
-Following on from the Microsoft Azure Overview, we are going to start with Azure Security and see where this can help in our day today. For the most part, I have found the built-in roles have been sufficient but knowing that we can create and work with many different areas of authentication and configurations. I have found Microsoft Azure to be quite advanced with its Active Directory background compared to other public clouds. 
+## Microsoft Azure 安全模型
 
-## Microsoft Azure Security Models
+繼 Microsoft Azure 概述之後，我們將從 Azure 安全開始，看看這如何在我們的日常工作中提供幫助。對於大多數部分，我發現內置角色已經足夠，但知道我們可以創建和使用身份驗證和配置的許多不同領域。我發現 Microsoft Azure 與其他公共雲相比，其 Active Directory 背景相當先進。
 
-This is one area that Microsoft Azure seemingly works differently from other public cloud providers, in Azure there is ALWAYS Azure AD. 
+這是 Microsoft Azure 似乎與其他公共雲提供商不同的領域之一，在 Azure 中總是 Azure AD。
 
-### Directory Services 
+### 目錄服務
 
-- Azure Active Directory hosts the security principles used by Microsoft Azure and other Microsoft cloud services. 
-- Authentication is accomplished through protocols such as SAML, WS-Federation, OpenID Connect and OAuth2. 
-- Queries are accomplished through REST API called Microsoft Graph API. 
-- Tenants have a tenant.onmicrosoft.com default name but can also have custom domain names. 
-- Subscriptions are associated with an Azure Active Directory tenant. 
+- Azure Active Directory 託管 Microsoft Azure 和其他 Microsoft 雲服務使用的安全主體。
+- 身份驗證通過 SAML、WS-Federation、OpenID Connect 和 OAuth2 等協議完成。
+- 查詢通過稱為 Microsoft Graph API 的 REST API 完成。
+- 租戶有一個 tenant.onmicrosoft.com 默認名稱，但也可以有自定義域名。
+- 訂閱與 Azure Active Directory 租戶關聯。
 
-If we think about AWS to compare the equivalent offering would be AWS IAM (Identity & Access Management) Although still very different 
+如果我們考慮 AWS 來比較，等效產品將是 AWS IAM（身份和訪問管理），儘管仍然非常不同
 
-Azure AD Connect provides the ability to replicate accounts from AD to Azure AD. This can also include groups and sometimes objects. This can be granular and filtered. Supports multiple forests and domains. 
+Azure AD Connect 提供從 AD 複製帳戶到 Azure AD 的能力。這也可以包括組，有時還包括對象。這可以是細粒度的和過濾的。支持多個林和域。
 
-It is possible to create cloud accounts in Microsoft Azure Active Directory (AD) but most organisations already have accounted for their users in their own Active Directory being on-premises. 
+可以在 Microsoft Azure Active Directory (AD) 中創建雲帳戶，但大多數組織已經在他們自己的本地 Active Directory 中為用戶記帳。
 
-Azure AD Connect also allows you to not only see Windows AD servers but also other Azure AD, Google and others. This also provides the ability to collaborate with external people and organisations this is called Azure B2B. 
+Azure AD Connect 還允許你不僅看到 Windows AD 服務器，還可以看到其他 Azure AD、Google 等。這還提供了與外部人員和組織協作的能力，這稱為 Azure B2B。
 
-Authentication options between Active Directory Domain Services and Microsoft Azure Active Directory are possible with both identity sync with a password hash.
+Active Directory 域服務和 Microsoft Azure Active Directory 之間的身份驗證選項可以通過密碼哈希進行身份同步。
 
 ![](Images/Day30_Cloud1.png)
 
-The passing of the password hash is optional, if this is not used then pass-through authentication is required. 
+傳遞密碼哈希是可選的，如果不使用，則需要直通身份驗證。
 
-There is a video linked below that goes into detail about Passthrough authentication. 
+下面鏈接了一個視頻，詳細介紹了直通身份驗證。
 
 [User sign-in with Azure Active Directory Pass-through Authentication](https://docs.microsoft.com/en-us/azure/active-directory/hybrid/how-to-connect-pta)
 
 ![](Images/Day30_Cloud2.png)
 
-### Federation 
+### 聯合
 
-It's fair to say that if you are using Microsoft 365, Microsoft Dynamics and on-premises Active Directory it is quite easy to understand and integrate into Azure AD for federation. However, you might be using other services outside of the Microsoft ecosystem. 
+公平地說，如果你使用 Microsoft 365、Microsoft Dynamics 和本地 Active Directory，那麼理解和集成到 Azure AD 進行聯合是相當容易的。但是，你可能在 Microsoft 生態系統之外使用其他服務。
 
-Azure AD can act as a federation broker to these other Non-Microsoft apps and other directory services. 
+Azure AD 可以充當這些其他非 Microsoft 應用程序和其他目錄服務的聯合代理。
 
-This will be seen in the Azure Portal as Enterprise Applications of which there are a large number of options. 
+這將在 Azure 門戶中顯示為企業應用程序，其中有大量選項。
 
 ![](Images/Day30_Cloud3.png)
 
-If you scroll down on the enterprise application page you are going to see a long list of featured applications. 
+如果你在企業應用程序頁面上向下滾動，你將看到一長串特色應用程序。
 
 ![](Images/Day30_Cloud4.png)
 
-This option also allows for "bring your own" integration, an application you are developing or a non-gallery application. 
+此選項還允許"自帶"集成，你正在開發的應用程序或非畫廊應用程序。
 
-I have not looked into this before but I can see that this is quite the feature set when compared to the other cloud providers and capabilities. 
+我之前沒有研究過這個，但我可以看到，與其他雲提供商和功能相比，這是一個相當大的功能集。
 
-### Role-Based Access Control 
+### 基於角色的訪問控制
 
-We have already covered on [Day 29](day29.md) the scopes we are going to cover here, we can set our role-based access control according to one of these areas. 
+我們已經在 [Day 29](day29.md) 上涵蓋了我們將在這裡涵蓋的範圍，我們可以根據這些領域之一設置基於角色的訪問控制。
 
-- Subscriptions
-- Management Group
-- Resource Group 
-- Resources 
+- 訂閱
+- 管理組
+- 資源組
+- 資源
 
-Roles can be split into three, there are many built-in roles in Microsoft Azure. Those three are: 
+角色可以分為三種，Microsoft Azure 中有許多內置角色。這三個是：
 
-- Owner 
-- Contributor 
-- Reader 
+- Owner
+- Contributor
+- Reader
 
-Owner and Contributor are very similar in their boundaries of scope however the owner can change permissions. 
+Owner 和 Contributor 在其範圍邊界上非常相似，但是 owner 可以更改權限。
 
-Other roles are specific to certain types of Azure Resources as well as custom roles. 
+其他角色特定於某些類型的 Azure 資源以及自定義角色。
 
-We should focus on assigning permissions to groups vs users. 
+我們應該專注於將權限分配給組而不是用戶。
 
-Permissions are inherited. 
+權限是繼承的。
 
-If we go back and look at the "90DaysOfDevOps" Resource group we created and check the Access Control (IAM) within you can see we have a list of contributors and a customer User Access Administrator, and we do have a list of owners (But I cannot show this)
+如果我們返回並查看我們創建的"90DaysOfDevOps"資源組並檢查其中的訪問控制 (IAM)，你可以看到我們有一個貢獻者列表和一個客戶用戶訪問管理員，我們確實有一個所有者列表（但我無法顯示這個）
 
 ![](Images/Day30_Cloud5.png)
 
-We can also check the roles we have assigned here if they are BuiltInRoles and which category they fall under. 
+我們還可以檢查我們在這裡分配的角色，如果它們是 BuiltInRoles 以及它們屬於哪個類別。
 
 ![](Images/Day30_Cloud6.png)
 
-We can also use the check access tab if we want to check an account against this resource group and make sure that the account we wish to have that access to has the correct permissions or maybe we want to check if a user has too much access. 
+如果我們想檢查此資源組的帳戶並確保我們希望擁有該訪問權限的帳戶具有正確的權限，或者我們想檢查用戶是否有太多訪問權限，我們還可以使用檢查訪問選項卡。
 
 ![](Images/Day30_Cloud7.png)
 
-### Microsoft Defender for Cloud 
+### Microsoft Defender for Cloud
 
-- Microsoft Defender for Cloud (formerly known as Azure Security Center) provides insight into the security of the entire Azure environment. 
+- Microsoft Defender for Cloud（以前稱為 Azure Security Center）提供對整個 Azure 環境安全性的見解。
 
-- A single dashboard for visibility into the overall security health of all Azure and non-Azure resources (via Azure Arc) and security hardening guidance.
+- 單一儀表板，用於查看所有 Azure 和非 Azure 資源（通過 Azure Arc）的整體安全運行狀況和安全強化指導。
 
-- Free tier includes continuous assessment and security recommendations.
+- 免費層包括持續評估和安全建議。
 
-- Paid plans for protected resources types (e.g. Servers, AppService, SQL, Storage, Containers, KeyVault).
+- 受保護資源類型的付費計劃（例如服務器、AppService、SQL、存儲、容器、KeyVault）。
 
-I have switched to another subscription to view the Azure Security Center and you can see here based on very few resources that I have some recommendations in one place. 
+我已經切換到另一個訂閱來查看 Azure Security Center，你可以看到這裡基於我很少的資源，我在一個地方有一些建議。
 
 ![](Images/Day30_Cloud8.png)
 
 ### Azure Policy
 
-- Azure Policy is an Azure native service that helps to enforce organizational standards and assess compliance at-scale.
+- Azure Policy 是一項 Azure 原生服務，有助於強制執行組織標準並大規模評估合規性。
 
-- Integrated into Microsoft Defender for Cloud. Azure Policy audits non-compliant resources and applies remediation.
+- 集成到 Microsoft Defender for Cloud。Azure Policy 審計不合規資源並應用補救措施。
 
-- Commonly used for governing resource consistency, regulatory compliance, security, cost, and management standards.
+- 通常用於管理資源一致性、監管合規性、安全性、成本和管理標準。
 
-- Uses JSON format to store evaluation logic and determine whether a resource is compliant or not, and any actions to take for non-compliance (e.g. Audit, AuditIfNotExists, Deny, Modify, DeployIfNotExists).
+- 使用 JSON 格式存儲評估邏輯並確定資源是否合規，以及對不合規採取的任何操作（例如 Audit、AuditIfNotExists、Deny、Modify、DeployIfNotExists）。
 
-- Free for use. The exception being Azure Arc connected resources charged per server/month for Azure Policy Guest Configuration usage.
+- 免費使用。例外是 Azure Arc 連接的資源，按服務器/月為 Azure Policy Guest Configuration 使用付費。
 
-### Hands-On
+### 親自動手
 
-I have gone out and I have purchased www.90DaysOfDevOps.com and I would like to add this domain to my Azure Active Directory portal, [Add your custom domain name using the Azure Active Directory Portal](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/add-custom-domain)
+我已經出去購買了 www.90DaysOfDevOps.com，我想將此域名添加到我的 Azure Active Directory 門戶，[使用 Azure Active Directory 門戶添加自定義域名](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/add-custom-domain)
 
 ![](Images/Day30_Cloud9.png)
 
-With that now we can create a new user on our new Active Directory Domain. 
+現在，我們可以在新的 Active Directory 域上創建新用戶。
 
 ![](Images/Day30_Cloud10.png)
 
-Now we want to create a group for all of our new 90DaysOfDevOps users in one group. We can create a group as per the below, notice that I am using "Dynamic User" this means Azure AD will query user accounts and add them dynamically vs assigned which is where you manually add the user to your group. 
+現在我們想為所有新的 90DaysOfDevOps 用戶在一個組中創建一個組。我們可以按照下面創建一個組，注意我使用的是"Dynamic User"，這意味著 Azure AD 將查詢用戶帳戶並動態添加它們，而不是分配，這是手動將用戶添加到組的地方。
 
 ![](Images/Day30_Cloud11.png)
 
-There are lots of options when it comes to creating your query, my plan is to simply find the principal name and make sure that the name contains @90DaysOfDevOps.com. 
+在創建查詢時有很多選項，我計劃簡單地查找主體名稱並確保名稱包含 @90DaysOfDevOps.com。
 
 ![](Images/Day30_Cloud12.png)
 
-Now because we have created our user account already for michael.cade@90DaysOfDevOps.com we can validate the rules are working. For comparison I have also added another account I have associated to another domain here and you can see that because of this rule our user will not land in this group.  
+現在因為我們已經為 michael.cade@90DaysOfDevOps.com 創建了用戶帳戶，我們可以驗證規則正在工作。為了比較，我還添加了另一個我關聯到另一個域的帳戶，你可以看到由於此規則，我們的用戶不會落在這個組中。
 
 ![](Images/Day30_Cloud13.png)
 
-I have since added a new user1@90DaysOfDevOps.com and if we go and check the group we can see our members. 
+我已經添加了一個新的 user1@90DaysOfDevOps.com，如果我們去檢查組，我們可以看到我們的成員。
 
 ![](Images/Day30_Cloud14.png)
 
-If we have this requirement x100 then we are not going to want to do this all in the console we are going to want to take advantage of either bulk options to create, invite, delete users or you are going to want to look into PowerShell to achieve this automated approach to scale. 
+如果我們有這個要求 x100，那麼我們不想在控制台中完成所有這些，我們想要利用批量選項來創建、邀請和刪除用戶，或者你想要研究 PowerShell 來實現這種自動化方法以擴展。
 
-Now we can go to our Resource Group and specify that on the 90DaysOfDevOps resource group we want the owner to be the group we just created. 
+現在我們可以去資源組並指定在 90DaysOfDevOps 資源組上，我們希望所有者是我們剛剛創建的組。
 
 ![](Images/Day30_Cloud15.png)
 
-We can equally go in here and deny assignments access to our resource group as well. 
+我們同樣可以在這裡拒絕分配對資源組的訪問。
 
-Now if we login to the Azure Portal with our new user account, you can see that we only have access to our 90DaysOfDevOps resource group and not the others seen in previous pictures because we do not have the access. 
+現在如果我們使用新用戶帳戶登錄 Azure 門戶，你可以看到我們只能訪問 90DaysOfDevOps 資源組，而不能訪問之前圖片中看到的其他資源組，因為我們沒有訪問權限。
 
 ![](Images/Day30_Cloud16.png)
 
-The above is great if this is a user that has access to resources inside of your Azure portal but not every user needs to be aware of the portal, but in order to check access we can use the [Apps Portal](https://myapps.microsoft.com/) This is a single sign on portal for us to test. 
+如果這是可以訪問 Azure 門戶內資源的用戶，上面是很好的，但並非每個用戶都需要知道門戶，但要檢查訪問，我們可以使用 [Apps Portal](https://myapps.microsoft.com/) 這是我們測試的單一登錄門戶。
 
 ![](Images/Day30_Cloud17.png)
 
-You are able to customise this portal with your own branding and this might be something we come back to later on. 
+你可以使用你的品牌自定義此門戶，這可能是我們稍後會回來的內容。
 
-## Resources 
+## 資源
 
 - [Hybrid Cloud and MultiCloud](https://www.youtube.com/watch?v=qkj5W98Xdvw)
 - [Microsoft Azure Fundamentals](https://www.youtube.com/watch?v=NKEFWyqJ5XA&list=WL&index=130&t=12s)
 - [Google Cloud Digital Leader Certification Course](https://www.youtube.com/watch?v=UGRDM86MBIQ&list=WL&index=131&t=10s)
-- [AWS Basics for Beginners - Full Course](https://www.youtube.com/watch?v=ulprqHHWlng&t=5352s)
 
-See you on [Day 31](day31.md)
+我們[Day 31](day31.md)見

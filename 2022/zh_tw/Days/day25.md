@@ -7,162 +7,163 @@ cover_image: null
 canonical_url: null
 id: 1049038
 ---
-## Python for Network Automation 
 
-Python is the standard language used for automated network operations. 
+## Python 用於網絡自動化
 
-Whilst it is not only for network automation it seems to be everywhere when you are looking for resources and as previously mentioned if it's not Python then it's generally Ansible which is written also in Python. 
+Python 是用於自動化網絡操作的標準語言。
 
-I think I have mentioned this already but during the "Learn a programming language" section I chose Golang over Python for reasons around my company are developing in Go so that was a good reason for me to learn but if that was not the case then Python would have taken that time. 
+雖然它不僅僅用於網絡自動化，但當你尋找資源時，它似乎無處不在，正如之前提到的，如果不是 Python，那麼通常是 Ansible，它也是用 Python 編寫的。
 
-- Readability and ease of use - It seems that Python seems to just make sense. There doesn't seem to be the requirements around `{}` in the code to start and end blocks. Couple this with a strong IDE like VS Code you have a pretty easy start when wanting to run some python code. 
+我想我已經提到過這一點，但在"學習程式語言"部分，我選擇了 Golang 而不是 Python，原因是我公司正在用 Go 開發，所以這是我學習的一個好理由，但如果情況不是這樣，那麼 Python 會佔用那段時間。
 
-Pycharm might be another IDE worth mentioning here. 
+- 可讀性和易用性 - Python 似乎只是有意義。代碼中似乎沒有圍繞 `{}` 的要求來開始和結束塊。再加上像 VS Code 這樣的強大 IDE，當你想運行一些 python 代碼時，你有一個相當容易的開始。
 
-- Libraries - The extensibility of Python is the real gold mine here, I mentioned before that this is not just for Network Automation but in fact, there are libraries plenty for all sorts of devices and configurations. You can see the vast amount here [PyPi](https://pypi.python.org/pypi)
+Pycharm 可能是這裡值得提及的另一個 IDE。
 
-When you want to download the library to your workstation, then you use a tool called `pip` to connect to PyPI and download it locally. Network vendors such as Cisco, Juniper, and Arista developed libraries to facilitate access to their devices.
+- 庫 - Python 的可擴展性是這裡真正的金礦，我之前提到這不僅僅用於網絡自動化，但實際上，有大量庫適用於各種設備和配置。你可以在這裡看到大量 [PyPi](https://pypi.python.org/pypi)
 
-- Powerful & Efficient - Remember during the Go days I went through the "Hello World" scenario and we went through I think 6 lines of code? In Python it is
+當你想將庫下載到工作站時，你使用名為 `pip` 的工具連接到 PyPI 並在本地下載它。網絡供應商如 Cisco、Juniper 和 Arista 開發了庫以促進對其設備的訪問。
 
-``` 
+- 強大且高效 - 記住在 Go 的日子裡，我經歷了"Hello World"場景，我們經歷了我認為 6 行代碼？在 Python 中它是
+
+```
 print('hello world')
 ```
 
-Put all of the above points together and it should be easy to see why Python is generally mentioned as the de-facto tool when working on automating. 
+將上述所有要點結合起來，應該很容易看出為什麼 Python 通常被稱為自動化工作的事實上的工具。
 
-I think it's important to note that it's possible that several years back there were scripts that might have interacted with your network devices to maybe automate the backup of configuration or to gather logs and other insights into your devices. The automation we are talking about here is a little different and that's because the overall networking landscape has also changed to suit this way of thinking better and enabled more automation. 
+我認為重要的是要注意，幾年前可能有一些腳本可能與你的網絡設備交互，以自動化配置備份或收集日誌以及對設備的其他見解。我們在這裡談論的自動化有點不同，這是因為整體網絡環境也發生了變化，以更好地適應這種思維方式並啟用更多自動化。
 
-- Software-Defined Network - SDN Controllers take the responsibility of delivering the control plane configuration to all devices on the network, meaning just a single point of contact for any network changes, no longer having to telnet or SSH into every device and also relying on humans to do this which has a repeatable chance of failure or misconfiguration. 
+- 軟體定義網絡 - SDN 控制器負責將控制平面配置交付給網絡上的所有設備，這意味著任何網絡更改只有一個聯繫點，不再需要 telnet 或 SSH 到每個設備，並且依賴人類來執行此操作，這具有可重複的失敗或配置錯誤的機會。
 
-- High-Level Orchestration - Go up a level from those SDN controllers and this allows for orchestration of service levels then there is the integration of this orchestration layer into your platforms of choice, VMware, Kubernetes, Public Clouds etc. 
+- 高級編排 - 從那些 SDN 控制器上升一級，這允許服務級別的編排，然後是此編排層與你選擇的平台（VMware、Kubernetes、公共雲等）的集成。
 
-- Policy-based management - What do you want to have? What is the desired state? You describe this and the system has all the details on how to figure it out to become the desired state. 
+- 基於策略的管理 - 你想要什麼？期望狀態是什麼？你描述這一點，系統有所有關於如何找出它成為期望狀態的詳細信息。
 
-## Setting up the lab environment
+## 設置實驗環境
 
-Not everyone has access to physical routers, switches and other networking devices. 
+不是每個人都有權訪問物理路由器、交換機和其他網絡設備。
 
-I wanted to make it possible for us to look at some of the tooling pre-mentioned but also get hands-on and learn how to automate the configuration of our networks. 
+我想讓我們能夠查看一些預先提到的工具，但也親自動手學習如何自動化網絡配置。
 
-When it comes to options there are a few that we can choose from.  
+當談到選項時，我們可以從幾個中選擇。
 
 - [GNS3 VM](https://www.gns3.com/software/download-vm)
 - [Eve-ng](https://www.eve-ng.net/)
-- [Unimus](https://unimus.net/) Not a lab environment but an interesting concept. 
+- [Unimus](https://unimus.net/) 不是實驗環境，但是一個有趣的概念。
 
-We will build our lab out using [Eve-ng](https://www.eve-ng.net/) as mentioned before you can use a physical device but to be honest a virtual environment means that we can have a sandbox environment to test many different scenarios. Plus being able to play with different devices and topologies might be of interest. 
+我們將使用 [Eve-ng](https://www.eve-ng.net/) 構建我們的實驗，正如之前提到的，你可以使用物理設備，但老實說，虛擬環境意味著我們可以有一個沙箱環境來測試許多不同的場景。此外，能夠使用不同的設備和拓撲可能會很有趣。
 
-We are going to do everything on EVE-NG with the community edition. 
+我們將在 EVE-NG 上使用社區版完成所有工作。
 
-### Getting started 
+### 開始
 
-The community edition comes in ISO and OVF formats for [download](https://www.eve-ng.net/index.php/download/)
+社區版以 ISO 和 OVF 格式提供[下載](https://www.eve-ng.net/index.php/download/)
 
-We will be using the OVF download but with the ISO there is the option to build out on a bare metal server without the need of a hypervisor. 
+我們將使用 OVF 下載，但使用 ISO，可以選擇在裸機服務器上構建，而無需虛擬機管理程序。
 
 ![](Images/Day25_Networking1.png)
 
-For our walkthrough, we will be using VMware Workstation as I have a license via my vExpert but you can equally use VMware Player or any of the other options mentioned in the [documentation](https://www.eve-ng.net/index.php/documentation/installation/system-requirement/)Unfortunately we cannot use our previously used Virtual box! 
+對於我們的演練，我們將使用 VMware Workstation，因為我通過我的 vExpert 擁有許可證，但你同樣可以使用 VMware Player 或[文檔](https://www.eve-ng.net/index.php/documentation/installation/system-requirement/)中提到的任何其他選項。不幸的是，我們不能使用我們之前使用的 Virtual box！
 
-This is also where I had an issue with GNS3 with Virtual Box even though supported. 
+這也是我在 Virtual Box 上使用 GNS3 時遇到的問題，儘管支持。
 
-[Download VMware Workstation Player - FREE](https://www.vmware.com/uk/products/workstation-player.html) 
+[Download VMware Workstation Player - FREE](https://www.vmware.com/uk/products/workstation-player.html)
 
-[VMware Workstation PRO](https://www.vmware.com/uk/products/workstation-pro.html) Also noted that there is an evaluation period for free! 
+[VMware Workstation PRO](https://www.vmware.com/uk/products/workstation-pro.html) 還注意到有一個免費的評估期！
 
-### Installation on VMware Workstation PRO 
+### 在 VMware Workstation PRO 上安裝
 
-Now we have our hypervisor software downloaded and installed, and we have the EVE-NG OVF downloaded. If you are using VMware Player please let me know if this process is the same. 
+現在我們已經下載並安裝了虛擬機管理程序軟體，並且我們已經下載了 EVE-NG OVF。如果你使用 VMware Player，請告訴我這個過程是否相同。
 
-We are now ready to get things configured. 
+我們現在準備開始配置。
 
-Open VMware Workstation and then select `file` and `open` 
+打開 VMware Workstation，然後選擇 `file` 和 `open`
 
 ![](Images/Day25_Networking2.png)
 
-When you download the EVE-NG OVF Image it is going to be within a compressed file. Extract the contents out into its folder so it looks like. 
+當你下載 EVE-NG OVF 鏡像時，它將在壓縮文件中。將內容提取到其文件夾中，使其看起來像這樣。
 
 ![](Images/Day25_Networking3.png)
 
-Navigate to the location that you downloaded the EVE-NG OVF image to and begin the import. 
+導航到你下載 EVE-NG OVF 鏡像的位置並開始導入。
 
-Give it a recognisable name and store the virtual machine somewhere on your system. 
+給它一個可識別的名稱並將虛擬機存儲在系統上的某個位置。
 
 ![](Images/Day25_Networking4.png)
 
-When the import is complete increase the number of processors to 4 and the memory allocated to 8 GB. (This should be the case after import with the latest version if not then edit VM settings)
+導入完成後，將處理器數量增加到 4，將分配的內存增加到 8 GB。（如果最新版本在導入後不是這種情況，則編輯 VM 設置）
 
-Also, make sure the Virtualise Intel VT-x/EPT or AMD-V/RVI checkbox is enabled. This option instructs VMware workstation to pass the virtualisation flags to the guest OS (nested virtualisation) This was the issue I was having with GNS3 with Virtual Box even though my CPU allows this. 
+此外，確保啟用了 Virtualise Intel VT-x/EPT 或 AMD-V/RVI 複選框。此選項指示 VMware workstation 將虛擬化標誌傳遞給客戶 OS（嵌套虛擬化）這是我在 Virtual Box 上使用 GNS3 時遇到的問題，儘管我的 CPU 允許這樣做。
 
 ![](Images/Day25_Networking5.png)
 
-### Power on & Access 
+### 啟動和訪問
 
-Sidenote & Rabbit hole: Remember I mentioned that this would not work with VirtualBox! Well yeah had the same issue with VMware Workstation and EVE-NG but it was not the fault of the virtualisation platform! 
+旁注和兔子洞：記住我提到這不會與 VirtualBox 一起工作！好吧，是的，在 VMware Workstation 和 EVE-NG 上遇到了同樣的問題，但這不是虛擬化平台的錯！
 
-I have WSL2 running on my Windows Machine and this seems to remove the capability of being able to run anything nested inside of your environment. I am confused as to why the Ubuntu VM does run as it seems to take out the Intel VT-d virtualisation aspect of the CPU when using WSL2. 
+我在 Windows 機器上運行 WSL2，這似乎消除了能夠在環境中運行任何嵌套內容的能力。我對為什麼 Ubuntu VM 確實運行感到困惑，因為在使用 WSL2 時，它似乎消除了 CPU 的 Intel VT-d 虛擬化方面。
 
-To resolve this we can run the following command on our Windows machine and reboot the system, note that whilst this is off then you will not be able to use WSL2. 
+為了解決這個問題，我們可以在 Windows 機器上運行以下命令並重新啟動系統，請注意，雖然這已關閉，但你將無法使用 WSL2。
 
 `bcdedit /set hypervisorlaunchtype off`
 
-When you want to go back and use WSL2 then you will need to run this command and reboot. 
+當你想返回並使用 WSL2 時，你需要運行此命令並重新啟動。
 
 `bcdedit /set hypervisorlaunchtype auto`
 
-Both of these commands should be ran as administrator! 
+這兩個命令都應該以管理員身份運行！
 
-Ok back to the show, You should now have a powered-on machine in VMware Workstation and you should have a prompt looking similar to this. 
+好的，回到節目，你現在應該在 VMware Workstation 中有一台已啟動的機器，你應該有一個看起來類似於此的提示。
 
 ![](Images/Day25_Networking6.png)
 
-On the prompt above you can use: 
+在上面的提示中，你可以使用：
 
 username = root
 password = eve
 
-You will then be asked to provide the root password again, this will be used to SSH into the host later on.  
+然後你將被要求再次提供 root 密碼，這將用於稍後 SSH 到主機。
 
-We then can change the hostname. 
+然後我們可以更改主機名。
 
 ![](Images/Day25_Networking7.png)
 
-Next, we define a DNS Domain Name, I have used the one below but I am not sure if this will need to be changed later on. 
+接下來，我們定義一個 DNS 域名，我使用了下面的一個，但我不確定這是否需要在以後更改。
 
 ![](Images/Day25_Networking8.png)
 
-We then configure networking, I am selecting static so that the IP address given will be persistent after reboots. 
+然後我們配置網絡，我選擇靜態，以便在重啟後給定的 IP 地址將是持久的。
 
 ![](Images/Day25_Networking9.png)
 
-The final step, provide a static IP address from a network that is reachable from your workstation. 
+最後一步，從可從工作站訪問的網絡提供靜態 IP 地址。
 
 ![](Images/Day25_Networking10.png)
 
-There are some additional steps here where you will have to provide a subnet mask for your network, default gateway and DNS. 
+這裡有一些額外的步驟，你必須為網絡提供子網掩碼、默認網關和 DNS。
 
-Once finished it will reboot, when it is back up you can take your static IP address and put this into your browser. 
+完成後它將重新啟動，當它恢復時，你可以獲取靜態 IP 地址並將其放入瀏覽器中。
 
 ![](Images/Day25_Networking11.png)
 
-The default username for the GUI is `admin` and the password is `eve` while the default username for SSH is `root` and the password is `eve` but this would have been changed if you changed during the setup. 
+GUI 的默認用戶名是 `admin`，密碼是 `eve`，而 SSH 的默認用戶名是 `root`，密碼是 `eve`，但如果你在設置期間更改了，這將被更改。
 
 ![](Images/Day25_Networking12.png)
 
-I chose HTML5 for the console vs native as this will open a new tab in your browser when you are navigating through different consoles. 
+我選擇 HTML5 作為控制台而不是本機，因為當你導航不同的控制台時，這將在瀏覽器中打開一個新選項卡。
 
-Next up we are going to: 
+接下來我們將：
 
-- Install the EVE-NG client pack 
-- Load some network images into EVE-NG
-- Build a Network Topology 
-- Adding Nodes 
-- Connecting Nodes 
-- Start building Python Scripts 
-- Look at telnetlib, Netmiko, Paramiko and Pexpect
+- 安裝 EVE-NG 客戶端包
+- 將一些網絡鏡像加載到 EVE-NG
+- 構建網絡拓撲
+- 添加節點
+- 連接節點
+- 開始構建 Python 腳本
+- 查看 telnetlib、Netmiko、Paramiko 和 Pexpect
 
-## Resources 
+## 資源
 
 - [Free Course: Introduction to EVE-NG](https://www.youtube.com/watch?v=g6B0f_E0NMg)
 - [EVE-NG - Creating your first lab](https://www.youtube.com/watch?v=9dPWARirtK8)
@@ -171,4 +172,4 @@ Next up we are going to:
 - [Practical Networking](http://www.practicalnetworking.net/)
 - [Python Network Automation](https://www.youtube.com/watch?v=xKPzLplPECU&list=WL&index=126)
 
-See you on [Day 26](day26.md)
+我們[Day 26](day26.md)見

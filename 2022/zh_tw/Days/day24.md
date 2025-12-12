@@ -2,128 +2,130 @@
 title: '#90DaysOfDevOps - Network Automation - Day 24'
 published: false
 description: 90DaysOfDevOps - Network Automation
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048805
 ---
-## Network Automation 
 
-### Basics of network automation
+## 網絡自動化
 
-Primary drivers for Network Automation 
-- Achieve Agility 
-- Reduce Cost 
-- Eliminate Errors 
-- Ensure Compliance 
-- Centralised Management 
+### 網絡自動化基礎
 
-The automation adoption process is specific to each business. There's no one size fits all when it comes to deploying automation, the ability to identify and embrace the approach that works best for your organisation is critical in advancing towards maintaining or creating a more agile environment, the focus should always be on business value and end-user experience. (We said something similar right at the start in regards to the whole of DevOps and the culture change and the automated process that this brings)
+網絡自動化的主要驅動因素
 
-To break this down you would need to identify how the task or process that you're trying to automate is going to achieve and improve the end-user experience or business value whilst following a step-by-step systematic approach.
+- 實現敏捷性
+- 降低成本
+- 消除錯誤
+- 確保合規性
+- 集中管理
 
-"If you don't know where you are going, any road will take you there."
+自動化採用過程對每個企業都是特定的。在部署自動化方面沒有一刀切的方法，識別和接受最適合你組織的方法的能力對於朝著維護或創建更敏捷的環境前進至關重要，重點應該始終放在業務價值和最終用戶體驗上。（我們在開始時就整個 DevOps 以及文化變革和這帶來的自動化過程說過類似的話）
 
-Having a framework or design structure that you're trying to achieve knowing what your end goal is and then working step by step towards achieving that goal measuring the automation success at various stages based on the business outcomes.
+要分解這一點，你需要識別你試圖自動化的任務或流程將如何實現並改善最終用戶體驗或業務價值，同時遵循逐步系統的方法。
 
-Build concepts modelled around existing applications there's no need to design the concepts around automation in a bubble because they need to be applied to your application, your service, your infrastructure, so begin to build the concepts and model them around your existing infrastructure, you're existing applications. 
+"如果你不知道你要去哪裡，任何道路都會帶你到那裡。"
 
-### Approach to Networking Automation 
+有一個你試圖實現的框架或設計結構，知道你的最終目標是什麼，然後逐步朝著實現該目標努力，根據業務結果在各個階段衡量自動化成功。
 
-We should identify the tasks and perform a discovery on network change requests so that you have the most common issues and problems to automate a solution to. 
+圍繞現有應用程序構建概念模型，不需要在真空中圍繞自動化設計概念，因為它們需要應用於你的應用程序、服務和基礎設施，所以開始構建概念並圍繞你現有的基礎設施、你現有的應用程序對它們進行建模。
 
-- Make a list of all the change requests and workflows that are currently being addressed manually. 
-- Determine the most common, time-consuming and error-prone activities. 
-- Prioritise the requests by taking a business-driven approach. 
-- This is the framework for building an automation process, what must be automated and what must not. 
+### 網絡自動化方法
 
-We should then divide tasks and analyse how different network functions work and interact with each other. 
+我們應該識別任務並對網絡變更請求執行發現，以便你有最常見的問題和問題來自動化解決方案。
 
-- Infrastructure/Network team receives change tickets at multiple layers to deploy applications. 
-- Based on Network services, divide them into different areas and understand how they interact with each other. 
-    - Application Optimisation 
-    - ADC (Application Delivery Controller)
-    - Firewall 
-    - DDI (DNS, DHCP, IPAM etc)
-    - Routing 
-    - Others
-- Identify various dependencies to address business and cultural differences and bring in cross-team collaboration. 
+- 列出當前正在手動處理的所有變更請求和工作流程。
+- 確定最常見、耗時且容易出錯的活動。
+- 通過採用業務驅動的方法來優先考慮請求。
+- 這是構建自動化流程的框架，什麼必須自動化，什麼不能自動化。
 
-Reusable policies, define and simplify reusable service tasks, processes and input/outputs. 
+然後我們應該劃分任務並分析不同的網絡功能如何工作以及如何相互交互。
 
-- Define offerings for various services, processes and input/outputs. 
-- Simplifying the deployment process will reduce the time to market for both new and existing workloads. 
-- Once you have a standard process, it can be sequenced and aligned to individual requests for a multi-threaded approach and delivery. 
+- 基礎設施/網絡團隊在多個層面接收變更票據以部署應用程序。
+- 基於網絡服務，將它們劃分為不同的領域並了解它們如何相互交互。
+  - 應用程序優化
+  - ADC（應用程序交付控制器）
+  - 防火牆
+  - DDI（DNS、DHCP、IPAM 等）
+  - 路由
+  - 其他
+- 識別各種依賴關係以解決業務和文化差異並引入跨團隊協作。
 
-Combine the policies with business-specific activities. How does implementing this policy help the business? Saves time? Saves Money? Provides better business outcome? 
+可重用策略，定義並簡化可重用的服務任務、流程和輸入/輸出。
 
-- Ensure that service tasks are interoperable. 
-- Associate the incremental service tasks so that they align to create business services. 
-- Allow for the flexibility to associate and re-associate service tasks on demand. 
-- Deploy Self-Service capabilities and pave the way for improved operational efficiency. 
-- Allow for the multiple technology skillsets to continue to contribute with oversight and compliance. 
+- 為各種服務、流程和輸入/輸出定義產品。
+- 簡化部署過程將減少新工作負載和現有工作負載的上市時間。
+- 一旦你有了標準流程，它可以被排序並與個別請求對齊，以實現多線程方法和交付。
 
-**Iterate** on the policies and process, adding and improving while maintaining availability and service. 
+將策略與特定業務活動相結合。實施此策略如何幫助業務？節省時間？省錢？提供更好的業務結果？
 
-- Start small by automating existing tasks. 
-- Get familiar with the automation process, so that you can identify other areas that can benefit from automation. 
-- iterate your automation initiatives, adding agility incrementally while maintaining the required availability. 
-- Taking an incremental approach paves the way for success! 
+- 確保服務任務是可互操作的。
+- 關聯增量服務任務，以便它們對齊以創建業務服務。
+- 允許靈活地按需關聯和重新關聯服務任務。
+- 部署自助服務功能並為提高運營效率鋪平道路。
+- 允許多種技術技能集在監督和合規的情況下繼續貢獻。
 
-Orchestrate the network service!
+**迭代**策略和流程，在保持可用性和服務的同時添加和改進。
 
-- Automation of the deployment process is required to deliver applications rapidly. 
-- Creating an agile service environment requires different elements to be managed across technology skillsets. 
-- Prepare for an end to end orchestration that provides for control over automation and the order of deployments. 
+- 通過自動化現有任務從小處著手。
+- 熟悉自動化流程，以便你可以識別其他可以從自動化中受益的領域。
+- 迭代你的自動化計劃，在保持所需可用性的同時逐步增加敏捷性。
+- 採用增量方法為成功鋪平道路！
 
-## Network Automation Tools 
+編排網絡服務！
 
-The good news here is that for the most part, the tools we use here for Network automation are generally the same that we will use for other areas of automation or what we have already covered so far or what we will cover in future sessions. 
+- 需要自動化部署流程以快速交付應用程序。
+- 創建敏捷服務環境需要跨技術技能集管理不同元素。
+- 準備端到端編排，提供對自動化和部署順序的控制。
 
-Operating System - As I have throughout this challenge, I am focusing on doing most of my learning with a Linux OS, those reasons were given in the Linux section but almost all of the tooling that we will touch albeit cross-OS platform maybe today they all started as Linux based applications or tools, to begin with. 
+## 網絡自動化工具
 
-Integrated Development Environment (IDE) - Again not much to say here other than throughout I would suggest Visual Studio Code as your IDE, based on the extensive plugins that are available for so many different languages. 
+這裡的好消息是，對於大多數部分，我們在這裡用於網絡自動化的工具通常與我們將用於其他自動化領域的工具相同，或者我們已經涵蓋的或我們將在未來的會話中涵蓋的。
 
-Configuration Management - We have not got to the Configuration management section yet, but it is very clear that Ansible is a favourite in this area for managing and automating configurations. Ansible is written in Python but you do not need to know Python. 
-    
-- Agentless 
-- Only requires SSH
-- Large Support Community 
-- Lots of Network Modules
-- Push only model 
-- Configured with YAML 
-- Open Source!  
+操作系統 - 正如我在整個挑戰中所做的那樣，我專注於使用 Linux OS 進行大部分學習，這些原因在 Linux 部分給出，但幾乎所有我們將接觸的工具，儘管是跨 OS 平台，也許今天它們都從基於 Linux 的應用程序或工具開始。
+
+集成開發環境（IDE）- 除了我建議 Visual Studio Code 作為你的 IDE 之外，這裡沒有太多要說的，基於為許多不同語言提供的廣泛插件。
+
+配置管理 - 我們還沒有進入配置管理部分，但很明顯 Ansible 是管理和自動化配置的這個領域的最愛。Ansible 是用 Python 編寫的，但你不需要了解 Python。
+
+- 無代理
+- 只需要 SSH
+- 大型支持社群
+- 大量網絡模塊
+- 僅推送模型
+- 使用 YAML 配置
+- 開源！
 
 [Link to Ansible Network Modules](https://docs.ansible.com/ansible/2.9/modules/list_of_network_modules.html)
 
-We will also touch on **Ansible Tower** in the configuration management section, see this as the GUI front end for Ansible. 
+我們還將在配置管理部分中觸及 **Ansible Tower**，將其視為 Ansible 的 GUI 前端。
 
-CI/CD - Again we will cover more about the concepts and tooling around this but it's important to at least mention here as this spans not only networking but all provisioning of service and platform. 
+CI/CD - 我們將再次更多地介紹圍繞此的概念和工具，但至少在這裡提及這一點很重要，因為這不僅跨越網絡，還跨越服務和平台的所有供應。
 
-In particular, Jenkins provides or seems to be a popular tool for Network Automation.
+特別是，Jenkins 提供或似乎是網絡自動化的流行工具。
 
-- Monitors git repository for changes and then initiates them. 
+- 監控 git 存儲庫的更改，然後啟動它們。
 
-Version Control - Again something we will dive deeper into later on. 
+版本控制 - 我們稍後將再次深入探討。
 
-- Git provides version control of your code on your local device - Cross-Platform
-- GitHub, GitLab, BitBucket etc are online websites where you define your repositories and upload your code. 
+- Git 在本地設備上提供代碼的版本控制 - 跨平台
+- GitHub、GitLab、BitBucket 等是在線網站，你可以在其中定義存儲庫並上傳代碼。
 
-Language | Scripting - Something we have not covered here is Python as a language, I decided to dive into Go instead as the programming language based on my circumstances, I would say that it was a close call between Golang and Python and Python it seems to be the winner for Network Automation. 
+語言 | 腳本 - 我們在這裡沒有涵蓋的一件事是 Python 作為一種語言，我決定基於我的情況深入探討 Go 作為程式語言，我想說 Golang 和 Python 之間非常接近，Python 似乎是網絡自動化的贏家。
 
-- Nornir is something to mention here, an automation framework written in Python. This seems to take the role of Ansible but specifically around Network Automation. [Nornir documentation](https://nornir.readthedocs.io/en/latest/) 
+- Nornir 是這裡要提到的，一個用 Python 編寫的自動化框架。這似乎承擔了 Ansible 的角色，但專門圍繞網絡自動化。[Nornir documentation](https://nornir.readthedocs.io/en/latest/)
 
-Analyse APIs - Postman is a great tool for analysing RESTful APIs. Helps to build, test and modify APIs.
+分析 API - Postman 是分析 RESTful API 的優秀工具。幫助構建、測試和修改 API。
 
-- POST >>> To create resources objects.
-- GET  >>> To retrieve a resources.
-- PUT  >>> To create or replace the resources.
-- PATCH >>> To create or update the resources object.
-- Delete >>> To delete a resources
+- POST >>> 創建資源對象。
+- GET >>> 檢索資源。
+- PUT >>> 創建或替換資源。
+- PATCH >>> 創建或更新資源對象。
+- Delete >>> 刪除資源
 
 [Postman tool Download](https://www.postman.com/downloads/)
 
-### Other tools to mention
+### 其他要提及的工具
 
 [Cisco NSO (Network Services Orchestrator)](https://www.cisco.com/c/en/us/products/cloud-systems-management/network-services-orchestrator/index.html)
 
@@ -131,15 +133,15 @@ Analyse APIs - Postman is a great tool for analysing RESTful APIs. Helps to buil
 
 [Network Test Automation](https://pubhub.devnetcloud.com/media/genie-feature-browser/docs/#/)
 
-Over the next 3 days, I am planning to get more hands-on around some of the things we have covered and put some work in around Python and Network automation. 
+在接下來的 3 天裡，我計劃更實際地處理我們涵蓋的一些內容，並圍繞 Python 和網絡自動化做一些工作。
 
-We have nowhere near covered all of the networking topics so far but wanted to make this broad enough to follow along and still keep learning from the resources I am adding below. 
+我們還沒有涵蓋所有網絡主題，但希望這足夠廣泛，可以跟隨並繼續從我在下面添加的資源中學習。
 
-## Resources 
+## 資源
 
 - [3 Necessary Skills for Network Automation](https://www.youtube.com/watch?v=KhiJ7Fu9kKA&list=WL&index=122&t=89s)
 - [Computer Networking full course](https://www.youtube.com/watch?v=IPvYjXCsTg8)
 - [Practical Networking](http://www.practicalnetworking.net/)
 - [Python Network Automation](https://www.youtube.com/watch?v=xKPzLplPECU&list=WL&index=126)
 
-See you on [Day 25](day25.md)
+我們[Day 25](day25.md)見

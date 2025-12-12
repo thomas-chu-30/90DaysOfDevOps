@@ -2,127 +2,128 @@
 title: '#90DaysOfDevOps - Getting Hands-On with Python & Network - Day 27'
 published: false
 description: 90DaysOfDevOps - Getting Hands-On with Python & Network
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048735
 ---
-## Getting Hands-On with Python & Network
 
-In this final section of Networking fundamentals, we are going to cover some automation tasks and tools with our lab environment created on [Day 26](day26.md) 
+## 親自動手使用 Python 和網絡
 
-We will be using an SSH tunnel to connect to our devices from our client vs telnet. The SSH tunnel created between client and device is encrypted. We also covered SSH in the Linux section on [Day 18](day18.md)
+在網絡基礎知識的最後一部分中，我們將使用在 [Day 26](day26.md) 創建的實驗環境涵蓋一些自動化任務和工具
 
-## Access our virtual emulated environment
+我們將使用 SSH 隧道從客戶端連接到設備，而不是 telnet。在客戶端和設備之間創建的 SSH 隧道是加密的。我們還在 Linux 部分的 [Day 18](day18.md) 中介紹了 SSH。
 
-For us to interact with our switches we either need a workstation inside the EVE-NG network and you can deploy a Linux box there with Python installed to perform your automation ([Resource for setting up Linux inside EVE-NG](https://www.youtube.com/watch?v=3Qstk3zngrY)) or you can do something like me and define a cloud for access from your workstation. 
+## 訪問我們的虛擬模擬環境
+
+為了與交換機交互，我們要么需要在 EVE-NG 網絡內有一個工作站，要么你可以在那裡部署一個安裝了 Python 的 Linux 盒子來執行自動化（[在 EVE-NG 內設置 Linux 的資源](https://www.youtube.com/watch?v=3Qstk3zngrY)），或者你可以像我一樣做一些事情並定義一個雲以從工作站訪問。
 
 ![](Images/Day27_Networking3.png)
 
-To do this, we have right-clicked on our canvas and we have selected network and then selected "Management(Cloud0)" this will bridge out to our home network. 
+為此，我們右鍵單擊畫布，選擇網絡，然後選擇"Management(Cloud0)"，這將橋接到我們的家庭網絡。
 
 ![](Images/Day27_Networking4.png)
 
-However, we do not have anything inside this network so we need to add connections from the new network to each of our devices. (My networking knowledge needs more attention and I feel that you could just do this next step to the top router and then have connectivity to the rest of the network through this one cable?)
+但是，我們在這個網絡內沒有任何東西，所以我們需要從新網絡向每個設備添加連接。（我的網絡知識需要更多關注，我覺得你可以只對頂部路由器執行下一步，然後通過這一個電纜連接到網絡的其餘部分？）
 
-I have then logged on to each of our devices and I have run through the following commands for the interfaces applicable for where the cloud comes in. 
+然後我已經登錄到每個設備，並且我已經為適用於雲進入位置的接口運行了以下命令。
 
 ```
 enable
 config t
 int gi0/0
-ip add dhcp 
-no sh 
-exit 
+IP add DHCP
+no sh
+exit
 exit
 sh ip int br
 ```
 
-The final step gives us the DHCP address from our home network. My device network list is as follows: 
+最後一步為我們提供來自家庭網絡的 DHCP 地址。我的設備網絡列表如下：
 
-| Node        | IP Address  | Home Network IP  |
-| ----------- | ----------- | -----------      |
-| Router      | 10.10.88.110| 192.168.169.115  |
-| Switch1     | 10.10.88.111| 192.168.169.178  |
-| Switch2     | 10.10.88.112| 192.168.169.193  |
-| Switch3     | 10.10.88.113| 192.168.169.125  |
-| Switch4     | 10.10.88.114| 192.168.169.197  |
+| Node    | IP Address   | Home Network IP |
+| ------- | ------------ | --------------- |
+| Router  | 10.10.88.110 | 192.168.169.115 |
+| Switch1 | 10.10.88.111 | 192.168.169.178 |
+| Switch2 | 10.10.88.112 | 192.168.169.193 |
+| Switch3 | 10.10.88.113 | 192.168.169.125 |
+| Switch4 | 10.10.88.114 | 192.168.169.197 |
 
-### SSH to a network device 
+### SSH 到網絡設備
 
-With the above in place, we can now connect to our devices on our home network using our workstation. I am using Putty but also have access to other terminals such as git bash that give me the ability to SSH to our devices. 
+有了上述內容，我們現在可以使用工作站連接到家庭網絡上的設備。我使用 Putty，但也可以訪問其他終端，如 git bash，它們為我提供了 SSH 到設備的能力。
 
-Below you can see we have an SSH connection to our router device. (R1)
+下面你可以看到我們與路由器設備（R1）的 SSH 連接。
 
 ![](Images/Day27_Networking5.png)
 
-### Using Python to gather information from our devices 
+### 使用 Python 從設備收集信息
 
-The first example of how we can leverage Python is to gather information from all of our devices and in particular, I want to be able to connect to each one and run a simple command to provide me with interface configuration and settings. I have stored this script here [netmiko_con_multi.py](Networking/netmiko_con_multi.py)
+我們如何利用 Python 的第一個例子是從所有設備收集信息，特別是我希望能夠連接到每一個並運行一個簡單的命令來為我提供接口配置和設置。我已經將此腳本存儲在這裡 [netmiko_con_multi.py](Networking/netmiko_con_multi.py)
 
-Now when I run this I can see each port configuration over all of my devices. 
+現在當我運行這個時，我可以看到所有設備上的每個端口配置。
 
 ![](Images/Day27_Networking6.png)
 
-This could be handy if you have a lot of different devices, create this one script so that you can centrally control and understand quickly all of the configurations in one place. 
+如果你有很多不同的設備，這可能很方便，創建這一個腳本，以便你可以集中控制並快速理解所有配置在一個地方。
 
-### Using Python to configure our devices 
+### 使用 Python 配置設備
 
-The above is useful but what about using Python to configure our devices, in our scenario we have a trunked port between `SW1` and `SW2` again imagine if this was to be done across many of the same switches we want to automate that and not have to manually connect to each switch to make the configuration change. 
+上面很有用，但使用 Python 配置設備怎麼樣，在我們的場景中，我們在 `SW1` 和 `SW2` 之間有一個中繼端口，再次想像如果這要在許多相同的交換機上完成，我們想要自動化這一點，而不必手動連接到每個交換機來進行配置更改。
 
-We can use [netmiko_sendchange.py](Networking/netmiko_sendchange.py) to achieve this. This will connect over SSH and perform that change on our `SW1` which will also change to `SW2`. 
+我們可以使用 [netmiko_sendchange.py](Networking/netmiko_sendchange.py) 來實現這一點。這將通過 SSH 連接並在我們的 `SW1` 上執行該更改，這也將更改為 `SW2`。
 
 ![](Images/Day27_Networking7.png)
 
-Now for those that look at the code, you will see the message appears and tells us `sending configuration to device` but there is no confirmation that this has happened to we could add additional code to our script to perform that check and validation on our switch or we could modify our script before to show us this. [netmiko_con_multi_vlan.py](Networking/netmiko_con_multi_vlan.py)
+現在對於那些查看代碼的人，你會看到消息出現並告訴我們 `sending configuration to device`，但沒有確認這已經發生，我們可以向腳本添加額外的代碼以在交換機上執行該檢查和驗證，或者我們可以修改之前的腳本以向我們顯示這一點。[netmiko_con_multi_vlan.py](Networking/netmiko_con_multi_vlan.py)
 
 ![](Images/Day27_Networking8.png)
 
-### backing up your device configurations 
+### 備份設備配置
 
-Another use case would be to capture our network configurations and make sure we have those backed up, but again we don't want to be connecting to every device we have on our network so we can also automate this using [backup.py](Networking/backup.py). You will also need to populate the [backup.txt](Networking/backup.txt) with the IP addresses you want to backup. 
+另一個用例是捕獲我們的網絡配置並確保我們有這些備份，但同樣我們不想連接到網絡上的每個設備，所以我們也可以使用 [backup.py](Networking/backup.py) 自動化這一點。你還需要填充 [backup.txt](Networking/backup.txt) 與你想要備份的 IP 地址。
 
-Run your script and you should see something like the below. 
+運行腳本，你應該看到類似下面的內容。
 
 ![](Images/Day27_Networking9.png)
 
-That could be me just writing a simple print script in python so I should show you the backup files as well. 
+那可能只是我在 python 中編寫一個簡單的打印腳本，所以我應該也向你展示備份文件。
 
 ![](Images/Day27_Networking10.png)
 
-### Paramiko 
+### Paramiko
 
-A widely used Python module for SSH. You can find out more at the official GitHub link [here](https://github.com/paramiko/paramiko)
+廣泛使用的 Python SSH 模塊。你可以在官方 GitHub 鏈接[這裡](https://github.com/paramiko/paramiko)找到更多信息
 
-We can install this module using the `pip install paramiko` command. 
+我們可以使用 `pip install paramiko` 命令安裝此模塊。
 
 ![](Images/Day27_Networking1.png)
 
-We can verify the installation by entering the Python shell and importing the paramiko module. 
+我們可以通過輸入 Python shell 並導入 paramiko 模塊來驗證安裝。
 
 ![](Images/Day27_Networking2.png)
 
-### Netmiko 
+### Netmiko
 
-The netmiko module targets network devices specifically whereas paramiko is a broader tool for handling SSH connections overall. 
+netmiko 模塊專門針對網絡設備，而 paramiko 是處理 SSH 連接的更廣泛工具。
 
-Netmiko which we have used above alongside paramiko can be installed using `pip install netmiko` 
+Netmiko，我們在上面與 paramiko 一起使用，可以使用 `pip install netmiko` 安裝
 
-Netmiko supports many network vendors and devices, you can find a list of supported devices on the [GitHub Page](https://github.com/ktbyers/netmiko#supports) 
+Netmiko 支持許多網絡供應商和設備，你可以在 [GitHub Page](https://github.com/ktbyers/netmiko#supports) 上找到支持的設備列表
 
-### Other modules 
+### 其他模塊
 
-It is also worth mentioning a few other modules that we have not had the chance to look at but they give a lot more functionality when it comes to network automation. 
+還值得提及一些我們沒有機會查看的其他模塊，但它們在網絡自動化方面提供了更多功能。
 
-`netaddr` is used for working with and manipulating IP addresses, again the installation is simple with `pip install netaddr` 
+`netaddr` 用於處理和操作 IP 地址，同樣安裝很簡單，使用 `pip install netaddr`
 
-you might find yourself wanting to store a lot of your switch configuration in an excel spreadsheet, the `xlrd` will allow your scripts to read the excel workbook and convert rows and columns into a matrix. `pip install xlrd` to get the module installed. 
+你可能會發現自己想在 excel 電子表格中存儲大量交換機配置，`xlrd` 將允許腳本讀取 excel 工作簿並將行和列轉換為矩陣。`pip install xlrd` 來安裝模塊。
 
-Some more use cases where network automation can be used that I have not had the chance to look into can be found [here](https://github.com/ktbyers/pynet/tree/master/presentations/dfwcug/examples)
+一些我沒有機會查看的網絡自動化用例可以在[這裡](https://github.com/ktbyers/pynet/tree/master/presentations/dfwcug/examples)找到
 
-I think this wraps up our Networking section of the #90DaysOfDevOps, Networking is one area that I have not touched for a while really and there is so much more to cover but I am hoping between my notes and the resources shared throughout it is helpful for some. 
+我認為這結束了 #90DaysOfDevOps 的網絡部分，網絡是我一段時間沒有觸及的一個領域，還有很多要涵蓋的內容，但我希望在我的筆記和整個過程中共享的資源之間對某些人有所幫助。
 
-## Resources 
+## 資源
 
 - [Free Course: Introduction to EVE-NG](https://www.youtube.com/watch?v=g6B0f_E0NMg)
 - [EVE-NG - Creating your first lab](https://www.youtube.com/watch?v=9dPWARirtK8)
@@ -131,8 +132,8 @@ I think this wraps up our Networking section of the #90DaysOfDevOps, Networking 
 - [Practical Networking](http://www.practicalnetworking.net/)
 - [Python Network Automation](https://www.youtube.com/watch?v=xKPzLplPECU&list=WL&index=126)
 
-Most of the examples I am using here as I am not a Network Engineer have come from this extensive book which is not free but I am using some of the scenarios to help understand Network Automation. 
+我在這裡使用的大多數示例，因為我不是網絡工程師，來自這本廣泛的書，它不是免費的，但我使用一些場景來幫助理解網絡自動化。
 
 - [Hands-On Enterprise Automation with Python (Book)](https://www.packtpub.com/product/hands-on-enterprise-automation-with-python/9781788998512)
 
-See you on [Day 28](day28.md) where will start looking into cloud computing and get a good grasp and foundational knowledge of the topic and what is available. 
+我們[Day 28](day28.md)見，我們將開始研究雲計算並對該主題和可用的內容有很好的掌握和基礎知識。

@@ -2,118 +2,119 @@
 title: '#90DaysOfDevOps - Network Protocols - Day 23'
 published: false
 description: 90DaysOfDevOps - Network Protocols
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048704
 ---
-## Network Protocols 
 
-A set of rules and messages that form a standard. An Internet Standard. 
+下面的內容主要來自 Practical Networking 的 [Networking Fundamentals series](https://www.youtube.com/playlist?list=PLIFyRwBY_4bRLmKfP1KnZA6rZbRHtxmXi)。如果你更喜歡視頻形式的內容，請查看此視頻：
 
-- ARP - Address Resolution Protocol 
+* [Network Protocols - ARP, FTP, SMTP, HTTP, SSL, TLS, HTTPS, DNS, DHCP](https://www.youtube.com/watch?v=E5bSumTAHZE&list=PLIFyRwBY_4bRLmKfP1KnZA6rZbRHtxmXi&index=12)
 
-If you want to get really into the weeds on ARP you can read the Internet Standard here. [RFC 826](https://datatracker.ietf.org/doc/html/rfc826) 
 
-Connects IP addresses to fixed physical machine addresses, also known as MAC addresses across a layer 2 network. 
+## 網絡協議
+
+形成標準的規則和消息集。互聯網標準。
+
+- ARP - 地址解析協議
+
+如果你真的想深入了解 ARP，你可以在這裡閱讀互聯網標準。[RFC 826](https://datatracker.ietf.org/doc/html/rfc826)
+
+將 IP 地址連接到固定物理機器地址，也稱為跨第 2 層網絡的 MAC 地址。
 
 ![](Images/Day23_Networking1.png)
 
-- FTP - File Transfer Protocol 
+- FTP - 文件傳輸協議
 
-Allows for the transfer of files from source to destination. Generally this process is authenticated but there is the ability if configured to use anonymous access. You will more frequently now see FTPS which provides SSL/TLS connectivity to FTP servers from the client for better security. This protocol would be found in the Application layer of the OSI Model. 
+允許從源到目標傳輸文件。通常，此過程是經過身份驗證的，但如果配置為使用匿名訪問，則具有此能力。你現在會更頻繁地看到 FTPS，它為客戶端提供到 FTP 服務器的 SSL/TLS 連接以獲得更好的安全性。此協議將在 OSI 模型的應用層中找到。
 
 ![](Images/Day23_Networking2.png)
 
-- SMTP - Simple Mail Transfer Protocol 
+- SMTP - 簡單郵件傳輸協議
 
-Used for email transmission, mail servers use SMTP to send and recieve mail messages. You will still find even with Microsoft 365 that the SMTP protocol is used for the same purpose. 
+用於電子郵件傳輸，郵件服務器使用 SMTP 發送和接收郵件消息。你會發現即使使用 Microsoft 365，SMTP 協議也用於相同的目的。
 
 ![](Images/Day23_Networking3.png)
 
-- HTTP - Hyper Text Transfer Protocol 
+- HTTP - 超文本傳輸協議
 
-HTTP is the foundation of the internet and browsing content. Giving us the ability to easily access our favourite websites. HTTP is still heavily used but HTTPS is more so used or should be used on most of your favourite sites. 
+HTTP 是互聯網和瀏覽內容的基礎。使我們能夠輕鬆訪問我們最喜歡的網站。HTTP 仍然被大量使用，但 HTTPS 在大多數你最喜歡的網站上被使用或應該被使用。
 
 ![](Images/Day23_Networking4.png)
 
-- SSL - Secure Sockets Layer | TLS - Transport Layer Security 
+- SSL - 安全套接字層 | TLS - 傳輸層安全
 
-TLS has taken over from SSL, TLS is a [Cryptographic Protocol]() that provides security communications over a network. It can and will be found in mail, im and other applications but most commonly it is used to secure HTTPS.  
+TLS 已經取代了 SSL，TLS 是一個**加密協議**，提供網絡上的安全通信。它可以並且將在郵件、即時消息和其他應用程序中找到，但最常見的是用於保護 HTTPS。
 
 ![](Images/Day23_Networking5.png)
 
-- HTTPS - HTTP secured with SSL/TLS 
+- HTTPS - 使用 SSL/TLS 保護的 HTTP
 
-An extension of HTTP, used for secure communications over a network, HTTPS is encrypted with TLS as mentioned above. The focus here was to bring authenticaion, privacy and integrity whilst data is exchanged between hosts. 
+HTTP 的擴展，用於網絡上的安全通信，HTTPS 使用上面提到的 TLS 加密。這裡的重點是在主機之間交換數據時帶來身份驗證、隱私和完整性。
 
 ![](Images/Day23_Networking6.png)
 
-- DNS - Domain Name System 
+- DNS - 域名系統
 
-The DNS is used to map human-freindly domain names for example we all know [google.com](https://google.com) but if you were to open a browser and put in [8.8.8.8](https://8.8.8.8) you would get Google as we pretty much know it. However good luck trying to remember all of the IP addresses for all of your websites where some of them we even use google to find information. 
+DNS 用於映射人類友好的域名，例如我們都知道 [google.com](https://google.com)，但如果你要打開瀏覽器並輸入 [8.8.8.8](https://8.8.8.8)，你會得到我們幾乎都知道的 Google。但是，祝你好運，試圖記住所有網站的所有 IP 地址，其中一些我們甚至使用 google 來查找信息。
 
-This is where DNS comes in, it ensures that hosts, services and other resources are reachable. 
+這就是 DNS 的用武之地，它確保主機、服務和其他資源可以訪問。
 
-On all hosts, if they require internet connectivity then they must have DNS to be able to resolve those domain names. DNS is an area you could spend Days and Years on learning. I would also say from experience that DNS is mostly the common cause of all errors when it comes to Networking. Not sure if a Network engineer would agree there though. 
+在所有主機上，如果它們需要互聯網連接，那麼它們必須有 DNS 才能解析這些域名。DNS 是一個你可以花數天和數年學習的領域。我還想說，根據經驗，DNS 是網絡錯誤的最常見原因。不確定網絡工程師是否會同意這一點。
 
 ![](Images/Day23_Networking7.png)
 
-- DHCP - Dynamic Host Configuration Protocol 
+- DHCP - 動態主機配置協議
 
-We have discussed a lot about protocols that are required to make our hosts work, be it accessing the internet or transferring files between each other. 
+我們已經討論了很多關於使我們的主機工作所需的協議，無論是訪問互聯網還是在彼此之間傳輸文件。
 
-There are 4 things that we need on every host for it to be able to achieve both of those tasks. 
+我們需要在每個主機上實現這兩個任務的 4 件事。
 
-- IP Address 
-- Subnet Mask 
-- Default Gateway 
-- DNS 
+- IP 地址
+- 子網掩碼
+- 默認網關
+- DNS
 
-We have covered IP address being a unique address for your host on the network it resides, we can think of this as our house number. 
+我們已經介紹了 IP 地址是主機在其所在網絡上的唯一地址，我們可以將其視為我們的門牌號。
 
-Subnet mask we will cover shortly, but you can think of this as post code or zip code. 
+我們將很快介紹子網掩碼，但你可以將其視為郵政編碼或郵遞區號。
 
-Default gateway is the IP of our router generally on our network providing us with that Layer 3 connectivity. You could think of this as the single road that allows us out of our street.  
+默認網關通常是我們網絡上路由器的 IP，為我們提供第 3 層連接。你可以將其視為允許我們離開街道的單一道路。
 
-Then we have DNS as we just covered to help us convert complicated public IP addresses to more suitable and rememberable domain names. Maybe we can think of this as the giant sorting office to make sure we get the right post. 
+然後我們有 DNS，正如我們剛剛介紹的那樣，幫助我們將複雜的公共 IP 地址轉換為更合適和可記住的域名。也許我們可以將其視為巨大的分揀辦公室，以確保我們收到正確的郵件。
 
-As I said each host requires these 4 things, if you have 1000 or 10,000 hosts then that is going to take you a very long time to determine each one of these individually. This is where DHCP comes in and allows you to determine a scope for your network and then this protocol will distribute to all available hosts in your network. 
+正如我所說，每個主機都需要這 4 件事，如果你有 1000 或 10,000 個主機，那麼這將需要很長時間來單獨確定每一個。這就是 DHCP 的用武之地，它允許你為網絡確定一個範圍，然後此協議將分發到網絡中所有可用的主機。
 
-Another example, you head into a coffee shop, grab a coffee and sit down with your laptop or your phone lets call that your host. You connect your host to the coffee shop wifi and you gain access to the internet, messages and mail start pinging through and you can navigate web pages and social media. When you connected to the coffee shop wifi your machine would have picked up a DHCP address either from a dedicated DHCP server or most likely from the router also handling DHCP. 
+另一個例子是你走進咖啡店，拿一杯咖啡，然後用筆記本電腦或手機坐下來，讓我們稱之為你的主機。你將主機連接到咖啡店 WiFi，你獲得互聯網訪問，消息和郵件開始通過，你可以瀏覽網頁和社交媒體。當你連接到咖啡店 WiFi 時，你的機器將從專用 DHCP 服務器或最可能從也處理 DHCP 的路由器獲取 DHCP 地址。
 
 ![](Images/Day23_Networking8.png)
 
-### Subnetting 
+### 子網劃分
 
-A subnet is a logical subdivision of an IP network.
+子網是 IP 網絡的邏輯細分。
 
-Subnets break large networks into smaller, more manageable networks that run more efficiently. 
+子網將大型網絡分解為更小、更易管理的網絡，這些網絡運行更高效。
 
-Each subnet is a logical subdivision of the bigger network. Connected devices with enough subnet share common IP address identifier, enabling them to communicate with each other. 
+每個子網都是更大網絡的邏輯細分。具有足夠子網的連接設備共享公共 IP 地址標識符，使它們能夠相互通信。
 
-Routers manage communication between subnets. 
+路由器管理子網之間的通信。
 
-The size of a subnet depends on the connectivity requirements and the network technology used. 
+子網的大小取決於連接需求和使用的網絡技術。
 
-An organisation is responsible for determining its number and size of the subnets within the limits of address space
-available, and the details remain local to that organisation. Subnets can also be segmented into even smaller subnets for things like Point to Point links, or for sub networks supporting a few devices. 
+組織負責在可用地址空間的限制內確定子網的數量和大小，詳細信息仍然對該組織本地。子網也可以進一步細分為更小的子網，用於點對點鏈路或支持少數設備的子網絡等。
 
-Among other advantages, segmenting large
-networks into subnets enables IP address
-reallocation and relieves network congestion, streamlining, network communication and efficiency. 
+在其他優勢中，將大型網絡分段為子網可以實現 IP 地址重新分配並緩解網絡擁塞，簡化網絡通信和效率。
 
-Subnets can also improve network security.
-If a section of a network is compromised, it can be quarantined, making it difficult for bad actors to move around the larger network. 
+子網還可以改善網絡安全。
+如果網絡的一部分受到損害，可以對其進行隔離，使壞人難以在更大的網絡中移動。
 
 ![](Images/Day23_Networking9.png)
 
+## 資源
 
-## Resources 
-
+- [Networking Fundamentals](https://www.youtube.com/playlist?list=PLIFyRwBY_4bRLmKfP1KnZA6rZbRHtxmXi)
+- [Subnetting Mastery](https://www.youtube.com/playlist?list=PLIFyRwBY_4bQUE4IB5c4VPRyDoLgOdExE)
 - [Computer Networking full course](https://www.youtube.com/watch?v=IPvYjXCsTg8)
-- [Practical Networking](http://www.practicalnetworking.net/)
 
-See you on [Day 24](day24.md)
-
-
+我們[Day 24](day24.md)見
