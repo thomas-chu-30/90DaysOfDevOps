@@ -8,61 +8,63 @@ canonical_url: null
 id: 1048699
 date: '2022-04-17T21:15:34Z'
 ---
-## Responsibilities of a DevOps Engineer 
 
-Hopefully you are coming into this off the back of going through the resources and post on [Day1 of #90DaysOfDevOps](day01.md) 
+## DevOps 工程師的職責
 
-It was briefly touched on in the first post but now we must get deeper into this concept and understand that there are two main parts when creating an application. We have the **Development** part where software developers program the application and test it. Then we have the **Operations** part where the application is deployed and maintained on a server. 
+希望你在完成 [Day1 of #90DaysOfDevOps](day01.md) 的資源和貼文後來到這裡。
 
-## DevOps is the link between the two
+在第一篇文章中我們簡要提到了這個概念，但現在我們必須更深入地了解這個概念，並理解在創建應用程序時有兩個主要部分。我們有**開發**部分，軟體開發人員在其中編程應用程序並進行測試。然後我們有**運營**部分，應用程序在服務器上部署和維護。
 
-To get to grips with DevOps or the tasks in which a DevOps engineer would be carrying out we need to understand the tools or the process and overview of those and how they come together. 
+## DevOps 是兩者之間的橋樑
 
-Everything starts with the application! You will see so much throughout that it is all about the application when it comes to DevOps.
+要掌握 DevOps 或 DevOps 工程師將執行的任務，我們需要了解工具或流程及其概述，以及它們如何結合在一起。
 
-Developers will create an application, this can be done with many different technology stacks and lets leave that to the imagination for now as we get into this later. This can also involve many different programming languages, build tools, code repository etc. 
+一切都從應用程序開始！你會看到在 DevOps 中，一切都是圍繞應用程序的。
 
-As a DevOps engineer you won't be programming the application but having a good understanding of the concepts of how a developer works and the systems, tools and processes they are using is key to success. 
+開發人員將創建一個應用程序，這可以通過許多不同的技術堆棧來完成，讓我們暫時把這個留給想像，因為我們稍後會深入探討。這也可能涉及許多不同的程式語言、構建工具、代碼存儲庫等。
 
-At a very high level you are going to need to know how the application is configured to talk to all of its required services or data services and then also sprinkle a requirement of how this can or should be tested. 
+作為 DevOps 工程師，你不會編程應用程序，但對開發人員如何工作以及他們使用的系統、工具和流程的概念有良好的理解是成功的關鍵。
 
-The application will need to be deployed somewhere, lets keep it generally simple here and make this a server, doesn't matter where but a server. This is then expected to be accessed by the customer or end user depending on the application that has been created. 
+在非常高的層面上，你需要知道應用程序如何配置以與其所需的所有服務或數據服務通信，然後還要考慮如何測試這個應用程序。
 
-This server needs to run somewhere, on-premises, in a public cloud, serverless (Ok I have gone too far, we won't be covering serverless but its an option and more and more enterprises are heading this way) Someone needs to create and configure these servers and get them ready for the application to run. Now this element might land to you as a DevOps engineer to deploy and configure these servers. 
+應用程序需要部署在某個地方，讓我們在這裡保持簡單，使其成為一個服務器，無論在哪裡，但必須是一個服務器。然後，根據已創建的應用程序，客戶或最終用戶應該能夠訪問它。
 
-These servers will have to run an Operating System and generally speaking this is going to be Linux but we have a whole section or week where we cover some of the foundational knowledge you should gain here. 
+這個服務器需要在某個地方運行，在本地、在公共雲中、無服務器（好吧，我走得太遠了，我們不會涵蓋無服務器，但它是一個選項，越來越多的企業正在朝這個方向發展）需要有人創建和配置這些服務器，並為應用程序運行做好準備。現在，作為 DevOps 工程師，你可能需要部署和配置這些服務器。
 
-It is also likely that we need to communicate with other services in our network or environment, so we also need to have that level of knowledge around networking and configuring that, this might to some degree also land at the feet of the DevOps engineer. Again we will cover this in more detail in a dedicated section talking all things DNS, DHCP, Load Balancing etc. 
+這些服務器運行操作系統，一般來說這將是 Linux，但我們有整個部分或一週的時間來涵蓋你應該在這裡獲得的一些基礎知識。
 
-## Jack of all trades, Master of none 
+我們還可能需要與網絡或環境中的其他服務通信，所以我們還需要具備網絡和配置方面的知識水平，這在某種程度上也可能落在 DevOps 工程師的職責範圍內。我們將在專門的部分中更詳細地討論所有關於 DNS、DHCP、負載平衡等的內容。
 
-I will say at this point though, you don't need to be a Network or Infrastructure specialist you need a foundational knowledge of how to get things up and running and talking to each other, much the same as maybe having a foundational knowledge of a programming language but you don't need to be a developer. However you might be coming into this as a specialist in an area and that is a great footing to adapt to other areas. 
+## 樣樣通，樣樣鬆
 
-You will also most likely not take over the management of these servers or the application on a daily basis. 
+不過我要說的是，你不需要成為網絡或基礎設施專家，你需要具備如何讓事物啟動並相互通信的基礎知識，就像可能對程式語言有基礎知識但不需要成為開發人員一樣。但是，你可能作為某個領域的專家進入這個領域，這是適應其他領域的良好基礎。
 
-We have been talking about servers but the likelihood is that your application will be developed to run as containers, Which still runs on a server for the most part but you will also need an understanding of not only virtualisation, Cloud Infrastructure as a Service (IaaS) but also containerisation as well, The focus in these 90 days will be more catered towards containers. 
+你也可能不會每天接管這些服務器或應用程序的管理。
 
-## High Level Overview
+我們一直在談論服務器，但你的應用程序很可能會被開發為以容器形式運行，這在大多數情況下仍然在服務器上運行，但你不僅需要了解虛擬化、雲基礎設施即服務（IaaS），還需要了解容器化，這 90 天的重點將更多地針對容器。
 
-On one side we have our developers creating new features and functionality (as well as bug fixes) for the application. 
+## 高層次概述
 
-On the other side we have some sort of environment, infrastructure or servers which are configured and managed to run this application and communicate with all its required services. 
+一方面，我們的開發人員為應用程序創建新功能和特性（以及錯誤修復）。
 
-The big question is how do we get those features and bug fixes into our production and make it available to those end users? 
+另一方面，我們有某種環境、基礎設施或服務器，這些服務器被配置和管理以運行此應用程序並與其所需的所有服務通信。
 
-How do we release the new application version? This is one of the main tasks for a DevOps engineer, and the important thing here is not to just figure out how to do this once but we need to do this continuously and in an automated, efficient way which also needs to include testing! 
+大問題是我們如何將這些功能和錯誤修復放入我們的產品中，並使其可供最終用戶使用？
 
-This is where we are going to end this day of learning, hopefully this was useful. Over the next few days we are going to dive a little deeper into some more areas of DevOps and then we will get into the sections that dive deeper into the tooling and processes and the benefits of these. 
+我們如何發布新版本的應用程序？這是 DevOps 工程師的主要任務之一，這裡重要的是不僅要弄清楚如何做一次，我們需要持續地、以自動化、高效的方式來做這件事，這還需要包括測試！
 
-## Resources 
+這就是我們今天學習的結束，希望這對你有用。在接下來的幾天裡，我們將更深入地探討 DevOps 的其他領域，然後我們將進入更深入地探討工具和流程及其好處的部分。
 
-I am always open to adding additional resources to these readme files as it is here as a learning tool.  
+## 資源
 
-My advice is to watch all of the below and hopefully you also picked something up from the text and explanations above. 
+我把這份readme當作一個學習工具，並且保持開放的心態希望能新增更多的資源。
+
+我建議看完下列的影片，希望你能從中學到一些基本的名詞
+
 - [What is DevOps? - TechWorld with Nana](https://www.youtube.com/watch?v=0yWAtQ6wYNM)
 - [What is DevOps? - GitHub YouTube](https://www.youtube.com/watch?v=kBV8gPVZNEE)
 - [What is DevOps? - IBM YouTube](https://www.youtube.com/watch?v=UbtB4sMaaNM)
 - [What is DevOps? - AWS](https://aws.amazon.com/devops/what-is-devops/)
 - [What is DevOps? - Microsoft](https://docs.microsoft.com/en-us/devops/what-is-devops)
 
-If you made it this far then you will know if this is where you want to be or not. See you on [Day 3](day03.md).  
+如果你已經看到這裡了, 那你大概會知道你想不想學習DevOps. 我們[Day 3](day03.md)見.

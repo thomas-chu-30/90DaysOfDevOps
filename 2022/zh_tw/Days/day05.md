@@ -2,84 +2,84 @@
 title: '#90DaysOfDevOps - Plan > Code > Build > Testing > Release > Deploy > Operate > Monitor > - Day 5'
 published: false
 description: 90DaysOfDevOps - Plan > Code > Build > Testing > Release > Deploy > Operate > Monitor >
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048830
 ---
-## Plan > Code > Build > Testing > Release > Deploy > Operate > Monitor > 
 
-Today we are going to focus on the individual steps from start to finish and the continous cycle of an Application in a DevOps world. 
+## Plan > Code > Build > Testing > Release > Deploy > Operate > Monitor >
+
+今天我們將專注於從開始到結束的個別步驟以及 DevOps 世界中應用程序的持續循環。
 
 ![DevOps](Images/Day5_DevOps8.png)
 
-### Plan:
+### 計劃
 
-It all starts with the planning process this is where the development team gets together and figure out what types of features and bug fixes that they're going to roll out in their next sprint. This is an opportunity as a DevOps Engineer for you to get involved with that and learn what kinds of things are going to be coming your way that you need to be involved with and also influence their decisions or their path and kind of help them work with the infrastructure that you've built or steer them towards something that's going to work better for them in case they're not on that path and so one key thing to point out here is the developers or software engineering team is your customer as a DevOps engineer so this is your opportunity to work with your customer before they go down a bad path.
+一切都從規劃過程開始，這是開發團隊聚在一起並弄清楚他們將在下一個衝刺中推出什麼類型的功能和錯誤修復的地方。作為 DevOps 工程師，這是你參與其中的機會，了解將要出現的你需要參與的事情類型，並影響他們的決策或他們的路徑，並幫助他們與你構建的基礎設施一起工作，或者在他們沒有走上這條路的情況下引導他們走向對他們更有效的方向，所以這裡要指出的一個關鍵點是開發人員或軟體工程團隊作為 DevOps 工程師是你的客戶，所以這是你與客戶合作的機會，在他們走上錯誤的道路之前。
 
-### Code:
+### 編碼
 
-Now once that planning session's done they're going to go start writing the code you may or may not be involved a whole lot with this one of the places you may get involved with it, is whenever they're writing code you can help them better understand the infrastructure so if they know what services are available and how to best talk with those services so they're going to do that and then once they're done they'll merge that code into the repository 
+現在一旦規劃會議完成，他們將開始編寫代碼，你可能會或可能不會大量參與這個，你可能參與的地方之一是每當他們編寫代碼時，你可以幫助他們更好地理解基礎設施，所以如果他們知道有哪些服務可用以及如何最好地與這些服務通信，他們將這樣做，然後一旦他們完成，他們將把代碼合併到存儲庫中
 
-### Build:
+### 構建
 
-This is where we'll kick off the first of our automation processes because we're going to take their code and we're going to build it depending on what language they're using it may be transpiling it or compiling it or it might be creating a docker image from that code either way we're going to go through that process using our ci cd pipeline 
+這是我們啟動第一個自動化流程的地方，因為我們將獲取他們的代碼並構建它，取決於他們使用的語言，可能是轉譯它或編譯它，或者可能是從該代碼創建 docker 鏡像，無論如何，我們將使用我們的 CI CD 管道完成該過程
 
-## Testing:
+## 測試
 
-Once we've built it we're going to run some tests on it now the development team usually writes the test you may have some input in what tests get written but we need to run those tests and the testing is a way for us to try and minimise introducing problems out into production, it doesn't guarantee that but we want to get as close to a guarantee as we can that were one not introducing new bugs and two not breaking things that used to work
+一旦我們構建了它，我們將對它運行一些測試，現在開發團隊通常編寫測試，你可能對編寫哪些測試有一些輸入，但我們需要運行這些測試，測試是我們嘗試最小化將問題引入生產環境的一種方式，它不能保證這一點，但我們希望盡可能接近保證，我們沒有引入新錯誤，也沒有破壞以前工作的東西
 
-## Release:
+## 發布
 
-Once those tests pass we're going to do the release process and depending again on what type of application you're working on this may be a non-step. You know the code may just live in the GitHub repo or the git repository or wherever it lives but it may be the process of taking your compiled code or the docker image that you've built and putting it into a registry or a repository where it's accessible by your production servers for the deployment process 
+一旦這些測試通過，我們將進行發布過程，再次取決於你正在處理的應用程序類型，這可能是一個非步驟。你知道代碼可能只存在於 GitHub repo 或 git 存儲庫或它所在的任何地方，但這可能是獲取你編譯的代碼或你構建的 docker 鏡像並將其放入註冊表或存儲庫的過程，你的生產服務器可以在部署過程中訪問它
 
-## Deploy:
+## 部署
 
-which is the thing that we do next because deployment is like the end game of this whole thing because deployments when we put the code into production and it's not until we do that that our business actually realizes the value from all the time effort and hard work that you and the software engineering team have put into this product up to this point. 
+這是我們接下來要做的事情，因為部署就像整個事情的最終目標，因為部署是我們將代碼投入生產的時候，只有當我們這樣做時，我們的業務才能從你和軟體工程團隊到目前為止投入這個產品的所有時間、精力和辛勤工作中實現價值。
 
-## Operate:
+## 運營
 
-Once it's deployed we are going to operate it and operate it may involve something like you start getting calls from your customers that they're all annoyed that the site's running slow or their application is running slow right so you need to figure out why that is and then possibly build auto-scaling you know to handle increase the number of servers available during peak periods and decrease the number of servers during off-peak periods either way that's all operational type metrics, another operational thing that you do is include like a feedback loop from production back to your ops team letting you know about key events that happened in production such as a deployment back one step on the deployment thing this may or may not get automated depending on your environment the goal is to always automate it when possible there are some environments where you possibly need to do a few steps before you're ready to do that but ideally you want to deploy automatically as part of your automation process but if you're doing that it might be a good idea to include in your operational steps some type of notification so that your ops team knows that a deployment has happened 
+一旦部署，我們將運營它，運營它可能涉及諸如你開始接到客戶的電話，他們都對網站運行緩慢或他們的應用程序運行緩慢感到煩惱，所以你需要找出原因，然後可能構建自動擴展，你知道在高峰期間處理增加可用服務器數量，在非高峰期間減少服務器數量，無論如何，這都是運營類型的指標，你做的另一件運營事情是包括從生產回到你的運營團隊的反饋循環，讓你知道生產中發生的關鍵事件，例如部署，回到部署的一件事，這可能會或可能不會自動化，取決於你的環境，目標是盡可能自動化，有些環境你可能需要執行幾個步驟才能準備好這樣做，但理想情況下，你希望作為自動化過程的一部分自動部署，但如果你這樣做，在你的運營步驟中包含某種類型的通知可能是個好主意，這樣你的運營團隊就知道已經發生了部署
 
-## Monitor:
+## 監控
 
-All of the above parts lead to the final step because you need to have monitoring, especially around operational issues auto-scaling troubleshooting like you don't know
-there's a problem if you don't have monitoring in place to tell you that there's a problem so some of the things you might build monitoring for are memory utilization CPU utilization disk space, api endpoint,  response time,  how quickly that endpoint is responding and a big part of that as well is logs. Logs give developers the ability to see what is happening without having to access production systems. 
+所有上述部分都導致最後一步，因為你需要監控，特別是圍繞運營問題、自動擴展、故障排除，就像你不知道有問題一樣，如果你沒有監控來告訴你有問題，所以你可能構建監控的一些事情是內存利用率、CPU 利用率、磁盤空間、API 端點、響應時間、該端點響應的速度，以及一個重要部分是日誌。日誌使開發人員能夠看到正在發生的事情，而無需訪問生產系統。
 
-## Rince & Repeat: 
+## 重複
 
-Once that's in place you go right back to the beginning to the planning stage and go through the whole thing again
+一旦到位，你直接回到開始的規劃階段，再次完成整個過程
 
-## Continuous:
+## 持續
 
-Many tools help us achieve the above continuous process, all this code and the ultimate goal of being completely automated, cloud infrastructure or any environment is often described as Continuous Integration/ Continuous Delivery/Continous Deployment or “CI/CD” for short. We will spend a whole week on CI/CD later on in the 90 Days with some examples and walkthroughs to grasp the fundamentals. 
+許多工具幫助我們實現上述持續過程，所有這些代碼和完全自動化的最終目標，雲基礎設施或任何環境通常被描述為持續集成/持續交付/持續部署或簡稱"CI/CD"。我們將在 90 天的後期花一整週的時間在 CI/CD 上，並提供一些示例和演練來掌握基礎知識。
 
-### Continuous Delivery:
+### 持續交付
 
-Continuous Delivery = Plan > Code > Build > Test 
+持續交付 = Plan > Code > Build > Test
 
-### Continuous Integration:
+### 持續集成
 
-This is effectively the outcome of the Continuous Delivery phases above plus the outcome of the Release phase. This is the case for both failure and success but this is fed back into continuous delivery or moved to Continuous Deployment. 
+這實際上是上述持續交付階段的結果加上發布階段的結果。這對於失敗和成功都是如此，但這會反饋到持續交付或移動到持續部署。
 
-Continuous Integration = Plan > Code > Build > Test > Release 
+持續集成 = Plan > Code > Build > Test > Release
 
-### Continuous Deployment: 
+### 持續部署
 
-If you have a successful release from your continuous integration then move to Continuous Deployment which brings in the following phases 
+如果你從持續集成中成功發布，則移動到持續部署，這引入了以下階段
 
-CI Release is Success = Continuous Deployment = Deploy > Operate > Monitor 
+CI 發布成功 = 持續部署 = Deploy > Operate > Monitor
 
-You can see these three Continuous notions above as the simple collection of phases of the DevOps Lifecycle. 
+你可以將上述三個持續概念視為 DevOps 生命週期階段的簡單集合。
 
-This last bit was a bit of a recap for me on Day 3 but think this actually makes things clearer for me. 
+這最後一點對我來說是第 3 天的一點回顧，但我認為這讓事情對我來說更清楚了。
 
-### Resources:
+### 資源
 
 - [DevOps for Developers – Software or DevOps Engineer?](https://www.youtube.com/watch?v=a0-uE3rOyeU)
 - [Techworld with Nana -DevOps Roadmap 2022 - How to become a DevOps Engineer? What is DevOps?](https://www.youtube.com/watch?v=9pZ2xmsSDdo&t=125s)
 - [How to become a DevOps Engineer in 2021 - DevOps Roadmap](https://www.youtube.com/watch?v=5pxbp6FyTfk)
 
-If you made it this far then you will know if this is where you want to be or not. 
+如果你已經看到這裡了, 那你大概會知道你想不想學習DevOps.
 
-See you on [Day 6](day06.md). 
+我們[Day 6](day06.md)見.

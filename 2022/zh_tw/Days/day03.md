@@ -2,83 +2,85 @@
 title: '#90DaysOfDevOps - Application Focused - Day 3'
 published: false
 description: 90DaysOfDevOps - Application Focused
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048825
 ---
-## DevOps Lifecycle - Application Focused
 
-As we continue through these next few weeks we are 100% going to come across these titles (Continuous Development, Testing, Deployment, Monitor) over and over again, If you are heading towards the DevOps Engineer role then repeatability will be something you will get used to but constantly enhancing each time is another thing that keeps things interesting. 
+## DevOps 生命週期 - 以應用程序為中心
 
-In this hour we are going to take a look at the high level view of the application from start to finish and then back round again like a constant loop. 
+當我們繼續接下來的幾週時，我們 100% 會一遍又一遍地遇到這些標題（持續開發、測試、部署、監控），如果你正在朝著 DevOps 工程師的角色前進，那麼可重複性將是你會習慣的事情，但每次不斷增強是讓事情保持有趣的另一件事。
 
-### Development 
-Let's take a brand new example of an Application, to start with we have nothing created, maybe as a developer you have to discuss with your client or end user on the requirements and come up with some sort of plan or requirements for your Application. We then need to create from the requirements our brand new application. 
+在這一個小時中，我們將從頭到尾查看應用程序的高層次視圖，然後像一個持續循環一樣再次回到起點。
 
-In regards to tooling at this stage there is no real requirement here other than choosing your IDE and the programming language you wish to use to write your application. 
+### 開發
 
-As a DevOps engineer, remember you are probably not the one creating this plan or coding the application for the end user, this will be a skilled developer. 
+讓我們以一個全新的應用程序為例，一開始我們什麼都沒有創建，也許作為開發人員，你必須與客戶或最終用戶討論需求，並為你的應用程序提出某種計劃或需求。然後我們需要根據需求創建我們的全新應用程序。
 
-But it also would not hurt for you to be able to read some of the code so that you can make the best infrastructure decisions moving forward for your application.
+關於這個階段的工具，除了選擇你的 IDE 和你希望用來編寫應用程序的程式語言之外，這裡沒有真正的需求。
 
-We previously mentioned that this application can be written in any language. Importantly this should be maintained using a version control system, this is something we will cover also in detail later on and in particular we will dive into **Git**. 
+作為 DevOps 工程師，記住你可能不是創建這個計劃或為最終用戶編寫應用程序代碼的人，這將是一位熟練的開發人員。
 
-It is also likely that it will not be one developer working on this project although this could be the case but even so best practices would require a code repository to store and collaborate on the code, this could be private or public and could be hosted or privately deployed generally speaking you would hear the likes of **GitHub or GitLab** being used as a code repository. Again we will cover these as part of our section on **Git** later on. 
+但如果你能夠閱讀一些代碼，這樣你就可以為應用程序做出最佳的基礎設施決策，這也不會有壞處。
 
+我們之前提到這個應用程序可以用任何語言編寫。重要的是，這應該使用版本控制系統來維護，這是我們稍後也會詳細介紹的內容，特別是我們將深入探討 **Git**。
 
-### Testing 
-At this stage we have our requirements and we have our application being developed. But we need to make sure we are testing our code in all the various different environments that we have available to us or specifically maybe to the programming language chosen. 
+雖然這可能是一個開發人員在這個項目上工作，但即使如此，最佳實踐也需要一個代碼存儲庫來存儲和協作代碼，這可以是私有的或公共的，可以託管或私有部署，一般來說你會聽到像 **GitHub 或 GitLab** 這樣的代碼存儲庫被使用。我們將在稍後關於 **Git** 的部分中再次介紹這些。
 
-This phase enables QA to test for bugs, more frequently we see containers being used for simulating the test environment which overall can improve on cost overheads of physical or cloud infrastructure. 
+### 測試
 
-This phase is also likely going to be automated as part of the next area which is Continuous Integration.
+在這個階段，我們有我們的需求，我們的應用程序正在開發中。但我們需要確保我們在我們可用的所有不同環境中測試我們的代碼，或者特別是針對所選的程式語言。
 
-The ability to automate this testing vs 10s,100s or even 1000s of QA engineers having to do this manually speaks for itself, these engineers can focus on something else within the stack to ensure you are moving faster and developing more functionality vs testing bugs and software which tends to be the hold up on most traditional software releases that use a waterfall methodology. 
+這個階段使 QA 能夠測試錯誤，更頻繁地我們看到容器被用於模擬測試環境，這總體上可以改善物理或雲基礎設施的成本開銷。
 
-### Integration 
+這個階段也可能會自動化，作為下一個領域的一部分，即持續集成。
 
-Quite importantly Integration is at the middle of the DevOps lifecycle. It is the practice of in which developers require to commit changes to the source code more frequently. This could be on a daily or weekly basis. 
+自動化此測試的能力與 10 個、100 個甚至 1000 個 QA 工程師必須手動執行此操作相比，不言而喻，這些工程師可以專注於堆棧中的其他內容，以確保你移動得更快並開發更多功能，而不是測試錯誤和軟體，這往往是使用瀑布方法的大多數傳統軟體發布的阻礙。
 
-With every commit your application can go through the automated testing phases and this allows for early detection of issues or bugs before the next phase. 
+### 集成
 
-Now you might at this stage be saying "but we don't create applications, we buy it off the shelf from a software vendor" Don't worry many companies do this and will continue to do this and it will be the software vendor that is concentrating on the above 3 phases but you might want to still adopt the final phase as this will enable for faster and more efficient deployments of your off the shelf deployments. 
+相當重要的是，集成位於 DevOps 生命週期的中間。這是開發人員需要更頻繁地將更改提交到源代碼的實踐。這可能每天或每週進行。
 
-I would also suggest just having this above knowledge is very important as you might buy off the shelf software today, but what about tomorrow or down the line... next job maybe? 
+每次提交時，你的應用程序都可以通過自動化測試階段，這允許在下一個階段之前及早發現問題或錯誤。
 
-### Deployment 
-Ok so we have our application built and tested against the requirements of our end user and we now need to go ahead and deploy this application into production for our end users to consume. 
+現在你可能在這個階段說"但我們不創建應用程序，我們從軟體供應商那裡購買現成的"不要擔心，許多公司這樣做並將繼續這樣做，這將是專注於上述 3 個階段的軟體供應商，但你可能仍然想採用最後階段，因為這將使你的現成部署更快、更高效。
 
-This is the stage where the code is deployed to the production servers, now this is where things get extremely interesting and it is where the rest of our 86 days dives deeper into these areas. Because different applications require different possibly hardware or configurations. This is where **Application Configuration Management** and **Infrastructure as Code** could play a key part in your DevOps lifecycle. It might be that your application is **Containerised** but also available to run on a virtual machine. Which then also leads us onto platforms like **Kubernetes** which would be orchestrating those containers and making sure you have the desired state available to your end users. 
+我還建議僅僅擁有上述知識非常重要，因為你今天可能購買現成軟體，但明天或以後呢...下一份工作也許？
 
-All of these bold topics we will go into more detail over the next few weeks to get a better foundational knowledge of what they are and when to use them. 
+### 部署
 
-### Monitoring 
+好的，所以我們已經構建了我們的應用程序並根據最終用戶的需求進行了測試，現在我們需要繼續將此應用程序部署到生產環境中供最終用戶使用。
 
-Things are moving fast here and we have our Application that we are continuously updating with new features and functionality and we have our testing making sure no gremlins are being found. We have the application running in our environment that can be continually keeping the required configuration and performance. 
+這是將代碼部署到生產服務器的階段，現在這是事情變得極其有趣的地方，也是我們其餘 86 天深入探討這些領域的地方。因為不同的應用程序需要不同的可能硬件或配置。這就是 **應用程序配置管理** 和 **基礎設施即代碼** 可以在你的 DevOps 生命週期中發揮關鍵作用的地方。你的應用程序可能是 **容器化的**，但也可以在虛擬機上運行。這也引導我們進入像 **Kubernetes** 這樣的平台，它將編排這些容器並確保你為最終用戶提供所需的狀態。
 
-But now we need to be sure that our end users are getting the experience they require. Here we need to make sure that our Application Performance is continuously being monitored, this phase is going to allow your developers to make better decisions about enhancements to the application in future releases to better serve the end users. 
+對於這些粗體主題，我們將在接下來的幾週內更詳細地介紹，以更好地了解它們是什麼以及何時使用它們。
 
-This section is also where we are going to capture that feedback wheel about the features that have been implemented and how the end users would like to make these better for them. 
+### 監控
 
-Reliability is a key factor here as well, at the end of the day we want our Application to be available all the time it is required. This then lends to other **observability, security and data management** areas that should be continuously monitored and feedback can always be used to better enhance, update and release the application continuously. 
+事情在這裡快速移動，我們有我們的應用程序，我們正在不斷更新新功能和特性，我們有我們的測試確保沒有發現小精靈。我們有在我們環境中運行的應用程序，可以持續保持所需的配置和性能。
 
-Some input from the community here specifcally [@_ediri](https://twitter.com/_ediri) mentioned also part of this continous process we should also have the FinOps teams involved. Apps & Data are running and stored somewhere you should be monitoring this continously to make sure if things change from a resources point of view your costs are not causing some major financial pain on your Cloud Bills.
+但現在我們需要確保我們的最終用戶獲得他們所需的體驗。在這裡，我們需要確保我們的應用程序性能持續受到監控，這個階段將允許你的開發人員在未來版本中對應用程序的增強做出更好的決策，以更好地服務最終用戶。
 
-I think it is also a good time to bring up the "DevOps Engineer" mentions above, albeit there are many DevOps Engineer positions in the wild that people hold, this is not really the ideal way of positioning the process of DevOps. What I mean is from speaking to others in the community the title of DevOps Engineer should not be the goal for anyone because really any position should be adopting DevOps processes and the culture explained here. DevOps should be used in many different positions such as Cloud-Native engineer/architect, virtualisation admin, cloud architect/engineer, infrastructure admin. This is to name a few but the reason for using DevOps Engineer above was really to highlight the scope or the process used by any of the above positions and more. 
+這個部分也是我們將捕獲關於已實施功能的反饋循環以及最終用戶希望如何為他們改進這些功能的地方。
 
-## Resources 
+可靠性也是一個關鍵因素，歸根結底，我們希望我們的應用程序在需要時始終可用。這導致其他 **可觀測性、安全性和數據管理** 領域應該持續監控，反饋總是用於更好地增強、更新和持續發布應用程序。
 
-I am always open to adding additional resources to these readme files as it is here as a learning tool.  
+來自社群的一些輸入，特別是 [@\_ediri](https://twitter.com/_ediri) 提到，作為這個持續過程的一部分，我們還應該讓 FinOps 團隊參與。應用程序和數據在某個地方運行和存儲，你應該持續監控這一點，以確保如果從資源的角度來看事情發生變化，你的成本不會對你的雲帳單造成一些重大的財務痛苦。
 
-My advice is to watch all of the below and hopefully you also picked something up from the text and explanations above. 
+我認為這也是提出上述"DevOps 工程師"的好時機，儘管在野外有許多 DevOps 工程師職位，但這不是定位 DevOps 流程的理想方式。我的意思是，從與社群中其他人的交談來看，DevOps 工程師的頭銜不應該是任何人的目標，因為實際上任何職位都應該採用 DevOps 流程和這裡解釋的文化。DevOps 應該用於許多不同的職位，如雲原生工程師/架構師、虛擬化管理員、雲架構師/工程師和基礎設施管理員。這只是舉幾個例子，但上面使用 DevOps 工程師的原因實際上是為了突出上述職位和更多職位使用的流程範圍。
 
-- [Continuous Development](https://www.youtube.com/watch?v=UnjwVYAN7Ns) I will also add that this is focused on manufacturing but the lean culture can be closely followed with DevOps. 
+## 資源
+
+我把這份readme當作一個學習工具，並且保持開放的心態希望能新增更多的資源。
+
+我建議看完下列的影片，希望你能從中學到一些基本的名詞
+
+- [Continuous Development](https://www.youtube.com/watch?v=UnjwVYAN7Ns) 我還想補充一點，這專注於製造業，但精益文化可以與 DevOps 密切相關。
 - [Continuous Testing - IBM YouTube](https://www.youtube.com/watch?v=RYQbmjLgubM)
 - [Continuous Integration - IBM YouTube](https://www.youtube.com/watch?v=1er2cjUq1UI)
 - [Continuous Monitoring](https://www.youtube.com/watch?v=Zu53QQuYqJ0)
-- [The Remote Flow](https://www.notion.so/The-Remote-Flow-d90982e77a144f4f990c135f115f41c6)
 - [FinOps Foundation - What is FinOps](https://www.finops.org/introduction/what-is-finops/)
-- [**NOT FREE** The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win](https://www.amazon.co.uk/Phoenix-Project-DevOps-Helping-Business-ebook/dp/B00AZRBLHO)
+- [**NOT FREE** The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win](https://www.amazon.com/Phoenix-Project-DevOps-Helping-Business/dp/1942788290/)
 
-If you made it this far then you will know if this is where you want to be or not. See you on [Day 4](day04.md).  
+如果你已經看到這裡了, 那你大概會知道你想不想學習DevOps. 我們[Day 4](day04.md)見.

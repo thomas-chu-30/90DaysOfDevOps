@@ -8,92 +8,90 @@ canonical_url: null
 id: 1048700
 ---
 
-## DevOps & Agile
+## DevOps 與敏捷
 
-Do you know the difference between DevOps and Agile? They were formed as standalone concepts. But now the two terms are getting fused.
+你知道 DevOps 和敏捷之間的區別嗎？它們是作為獨立概念形成的。但現在這兩個術語正在融合。
 
-In this post, we will examine the crucial differences between Agile and DevOps and find out why the two are connected so tightly.
+在這篇文章中，我們將研究敏捷和 DevOps 之間的關鍵差異，並找出為什麼兩者如此緊密地聯繫在一起。
 
-I think a good place to start is understanding a little more about a common angle I have seen in learning this area and that is DevOps vs Agile, even though they have similar goals and processes. In this section, I am going to summarise this hopefully.
+我認為一個好的起點是更多地了解我在學習這個領域時看到的一個常見角度，那就是 DevOps vs Agile，儘管它們有相似的目標和流程。在本節中，我將總結這一點。
 
-Let's start with definitions.
+讓我們從定義開始。
 
-### Agile Development
+### 敏捷開發
 
-Agile is an approach that focuses on delivering small results faster rather than releasing one big interaction of the product; software is developed in iterations. The team releases a new version every week or month with incremental updates. The final goal of Agile is to deliver an optimal experience to the end-users.
+敏捷是一種專注於更快地交付小結果而不是發布一個大產品交互的方法；軟體在迭代中開發。團隊每週或每月發布一個新版本，並進行增量更新。敏捷的最終目標是為最終用戶提供最佳體驗。
 
 ### DevOps
 
-We have been covering this for the past few days with a few different ways of describing the end goals of DevOps. DevOps usually describes software development
-and delivery practices based on cooperation between software developers and operations specialists. The main DevOps benefits are delivering a simplified development process and minimising miscommunication.
+我們在過去幾天中一直在以幾種不同的方式描述 DevOps 的最終目標。DevOps 通常描述基於軟體開發人員和運營專家之間合作的軟體開發和交付實踐。DevOps 的主要好處是簡化開發流程並最小化溝通不暢。
 
-## What is the difference between Agile and DevOps
+## 敏捷和 DevOps 之間的區別是什麼
 
-The difference is mainly the preoccupations. Agile and DevOps have different preoccupations but they are helping each other. Agile wants short iteration, which is only possible with the automation that DevOps brings. Agile wants the customer to try a specific version and quickly give feedback which is only possible if DevOps make the creation of new environment easy.
+區別主要在於關注點。敏捷和 DevOps 有不同的關注點，但它們互相幫助。敏捷想要短迭代，這只有在 DevOps 帶來的自動化下才有可能。敏捷希望客戶嘗試特定版本並快速提供反饋，這只有在 DevOps 使新環境的創建變得容易的情況下才有可能。
 
-### Different participants
+### 不同的參與者
 
-Agile focuses on optimising communication between end-users and developers while DevOps targets developers and operation team members. We could say that agile is outward-oriented towards customers whereas DevOps is a set of internal practices.
+敏捷專注於優化最終用戶和開發人員之間的溝通，而 DevOps 針對開發人員和運營團隊成員。我們可以說敏捷是面向客戶的，而 DevOps 是一套內部實踐。
 
-### Team
+### 團隊
 
-Agile usually applies to software developers and project managers. The competencies of DevOps engineers lie in the intersection of development, QA (quality assurance) and operations as they are involved in all stages of the product cycle and are part of the Agile team.
+敏捷通常適用於軟體開發人員和項目經理。DevOps 工程師的能力在於開發、QA（質量保證）和運營的交集，因為他們參與產品週期的所有階段，並且是敏捷團隊的一部分。
 
-### Applied Frameworks
+### 應用的框架
 
-Agile has a lot of management frameworks to achieve flexibility and transparency: Scrum > Kanban > Lean > Extreme > Crystal > Dynamic > Feature-Driven. DevOps focuses on the development approach in collaboration but doesn't offer specific methodologies. However, DevOps promote practices like Infrastructure as Code, Architecture as Code, Monitoring, Self Healing, end to end test automation ... But per se this is not a framework, rather practices.
+敏捷有許多管理框架來實現靈活性和透明度：Scrum > Kanban > Lean > Extreme > Crystal > Dynamic > Feature-Driven。DevOps 專注於協作中的開發方法，但不提供特定的方法論。但是，DevOps 促進實踐，如基礎設施即代碼、架構即代碼、監控、自我修復、端到端測試自動化...但本身這不是一個框架，而是實踐。
 
-### Feedback
+### 反饋
 
-In Agile the main source of feedback is the end-user while in DevOps the feedback from stakeholders and the team itself has a higher priority.
+在敏捷中，反饋的主要來源是最終用戶，而在 DevOps 中，來自利益相關者和團隊本身的反饋具有更高的優先級。
 
-### Target areas
+### 目標領域
 
-Agile focuses on software development more than on deployment and maintenance. DevOps focuses on software development as well but its values and tools also cover deployment and post-release stages like monitoring, high availability, security and data protection.
+敏捷更專注於軟體開發而不是部署和維護。DevOps 也專注於軟體開發，但其價值和工具也涵蓋部署和發布後階段，如監控、高可用性、安全性和數據保護。
 
-### Documentation
+### 文檔
 
-Agile prioritises flexibility and tasks at hand over documentation and monitoring. DevOps on the other hand regards project documentation as one of the essential project components.
+敏捷優先考慮靈活性和手頭的任務，而不是文檔和監控。另一方面，DevOps 將項目文檔視為基本項目組件之一。
 
-### Risks
+### 風險
 
-Agile risks derive from the flexibility of the methodology. Agile projects are difficult to predict or evaluate as priorities and requirements are continually changing.
+敏捷風險源於方法論的靈活性。敏捷項目難以預測或評估，因為優先級和需求不斷變化。
 
-DevOps risks derive from a misunderstanding of the term and the lack of suitable tools. Some people see DevOps as a collection of software for the deployment and continuous integration failing to change the underlying structure of the development process.
+DevOps 風險源於對術語的誤解和缺乏合適的工具。有些人將 DevOps 視為用於部署和持續集成的軟體集合，未能改變開發流程的底層結構。
 
-### The Tools Used
+### 使用的工具
 
-Agile tools are focused on management communication collaboration, metrics and feedback processing. The most popular agile tools include JIRA, Trello, Slack, Zoom, SurveyMonkey and others.
+敏捷工具專注於管理溝通協作、指標和反饋處理。最受歡迎的敏捷工具包括 JIRA、Trello、Slack、Zoom、SurveyMonkey 等。
 
-DevOps uses tools for team communication, software development, deployment and integration like Jenkins, GitHub Actions, BitBucket, etc. Even though agile and DevOps have slightly different focuses and scopes the key values are almost identical, therefore you can combine the two.
+DevOps 使用團隊溝通、軟體開發、部署和集成的工具，如 Jenkins、GitHub Actions、BitBucket 等。儘管敏捷和 DevOps 的關注點和範圍略有不同，但關鍵價值幾乎相同，因此你可以將兩者結合起來。
 
-## Bring it all together… good idea or not? Discuss?
+## 將所有內容結合起來...好主意還是壞主意？討論？
 
-The combination of Agile and DevOps brings the following benefits you will get:
+敏捷和 DevOps 的結合帶來以下好處：
 
--   Flexible management and powerful technology.
--   Agile practices help DevOps teams to communicate their priorities more efficiently.
--   The automation cost that you have to pay for your DevOps practices is justified by your agile requirement of deploying quickly and frequently.
--   It leads to strengthening: the team adopting agile practices will improve collaboration, increase the team's motivation and decrease employee turnover rates.
--   As a result, you get better product quality.
+- 靈活的管理和強大的技術。
+- 敏捷實踐幫助 DevOps 團隊更有效地溝通他們的優先級。
+- 你必須為 DevOps 實踐支付的自動化成本由你快速頻繁部署的敏捷需求來證明是合理的。
+- 它導致加強：採用敏捷實踐的團隊將改善協作，增加團隊的動力並降低員工流動率。
+- 因此，你獲得了更好的產品質量。
 
-Agile allows coming back to previous product development stages to fix errors and prevent the accumulation of technical debt. To adopt agile and DevOps
-simultaneously just follow 7 steps:
+敏捷允許回到以前的產品開發階段來修復錯誤並防止技術債務的積累。要同時採用敏捷和 DevOps，只需遵循 7 個步驟：
 
-1. Unite the development and operation teams.
-2. Create build and run teams, all development and operational concerns are discussed by the entire DevOps team.
-3. Change your approach to sprints, and assign priority ratings to offer DevOps tasks that have the same value than development tasks. Encourage development and operations teams to exchange their opinion on other teams workflow and possible issues.
-4. Include QA in all development stages.
-5. Choose the right tools.
-6. Automate everything you can.
-7. Measure and control by using tangible numeric deliverables.
+1. 團結開發和運營團隊。
+2. 創建構建和運行團隊，所有開發和運營問題都由整個 DevOps 團隊討論。
+3. 改變你對衝刺的方法，並分配優先級評級，以提供與開發任務具有相同價值的 DevOps 任務。鼓勵開發和運營團隊就其他團隊的工作流程和可能的問題交換意見。
+4. 在所有開發階段包括 QA。
+5. 選擇正確的工具。
+6. 自動化你能做的一切。
+7. 通過使用有形的數字可交付成果來衡量和控制。
 
-What do you think? Do you have different views? I want to hear from Developers, Operations, QA or anyone that has a better understanding of Agile and DevOps that can pass comments and feedback on this?
+你怎麼看？你有不同的觀點嗎？我想聽聽開發人員、運營、QA 或任何對敏捷和 DevOps 有更好理解的人可以對此發表評論和反饋？
 
-### Resources
+### 資源
 
--   [DevOps for Developers – Day in the Life: DevOps Engineer in 2021](https://www.youtube.com/watch?v=2JymM0YoqGA)
--   [3 Things I wish I knew as a DevOps Engineer](https://www.youtube.com/watch?v=udRNM7YRdY4)
--   [How to become a DevOps Engineer feat. Shawn Powers](https://www.youtube.com/watch?v=kDQMjAQNvY4)
+- [DevOps for Developers – Day in the Life: DevOps Engineer in 2021](https://www.youtube.com/watch?v=2JymM0YoqGA)
+- [3 Things I wish I knew as a DevOps Engineer](https://www.youtube.com/watch?v=udRNM7YRdY4)
+- [How to become a DevOps Engineer feat. Shawn Powers](https://www.youtube.com/watch?v=kDQMjAQNvY4)
 
-If you made it this far then you will know if this is where you want to be or not. See you on [Day 5](day05.md).
+如果你已經看到這裡了, 那你大概會知道你想不想學習DevOps. 我們[Day 5](day05.md)見.
