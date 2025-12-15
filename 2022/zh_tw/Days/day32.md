@@ -2,187 +2,190 @@
 title: '#90DaysOfDevOps - Microsoft Azure Storage Models - Day 32'
 published: false
 description: 90DaysOfDevOps - Microsoft Azure Storage Models
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048775
 ---
-## Microsoft Azure Storage Models
 
-### Storage Services
+## Microsoft Azure 存儲模型
 
-- Azure storage services are provided by storage accounts. 
-- Storage accounts are primarily accessed via REST API. 
-- A storage account must have a unique name that is part of a DNS name `<Storage Account name>.core.windows.net`
-- Various replication and encryption options.
-- Sits within a resource group
+### 存儲服務
 
-We can create our storage group by simply searching for Storage Group in the search bar at the top of the Azure Portal. 
+- Azure 存儲服務由存儲帳戶提供。
+- 存儲帳戶主要通過 REST API 訪問。
+- 存儲帳戶必須有一個唯一的名稱，該名稱是 DNS 名稱的一部分 `<Storage Account name>.core.windows.net`
+- 各種複製和加密選項。
+- 位於資源組內
+
+我們可以通過在 Azure 門戶頂部的搜索欄中搜索 Storage Group 來創建存儲組。
 
 ![](Images/Day32_Cloud1.png)
 
-We can then run through the steps to create our storage account remembering that this name needs to be unique and it also needs to be all lower case, no spaces but can include numbers. 
+然後我們可以運行步驟來創建存儲帳戶，記住此名稱需要唯一，還需要全部小寫，沒有空格，但可以包含數字。
 
 ![](Images/Day32_Cloud2.png)
 
-We can also choose the level of redundancy we would like against our storage account and anything we store within here. The further down the list the more expensive option but also the spread of your data. 
+我們還可以選擇我們希望對存儲帳戶和我們在此存儲的任何內容的冗餘級別。列表越往下，選項越昂貴，但數據的傳播也越多。
 
-Even the default redundancy option gives us 3 copies of our data. 
+甚至默認冗餘選項也為我們提供了 3 份數據副本。
 
 [Azure Storage Redundancy](https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy)
 
-Summary of the above link down below: 
+上述鏈接的摘要如下：
 
-- **Locally-redundant storage** - replicates your data three times within a single data centre in the primary region.
-  
-- **Geo-redundant storage** - copies your data synchronously three times within a single physical location in the primary region using LRS.
-  
-- **Zone-redundant storage** - replicates your Azure Storage data synchronously across three Azure availability zones in the primary region.
-  
-- **Geo-zone-redundant storage** - combines the high availability provided by redundancy across availability zones with protection from regional outages provided by geo-replication. Data in a GZRS storage account is copied across three Azure availability zones in the primary region and is also replicated to a second geographic region for protection from regional disasters.
+- **本地冗餘存儲** - 在主區域的單個數據中心內複製數據三次。
+- **地理冗餘存儲** - 使用 LRS 在主區域的單個物理位置內同步複製數據三次。
+- **區域冗餘存儲** - 在主區域的三個 Azure 可用性區域中同步複製 Azure 存儲數據。
+- **地理區域冗餘存儲** - 結合跨可用性區域的冗餘提供的高可用性以及地理複製提供的區域中斷保護。GZRS 存儲帳戶中的數據在主區域的三個 Azure 可用性區域中複製，並且還複製到第二個地理區域以保護免受區域災難。
 
 ![](Images/Day32_Cloud3.png)
 
-Just moving back up to performance options. We have Standard and Premium to choose from. We have chosen Standard in our walkthrough but premium gives you some specific options. 
+只是回到性能選項。我們有標準和高級可供選擇。我們在演練中選擇了標準，但高級為你提供了一些特定選項。
 
 ![](Images/Day32_Cloud4.png)
 
-Then in the drop-down, you can see we have these three options to choose from. 
+然後在下拉菜單中，你可以看到我們有三個選項可供選擇。
 
 ![](Images/Day32_Cloud5.png)
 
-There are lots more advanced options available for your storage account but for now, we do not need to get into these areas. These options are around encryption and data protection. 
+存儲帳戶還有更多高級選項，但現在我們不需要進入這些領域。這些選項圍繞加密和數據保護。
 
-### Managed Disks 
+### 託管磁盤
 
-Storage access can be achieved in a few different ways. 
+可以通過幾種不同的方式實現存儲訪問。
 
-Authenticated access via: 
-- A shared key for full control. 
-- Shared Access Signature for delegated, granular access.
-- Azure Active Directory (Where Available)
+通過以下方式進行身份驗證訪問：
 
-Public Access: 
-- Public access can also be granted to enable anonymous access including via HTTP. 
-- An example of this could be to host basic content and files in a block blob so a browser can view and download this data. 
+- 用於完全控制的共享密鑰。
+- 用於委派的細粒度訪問的共享訪問簽名。
+- Azure Active Directory（可用時）
 
-If you are accessing your storage from another Azure service, traffic stays within Azure. 
+公共訪問：
 
-When it comes to storage performance we have two different types: 
-- **Standard** - Maximum number of IOPS
-- **Premium** - Guaranteed number of IOPS
+- 還可以授予公共訪問權限以啟用匿名訪問，包括通過 HTTP。
+- 一個例子是在塊 blob 中託管基本內容和文件，以便瀏覽器可以查看和下載此數據。
 
-There is also a difference between unmanaged and managed disks to consider when choosing the right storage for the task you have. 
+如果你從另一個 Azure 服務訪問存儲，流量保持在 Azure 內。
 
-### Virtual Machine Storage 
+當談到存儲性能時，我們有兩種不同的類型：
 
-- Virtual Machine OS disks are typically stored on persistent storage. 
-- Some stateless workloads do not require persistent storage and reduced latency is a larger benefit. 
-- There are VMs that support ephemeral OS managed disks that are created on the node-local storage. 
-  - These can also be used with VM Scale Sets.
+- **標準** - 最大 IOPS 數量
+- **高級** - 保證的 IOPS 數量
 
-Managed Disks are durable block storage that can be used with Azure Virtual Machines. You can have Ultra Disk Storage, Premium SSD, Standard SSD, Standard HDD. They also carry some characteristics. 
+IOPS => 每秒輸入/輸出操作。
 
-- Snapshot and Image support 
-- Simple movement between SKUs 
-- Better availability when combined with availability sets 
-- Billed based on disk size not on consumed storage.  
+在為任務選擇正確的存儲時，還需要考慮非託管磁盤和託管磁盤之間的差異。
 
-## Archive Storage 
+### 虛擬機存儲
 
-- **Cool Tier** - A cool tier of storage is available to block and append BLOBs. 
-  - Lower Storage cost
-  - Higher transaction cost.  
-- **Archive Tier** - Archive storage is available for block BLOBs. 
-  - This is configured on a per-BLOB basis. 
-  - Cheaper cost, Longer Data retrieval latency. 
-  - Same Data Durability as regular Azure Storage. 
-  - Custom Data tiering can be enabled as required.  
+- 虛擬機 OS 磁盤通常存儲在持久存儲上。
+- 一些無狀態工作負載不需要持久存儲，降低延遲是更大的好處。
+- 有一些 VM 支持在節點本地存儲上創建的臨時 OS 託管磁盤。
+  - 這些也可以與 VM 規模集一起使用。
 
-### File Sharing 
+託管磁盤是持久的塊存儲，可與 Azure 虛擬機一起使用。你可以擁有 Ultra Disk Storage、Premium SSD、Standard SSD 或 Standard HDD。它們還具有一些特性。
 
-From the above creation of our storage account, we can now create file shares.
+- 快照和鏡像支持
+- SKU 之間的簡單移動
+- 與可用性集結合時更好的可用性
+- 根據磁盤大小而非消耗的存儲計費。
+
+## 歸檔存儲
+
+- **冷層** - 冷層存儲可用於塊和追加 blob。
+  - 較低的存儲成本
+  - 較高的交易成本。
+- **歸檔層** - 歸檔存儲可用於塊 BLOB。
+  - 這是在每個 BLOB 的基礎上配置的。
+  - 更便宜的成本，更長的數據檢索延遲。
+  - 與常規 Azure 存儲相同的數據持久性。
+  - 可以根據需要啟用自定義數據分層。
+
+### 文件共享
+
+從上面創建存儲帳戶，我們現在可以創建文件共享。
 
 ![](Images/Day32_Cloud6.png)
 
-This will provide SMB2.1 and 3.0 file shares in Azure. 
+這將在 Azure 中提供 SMB2.1 和 3.0 文件共享。
 
-Useable within the Azure and externally via SMB3 and port 445 open to the internet. 
+可在 Azure 內使用，也可通過 SMB3 和對互聯網開放的端口 445 在外部使用。
 
-Provides shared file storage in Azure. 
+在 Azure 中提供共享文件存儲。
 
-Can be mapped using standard SMB clients in addition to REST API. 
+可以使用標準 SMB 客戶端以及 REST API 進行映射。
 
-You might also notice [Azure NetApp Files](https://vzilla.co.uk/vzilla-blog/azure-netapp-files-how) (SMB and NFS) 
+你可能還會注意到 [Azure NetApp Files](https://vzilla.co.uk/vzilla-blog/azure-netapp-files-how)（SMB 和 NFS）
 
-### Caching & Media Services 
+### 緩存和媒體服務
 
-The Azure Content Delivery Network provides a cache of static web content with locations throughout the world. 
+Azure Content Delivery Network 提供靜態 Web 內容的緩存，位置遍佈世界各地。
 
-Azure Media Services, provides media transcoding technologies in addition to playback services. 
+Azure Media Services 提供媒體轉碼技術以及播放服務。
 
-## Microsoft Azure Database Models
+## Microsoft Azure 數據庫模型
 
-Back on [Day 28](day28.md), we covered various service options. One of these was PaaS (Platform as a Service) where you abstract a large amount of the infrastructure and operating system away and you are left with the control of the application or in this case the database models. 
+回到 [Day 28](day28.md)，我們涵蓋了各種服務選項。其中之一是 PaaS（平台即服務），你可以在其中抽象大量基礎設施和操作系統，你將控制應用程序或在這種情況下是數據庫模型。
 
-### Relational Databases
+### 關係數據庫
 
-Azure SQL Database provides a relational database as a service based on Microsoft SQL Server. 
+Azure SQL Database 提供基於 Microsoft SQL Server 的關係數據庫即服務。
 
-This is SQL running the latest SQL branch with database compatibility level available where specific functionality version is required. 
+這是運行最新 SQL 分支的 SQL，具有數據庫兼容級別，可在需要特定功能版本時使用。
 
-There are a few options on how this can be configured, we can provide a single database that provides one database in the instance, while an elastic pool enables multiple databases that share a pool of capacity and collectively scale. 
+關於如何配置這一點有幾個選項，我們可以提供單個數據庫，在實例中提供一個數據庫，而彈性池允許共享容量池並集體擴展的多個數據庫。
 
-These database instances can be accessed like regular SQL instances. 
+這些數據庫實例可以像常規 SQL 實例一樣訪問。
 
-Additional managed offerings for MySQL, PostgreSQL and MariaDB. 
+為 MySQL、PostgreSQL 和 MariaDB 提供額外的託管產品。
 
 ![](Images/Day32_Cloud7.png)
 
-### NoSQL Solutions 
+### NoSQL 解決方案
 
-Azure Cosmos DB is a scheme agnostic NoSQL implementation. 
+Azure Cosmos DB 是一個與方案無關的 NoSQL 實現。
 
-99.99% SLA 
+99.99% SLA
 
-Globally distributed database with single-digit latencies at the 99th percentile anywhere in the world with automatic homing. 
+全球分佈的數據庫，在全球任何地方的第 99 百分位數具有單位數延遲，具有自動歸屬。
 
-Partition key leveraged for the partitioning/sharding/distribution of data. 
+利用分區鍵進行數據的分區/分片/分發。
 
-Supports various data models (documents, key-value, graph, column-friendly)
+支持各種數據模型（文檔、鍵值、圖形、列友好）
 
-Supports various APIs (DocumentDB SQL, MongoDB, Azure Table Storage and Gremlin) 
+支持各種 API（DocumentDB SQL、MongoDB、Azure Table Storage 和 Gremlin）
 
 ![](Images/Day32_Cloud9.png)
 
-Various consistency models are available based around [CAP theorem](https://en.wikipedia.org/wiki/CAP_theorem). 
+基於 [CAP theorem](https://en.wikipedia.org/wiki/CAP_theorem) 提供各種一致性模型。
 
 ![](Images/Day32_Cloud8.png)
 
-### Caching 
+### 緩存
 
-Without getting into the weeds about caching systems such as Redis I wanted to include that Microsoft Azure have their service called Azure Cache for Redis. 
+在不深入研究 Redis 等緩存系統的情況下，我想提到 Microsoft Azure 有一項名為 Azure Cache for Redis 的服務。
 
-Azure Cache for Redis provides an in-memory data store based on the Redis software. 
+Azure Cache for Redis 提供基於 Redis 軟體的內存數據存儲。
 
-- It is an implementation of the open-source Redis Cache. 
-    - A hosted, secure Redis cache instance.
-    - Different tiers are available
-    - Application must be updated to leverage the cache. 
-    - Aimed for an application that has high read requirements compared to writes. 
-    - Key-Value store based.  
+- 它是開源 Redis Cache 的實現。
+  - 託管的、安全的 Redis 緩存實例。
+  - 提供不同的層
+  - 必須更新應用程序以利用緩存。
+  - 針對具有高讀取要求相比寫入的應用程序。
+  - 基於鍵值存儲。
 
 ![](Images/Day32_Cloud10.png)
 
-I appreciate the last few days have been a lot of note-taking and theory on Microsoft Azure but I wanted to cover the building blocks before we get into the hands-on aspects of how these components come together and work. 
+我感謝過去幾天在 Microsoft Azure 上進行了大量筆記和理論，但我想在我們進入這些組件如何組合和工作的實際方面之前涵蓋構建塊。
 
-We have one more bit of theory remaining around networking before we can get some scenario-based deployments of services up and running. We also want to take a look at some of the different ways we can interact with Microsoft Azure vs just using the portal that we have been using so far. 
+在我們可以啟動一些基於場景的服務部署之前，我們還有一點關於網絡的理論。我們還想查看一些與 Microsoft Azure 交互的不同方式，而不僅僅是使用我們迄今為止一直在使用的門戶。
 
-## Resources 
+## 資源
 
 - [Hybrid Cloud and MultiCloud](https://www.youtube.com/watch?v=qkj5W98Xdvw)
 - [Microsoft Azure Fundamentals](https://www.youtube.com/watch?v=NKEFWyqJ5XA&list=WL&index=130&t=12s)
 - [Google Cloud Digital Leader Certification Course](https://www.youtube.com/watch?v=UGRDM86MBIQ&list=WL&index=131&t=10s)
 - [AWS Basics for Beginners - Full Course](https://www.youtube.com/watch?v=ulprqHHWlng&t=5352s)
 
-See you on [Day 33](day33.md) 
+我們[Day 33](day33.md)見

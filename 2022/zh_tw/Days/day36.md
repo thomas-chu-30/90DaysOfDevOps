@@ -1,152 +1,154 @@
 ---
-title: '#90DaysOfDevOps - Installing & Configuring Git - Day 36'
+title: '#90DaysOfDevOps - 安裝與配置 Git - 第 36 天'
 published: false
-description: 90DaysOfDevOps - Installing & Configuring Git
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - 安裝與配置 Git
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048738
 ---
-## Installing & Configuring Git
 
-Git is a open source, cross platform tool for version control. If I like me you are using Ubuntu or most Linux environments you might find that you already git installed but we are going to run through the install and configuration. 
+## 安裝與配置 Git
 
-Even if you already have git installed on your system it is also a good idea to make sure we are up to date. 
+Git 是一個開源的跨平台版本控制工具。如果你像我一樣使用 Ubuntu 或大多數 Linux 環境，你可能會發現已經安裝了 git，但我們還是要進行安裝和配置的步驟。
 
-### Installing Git
+即使你的系統上已經安裝了 git，確保我們使用的是最新版本也是個好主意。
 
-As already mentioned Git is cross platform, we will be running through Windows and Linux but you can find macOS also listed [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+### 安裝 Git
 
-For [Windows](https://git-scm.com/download/win) we can grab our installers from the official site. 
+正如前面提到的，Git 是跨平台的，我們將介紹 Windows 和 Linux 的安裝，但你也可以在[這裡](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)找到 macOS 的安裝說明。
 
-You could also use `winget` on your Windows machine, think of this as your Windows Application Package Manager. 
+對於 [Windows](https://git-scm.com/download/win)，我們可以從官方網站下載安裝程式。
 
-Before we install anything lets see what version we have on our Windows Machine. Open a PowerShell window and run `git --version` 
+你也可以在 Windows 機器上使用 `winget`，把它想成你的 Windows 應用程式套件管理工具。
+
+在安裝任何東西之前，讓我們先看看 Windows 機器上的版本。打開 PowerShell 視窗並執行 `git --version`
 
 ![](Images/Day36_Git1.png)
 
-We can also check our WSL Ubuntu version of Git as well. 
+我們也可以檢查 WSL Ubuntu 版本的 Git。
 
 ![](Images/Day36_Git2.png)
 
-At the time of writing the latest Windows release is `2.35.1` so we have some updating to do there which I will run through. I expect the same for Linux. 
+在撰寫本文時，最新的 Windows 版本是 `2.35.1`，所以我們需要進行一些更新，我將進行說明。我預期 Linux 也是如此。
 
-I went ahead and downloaded the latest installer and ran through the wizard and will document that here. The important thing to note is that git will uninstall previous versions before installing the latest. 
+我下載了最新的安裝程式並執行安裝精靈，將在此記錄。重要的是，git 會在安裝最新版本之前先卸載舊版本。
 
-Meaning that the process shown below is also the same process for the most part as if you were installing from no git. 
+這意味著下面顯示的過程在很大程度上與從零開始安裝 git 相同。
 
-It is a very simple installation. Once downloaded double click and get started. Read through the GNU license agreement. But remember this is free and open source software. 
+這是一個非常簡單的安裝過程。下載後雙擊並開始。閱讀 GNU 授權協議。但請記住這是免費和開源的軟體。
 
 ![](Images/Day36_Git3.png)
 
-Now we can choose additional components that we would like to also install but also associate with git. On Windows I always make sure I install Git Bash as this allows us to run bash scripts on Windows. 
+現在我們可以選擇想要安裝的額外元件，並與 git 建立關聯。在 Windows 上，我總是確保安裝 Git Bash，因為這允許我們在 Windows 上執行 bash 腳本。
 
 ![](Images/Day36_Git4.png)
 
-We can then choose which SSH Executable we wish to use. IN leave this as the bundled OpenSSH that you might have seen in the Linux section. 
+然後我們可以選擇要使用的 SSH 執行檔。我保留使用內建的 OpenSSH，你可能在 Linux 部分看到過。
 
 ![](Images/Day36_Git5.png)
 
-We then have experimental features that we may wish to enable, for me I don't need them so I don't enable, you can always come back in through the installation and enable these later on. 
+然後我們有一些實驗性功能可以選擇啟用，對我來說我不需要它們，所以我不啟用它們，你可以隨時透過安裝程式回來啟用這些功能。
 
 ![](Images/Day36_Git6.png)
 
-Installation complete, we can now choose to open Git Bash and or the latest release notes. 
+安裝完成，我們現在可以選擇打開 Git Bash 和/或最新的發布說明。
 
 ![](Images/Day36_Git7.png)
 
-The final check is to take a look in our PowerShell window what version of git we have now. 
+最後檢查是在我們的 PowerShell 視窗中查看我們現在擁有的 git 版本。
 
 ![](Images/Day36_Git8.png)
 
-Super simple stuff and now we are on the latest version. On our Linux machine we seemed to be a little behind so we can also walk through that update process. 
+非常簡單，現在我們已經是最新版本了。在我們的 Linux 機器上，我們似乎有點落後，所以我們也可以進行更新過程。
 
-I simply run the `sudo apt-get install git` command. 
+我只需執行 `sudo apt-get install git` 指令。
 
 ![](Images/Day36_Git9.png)
 
-You could also run the following which will add the git repository for software installations. 
+你也可以執行以下命令，這將添加 git 儲存庫以進行軟體安裝。
 
 ```
 sudo add-apt-repository ppa:git-core/ppa -y
 sudo apt-get update
 sudo apt-get install git -y
 git --version
-``` 
-### Configuring Git
+```
 
-When we first use git we have to define some settings, 
+### 配置 Git
 
-- Name
-- Email 
-- Default Editor
-- Line Ending
+當我們第一次使用 git 時，我們必須定義一些設定，
 
-This can be done at three levels 
+- 名稱
+- 電子郵件
+- 預設編輯器
+- 行尾符號
 
-- System = All users 
-- Global = All repositories of the current user 
-- Local = The current repository
+這可以在三個層級完成
 
-Example: 
-`git config --global user.name "Michael Cade"` 
+- System = 所有用戶
+- Global = 當前用戶的所有儲存庫
+- Local = 當前儲存庫
+
+範例：
+`git config --global user.name "Michael Cade"`
 `git config --global user.email Michael.Cade@90DaysOfDevOPs.com"`
-Depending on your Operating System will determine the default text editor. In my Ubuntu machine without setting the next command is using nano. The below command will change this to visual studio code. 
+根據你的作業系統將決定預設文字編輯器。在我的 Ubuntu 機器上，如果不設定下一個命令，預設使用 nano。下面的命令將此更改為 Visual Studio Code。
 
 `git config --global core.editor "code --wait"`
 
-now if we want to be able to see all git configuration then we can use the following command. 
+現在如果我們想查看所有 git 配置，那麼我們可以使用以下命令。
 
-`git config --global -e` 
+`git config --global -e`
 
 ![](Images/Day36_Git10.png)
 
-On any machine this file will be named `.gitconfig` on my Windows machine you will find this in your user account directory. 
+在任何機器上，這個檔案都會被命名為 `.gitconfig`，在我的 Windows 機器上，你會在用戶帳戶目錄中找到它。
 
 ![](Images/Day36_Git11.png)
 
-### Git Theory
+### Git 理論
 
-I mentioned in the post yesterday that there were other version control types and we can split these down into two different types. One is Client Server and the other is Distributed. 
+我在昨天的文章中提到了有其他版本控制類型，我們可以將它們分為兩種類型。一種是客戶端-伺服器（Client-Server），另一種是分布式（Distributed）。
 
-### Client-Server Version Control 
+### 客戶端-伺服器版本控制
 
-Before git was around Client-Server was the defacto method for version control. An example of this would be [Apache Subversion](https://subversion.apache.org/) which is an open source version control system founded in 2000. 
+在 git 出現之前，客戶端-伺服器是版本控制的標準方法。一個例子是 [Apache Subversion](https://subversion.apache.org/)，這是一個成立於 2000 年的開源版本控制系統。
 
-In this model of Client-Server version control, the first step the developer downloads the source code, the actual files from the server. This doesnt remove the conflicts but it does remove the complexity of the conflicts and how to resolve them. 
+在這種客戶端-伺服器版本控制模型中，第一步是開發人員從伺服器下載原始碼和實際檔案。這不會消除衝突，但確實消除了衝突的複雜性以及如何解決它們。
 
 ![](Images/Day36_Git12.png)
 
-Now for example lets say we have two developers working on the same files and one wins the race and commits or uploads their file back to the server first with their new changes. When the second developer goes to update they have a conflict. 
+現在舉例來說，假設我們有兩個開發人員處理相同的檔案，其中一個贏得競賽並首先提交或上傳他們的檔案到伺服器以及他們的新更改。當第二個開發人員去更新時，他們會遇到衝突。
 
 ![](Images/Day36_Git13.png)
 
-So now the Dev needs to pull down the first devs code change next to theirs check and then commit once those conflicts have been settled. 
+所以現在開發人員需要拉取第一個開發人員的程式碼更改，然後在解決衝突後再提交。
 
 ![](Images/Day36_Git15.png)
 
-### Distributed Version Control 
+### 分布式版本控制
 
-Git is not the only distributed version control system. But it is very much the defacto. 
+Git 不是唯一的分布式版本控制系統。但它是事實上的標準。
 
-Some of the major benefits of Git are: 
+Git 的一些主要優勢是：
 
-- Fast 
-- Smart 
-- Flexible 
-- Safe & Secure
+- 快速
+- 智能
+- 靈活
+- 安全
 
-Unlike the Client-Server version control model, each developer downloads the the source repository meaning everything. History of commits, all the branches etc. etc. 
+與客戶端-伺服器版本控制模型不同，每個開發人員都下載整個源儲存庫，意味著一切。提交歷史、所有分支等等。
 
 ![](Images/Day36_Git16.png)
 
-## Resources 
+## 資源
 
 - [What is Version Control?](https://www.youtube.com/watch?v=Yc8sCSeMhi4)
 - [Types of Version Control System](https://www.youtube.com/watch?v=kr62e_n6QuQ)
-- [Git Tutorial for Beginners](https://www.youtube.com/watch?v=8JJ101D3knE&t=52s) 
-- [Git for Professionals Tutorial](https://www.youtube.com/watch?v=Uszj_k0DGsg) 
-- [Git and GitHub for Beginners - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk&t=8s) 
+- [Git Tutorial for Beginners](https://www.youtube.com/watch?v=8JJ101D3knE&t=52s)
+- [Git for Professionals Tutorial](https://www.youtube.com/watch?v=Uszj_k0DGsg)
+- [Git and GitHub for Beginners - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk&t=8s)
 - [Complete Git and GitHub Tutorial](https://www.youtube.com/watch?v=apGV9Kg7ics)
 
-See you on [Day 37](day37.md) 
+我們[第 37 天](day37.md)見

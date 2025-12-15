@@ -1,211 +1,212 @@
 ---
-title: '#90DaysOfDevOps - Viewing, unstaging, discarding & restoring - Day 39'
+title: '#90DaysOfDevOps - 查看、取消暫存、丟棄與還原 - 第 39 天'
 published: false
-description: '90DaysOfDevOps - Viewing, unstaging, discarding & restoring'
-tags: "devops, 90daysofdevops, learning"
+description: '90DaysOfDevOps - 查看、取消暫存、丟棄與還原'
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048827
 ---
-## Viewing, unstaging, discarding & restoring
 
-Continuing on from where we finished yesterday around some of the commands that we have with git and how to leverage git with your projects. Remember we have not touched GitHub or any other git based services yet this is all to help you keep control of your projects locally at the moment, but they will all become useful when we start to integrate into those tools. 
+## 查看、取消暫存、丟棄與還原
 
-### Viewing the Staged and Unstaged Changes 
+繼續昨天我們結束的地方，討論 git 的一些指令以及如何在專案中利用 git。記住，我們還沒有接觸 GitHub 或任何其他基於 git 的服務，這都是為了幫助你目前在本地控制專案，但當我們開始整合到這些工具時，它們都會變得有用。
 
-It is good practice to make sure you view the staged and unstaged code before committing. We can do this by running the `git diff --staged` command 
+### 查看已暫存和未暫存的更改
+
+在提交之前查看已暫存和未暫存的程式碼是個好習慣。我們可以通過執行 `git diff --staged` 指令來執行此操作。
 
 ![](Images/Day39_Git1.png)
 
-This then shows us all the changes we have made and all new files we have added or deleted. 
+這會顯示我們所做的所有更改以及我們添加或刪除的所有新檔案。
 
-changes in the modified files are indicated with `---` or `+++` you can see below that we just added +add some text below which means they are new lines. 
+修改檔案中的更改用 `---` 或 `+++` 表示，你可以在下面看到我們剛剛添加了一些文字，這意味著它們是新行。
 
 ![](Images/Day39_Git2.png)
 
-We can also run `git diff` to compare our staging area with our working directory. If we make some changes to our newly added file code.txt and add some lines of text. 
+我們也可以執行 `git diff` 來比較暫存區和工作目錄。如果我們對新添加的檔案 code.txt 進行一些更改並添加一些文字行。
 
 ![](Images/Day39_Git3.png)
 
-If we then run `git diff` we compare and see the output below. 
+如果我們執行 `git diff`，我們會比較並看到下面的輸出。
 
 ![](Images/Day39_Git4.png)
 
-### Visual Diff Tools
+### 視覺化差異工具
 
-For me the above is more confusing so I would much rather use a visual tool, 
+對我來說，上面的內容更令人困惑，所以我更願意使用視覺化工具。
 
-To name a few visual diff tools: 
+一些視覺化差異工具：
 
 - KDiff3
-- P4Merge 
-- WinMerge (Windows Only)
+- P4Merge
+- WinMerge（僅限 Windows）
 - VSCode
 
-To set this in git we run the following command `git config --global diff.tool vscode`
+要在 git 中設定此功能，我們執行以下指令 `git config --global diff.tool vscode`
 
-We are going to run the above and we are going to set some parameters when we launch VScode. 
+我們將執行上述指令，並在啟動 VScode 時設定一些參數。
 
 ![](Images/Day39_Git5.png)
 
-We can also check our configuration with `git config --global -e` 
+我們也可以使用 `git config --global -e` 檢查我們的配置。
 
 ![](Images/Day39_Git6.png)
 
-We can then use `git difftool` to now open our diff visual tool. 
+然後我們可以使用 `git difftool` 現在打開我們的差異視覺化工具。
 
 ![](Images/Day39_Git7.png)
 
-Which then opens our VScode editor on the diff page and compares the two, we have only modified one file from nothing to now adding a line of code on the right side. 
+這會在差異頁面上打開我們的 VScode 編輯器並比較兩者，我們只修改了一個檔案，從沒有內容到現在在右側添加一行程式碼。
 
 ![](Images/Day39_Git8.png)
 
-I find this method much easier to track changes and this is something similar to what we will see when we look into git based services such as GitHub. 
+我發現這種方法更容易追蹤更改，這類似於我們在查看基於 git 的服務（如 GitHub）時會看到的內容。
 
-We can also use `git difftool --staged` to compare stage with committed files. 
+我們也可以使用 `git difftool --staged` 來比較暫存區與已提交的檔案。
 
 ![](Images/Day39_Git9.png)
 
-Then we can cycle through our changed files before we commit. 
+然後我們可以在提交之前循環查看已更改的檔案。
 
 ![](Images/Day39_Git10.png)
 
-I am using VScode as my IDE and like most IDEs they have this functionality built in it is very rare you would need to run these commands from the terminal, although helpful if you don't have an IDE installed for some reason. 
+我使用 VScode 作為我的 IDE，像大多數 IDE 一樣，它們內建了此功能，你很少需要從終端機執行這些指令，儘管如果你由於某種原因沒有安裝 IDE，這會很有幫助。
 
-### Viewing the History
+### 查看歷史
 
-We previously touched on `git log` which will provide us a comprehensive view on all commits we have made in our repository. 
+我們之前提到了 `git log`，它將為我們提供儲存庫中所有提交的全面視圖。
 
 ![](Images/Day39_Git11.png)
 
-Each commit has its own hexadecimal string, unique to the repository. Here you can see which branch we are working on and then also the author, date and commit message. 
+每個提交都有其唯一的十六進位字串，對儲存庫是唯一的。在這裡你可以看到我們正在處理的分支，以及作者、日期和提交訊息。
 
-We also have `git log --oneline` and this gives us a much smaller version of the hexadecimal string whcih we can use in other `diff` commands. We also only have the one line description or commit message. 
+我們還有 `git log --oneline`，這給了我們一個更短的十六進位字串版本，我們可以在其他 `diff` 指令中使用。我們也只有一行描述或提交訊息。
 
 ![](Images/Day39_Git12.png)
 
-We can reverse this into a start with the first commit by running `git log --oneline --reverse` and now we see our first commit at the top of our page. 
+我們可以通過執行 `git log --oneline --reverse` 將此反轉為從第一次提交開始，現在我們在頁面頂部看到我們的第一次提交。
 
 ![](Images/Day39_Git13.png)
 
-### Viewing a Commit
+### 查看提交
 
-Being able to look at the commit message is great if you have been concious about following best practices and you have added a meaningful commit message, however there is also `git show` command which allows us to inspect and view a commit. 
+如果你一直注意遵循最佳實踐並且添加了有意義的提交訊息，能夠查看提交訊息是很棒的，但是，還有 `git show` 指令，允許我們檢查和查看提交。
 
-We can use `git log --oneline --reverse` to get a list of our commits. and then we can take those and run `git show <commit ID>`
+我們可以使用 `git log --oneline --reverse` 來獲取提交列表。然後我們可以使用這些並執行 `git show <commit ID>`
 
 ![](Images/Day39_Git14.png)
 
-The output of that command will look like below with the detail of the commit, author and what actually changed. 
+該指令的輸出將如下所示，包含提交的詳細資訊、作者和更改內容。
 
 ![](Images/Day39_Git15.png)
 
-We can also use `git show HEAD~1` where 1 is how many steps back from the current version we want to get back to. 
+我們也可以使用 `git show HEAD~1`，其中 1 是我們想要從當前版本向後多少步。
 
-This is great if you want some detail on your files, but if we want to list all the files in a tree for the whole snapshot directory. We can achieve this by using the `git ls-tree HEAD~1` command, again going back one snapshot from the last commit. We can see below we have two blobs, these indicate files where as tree would indicate a directory. You can also see commits and tags in this information. 
+如果你想要檔案的一些詳細資訊，這很棒，但如果我們想要列出整個快照目錄的樹狀結構中的所有檔案。我們可以使用 `git ls-tree HEAD~1` 指令來實現這一點，再次從最後一次提交向後一個快照。我們可以在下面看到我們有兩個 blobs，這些表示檔案，而 tree 將表示目錄。你也可以在此資訊中看到提交和標籤。
 
 ![](Images/Day39_Git16.png)
 
-We can then use the above to drill in and see the contents of our file (blobs) using the `git show` command. 
+然後我們可以使用上述內容來深入查看並使用 `git show` 指令查看檔案（blobs）的內容。
 
 ![](Images/Day39_Git17.png)
 
-Then the contents of that specific version of the file will be shown. 
+然後將顯示該特定版本的檔案內容。
 
 ![](Images/Day39_Git18.png)
 
-### Unstaging Files
+### 取消暫存檔案
 
-There will be a time where you have maybe used `git add .` but actually there are files you do not wish to commit to that snapshot just yet. In this example below I have added newfile.txt to my staging area but I am not ready to commit this file so I am going to use the `git restore --staged newfile.txt` to undo the `git add` step. 
+有時你可能使用了 `git add .` 但有些檔案你不想提交到該快照。在下面的範例中，我已經將 newfile.txt 添加到我的暫存區，但我還沒有準備好提交此檔案，所以我將使用 `git restore --staged newfile.txt` 來撤銷 `git add` 步驟。
 
 ![](Images/Day39_Git19.png)
 
-We can also do the same to modified files such as main.js and unstage the commit, see above we have a greem M for modified and then below we are unstaging those changes. 
+我們也可以對修改的檔案（如 main.js）執行相同操作並取消暫存提交，請參閱上面我們有一個綠色的 M 表示已修改，然後下面我們正在取消暫存這些更改。
 
 ![](Images/Day39_Git20.png)
 
-I have actually found this command quite useful during the 90DaysOfDevOps as I sometimes work ahead of the days where I feel I want to make notes for the following day but I don't want to commit and push to the public GitHub repository. 
+我發現在 90DaysOfDevOps 期間這個指令非常有用，因為我有時會提前工作，我想為下一天做筆記，但我不想提交並推送到公共 GitHub 儲存庫。
 
-### Discarding Local Changes
+### 丟棄本地更改
 
-Some times we might make changes but we are not happy with those changes and we want to throw them away. We are going to use the `git restore` command again and we are going to be able to restore files from our snapshots or previous versions. We can run `git restore .` against our directory and we will restore everything from our snapshot but notice that our untracked file is still present. There is no previous file being tracked called newfile.txt. 
+有時我們可能會進行更改，但我們對這些更改不滿意，我們想丟棄它們。我們將再次使用 `git restore` 指令，我們將能夠從快照或先前版本還原檔案。我們可以對目錄執行 `git restore .`，我們將從快照還原所有內容，但請注意我們的未追蹤檔案仍然存在。沒有名為 newfile.txt 的先前檔案被追蹤。
 
 ![](Images/Day39_Git21.png)
 
-Now to remove newfile.txt or any untracked files. We can use `git clean` we will get a warning alone. 
+現在要刪除 newfile.txt 或任何未追蹤的檔案。我們可以使用 `git clean`，我們會收到警告。
 
 ![](Images/Day39_Git22.png)
 
-Or if we know the consequences then we might want to run `git clean -fd` to force and remove all directories. 
+或者，如果我們知道後果，那麼我們可能想要執行 `git clean -fd` 來強制刪除所有目錄。
 
 ![](Images/Day39_Git23.png)
 
-### Restoring a File to an Earlier Version 
+### 將檔案還原到較早的版本
 
-As we have alluded to throughout a big portion of what Git is able to help with is being able to restore copies of your files from your snapshots (this is not a backup but it is a very fast restore point) My advice is that you also save copies of your code in other locations using a backup solution for this. 
+正如我們一直暗示的那樣，Git 可以幫助你做的很大一部分是能夠從快照還原檔案的副本（這不是備份，但它是一個非常快的還原點）我的建議是你還應該使用備份解決方案在其他位置保存程式碼的副本。
 
-As an example let's go and delete our most important file in our directory, notice we are using unix based commands to remove this from the directory, not git commands. 
+作為範例，讓我們刪除目錄中最重要的檔案，請注意我們使用基於 Unix 的指令從目錄中刪除此檔案，而不是 git 指令。
 
 ![](Images/Day39_Git24.png)
 
-Now we have no readme.mdin our working directory. We could have used `git rm readme.md` and this would then be reflected in our git database. Let's also delete from here to simiulate it being removed completely. 
+現在我們的工作目錄中沒有 readme.md。我們可以使用 `git rm readme.md`，這會反映在我們的 git 資料庫中。讓我們也從這裡刪除它以模擬它被完全刪除。
 
 ![](Images/Day39_Git25.png)
 
-Let's now commit this with a message and prove that we no longer have anything in our working directory or staging area. 
+現在讓我們用訊息提交此更改，並證明我們的工作目錄或暫存區中不再有任何內容。
 
 ![](Images/Day39_Git26.png)
 
-Mistakes were made and we now need this file back! 
+犯了錯誤，我們現在需要這個檔案回來！
 
-We could use the `git undo` command which will undo the last commit, but what if it was a while back? We can use our `git log` command to find our commits and then we find that our file is in the last commit but we don't all of those commits to be undone so we can then use this command `git restore --source=HEAD~1 README.md` to specifically find the file and restore it from our snapshot. 
+我們可以使用 `git undo` 指令來撤銷最後一次提交，但如果那是一段時間之前呢？我們可以使用 `git log` 指令找到我們的提交，然後我們發現檔案在最後一次提交中，但我們不希望所有提交都被撤銷，所以我們可以使用此指令 `git restore --source=HEAD~1 README.md` 來專門查找檔案並從快照還原它。
 
-You can see using this process we now have the file back in our working directory. 
+你可以看到使用此過程，我們現在在工作目錄中有檔案回來了。
 
 ![](Images/Day39_Git27.png)
 
-We now have a new untracked file and we can use our commands previously mentioned to track, stage and commit our files and changes. 
+我們現在有一個新的未追蹤檔案，我們可以使用前面提到的指令來追蹤、暫存和提交我們的檔案和更改。
 
-### Rebase vs Merge 
+### Rebase vs Merge
 
-This seems to be the biggest headache when it comes to Git and when to use rebase vs using merge on your git repositories. 
+這似乎是 Git 中最大的頭痛問題，以及何時在 git 儲存庫中使用 rebase 與使用 merge。
 
-The first thing to know is that both `git rebase` and `git merge` solve the same problem. Both are to integrate changes from one brance into another branch. However they do this in different ways. 
+首先要知道的是 `git rebase` 和 `git merge` 都解決了相同的問題。兩者都是將更改從一個分支整合到另一個分支。但是，它們以不同的方式執行此操作。
 
-Let's start with a new feature in a new dedicated branch. The Main branch continues on with new commits. 
+讓我們從新專用分支中的新功能開始。Main 分支繼續進行新的提交。
 
 ![](Images/Day39_Git28.png)
 
-The easy option here is to use `git merge feature main` which will merge the main branch into the feature branch. 
+這裡的簡單選擇是使用 `git merge feature main`，這會將 main 分支合併到 feature 分支中。
 
 ![](Images/Day39_Git29.png)
 
-Merging is easy because it is non-destructive. The existing branches are not changed in any way. However this also means that the feature branch will have an irrellevant merge commit every time you need to incorporate upstream changes. If main is very busy or active this will or can pollute the feature branch history. 
+合併很容易，因為它是非破壞性的。現有分支不會以任何方式更改。但是，這也意味著每次需要合併上游更改時，feature 分支都會有一個不相關的合併提交。如果 main 非常繁忙或活躍，這將或可能污染 feature 分支歷史。
 
-As an alternate option we can rebase the feature branch onto the main branch using 
+作為替代選項，我們可以使用以下方式將 feature 分支 rebase 到 main 分支上
 
 ```
 git checkout feature
 git rebase main
-``` 
-This moves the feature branch (the entire feature branch) effectively incorporating all of the new commits in main. But, instead of using a merge commit, rebasing re-writes the project history by creating brand new commits for each commit in the original branch.
+```
+
+這會移動 feature 分支（整個 feature 分支），有效地合併 main 中的所有新提交。但是，不使用合併提交，rebase 通過為原始分支中的每個提交創建全新的提交來重寫專案歷史。
 
 ![](Images/Day39_Git30.png)
 
-The biggest benefit of rebasing is a much cleaner project history. It also eliminates unnecessary merge commits. and as you compare the last two images, you can follow arguably a much cleaner linear project history. 
+rebase 的最大好處是更清晰的專案歷史。它還消除了不必要的合併提交。當你比較最後兩張圖片時，你可以遵循可以說更清晰的線性專案歷史。
 
-Although it's still not a forgone conclusion, because choosing the cleaner history also comes with tradeoffs, If you do not follow the [The Golden rule of rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing) re-writing project history can be potentially catastrophic for your collaboration workflow. And, less importantly, rebasing loses the context provided by a merge commit—you can’t see when upstream changes were incorporated into the feature.  
+儘管這仍然不是一個必然的結論，選擇更清晰的歷史也伴隨著權衡，如果你不遵循 [The Golden rule of rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing) 重寫專案歷史可能會對你的協作工作流程造成災難性的影響。而且，不太重要的是，rebase 失去了合併提交提供的上下文——你無法看到何時將上游更改合併到功能中。
 
-## Resources 
+## 資源
 
 - [What is Version Control?](https://www.youtube.com/watch?v=Yc8sCSeMhi4)
 - [Types of Version Control System](https://www.youtube.com/watch?v=kr62e_n6QuQ)
-- [Git Tutorial for Beginners](https://www.youtube.com/watch?v=8JJ101D3knE&t=52s) 
-- [Git for Professionals Tutorial](https://www.youtube.com/watch?v=Uszj_k0DGsg) 
-- [Git and GitHub for Beginners - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk&t=8s) 
+- [Git Tutorial for Beginners](https://www.youtube.com/watch?v=8JJ101D3knE&t=52s)
+- [Git for Professionals Tutorial](https://www.youtube.com/watch?v=Uszj_k0DGsg)
+- [Git and GitHub for Beginners - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk&t=8s)
 - [Complete Git and GitHub Tutorial](https://www.youtube.com/watch?v=apGV9Kg7ics)
 - [Git cheatsheet](https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet)
 - [Exploring the Git command line – A getting started guide](https://veducate.co.uk/exploring-the-git-command-line/)
 
-
-See you on [Day40](day40.md) 
+我們[第 40 天](day40.md)見

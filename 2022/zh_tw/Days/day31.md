@@ -7,108 +7,108 @@ cover_image: null
 canonical_url: null
 id: 1049040
 ---
-## Microsoft Azure Compute Models
 
-Following on from covering the basics around security models within Microsoft Azure yesterday today we are going to look into the various compute services available to us in Azure. 
+## Microsoft Azure 計算模型
 
-### Service Availability Options 
+繼昨天涵蓋 Microsoft Azure 內安全模型的基礎知識之後，今天我們將查看 Azure 中可用的各種計算服務。
 
-This section is close to my heart given my role within Data Management. As with on-premises, it is critical to ensure the availability of your services. 
+### 服務可用性選項
 
-- High Availability (Protection within a region)
-- Disaster Recovery (Protection between regions)
-- Backup (Recovery from a point in time)
+本節對我來說很親近，因為我在數據管理中的角色。與本地一樣，確保服務的可用性至關重要。
 
-Microsoft deploys multiple regions within a geopolitical boundary. 
+- 高可用性（區域內的保護）
+- 災難恢復（區域之間的保護）
+- 備份（從時間點恢復）
 
-Two concepts with Azure for Service Availability. Both sets and zones. 
+Microsoft 在地緣政治邊界內部署多個區域。
 
-Availability Sets - Provide resiliency within a datacenter 
+Azure 服務可用性的兩個概念。集合和區域。
 
-Availability Zones - Provide resiliency between data centres within a region.  
+可用性集 - 在數據中心內提供彈性
 
-### Virtual Machines 
+可用性區域 - 在區域內的數據中心之間提供彈性。
 
-Most likely the starting point for anyone in the public cloud. 
+### 虛擬機
 
-- Provides a VM from a variety of series and sizes with different capabilities (Sometimes an overwhelming) [Sizes for Virtual machines in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes)
-- There are many different options and focuses for VMs from high performance, low latency to high memory option VMs. 
-- We also have a burstable VM type which can be found under the B-Series. This is great for workloads where you can have a low CPU requirement for the most part but require that maybe once a month performance spike requirement. 
--  Virtual Machines are placed on a virtual network that can provide connectivity to any network. 
--  Windows and Linux guest OS support. 
--  There are also Azure-tuned kernels when it comes to specific Linux distributions. [Azure Tuned Kernals](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/endorsed-distros#azure-tuned-kernels)
+最可能是任何人在公共雲中的起點。
 
-### Templating 
+- 提供來自各種系列和大小、具有不同功能的 VM（有時很令人困惑）[Azure 中虛擬機的大小](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes)
+- 有許多不同的選項和 VM 的重點，從高性能、低延遲到高內存選項 VM。
+- 我們還有一個可突發的 VM 類型，可以在 B 系列下找到。這對於大部分時間可以具有低 CPU 要求但可能每月需要一次性能峰值要求的工作負載非常有用。
+- 虛擬機放置在虛擬網絡上，可以提供與任何網絡的連接。
+- Windows 和 Linux 客戶 OS 支持。
+- 當涉及特定 Linux 發行版時，還有 Azure 調整的內核。[Azure Tuned Kernals](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/endorsed-distros#azure-tuned-kernels)
 
-I have mentioned before that everything behind or underneath Microsoft Azure is JSON. 
+### 模板化
 
-There are several different management portals and consoles we can use to create our resources the preferred route is going to be via JSON templates. 
+我之前提到過，Microsoft Azure 背後或下面的所有內容都是 JSON。
 
-Idempotent deployments in incremental or complete mode - i.e repeatable desired state. 
+有幾種不同的管理門戶和控制台，我們可以使用它們來創建資源，首選路由將是通過 JSON 模板。
 
-There is a large selection of templates that can export deployed resource definitions. I like to think about this templating feature to something like AWS CloudFormation or could be Terraform for a multi-cloud option. We will cover Terraform more in the Infrastructure as code section. 
+增量或完整模式中的冪等部署 - 即可重複的期望狀態。
 
-### Scaling
+有大量模板可以導出已部署的資源定義。我喜歡將此模板功能視為類似 AWS CloudFormation 或可能是 Terraform 用於多雲選項。我們將在基礎設施即代碼部分更多地涵蓋 Terraform。
 
-Automatic scaling is a large feature of the Public Cloud, being able to spin down resources you are not using or spinning up when you need them. 
+### 擴展
 
-In Azure, we have something called Virtual Machine Scale Sets (VMSS) for IaaS. This enables the automatic creation and scale from a gold standard image based on schedules and metrics. 
+自動擴展是公共雲的一個重要功能，能夠關閉你未使用的資源或在需要時啟動它們。
 
-This is ideal for updating windows so that you can update your images and roll those out with the least impact. 
+在 Azure 中，對於 IaaS，我們有一個名為虛擬機規模集 (VMSS) 的東西。這允許基於計劃和指標從黃金標準鏡像自動創建和擴展。
 
-Other services such as Azure App Services have auto-scaling built-in. 
+這對於更新 windows 是理想的，這樣你就可以更新鏡像並以最少的影響推出它們。
 
-### Containers 
+其他服務，如 Azure App Services，內置了自動擴展。
 
-We have not covered containers as a use case and what and how they can and should be needed in our DevOps learning journey but we need to mention that Azure have some specific container focused services to mention. 
+### 容器
 
-Azure Kubernetes Service (AKS) - Provides a managed Kubernetes solution, no need to worry about the control plane or management of the underpinning cluster management. More on Kubernetes also later on. 
+我們還沒有將容器作為用例進行涵蓋，以及它們在 DevOps 學習旅程中可以和應該需要什麼以及如何需要，但我們需要提到 Azure 有一些特定的以容器為重點的服務要提及。
 
-Azure Container Instances - Containers as a service with Per-Second Billing. Run an image and integrate with your virtual network, no need for Container Orchestration. 
+Azure Kubernetes Service (AKS) - 提供託管 Kubernetes 解決方案，無需擔心控制平面或基礎集群管理的管理。稍後還有更多關於 Kubernetes 的內容。
 
-Service Fabric - Has many capabilities but includes orchestration for container instances. 
+Azure Container Instances - 按秒計費的容器即服務。運行鏡像並將其與虛擬網絡集成，無需容器編排。
 
-Azure also has the Container Registry which provides a private registry for Docker Images, Helm charts, OCI Artifacts and images. More on this again when we reach the containers section. 
+Service Fabric - 具有許多功能，但包括容器實例的編排。
 
-We should also mention that a lot of the container services may indeed also leverage containers under the hood but this is abstracted away from your requirement to manage. 
+Azure 還擁有 Container Registry，它為 Docker 鏡像、Helm charts、OCI Artifacts 和鏡像提供私有註冊表。當我們到達容器部分時，還有更多關於此的內容。
 
-These mentioned container focused services we also find similar services in all other public clouds. 
+我們還應該提到，許多容器服務實際上也可能在幕後利用容器，但這從你需要管理的內容中抽象出來。
 
-### Application Services 
+這些提到的以容器為重點的服務，我們在所有其他公共雲中也發現類似的服務。
 
-- Azure Application Services provides an application hosting solution that provides an easy method to establish services. 
-- Automatic Deployment and Scaling. 
-- Supports Windows & Linux based solutions. 
-- Services run in an App Service Plan which has a type and size. 
-- Number of different services including web apps, API apps and mobile apps. 
-- Support for Deployment slots for reliable testing and promotion. 
+### 應用服務
 
-### Serverless Computing 
+- Azure Application Services 提供應用程序託管解決方案，提供建立服務的簡單方法。
+- 自動部署和擴展。
+- 支持基於 Windows 和 Linux 的解決方案。
+- 服務在具有類型和大小的 App Service Plan 中運行。
+- 許多不同的服務，包括 web 應用、API 應用和移動應用。
+- 支持部署槽，用於可靠的測試和推廣。
 
-Serverless for me is an exciting next step that I am extremely interested in learning more about. 
+### 無服務器計算
 
-The goal with serverless is that we only pay for the runtime of the function and do not have to have running virtual machines or PaaS applications running all the time. We simply run our function when we need it and then it goes away. 
+對我來說，無服務器是一個令人興奮的下一步，我非常感興趣學習更多關於它的知識。
 
-Azure Functions - Provides serverless code. If we remember back to our first look into the public cloud you will remember the abstraction layer of management, with serverless functions you are only going to be managing the code. 
+無服務器的目標是我們只為函數的運行時付費，不必一直運行虛擬機或 PaaS 應用程序。我們只需在需要時運行函數，然後它就消失了。
 
-Event-Driven with massive scale, I have a plan to build something when I get some hands-on here hopefully later on. 
+Azure Functions - 提供無服務器代碼。如果我們記得回到我們對公共雲的第一次查看，我們會記住管理的抽象層，對於無服務器函數，你只需要管理代碼。
 
-Provides input and output binding to many Azure and 3rd Party Services. 
+事件驅動且規模巨大，我計劃在稍後希望親自動手時構建一些東西。
 
-Supports many different programming languages. (C#, NodeJS, Python, PHP, batch, bash, Golang and Rust. Or any Executable)
+為許多 Azure 和第三方服務提供輸入和輸出綁定。
 
-Azure Event Grid enables logic to be triggered from services and events. 
+支持許多不同的程式語言。（C#、NodeJS、Python、PHP、batch、bash、Golang 和 Rust。或任何可執行文件）
 
-Azure Logic App provides a graphical-based workflow and integration. 
+Azure Event Grid 使邏輯能夠從服務和事件中觸發。
 
-We can also look at Azure Batch which can run large-scale jobs on both Windows and Linux nodes with consistent management & scheduling. 
+Azure Logic App 提供基於圖形的工作流和集成。
 
-## Resources 
+我們還可以查看 Azure Batch，它可以在 Windows 和 Linux 節點上運行大規模作業，具有一致的管理和調度。
+
+## 資源
 
 - [Hybrid Cloud and MultiCloud](https://www.youtube.com/watch?v=qkj5W98Xdvw)
 - [Microsoft Azure Fundamentals](https://www.youtube.com/watch?v=NKEFWyqJ5XA&list=WL&index=130&t=12s)
 - [Google Cloud Digital Leader Certification Course](https://www.youtube.com/watch?v=UGRDM86MBIQ&list=WL&index=131&t=10s)
 - [AWS Basics for Beginners - Full Course](https://www.youtube.com/watch?v=ulprqHHWlng&t=5352s)
 
-See you on [Day 32](day32.md) 
-
+我們[Day 32](day32.md)見

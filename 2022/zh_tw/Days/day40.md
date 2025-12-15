@@ -1,210 +1,210 @@
 ---
-title: '#90DaysOfDevOps - Social Network for code - Day 40'
+title: '#90DaysOfDevOps - 程式碼的社交網路 - 第 40 天'
 published: false
-description: 90DaysOfDevOps - Social Network for code
+description: 90DaysOfDevOps - 程式碼的社交網路
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1049044
 ---
-## Social Network for code
-Exploring GitHub | GitLab | BitBucket 
 
-Today I want to cover off some of the git based services that we have likely all heard of and expect we also use on a daily basis. 
+## 程式碼的社交網路
 
-We will then use some of our prior session knowledge to move copies of our data to each of the main services. 
+探索 GitHub | GitLab | BitBucket
 
-I called this section "Social Network for Code" let me explain why? 
+今天我想介紹一些基於 git 的服務，我們可能都聽說過，並且預期我們也會日常使用。
 
-### GitHub 
+然後我們將使用之前課程的一些知識，將我們的資料副本移動到每個主要服務。
 
-Most common at least for me is GitHub, GitHub is a web based hosting service for git. It is most commonly used by software developers to store their code in. Source Code Management with the git version control features as well as a lot of additional features. It allows for teams or open contributors to easily communicate and provides a social aspect to coding. (hence the social networking title) Since 2018 GitHub is part of Microsoft. 
+我將這部分稱為「程式碼的社交網路」，讓我解釋為什麼？
 
-GitHub has been around for quite some time and was founded in 2007/2008. With Over 40 million users on the platform today. 
+### GitHub
 
-GitHub Main Features 
+最常見的至少對我來說是 GitHub，GitHub 是一個基於 Web 的 git 託管服務。它最常被軟體開發人員用來儲存他們的程式碼。具有 git 版本控制功能的原始碼管理以及許多額外功能。它允許團隊或開源貢獻者輕鬆溝通，並提供編碼的社交層面。（因此有社交網路這個標題）自 2018 年起，GitHub 成為 Microsoft 的一部分。
 
-- Code Repository 
-- Pull Requests 
-- Project Management toolset - Issues 
-- CI / CD Pipeline - GitHub Actions 
+GitHub 已經存在了相當長的一段時間，成立於 2007/2008 年。如今平台上有超過 4000 萬用戶。
 
-In terms of pricing GitHub have various different levels of pricing for their users. More can be found on [Pricing](https://github.com/pricing) 
+GitHub 主要功能
 
-For the purpose of this we will cover the free tier. 
+- 程式碼儲存庫
+- Pull Requests
+- 專案管理工具集 - Issues
+- CI / CD 管道 - GitHub Actions
 
-I am going to be using my already created GitHub account during this walkthrough, if you do not have an account then on the opening GitHub page there is a sign up option and some easy steps to get set up. 
+在定價方面，GitHub 為用戶提供不同級別的定價。更多資訊可以在[定價](https://github.com/pricing)頁面找到。
 
-### GitHub opening page
+在這方面，我們將涵蓋免費層級。
 
-When you first login to your GitHub account you get a page containing a lot of widgets giving you options of where and what you would like to see or do. First up we have the "All Activity" this is going to give you a look into what is happening with your repositories or activity in general associated to your organisation or account. 
+我將在此演練中使用我已經創建的 GitHub 帳戶，如果你沒有帳戶，那麼在 GitHub 首頁有註冊選項和一些簡單的設置步驟。
+
+### GitHub 首頁
+
+當你首次登入 GitHub 帳戶時，你會看到一個包含許多小工具的頁面，為你提供想要查看或執行的選項。首先我們有「All Activity」（所有活動），這將讓你了解儲存庫或與你的組織或帳戶相關的活動正在發生什麼。
 
 ![](Images/Day40_Git1.png)
 
-Next we have our Code Repositories, either our own or repositories that we have interacted with recently. We can also quickly create new repositories or search repositories. 
+接下來，我們有程式碼儲存庫，無論是我們自己的還是我們最近互動過的儲存庫。我們也可以快速創建新儲存庫或搜尋儲存庫。
 
 ![](Images/Day40_Git2.png)
 
-We then have our recent activity, these for me are issues and pull requests that I have created or contributed to recently. 
+然後我們有最近的活動，對我來說，這些是我最近創建或貢獻的 issues 和 pull requests。
 
 ![](Images/Day40_Git3.png)
 
-Over on the right side of the page we have some referrals for repositories that we might be interested in, most likely based on your recent activity or own projects. 
+在頁面的右側，我們有一些可能感興趣的儲存庫推薦，最可能是基於你最近的活動或自己的專案。
 
 ![](Images/Day40_Git4.png)
 
-To be honest I am very rarely on my home page that we just saw and described, although I now see that the feed could be really useful to help interacting with the community a little better on certain projects. 
+老實說，我很少在我剛剛看到和描述的首頁上，儘管我現在看到這個動態訊息可能真的很有用，可以在某些專案上幫助更好地與社群互動。
 
-Next up if we want to head into our GitHub Profile we can navigate to the top right corner and on your image there is a drop down which allows you to navigate through your account. From here to access your Profile select "Your Profile" 
+接下來，如果我們想進入 GitHub 個人資料，我們可以導航到右上角，在你的圖像上，有一個下拉選單，允許你導航你的帳戶。從這裡訪問你的個人資料，選擇「Your Profile」（你的個人資料）
 
 ![](Images/Day40_Git5.png)
 
-Next, your profile page will appear, by default unless you change your configuration you are not going to see what I have, I have added some functionality that shows my recent blog posts over on [vZilla](https://vzilla.co.uk) and then also my latest videos on my [YouTube](https://m.youtube.com/c/MichaelCade1) Channel. 
+接下來，你的個人資料頁面將出現，預設情況下，除非你更改配置，否則你不會看到我有的內容，我添加了一些功能，顯示我在 [vZilla](https://vzilla.co.uk) 上的最近部落格文章，以及我在 [YouTube](https://m.youtube.com/c/MichaelCade1) 頻道上的最新影片。
 
-Personally you are not going to be spending much time looking at your own profile, but this is a good profile page to share around your network so they can see the cool projects you are working on. 
+你不會花太多時間查看自己的個人資料，但這是一個很好的個人資料頁面，可以在你的網路中分享，這樣他們可以看到你正在處理的酷專案。
 
 ![](Images/Day40_Git6.png)
 
-We can then drill down into the building block of GitHub, the repositories. Here you are going to see your own repositories and if you have private repositories they are also going to be shown in this long list. 
+然後我們可以深入了解 GitHub 的基礎構建塊，即儲存庫。在這裡，你會看到你的儲存庫，如果你有私有儲存庫，它們也會顯示在這個長列表中。
 
 ![](Images/Day40_Git7.png)
 
-As the repository is so important to GitHub let me choose a pretty busy one of late and run through some of the core functionality that we can use here on top of everything I am already using when it comes to editing our "code" in git on my local system. 
+由於儲存庫對 GitHub 非常重要，讓我選擇一個最近相當活躍的儲存庫，並介紹一些我們可以在這裡使用的核心功能，除了我在本地系統上的 git 中編輯「程式碼」時已經使用的所有功能。
 
-First of all from the previous window I have selected the 90DaysOfDevOps repository and we get to see this view. You can see from this view we have a lot of information, we have our main code structure in the middle showing our files and folders that are stored in our repository. We have our readme.mdbeing displayed down at the bottom. Over to the right of the page we have an about section where the repository has a description and purpose. Then we have lot of information underneath this showing how many people have starred the project, forked, and watching. 
+首先，從上一個視窗，我選擇了 90DaysOfDevOps 儲存庫，我們可以看到這個視圖。你可以從這個視圖中看到我們有很多資訊，中間有主要的程式碼結構，顯示儲存在儲存庫中的檔案和資料夾。我們的 readme.md 顯示在底部。在頁面的右側，我們有一個關於部分，其中儲存庫有描述和目的。然後在下面有很多資訊，顯示有多少人為專案加星標、分叉和關注。
 
 ![](Images/Day40_Git8.png)
 
-If we scroll down a little further you will also see that we have Releases, these are from the golang part of the challenge. We do not have any packages in our project, we have our contributers listed here. (Thank you community for assisting in my spelling and fact checking) We then have languages used again these are from different sections in the challenge.  
+如果我們向下滾動一點，你還會看到我們有 Releases（發布），這些來自挑戰的 golang 部分。我們的專案中沒有任何套件，我們在這裡列出了貢獻者。（感謝社群協助我的拼寫和事實檢查）然後我們再次有使用的語言，這些來自挑戰的不同部分。
 
 ![](Images/Day40_Git9.png)
 
-A the top of the page you are going to see a list of tabs. These may vary and these can be modified to only show the ones you require. You will see here that I am not using all of these and I should remove them to make sure my whole repository is tidy. 
+在頁面頂部，你會看到一個標籤列表。這些可能會有所不同，可以修改為只顯示你需要的那些。你會在這裡看到我沒有使用所有這些，我應該刪除它們以確保我的整個儲存庫整潔。
 
-First up we had the code tab which we just discussed but these tabs are always available when navigating through a repository which is super useful so we can jump between sections quickly and easily. Next we have the issues tab. 
+首先，我們有程式碼標籤，這是我們剛剛討論的，但這些標籤在瀏覽儲存庫時始終可用，這非常有用，所以我們可以快速輕鬆地在各部分之間跳轉。接下來，我們有 issues 標籤。
 
-Issues let you track your work on GitHub, where development happens. In this specific repository you can see I have some issues focused on adding diagrams or typos but also we have an issue stating a need or requirement for a Chinese version of the repository. 
+Issues 讓你在 GitHub 上追蹤你的工作，開發發生的地方。在這個特定的儲存庫中，你可以看到我有一些專注於添加圖表或拼寫錯誤的 issues，但我們也有一個說明需要或要求儲存庫中文版本的 issue。
 
-If this was a code repository then this is a great place to raise concerns or issues with the maintainers, but remember be mindful and detailed about what you are reporting, give as much detail as possible. 
+如果這是一個程式碼儲存庫，那麼這是向維護者提出關注或問題的好地方，但請記住要仔細考慮和詳細說明你報告的內容，並盡可能提供詳細資訊。
 
 ![](Images/Day40_Git10.png)
 
-The next tab is Pull Requests, Pull requests let you tell others about changes you've pushed to a branch in a repository. This is where someone may have forked your repository, made changes such as bug fixes or feature enhancements or just typos a lot of the case in this repository. 
+下一個標籤是 Pull Requests，Pull requests 讓你可以告訴其他人你已經推送到儲存庫分支的更改。這是某人可能分叉你的儲存庫、進行更改（例如錯誤修復或功能增強）或在這個儲存庫的許多情況下只是拼寫錯誤的地方。
 
-We will cover forking later on. 
+我們稍後會介紹分叉。
 
 ![](Images/Day40_Git11.png)
 
-I believe the next tab is quite new? But I thought for a project like #90DaysOfDevOps this could really help guide the content journey but also help the community as they walk through their own learning journey. I have created some discussion groups for each section of the challenge so people can jump in and discuss. 
+我相信下一個標籤是相當新的？但我認為對於像 #90DaysOfDevOps 這樣的專案，這可以幫助指導內容旅程，也可以幫助社群在他們完成學習旅程時。我為挑戰的每個部分創建了一些討論組，以便人們可以參與並討論。
 
 ![](Images/Day40_Git12.png)
 
-The Actions tab is going to enable you to build, test and deploy code and a lot more right from within GitHub. GitHub Actions will be something we cover in the CI/CD section of the challenge but this is where we can set some configuration here to automate steps for us. 
+Actions 標籤將使你能夠從 GitHub 內構建、測試和部署程式碼以及更多內容。GitHub Actions 將是我們在挑戰的 CI/CD 部分中涵蓋的內容，但這是我們可以在這裡設置一些配置以自動化步驟的地方。
 
-On my main GitHub Profile I am using GitHub Actions to fetch the latest blog posts and YouTube videos to keep things up to date on that home screen. 
+在我的主要 GitHub 個人資料上，我正在使用 GitHub Actions 來獲取最新的部落格文章和 YouTube 影片，以保持該主螢幕的更新。
 
 ![](Images/Day40_Git13.png)
 
-I mentioned above about how GitHub is not just a source code repository but it is also a project management tool, The Project tab enables us to build out project tables kanban type boards so that we can link issues and PRs to better collaborate on the project and have a visibility of those tasks. 
+我在上面提到了 GitHub 不僅是原始碼儲存庫，還是專案管理工具，Project 標籤使我們能夠構建專案表格看板類型的看板，以便我們可以將 issues 和 PR 連結起來，更好地協作專案並具有這些任務的可見性。
 
 ![](Images/Day40_Git14.png)
 
-I know that issues to me seems like a good place to log feature requests and they are but the wiki page allows for a comprehensive roadmap for the project to be outlined with the current status and in general better document your project be it troubleshooting or how-to type content. 
+我知道 issues 對我來說似乎是記錄功能請求的好地方，它們確實是，但 wiki 頁面允許為專案制定全面的路線圖，概述當前狀態，並通常更好地記錄你的專案，無論是故障排除還是操作指南類型的內容。
 
 ![](Images/Day40_Git15.png)
 
-Not so applicable to this project but the Security tab is really there to make sure that contributers know how to deal with certain tasks, we can define a policy here but also code scanning add-ons to make sure your code for example does not contain secret environment variables. 
+不太適用於這個專案，但 Security 標籤是為了確保貢獻者知道如何處理某些任務，我們可以在這裡定義策略，還可以進行程式碼掃描附加元件，以確保你的程式碼例如不包含機密環境變數。
 
 ![](Images/Day40_Git16.png)
 
-For me the insights tab is great, it provides so much information about the repository from how much activity has been going on down to commits and issues, but it also reports on traffic to the repository. You can see a list on the left side that allows you to go into great detail about metrics on the repository. 
+對我來說，insights 標籤很棒，它提供了有關儲存庫的大量資訊，從正在進行的活動量到提交和 issues，但它還報告儲存庫的流量。你可以在左側看到一個列表，允許你深入了解儲存庫的指標。
 
 ![](Images/Day40_Git17.png)
 
-Finally we have the Settings tab, this is where we can get into the details of how we run our repository, I am currently the only maintainer of the repository but we could share this responsibility here. We can define integrations and other such tasks here. 
+最後，我們有 Settings 標籤，這是我們可以深入了解如何運行儲存庫的地方，我目前是儲存庫的唯一維護者，但我們可以在這裡分享這個責任。我們可以在這裡定義整合和其他此類任務。
 
 ![](Images/Day40_Git18.png)
 
-This was a super quick overview of GitHub, I think there are some other areas that I might have mentioned that need explaining in a little more detail. As mentioned GitHub houses millions of repositories mostly these are holding source code and these can be public or privately accessible. 
+這是 GitHub 的超快速概述，我認為還有一些其他我可能提到的領域需要更詳細的解釋。如前所述，GitHub 擁有數百萬個儲存庫，主要是儲存原始碼，這些可以是公開或私有訪問。
 
-### Forking 
+### Forking
 
-I am going to get more into Open-Source in the session tomorrow but a big part of any code repository is the ability to collaborate with the community. Let's think of the scenario I want a copy of a repository because I want to make some changes to it, maybe I want to fix a bug or maybe I want to change something to use it for a use case that I have that was maybe not the intended use case for the original maintainer of the code. This is what we would call forking a repository. A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project. 
+我將在明天的課程中更深入地介紹開源，但任何程式碼儲存庫的一個重要部分是與社群協作的能力。讓我們想想這個場景，我想要一個儲存庫的副本，因為我想對它進行一些更改，也許我想修復一個錯誤，或者也許我想更改一些東西以用於我有的用例，這可能不是原始程式碼維護者預期的用例。這就是我們所說的分叉儲存庫。Fork 是儲存庫的副本。分叉儲存庫允許你自由地進行更改實驗，而不會影響原始專案。
 
-Let me head back to the opening page after login and see one of those suggested repositories. 
+讓我回到登入後的首頁，看看其中一個推薦的儲存庫。
 
 ![](Images/Day40_Git19.png)
 
-If we click on that repository we are going to get the same look as we have just walked through on the 90DaysOfDevOps repository. 
+如果我們點擊該儲存庫，我們將看到與我們剛剛在 90DaysOfDevOps 儲存庫中看到的相同外觀。
 
 ![](Images/Day40_Git20.png)
 
-If we notice below we have 3 options, we have watch, fork and star. 
+如果我們注意到下面有三個選項，我們有 watch、fork 和 star。
 
-- Watch - Updates when things happen to the repository.  
-- Fork - copy of a repository.
-- Star - "I think your project is cool"
+- Watch - 當儲存庫發生事情時更新。
+- Fork - 儲存庫的副本。
+- Star - 「我認為你的專案很酷」
 
 ![](Images/Day40_Git21.png)
 
-Given our scenario of wanting a copy of this repository to work on we are going to hit the fork option. If you are a member of multiple organisations then you will have to choose where the fork will take place, I am going to choose my profile. 
+鑑於我們想要此儲存庫的副本來工作的場景，我們將點擊 fork 選項。如果你是多個組織的成員，則必須選擇分叉將在哪裡進行，我將選擇我的個人資料。
 
 ![](Images/Day40_Git22.png)
 
-Now we have our own copy of the repository that we can freely work on and change as we see fit. This would be the start of the pull request process that we mentioned briefly before but we will cover in more detail tomorrow. 
+現在我們有了儲存庫的副本，我們可以自由地工作並根據需要進行更改。這將是我們之前簡要提到的 pull request 過程的開始，但我們將在明天更詳細地介紹它。
 
 ![](Images/Day40_Git23.png)
 
-Ok I hear you say, but how do I make changes to this repository and code if its on a website, well you can go through and edit on the website but its not going to be the same as using your favourite IDE on your local system with your favourite colour theme. In order for us to get a copy of this repository on our local machine we will perform a clone of the repository. This will allow us to work on things locally and then push our changes back into our forked copy of the repository. 
+好的，我聽到你說，但如果它在網站上，我如何對這個儲存庫和程式碼進行更改，好吧，你可以通過網站進行編輯，但它不會與在本地系統上使用你最喜歡的 IDE 和你最喜歡的顏色主題相同。為了在本地機器上獲取此儲存庫的副本，我們將執行儲存庫的克隆。這將使我們能夠在本地工作，然後將更改推送到我們分叉的儲存庫副本。
 
-We have several options when it comes to getting a copy of this code as you can see below. 
+在獲取此程式碼的副本時，我們有幾個選項，如下所示。
 
-There is a local version available of GitHub Desktop which gives you a visual desktop application to track changes and push and pull changes between local and github. 
+有一個本地版本的 GitHub Desktop，它為你提供視覺化桌面應用程式來追蹤更改，並在本地和 GitHub 之間推送和拉取更改。
 
-For the purpose of this little demo I am going to use the HTTPS url we see on there. 
+對於這個小演示，我將使用我們在那裡看到的 HTTPS URL。
 
 ![](Images/Day40_Git24.png)
 
-Now on our local machine, I am going to navigate to a directory I am happy to download this repository to and then run `git clone url` 
+現在在我們的本地機器上，我將導航到我願意下載此儲存庫的目錄，然後執行 `git clone url`
 
 ![](Images/Day40_Git25.png)
 
-Now we could take to VScode to really make some changes to this. 
+現在我們可以將其帶到 VScode 對其進行一些更改。
 
 ![](Images/Day40_Git26.png)
 
-Let's now make some changes, I want to make a change to all those links and replace that with something else. 
+現在讓我們進行一些更改，我想更改所有這些連結並用其他東西替換它們。
 
 ![](Images/Day40_Git27.png)
 
-Now if we check back on GitHub and we find our readme.mdin that repository, you should be able to see a few changes that I made to the file. 
+現在如果我們回到 GitHub 並在該儲存庫中找到我們的 readme.md，你應該能夠看到我對檔案進行的一些更改。
 
 ![](Images/Day40_Git28.png)
 
-At this stage this might be complete and we might be happy with our change as we are the only people going to use our new change but maybe it was a bug change and if that is the case then we will want to contribute via a Pull Request to notify the original repository maintainers of our change and see if they accept our changes. 
+在這個階段，這可能已經完成，我們可能對我們的更改感到滿意，因為我們是唯一會使用我們新更改的人，但也許這是一個錯誤更改，如果是這種情況，那麼我們將希望通過 Pull Request 來貢獻，以通知原始儲存庫維護者我們的更改，並查看他們是否接受我們的更改。
 
-We can do this by using the contribute button highlighted below. I will cover more on this tomorrow when we look into Open-Source workflows. 
+我們可以通過使用下面突出顯示的 contribute 按鈕來執行此操作。當我們研究開源工作流程時，我將在明天更詳細地介紹這一點。
 
 ![](Images/Day40_Git29.png)
 
-I have spent a long time looking through GitHub and I hear some of you cry but what about other options! 
+我花了很長時間查看 GitHub，我聽到你們中的一些人說，但其他選項呢！
 
-Well there are and I am going to find some resources that cover the basics for some of those as well. You are going to come across GitLab and BitBucket amongst others in your travels and whilst they are git based services they have their differences. 
+好吧，還有其他選項，我將找一些資源來涵蓋其中一些的基礎知識。在你的旅程中，你會遇到 GitLab 和 BitBucket 等服務，雖然它們是基於 git 的服務，但它們有各自的差異。
 
-You will also come across hosted options. Most commonly here I have seen GitLab as a hosted version vs GitHub Enterprise (Don't believe there is a free hosted GitHub?)
+你還會遇到託管選項。在這裡，我最常看到 GitLab 作為託管版本，與 GitHub Enterprise 相比（我不相信有免費的託管 GitHub？）
 
-
-## Resources 
+## 資源
 
 - [Learn GitLab in 3 Hours | GitLab Complete Tutorial For Beginners](https://www.youtube.com/watch?v=8aV5AxJrHDg)
 - [BitBucket Tutorials Playlist](https://www.youtube.com/watch?v=OMLh-5O6Ub8&list=PLaD4FvsFdarSyyGl3ooAm-ZyAllgw_AM5)
 - [What is Version Control?](https://www.youtube.com/watch?v=Yc8sCSeMhi4)
 - [Types of Version Control System](https://www.youtube.com/watch?v=kr62e_n6QuQ)
-- [Git Tutorial for Beginners](https://www.youtube.com/watch?v=8JJ101D3knE&t=52s) 
-- [Git for Professionals Tutorial](https://www.youtube.com/watch?v=Uszj_k0DGsg) 
-- [Git and GitHub for Beginners - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk&t=8s) 
+- [Git Tutorial for Beginners](https://www.youtube.com/watch?v=8JJ101D3knE&t=52s)
+- [Git for Professionals Tutorial](https://www.youtube.com/watch?v=Uszj_k0DGsg)
+- [Git and GitHub for Beginners - Crash Course](https://www.youtube.com/watch?v=RGOj5yH7evk&t=8s)
 - [Complete Git and GitHub Tutorial](https://www.youtube.com/watch?v=apGV9Kg7ics)
 - [Git cheatsheet](https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet)
 
-
-See you on [Day 41](day41.md) 
+我們[第 41 天](day41.md)見
