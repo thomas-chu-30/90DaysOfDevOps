@@ -1,55 +1,55 @@
-# Runtime access control
+# 運行時訪問控制
 
-Runtime access control is crucial in a computer system because it helps ensure the security and integrity of a computer system cluster and the applications running on it. A computer system is a complex system with many moving parts, and it is essential to control access to these components to prevent unauthorized access or malicious activities.
+運行時訪問控制在計算機系統中至關重要，因為它有助於確保計算機系統集群及其上運行的應用程式的安全性和完整性。計算機系統是一個具有許多移動部件的複雜系統，控制對這些組件的訪問以防止未授權訪問或惡意活動至關重要。
 
-Here are some reasons why runtime access control is important in a computer system:
+以下是運行時訪問控制在計算機系統中很重要的一些原因：
 
-Protects the Cluster from Unauthorized Access: Access control ensures that only authorized users or processes can interact with the computer system API server or cluster components. Unauthorized access could result in data breaches, theft of sensitive information, or compromise of the entire cluster.
+保護集群免受未授權訪問：訪問控制確保只有授權用戶或進程可以與計算機系統 API 伺服器或集群組件交互。未授權訪問可能導致數據洩露、敏感資訊被盜或整個集群受到損害。
 
-Prevents Misuse of Resources: computer system manages and allocates resources such as CPU, memory, and network bandwidth. Access control helps ensure that these resources are used appropriately and that applications are not using more resources than they need.
+防止資源濫用：計算機系統管理和分配資源，如 CPU、記憶體和網路頻寬。訪問控制有助於確保這些資源得到適當使用，並且應用程式不會使用超過其需要的資源。
 
-Ensures Compliance: Access control helps ensure that the computer system and the applications running on it comply with organizational policies, industry standards, and regulatory requirements such as HIPAA, GDPR, or PCI-DSS.
+確保合規性：訪問控制有助於確保計算機系統及其上運行的應用程式符合組織政策、行業標準和監管要求，如 HIPAA、GDPR 或 PCI-DSS。
 
-Facilitates Auditing and Accountability: Access control provides an audit trail of who accessed what resources and when. This information is useful for tracking down security incidents, troubleshooting, and compliance reporting.
+促進審計和問責制：訪問控制提供誰在何時訪問了哪些資源的審計追蹤。這些資訊對於追蹤安全事件、故障排除和合規報告很有用。
 
-For example, Kubernetes provides several mechanisms for access control, including authnetication mechanisms, access control (RBAC), admission control, Network Policies, and more. It is important to properly configure and manage access control to ensure the security and reliability of a computer system cluster.
+例如，Kubernetes 提供了幾種訪問控制機制，包括身份驗證機制、訪問控制（RBAC）、准入控制、網路策略等。正確配置和管理訪問控制以確保計算機系統集群的安全性和可靠性很重要。
 
-## Authentication
+## 身份驗證
 
-Authentication is the process of verifying the identity of a user or process attempting to access the Kubernetes API server or cluster resources. Kubernetes provides several authentication mechanisms, including X.509 client certificates, bearer tokens, and OpenID Connect (OIDC) tokens.
+身份驗證是驗證嘗試訪問 Kubernetes API 伺服器或集群資源的用戶或進程身份的過程。Kubernetes 提供了幾種身份驗證機制，包括 X.509 客戶端證書、Bearer token 和 OpenID Connect (OIDC) token。
 
-X.509 client certificates are the most secure and widely used authentication mechanism in Kubernetes. In this method, a client presents a valid X.509 client certificate to the API server, which verifies the certificate against a trusted Certificate Authority (CA).
+X.509 客戶端證書是 Kubernetes 中最安全且廣泛使用的身份驗證機制。在這種方法中，客戶端向 API 伺服器提供有效的 X.509 客戶端證書，API 伺服器根據受信任的證書頒發機構（CA）驗證證書。
 
-Bearer tokens are another popular authentication mechanism in Kubernetes. A bearer token is a string of characters that represents the identity of a user or process. The API server validates the token against a configured TokenReview API server.
+Bearer token 是 Kubernetes 中另一種流行的身份驗證機制。Bearer token 是一個字元串，代表用戶或進程的身份。API 伺服器根據配置的 TokenReview API 伺服器驗證 token。
 
-OIDC tokens are a newer authentication mechanism in Kubernetes. OIDC is an identity layer on top of the OAuth 2.0 protocol that enables authentication and authorization using third-party identity providers such as Google, Azure, or Okta.
+OIDC token 是 Kubernetes 中較新的身份驗證機制。OIDC 是 OAuth 2.0 協議之上的身份層，使用第三方身份提供者（如 Google、Azure 或 Okta）啟用身份驗證和授權。
 
-Kubernetes also supports Webhook token authentication, in which the API server sends an authentication request to a configured webhook service. The webhook service validates the request and returns a response indicating whether the authentication succeeded or failed.
+Kubernetes 還支援 Webhook token 身份驗證，其中 API 伺服器將身份驗證請求發送到配置的 webhook 服務。Webhook 服務驗證請求並返回指示身份驗證成功或失敗的響應。
 
-In addition to authentication, Kubernetes provides authorization mechanisms that control access to specific resources. Role-Based Access Control (RBAC) is the most widely used authorization mechanism in Kubernetes. RBAC allows administrators to define roles and permissions for users or groups of users based on their job functions or responsibilities.
+除了身份驗證之外，Kubernetes 還提供控制對特定資源訪問的授權機制。基於角色的訪問控制（RBAC）是 Kubernetes 中最廣泛使用的授權機制。RBAC 允許管理員根據用戶或用戶組的工作職能或職責為他們定義角色和權限。
 
-Kubernetes also provides other authorization mechanisms such as Attribute-Based Access Control (ABAC) and Node Authorization.
+Kubernetes 還提供其他授權機制，如基於屬性的訪問控制（ABAC）和節點授權。
 
-Authentication and authorization are essential components of securing a Kubernetes cluster. They help ensure that only authorized users and processes can access cluster resources and protect against unauthorized access, data breaches, and other security threats.
+身份驗證和授權是保護 Kubernetes 集群的重要組成部分。它們有助於確保只有授權用戶和進程可以訪問集群資源，並防止未授權訪問、數據洩露和其他安全威脅。
 
-Kubernetes administrators should carefully configure and manage authentication and authorization to ensure the security and reliability of their clusters. Best practices include using secure authentication mechanisms such as X.509 certificates, restricting access to the Kubernetes API server, and enabling RBAC to control access to resources.
+Kubernetes 管理員應該仔細配置和管理身份驗證和授權，以確保其集群的安全性和可靠性。最佳實踐包括使用安全身份驗證機制（如 X.509 證書）、限制對 Kubernetes API 伺服器的訪問，以及啟用 RBAC 來控制對資源的訪問。
 
-Kubernetes authentication is a complex topic that requires a deep understanding of the underlying security mechanisms and protocols. Kubernetes administrators and security professionals should stay up-to-date with the latest authentication and authorization best practices and security updates to keep their clusters secure and compliant.
+Kubernetes 身份驗證是一個複雜的主題，需要深入理解底層安全機制和協議。Kubernetes 管理員和安全專業人員應該及時了解最新的身份驗證和授權最佳實踐和安全更新，以保持其集群的安全和合規。
 
-No question, that authentication tokens and credentials are cornerstones of the security of a Kubernetes cluster. This is true for any computer system for access control. 
+毫無疑問，身份驗證 token 和憑證是 Kubernetes 集群安全的基石。這對於任何計算機系統的訪問控制都是如此。
 
-Here is an example of how different credentials can be used in a way that was not planned by the design.
+以下是一個範例，說明不同的憑證如何以設計未計劃的方式使用。
 
-I assume that your Minikube is still up and running. You can obtain the Kubernetes Service Account token of the Kube-proxy component with the following command:
+我假設您的 Minikube 仍在運行。您可以使用以下命令獲取 Kube-proxy 組件的 Kubernetes Service Account token：
 ```bash
 kubectl -n kube-system exec $(kubectl get pods -n kube-system | grep kube-proxy | head -n 1 | awk '{print $1}') -- cat /var/run/secrets/kubernetes.io/serviceaccount/token
 ```
 
-Note: if you want to learn more about the content of this JWT go to [jwt.io](https://jwt.io/) and parse the token you got with the previous command!
+注意：如果您想了解更多關於此 JWT 的內容，請訪問 [jwt.io](https://jwt.io/) 並解析您使用上一個命令獲得的 token！
 
 ![](images/day34-1.png)
 
-We will see here how easy it is to masquerade as someone else if the above token is obtained. We will set up `kubectl` to use this instead the default credentials.
+我們將在這裡看到如果獲得上述 token，冒充其他人是多麼容易。我們將設置 `kubectl` 使用此 token 而不是預設憑證。
 
 ```bash
 export KUBE_PROXY_POD_NAME=`kubectl get pods -n kube-system | grep kube-proxy | head -n 1 | awk '{print $1}'`
@@ -63,90 +63,89 @@ kubectl config set-context access-test --user=user
 kubectl config use-context access-test
 ```
 
-Now that we have set up our `kubectl` to use the above token we "stole" from the Kube-proxy, we can see it working in action:
+現在我們已經設置了 `kubectl` 使用我們從 Kube-proxy「竊取」的上述 token，我們可以看到它在實際操作中：
 ```bash
 kubectl get nodes
 ```
 
-Voila! 😄
+瞧！😄
 
-This was a simple example of how credentials can be used by malicious actors in case they're stolen.
+這是一個簡單的範例，說明憑證在被盜的情況下如何被惡意行為者使用。
 
-(if you used Minikube, revert to your original context by `kubectl config use-context minikube`)
+（如果您使用了 Minikube，請通過 `kubectl config use-context minikube` 恢復到原始上下文）
 
-## Authorization
+## 授權
 
-Let's continue the above journey with what is after authentication.
+讓我們繼續上面的旅程，看看身份驗證之後是什麼。
 
-Kubernetes Role-Based Access Control (RBAC) is a security mechanism used to control access to resources within a Kubernetes cluster. RBAC is used to define policies that determine what actions users and service accounts are allowed to perform on Kubernetes resources.
+Kubernetes 基於角色的訪問控制（RBAC）是一種用於控制 Kubernetes 集群內資源訪問的安全機制。RBAC 用於定義確定用戶和服務帳戶可以在 Kubernetes 資源上執行哪些操作的政策。
 
-In Kubernetes, RBAC works by defining two main types of objects: roles and role bindings. A role is a collection of permissions that can be applied to one or more resources in a Kubernetes cluster. Role binding is used to grant a role to a user, group of users or service accounts.
+在 Kubernetes 中，RBAC 通過定義兩種類型的主要對象來工作：角色和角色綁定。角色是可以應用於 Kubernetes 集群中一個或多個資源的權限集合。角色綁定用於將角色授予用戶、用戶組或服務帳戶。
 
-When a user or service account attempts to perform an action on a resource in Kubernetes, the Kubernetes API server checks the permissions defined in the relevant role binding. If the user or service account is authorized to perform the action, the API server grants access. If the user or service account is not authorized, the API server denies access.
+當用戶或服務帳戶嘗試在 Kubernetes 中的資源上執行操作時，Kubernetes API 伺服器會檢查相關角色綁定中定義的權限。如果用戶或服務帳戶被授權執行該操作，API 伺服器會授予訪問權限。如果用戶或服務帳戶未被授權，API 伺服器會拒絕訪問。
 
-RBAC can be used to control access to a wide range of Kubernetes resources, including pods, services, deployments, and more. RBAC policies can be defined at various levels of the Kubernetes cluster, including the cluster level, namespace level, and individual resource level.
+RBAC 可用於控制對各種 Kubernetes 資源的訪問，包括 Pod、Service、Deployment 等。RBAC 政策可以在 Kubernetes 集群的各個級別定義，包括集群級別、命名空間級別和單個資源級別。
 
-RBAC can be configured using the Kubernetes API or using tools such as `kubectl`. With RBAC, administrators can enforce strict security policies and help to ensure that only authorized users and service accounts are able to access and modify Kubernetes resources, reducing the risk of unauthorized access and data breaches.
+RBAC 可以使用 Kubernetes API 或使用 `kubectl` 等工具進行配置。使用 RBAC，管理員可以實施嚴格的安全政策，並有助於確保只有授權用戶和服務帳戶能夠訪問和修改 Kubernetes 資源，從而降低未授權訪問和數據洩露的風險。
 
-In the case above with Kube-proxy, this workload has a service account. How do we know it? Run the following command:
+在上面的 Kube-proxy 案例中，此工作負載有一個服務帳戶。我們怎麼知道？運行以下命令：
 ```bash
 kubectl -n kube-system get daemonset kube-proxy -o=jsonpath='{.spec.template.spec.serviceAccount}'
 ```
-It returns `kube-proxy` as the associated service account.
+它返回 `kube-proxy` 作為關聯的服務帳戶。
 
-If you list all the `ClusterRoleBindings`, you will see that this service account is bound with `kubeadm:node-proxier` and `system:node-proxier` `ClusterRoles`.
+如果您列出所有 `ClusterRoleBindings`，您將看到此服務帳戶與 `kubeadm:node-proxier` 和 `system:node-proxier` `ClusterRoles` 綁定。
 ```bash
 kubectl get clusterrolebindings -o wide | grep kube-proxy
 ```
 
-You can see what these `ClusterRoles` allow this service account to do by doing querying them with `kubectl`:
+您可以通過使用 `kubectl` 查詢它們來查看這些 `ClusterRoles` 允許此服務帳戶執行哪些操作：
 ```bash
 kubectl get clusterrole system:node-proxier -o yaml
 ```
 
-You will see that this role enables:
-* List and watch on `endpoint` and `service` objects
-* Get, list and watch on `nodes`
-* Create, patch, update on `events`
+您將看到此角色啟用：
+* 在 `endpoint` 和 `service` 對象上列出和監視
+* 在 `nodes` 上獲取、列出和監視
+* 在 `events` 上創建、修補、更新
 
-This is why we did `kubectl get nodes` in the previous section.
+這就是為什麼我們在上一節中執行了 `kubectl get nodes`。
 
-Another example is the ClusterRole called `system:controller:deployment-controller`, it is the role associated with the service account of the Deployment Controller component which is in charge of managing `ReplicaSets` for `Deployments` and they need to make sure that the downstream object (`ReplicaSet`) is always consolidated with the definitions of `Deployments`.
+另一個範例是名為 `system:controller:deployment-controller` 的 ClusterRole，它是與 Deployment Controller 組件的服務帳戶關聯的角色，該組件負責管理 `Deployments` 的 `ReplicaSets`，它們需要確保下游對象（`ReplicaSet`）始終與 `Deployments` 的定義保持一致。
 
 ```bash
 kubectl get clusterrole system:controller:deployment-controller -o yaml
 ```
 
-Here you can see that this role for example authorizes the subject to create, delete, update and etc. on `ReplicaSets`, which makes sense given the functionality this component has.
+在這裡，您可以看到例如此角色授權主體在 `ReplicaSets` 上創建、刪除、更新等，這考慮到此組件具有的功能是有意義的。
 
-Is Kubernetes RBAC a good authorization system? Yes, but...
-* It can be a bit complex to manage sometimes
-* Authorization can be given to combinations of verb and object (what can you do with what)
+Kubernetes RBAC 是一個好的授權系統嗎？是的，但是...
+* 有時管理起來可能有點複雜
+* 授權可以給予動詞和對象的組合（您可以對什麼做什麼）
 
-The latter is not an obvious limitation. You can allow someone to create Pods but you cannot limit the same subject to creating only un-privileged Pods since both are the same objects.
+後者不是一個明顯的限制。您可以允許某人創建 Pod，但您無法限制同一主體僅創建非特權 Pod，因為兩者都是相同的對象。
 
-This brings us to the last part of today's content.
+這將我們帶到今天內容的最後一部分。
 
-## Runtime admission controllers
+## 運行時准入控制器
 
-In Kubernetes, an admission controller is a type of plug-in that intercepts requests to the Kubernetes API server before they are processed, allowing administrators to enforce custom policies and restrictions on the resources being created or modified.
+在 Kubernetes 中，准入控制器是一種在請求被處理之前攔截對 Kubernetes API 伺服器的請求的插件類型，允許管理員對正在創建或修改的資源實施自定義政策和限制。
 
-Admission controllers are used to validate and modify resource specifications before they are persisted to the Kubernetes API server. They can be used to enforce a wide range of policies, such as ensuring that all pods have a specific label, preventing the creation of privileged containers, or restricting access to certain namespaces.
+准入控制器用於在資源持久化到 Kubernetes API 伺服器之前驗證和修改資源規範。它們可用於實施廣泛的政策，例如確保所有 Pod 都有特定標籤、防止創建特權容器或限制對某些命名空間的訪問。
 
-Admission controllers in Kubernetes can be either/or type of:
-* MutatingAdmissionWebhook: This controller can modify or mutate requests to the Kubernetes API server before they are persisted.
-* ValidatingAdmissionWebhook: This controller can validate or reject requests to the Kubernetes API server based on custom policies.
+Kubernetes 中的准入控制器可以是以下類型之一或兩者：
+* MutatingAdmissionWebhook：此控制器可以在請求持久化到 Kubernetes API 伺服器之前修改或變異請求。
+* ValidatingAdmissionWebhook：此控制器可以根據自定義政策驗證或拒絕對 Kubernetes API 伺服器的請求。
 
-Admission controllers can be customized or extended to meet the specific needs of an organization or application. By using admission controllers, administrators can ensure that resources in the Kubernetes cluster conform to specific policies and security requirements, helping to reduce the risk of security breaches and ensuring a consistent and secure deployment environment.
+准入控制器可以自定義或擴展以滿足組織或應用程式的特定需求。通過使用准入控制器，管理員可以確保 Kubernetes 集群中的資源符合特定的政策和安全要求，有助於降低安全漏洞的風險並確保一致且安全的部署環境。
 
-There are two great examples of open-source admission controller projects: [OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/) and [Kyverno](https://kyverno.io/). We will use Kyverno today.
+有兩個很好的開源准入控制器專案範例：[OPA Gatekeeper](https://open-policy-agent.github.io/gatekeeper/website/docs/) 和 [Kyverno](https://kyverno.io/)。今天我們將使用 Kyverno。
 
+Kyverno 允許用戶將政策定義為代碼，並將其應用於 Kubernetes 資源，如 Pod、Deployment、Service 等。政策可以用 YAML 或 JSON 編寫，可以自定義以實施組織或應用程式的特定要求。Kyverno 政策可以在創建時應用於資源，或根據需要在以後更新。
 
-Kyverno allows users to define policies as code and apply them to Kubernetes resources such as pods, deployments, services, and more. Policies can be written in YAML or JSON and can be customized to enforce specific requirements for an organization or application. Kyverno policies can be applied to resources at the time of creation or updated later as needed.
+Kyverno 是一個強大的工具，可以幫助確保 Kubernetes 資源根據組織政策和最佳實踐進行配置和管理。它可以幫助改善 Kubernetes 部署的安全性、合規性和一致性，同時也簡化了管理員和開發人員的政策管理。
 
-Kyverno is a powerful tool that can help to ensure that Kubernetes resources are configured and managed according to organizational policies and best practices. It can help to improve the security, compliance, and consistency of Kubernetes deployments while also simplifying policy management for administrators and developers.
-
-To install Kyverno on our Minikube, use the following commands:
+要在我們的 Minikube 上安裝 Kyverno，請使用以下命令：
 ```bash
 helm repo add kyverno https://kyverno.github.io/kyverno/
 helm repo update
@@ -154,7 +153,7 @@ helm install kyverno kyverno/kyverno -n kyverno --create-namespace --set replica
 helm install kyverno-policies kyverno/kyverno-policies -n kyverno
 ```
 
-Let's create a policy that prevents privileged Pods.
+讓我們創建一個防止特權 Pod 的政策。
 ```bash
 kubectl apply -f - << EOF
 apiVersion: kyverno.io/v1
@@ -184,9 +183,9 @@ spec:
 EOF
 ```
 
-You can see that this policy validates that the `privileged` flag is false under `securityContext` field in Pods.
+您可以看到此政策驗證 Pod 中 `securityContext` 欄位下的 `privileged` 標誌為 false。
 
-Now if I try to spawn up a privileged Pod, it will fail. Try it:
+現在如果我嘗試啟動一個特權 Pod，它將失敗。試試看：
 
 ```bash
 kubectl apply -f - << EOF
@@ -203,7 +202,7 @@ spec:
 EOF
 ```
 
-This should fail (without the Kyverno policy, this will succeed.
+這應該會失敗（沒有 Kyverno 政策，這將成功）。
 
 ```
 admission webhook "validate.kyverno.svc-fail" denied the request: 
@@ -215,5 +214,6 @@ no-privileged-containers:
     rule no-privileged-containers failed at path /spec/containers/0/securityContext/privileged/'
 ```
 
-I hope this short intro gave a little taste of how admission controllers can help you to enforce runtime rules over a Kubernetes cluster!.
-See you on [Day 35](day35.md).
+我希望這個簡短的介紹讓您稍微了解准入控制器如何幫助您在 Kubernetes 集群上實施運行時規則！
+
+請參閱 [Day 35](day35.md)。

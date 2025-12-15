@@ -1,43 +1,46 @@
-# Understanding the Importance of Secrets Management
+# 理解密鑰管理的重要性
 
-## Introduction
-Regardless of the type of environment you work in, there will be privileged credentials needed by applications, users, or other software platforms to manage your environment. Secrets can be anything your organization deems confidential and could cause harm to the company if shared or exposed. Examples could be database credentials to read customer data, a private key used to decrypt communications to your app server, or domain admin creds used by your vulnerability scanner during nightly runs. Managing these privileged credentials is an essential process that is critical to an organization's security posture. 
+## 簡介
 
-Secrets are used EVERYWHERE in organizations. Think about the credentials that were required for the last application or deployment you participated in, regardless of how basic or complex it was. As a human user, you likely need privileged credentials to provision resources in your production environment, like gaining access to VMware vCenter to deploy virtual machines, requesting a TLS certificate for your application, or logging into Terraform Cloud to provision Amazon EC2 instances. Moving over to the application side, they need access to additional services within your organization, like an internal API, a file share, or the ability to read/write to a database server to store data. The applications might need to register the service within your service catalog (service mesh) or execute a script that traverses a proxy and pulls down packages from Artifactory. These actions all require some privileged credential or secret that needs to be managed appropriately.
+無論您工作的環境類型如何，應用程式、用戶或其他軟體平台都需要特權憑證來管理您的環境。密鑰可以是您的組織認為機密的任何內容，如果共享或暴露，可能會對公司造成損害。範例可能包括讀取客戶數據的數據庫憑證、用於解密與應用程式伺服器通信的私鑰，或由漏洞掃描器在夜間運行時使用的域管理員憑證。管理這些特權憑證是一個關鍵流程，對組織的安全態勢至關重要。
 
-## Consolidation
+密鑰在組織中無處不在。想想您參與的最後一個應用程式或部署所需的憑證，無論它是多麼基本或複雜。作為人類用戶，您可能需要特權憑證來在生產環境中配置資源，例如獲得對 VMware vCenter 的訪問權限以部署虛擬機器、為您的應用程式請求 TLS 證書，或登錄 Terraform Cloud 以配置 Amazon EC2 實例。轉到應用程式方面，它們需要訪問組織內的其他服務，如內部 API、檔案共享或讀寫數據庫伺服器以存儲數據的能力。應用程式可能需要將服務註冊到服務目錄（服務網格）中，或執行一個遍歷代理並從 Artifactory 拉取套件的腳本。這些操作都需要一些需要適當管理的特權憑證或密鑰。
 
-So where should all these secrets live? Most organizations understand these secrets should be managed in some secret management solution. However, that doesn't always reflect what is actually in practice. I've worked with countless organizations that keep credentials in an Excel sheet, a OneNote document, or even a text file on their desktop. That strategy provides absolutely no security and exposes these companies to security breaches. Other organizations have taken a step further and used a consumer-based solution, like 1Password or LastPass, to store these long-lived credentials. It's better than nothing, but it doesn't provide the organization with complete visibility and management of credentials. Plus, we're talking about the practice of DevOps here, so it doesn't offer much in terms of automated retrieval or rotation either.
+## 整合
 
-Ideally, organizations need to adopt a proper secret management tool that can be used to consolidate secrets and provide features such as role-based access control, rotation and revocation, expiration, and auditing capabilities.
+那麼所有這些密鑰應該存放在哪裡？大多數組織了解這些密鑰應該在某個密鑰管理解決方案中管理。然而，這並不總是反映實際情況。我與無數組織合作過，他們將憑證保存在 Excel 表格、OneNote 文檔或甚至桌面上的文字檔案中。這種策略絕對不提供安全性，並使這些公司面臨安全漏洞。其他組織已經更進一步，使用基於消費者的解決方案，如 1Password 或 LastPass，來存儲這些長期有效的憑證。這比沒有好，但它不能為組織提供完整的憑證可見性和管理。此外，我們在這裡談論的是 DevOps 實踐，所以它在自動檢索或輪換方面也沒有提供太多幫助。
 
-## Long-Lived Secrets vs. Dynamic Secrets
-Let's talk about the difference between long-lived secrets and dynamic secrets
+理想情況下，組織需要採用適當的密鑰管理工具，該工具可用於整合密鑰並提供基於角色的訪問控制、輪換和撤銷、過期和審計功能等功能。
 
-### Long-Lived Credentials 
-Not all secrets are created equal. Most organizations default to creating long-lived, static credentials that are often shared among teams and applications. Creating these credentials usually requires a long process, such as ticket creation, security approval, management approval, etc. Because obtaining credentials is often tedious, engineers and administrators will reuse or share these credentials among different applications rather than repeat this process. Be honest, how many times have you clicked this button in Active Directory? I know I have done it 100s of times in the past….
+## 長期有效的密鑰與動態密鑰
+
+讓我們談談長期有效的密鑰和動態密鑰之間的區別
+
+### 長期有效的憑證
+
+並非所有密鑰都是平等的。大多數組織預設創建長期有效的靜態憑證，這些憑證通常在團隊和應用程式之間共享。創建這些憑證通常需要一個漫長的過程，例如創建工單、安全批准、管理批准等。由於獲得憑證通常很繁瑣，工程師和管理員會在不同應用程式之間重用或共享這些憑證，而不是重複此過程。誠實地說，您在 Active Directory 中點擊此按鈕多少次？我知道我過去已經這樣做了數百次...
 
 ![](images/day35-0.png)
 
-These reused and often shared credentials are hard to audit, can be impossible to rotate, and provide very little accountability. Additionally, these static credentials offer 24/7 access to the target system, even though access might only be needed for minutes per day.
+這些重用且經常共享的憑證很難審計，可能無法輪換，並且幾乎沒有問責制。此外，這些靜態憑證提供對目標系統的 24/7 訪問，即使每天可能只需要幾分鐘的訪問。
 
-### Dynamic Secrets
+### 動態密鑰
 
-In contrast with static credentials, many organizations realize the benefits of migrating to dynamically generated secrets. Rather than create the credentials beforehand, applications can request credentials on-demand when needed. The application uses dynamic credentials to access a system or platform to perform work, and the credentials are then revoked/deleted afterward. If these dynamic credentials are accidentally written to a log file or committed to a code repository, it no longer becomes a security threat because they are already invalidated. And because dynamic credentials are accessible to applications (with proper authentication, of course), each instance of an application can generate its own credential to access the backend system.
+與靜態憑證相比，許多組織意識到遷移到動態生成的密鑰的好處。與預先創建憑證不同，應用程式可以在需要時按需請求憑證。應用程式使用動態憑證訪問系統或平台以執行工作，然後撤銷/刪除憑證。如果這些動態憑證意外寫入日誌檔案或提交到代碼儲存庫，它們不再成為安全威脅，因為它們已經失效。由於動態憑證可供應用程式訪問（當然，需要適當的身份驗證），應用程式的每個實例都可以生成自己的憑證來訪問後端系統。
 
-For example, let's assume we're using Terraform to deploy our infrastructure to our favorite public cloud platform. If you were using static credentials, you would log into the cloud platform, create static credentials (probably highly privileged ones), and provide those credentials for Terraform to provision and manage your infrastructure. Those highly privileged credentials are valid 24/7, even though you only run Terraform a few times daily. On the other hand, if you were using a dynamic credential, Terraform could first obtain a credential, provision, or manage the infrastructure, and the credential would be invalidated after. When Terraform isn't running, there is no credential that can be exposed or misused. Even if the dynamic credential were written to logs or accidentally committed to a public GitHub repo, it wouldn't matter since it was revoked when the job was completed or after a minimal TTL.
+例如，讓我們假設我們使用 Terraform 將基礎設施部署到我們最喜歡的公共雲平台。如果您使用靜態憑證，您將登錄雲平台，創建靜態憑證（可能是高度特權的），並為 Terraform 提供這些憑證以配置和管理您的基礎設施。這些高度特權的憑證在 24/7/365 有效，即使您每天只運行 Terraform 幾次。另一方面，如果您使用動態憑證，Terraform 可以首先獲得憑證，配置或管理基礎設施，然後憑證將失效。當 Terraform 不運行時，沒有可以暴露或濫用的憑證。即使動態憑證被寫入日誌或意外提交到公共 GitHub 儲存庫，也沒關係，因為它在作業完成時或最小 TTL 後被撤銷。
 
 ![](images/day35-1.png)
 
-## Access Control and Auditing
+## 訪問控制和審計
 
-Access to secrets should be tightly controlled, and only authorized personnel should be able to access them. Ideally, two-factor authentication or a multi-step approval process should be in place for highly-privileged credentials, such as domain access, root credentials, or secrets used to obtain confidential data. Access should be limited to secrets based on an employee's role within the organization or an application's requirements to fulfill its duties. 
+對密鑰的訪問應該受到嚴格控制，只有授權人員才能訪問它們。理想情況下，對於高度特權的憑證（如域訪問、root 憑證或用於獲得機密數據的密鑰），應該實施雙因素身份驗證或多步驟批准流程。訪問應該根據員工在組織中的角色或應用程式履行其職責的要求限制對密鑰的訪問。
 
-It is important that access to secrets should be closely monitored, and a log should be maintained of all actions taken of them. Logs should be ingested into a SIEM or log correlation systems, like Splunk, SumoLogic, or DataDog, to create dashboards and alert on specific actions. This can help quickly detect and respond to potential security threats within the organization. 
+重要的是，對密鑰的訪問應該受到密切監控，並應維護對它們執行的所有操作的日誌。日誌應該被攝取到 SIEM 或日誌關聯系統中，如 Splunk、SumoLogic 或 DataDog，以創建儀表板並對特定操作進行告警。這可以幫助快速檢測和響應組織內的潛在安全威脅。
 
-## Common Solutions
+## 常見解決方案
 
-In a DevOps and automated world, secrets management solutions must be centered around a fully featured REST API. With such, access to the platform can be automated entirely by any orchestrator or pipeline tool the organization uses, simplifying company-wide adoption. Secrets Management tools such as HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault can provide organizations with features such as encryption at rest, role-based access control, and auditing capabilities to help protect secrets. From my experience, the most popular tools used by organizations are:
+在 DevOps 和自動化世界中，密鑰管理解決方案必須圍繞功能齊全的 REST API 構建。有了這樣的 API，對平台的訪問可以完全由組織使用的任何編排器或管道工具自動化，簡化公司範圍內的採用。密鑰管理工具（如 HashiCorp Vault、AWS Secrets Manager 或 Azure Key Vault）可以為組織提供靜態加密、基於角色的訪問控制和審計功能等功能，以幫助保護密鑰。根據我的經驗，組織使用的最流行的工具是：
 
 * HashiCorp Vault
 * CyberArk
@@ -46,4 +49,4 @@ In a DevOps and automated world, secrets management solutions must be centered a
 * GCP Secret Manager
 * Thycotic Secret Server
 
-See you on [Day 36](day36.md).
+請參閱 [Day 36](day36.md)。

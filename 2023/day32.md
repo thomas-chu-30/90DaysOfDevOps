@@ -1,76 +1,73 @@
-# Vulnerability and patch management
+# 漏洞和補丁管理
 
-Vulnerability and patch management is a crucial process for ensuring the security of computer systems and networks. In simple terms, it involves identifying, prioritizing, and addressing weaknesses or flaws in software and hardware systems that can be exploited by attackers to gain unauthorized access or perform other malicious activities.
+漏洞和補丁管理是確保計算機系統和網路安全的關鍵流程。簡單來說，它涉及識別、優先排序和解決軟體和硬體系統中的弱點或缺陷，這些弱點或缺陷可能被攻擊者利用來獲得未授權訪問或執行其他惡意活動。
 
-Vulnerabilities can arise due to various reasons, such as coding errors, configuration mistakes, or design flaws. Once a vulnerability is known, attackers may use it to gain access or steal data. This is why it is essential to identify and prioritize vulnerabilities and take necessary steps to mitigate them by applying patches or updates released by vendors.
+漏洞可能由於各種原因而出現，例如編碼錯誤、配置錯誤或設計缺陷。一旦漏洞被發現，攻擊者可能會利用它來獲得訪問權限或竊取數據。這就是為什麼識別和優先排序漏洞並採取必要步驟通過應用供應商發布的補丁或更新來緩解它們至關重要。
 
-To effectively manage vulnerabilities and patches, DevOps teams need to have a system in place for identifying and prioritizing vulnerabilities. This can be achieved through the use of vulnerability scanners or manual assessments. After prioritizing vulnerabilities, teams need to assess their level of risk and plan for their remediation.
+為了有效管理漏洞和補丁，DevOps 團隊需要建立一個識別和優先排序漏洞的系統。這可以通過使用漏洞掃描器或手動評估來實現。在優先排序漏洞後，團隊需要評估其風險級別並規劃補救措施。
 
-Applying patches or updates to address vulnerabilities is a critical step, and it is important to test patches in a staging environment before deploying them in production. This helps ensure that patches do not introduce new problems or conflicts with other software components.
+應用補丁或更新來解決漏洞是關鍵步驟，在生產環境中部署之前，在測試環境中測試補丁很重要。這有助於確保補丁不會引入新問題或與其他軟體組件發生衝突。
 
-To maintain the security of systems over time, ongoing monitoring and review are crucial. This helps identify new vulnerabilities promptly and ensures that systems remain secure. In summary, effective vulnerability and patch management is a key component of a robust cybersecurity strategy for DevOps engineers to help ensure the security and integrity of computer systems and networks.
+為了長期維護系統的安全性，持續監控和審查至關重要。這有助於及時識別新漏洞並確保系統保持安全。總而言之，有效的漏洞和補丁管理是 DevOps 工程師強健網路安全策略的關鍵組成部分，有助於確保計算機系統和網路的安全性和完整性。
 
+# 監控漏洞和錯誤配置
 
-# Monitoring vulnerabilities and misconfigurations
+漏洞管理的第一步是在運行時期監控當前狀態。
 
-The first step in vulnerability management is to monitor the current posture in runtime.
-
-Let's assume the technology stack we have been using:
-* Linux/Mac hosts
+讓我們假設我們一直在使用的技術堆疊：
+* Linux/Mac 主機
 * Kubernetes (Minikube)
-* Containerized applications
+* 容器化應用程式
 
-Given this stack, we need to monitor vulnerabilities at the host level, Kubernetes component and configuration and container level.
+考慮到這個堆疊，我們需要在主機級別、Kubernetes 組件和配置以及容器級別監控漏洞。
 
-## Host-level vulnerability scanning
+## 主機級別漏洞掃描
 
-There are multiple solutions and projects that can help you find out host vulnerabilities. To decide which one to choose you need to know your constraints and needs.
+有多種解決方案和專案可以幫助您找出主機漏洞。要決定選擇哪一個，您需要了解您的約束和需求。
 
-A few examples include:
-* [AWS Inspector](https://aws.amazon.com/inspector/) which is good if you are running your hosts in AWS EC2. You can turn this on in AWS console or API and get results
-* [OpenVAS](https://www.openvas.org/) is an open-source vulnerability scanner, a fork of the "since become closed-source" project Nessus. It container 
-* [Vuls](https://vuls.io/) another open-source vulnerability scanner and management system. You can install it in a centralized component and let it connect all your host via SSH and scan them.
-* [lynis](https://cisofy.com/lynis/) is a simple but powerful scanner for single hosts
+一些範例包括：
+* [AWS Inspector](https://aws.amazon.com/inspector/)，如果您在 AWS EC2 上運行主機，這是一個不錯的選擇。您可以在 AWS 控制台或 API 中開啟它並獲得結果
+* [OpenVAS](https://www.openvas.org/) 是一個開源漏洞掃描器，是「後來成為閉源」專案 Nessus 的分支。它是容器化的
+* [Vuls](https://vuls.io/) 另一個開源漏洞掃描器和管理系統。您可以將其安裝在集中式組件中，讓它通過 SSH 連接到所有主機並掃描它們。
+* [lynis](https://cisofy.com/lynis/) 是一個簡單但強大的單主機掃描器
 
-Here is an example, how to scan your machine with `lynis`. We will install it with our package manager:
+以下是一個範例，說明如何使用 `lynis` 掃描您的機器。我們將使用套件管理器安裝它：
 
-Ubuntu/Debian:
+Ubuntu/Debian：
 ```bash
 sudo apt install lynis
 ```
 
-RHEL/CentOs:
+RHEL/CentOs：
 ```bash
 sudo yum install lynis
 ```
 
-Now run the host audit:
+現在運行主機審計：
 ```bash
 sudo lynis audit system
 ```
 
-It will return you a report of your host system with potential security issues:
+它將返回您的主機系統報告，其中包含潛在的安全問題：
 
 ![](images/day32-1.png)
 
-This is great to see to get a first impression of what such a tool can give you, but I encourage you to think about a more complex system where you need to manage multiple hosts and it is preferable to use a centralized solution to overview the whole system (like mentioned in the above examples).
+這對於了解此類工具可以為您提供什麼很有幫助，但我鼓勵您考慮一個更複雜的系統，您需要管理多個主機，最好使用集中式解決方案來概覽整個系統（如上述範例中提到的）。
 
+## Kubernetes 漏洞和錯誤配置
 
-## Kubernetes vulnerabilities and misconfigurations
+管理 Kubernetes 集群中的漏洞需要多方面的方法。
 
-Managing vulnerabilities in a Kubernetes cluster requires a multi-faceted approach.
+保持 Kubernetes 及其組件最新很重要：確保 Kubernetes 版本及其組件（如 etcd、kube-apiserver、kubelet 等）與最新的補丁和安全修復保持同步。這可以通過遵循 Kubernetes 發布說明並盡快將集群升級到最新版本來實現。
 
-It is important to Kubernetes and its components up-to-date: Make sure that the Kubernetes version and its components (such as etcd, kube-apiserver, kubelet, and others) are up-to-date with the latest patches and security fixes. This can be achieved by following the Kubernetes release notes and upgrading the cluster to the latest version as soon as possible.
+一般來說，這些組件像任何其他專案一樣在漏洞數據庫中進行追蹤，主機掃描器很可能會找到相關漏洞，因此您應該能夠使用良好的主機掃描器追蹤它們。
 
-In general, these components are tracked in vulnerability databases like any other project and the host scanner will most likely find related vulnerabilities, so you should able to track them with a good host scanner.
+審計 Kubernetes 配置很簡單，有多種工具可以使用：
+* Kubescape - 用於 Kubernetes 安全的 CNCF 專案，其 CLI 可以即時反饋潛在的安全和合規問題
+* Trivy - Aqua Security 的開源掃描器，用於映像、雲端和 Kubernetes 掃描
+* Checkov - Bridgecrew 的開源工具，掃描雲端基礎設施和 Kubernetes
 
-Auditing Kubernetes configuration is simple and there are multiple tools you can use here:
-* Kubescape - CNCF Project for Kubernetes security, its CLI can give you instant feedback about potential security and compliance issues
-* Trivy - Aqua Security's open-source scanner used for both image, cloud and Kubernetes scanning
-* Checkov - Bridgecrew's open-source tool scanning cloud infrastructure and Kubernetes 
-
-
-We will see the simple way to scan our cluster with Kubescape:
+我們將看到使用 Kubescape 掃描集群的簡單方法：
 
 ```
 kubescape installation in macOs M1 and M2 chip error fixed
@@ -79,8 +76,6 @@ kubescape installation in macOs M1 and M2 chip error fixed
 
 ```
 
-
-
 ```bash
 curl -s https://raw.githubusercontent.com/kubescape/kubescape/master/install.sh | /bin/bash
 kubescape scan --enable-host-scan --verbose
@@ -88,15 +83,15 @@ kubescape scan --enable-host-scan --verbose
 
 ![](https://raw.githubusercontent.com/kubescape/kubescape/master/docs/img/summary.png)
 
-## Application vulnerabilities
+## 應用程式漏洞
 
-Scanning application images is an important aspect of ensuring the security of the entire application stack. Application images are a fundamental part of container-based deployment systems, and they are used to package applications and all their dependencies into a single, deployable artifact. These images are often pulled from public or private repositories and can contain vulnerabilities, misconfigurations, or other security issues that could be exploited by attackers.
+掃描應用程式映像是確保整個應用程式堆疊安全的重要方面。應用程式映像是基於容器的部署系統的基本組成部分，它們用於將應用程式及其所有依賴項打包成單個可部署的工件。這些映像通常從公共或私有儲存庫中拉取，可能包含漏洞、錯誤配置或其他可能被攻擊者利用的安全問題。
 
-Image scanning tools can analyze images for known vulnerabilities and misconfigurations, as well as other issues such as insecure software libraries, outdated packages, or default passwords. These tools compare the contents of an image with a database of known vulnerabilities and can provide information on the severity of the issue.
+映像掃描工具可以分析映像中的已知漏洞和錯誤配置，以及其他問題，如不安全的軟體庫、過時的套件或預設密碼。這些工具將映像的內容與已知漏洞數據庫進行比較，並可以提供有關問題嚴重性的資訊。
 
-Trivy project has an operator which monitors application vulnerabilities in containers in the Kubernetes cluster.
+Trivy 專案有一個運算符，可以監控 Kubernetes 集群中容器中的應用程式漏洞。
 
-It is very easy to install it:
+安裝它非常簡單：
 ```bash
 helm repo add aqua https://aquasecurity.github.io/helm-charts/
 helm repo update
@@ -107,10 +102,10 @@ helm install trivy-operator aqua/trivy-operator \
   --version 0.11.1
 ```
 
-After the installation you can access the vulnerabilities via CRD with kubectl:
+安裝後，您可以通過 CRD 使用 kubectl 訪問漏洞：
 ```bash
 kubectl get vulnerabilityreports --all-namespaces -o wide
 ```
 ![](images/day32-2.png)
 
-[Day 33](day33.md).
+[Day 33](day33.md)。

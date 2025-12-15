@@ -1,50 +1,50 @@
-# Increase the Security Posture of Your Organization with Dynamic Credentials 
+# 使用動態憑證提高組織的安全態勢
 
-As we talked about yesterday, Vault is commonly used as a platform to consolidate your static, long-lived credentials. However, you're still stuck with the management nightmare of rotating those credentials based on your organization's security policies. This credential rotation "tradition" is a manual, laborious task and is susceptible to errors resulting in application downtime. But…
+正如我們昨天談到的，Vault 通常用作整合靜態、長期有效憑證的平台。然而，您仍然面臨根據組織安全政策輪換這些憑證的管理噩夢。這種憑證輪換「傳統」是一項手動、費力的任務，容易出錯，導致應用程式停機。但是...
 
-What if you could get rid of static credentials altogether? If your app only needs database access once a week to run reports, why do you give it a credential that is valid 24/7/365? Wouldn't it be great to have your applications generate dynamic, self-destructing credentials on-demand for the systems needed to function? 
+如果您可以完全擺脫靜態憑證會怎樣？如果您的應用程式每週只需要一次數據庫訪問來運行報告，為什麼您要給它一個在 24/7/365 有效的憑證？讓您的應用程式按需為需要運行的系統生成動態、自毀的憑證不是很好嗎？
 
-Well, it's all possible using many of the secrets engines available in Vault. 
+好吧，使用 Vault 中可用的許多密鑰引擎，這一切都是可能的。
 
-## Intro to Dynamic Secrets
+## 動態密鑰簡介
 
-Dynamic secrets are credentials that are generated on demand on behalf of the requesting Vault client. Rather than simply reading a static credential stored in the KV store, Vault can make an API call to the requested platform, create a credential, and pass the credential back to the user. In the process, Vault attaches a lease (TTL) to the credential, which indicates how long the credential is valid. The Vault client can then use the credential to communicate directly with the platform for its intended function. Once the credential's lease expires, Vault calls back to the platform and deletes the credential, making it invalid.
+動態密鑰是代表請求的 Vault 客戶端按需生成的憑證。與簡單地從 KV 存儲中讀取靜態憑證不同，Vault 可以對請求的平台進行 API 調用，創建憑證，並將憑證傳遞回用戶。在此過程中，Vault 將租約（TTL）附加到憑證，這表示憑證有效的時間長度。然後，Vault 客戶端可以使用憑證直接與平台通信以執行其預期功能。一旦憑證的租約過期，Vault 會回調平台並刪除憑證，使其失效。
 
-## Benefits of Using Dynamic Secrets
+## 使用動態密鑰的好處
 
-There are so many benefits of migrating to dynamic credentials. The obvious benefit is not having long-lived credentials that are manually rotated. Because these long-lived credentials are often shared between teams and application stacks, they are more susceptible to misuse or abuse. However, when you migrate to dynamic creds, each application instance can retrieve a unique credential to access the required platform when using dynamic credentials. And if that application instance is terminated (think containerization or auto-scaling), the credential will be invalidated by Vault and not impact other instances or applications in your environment. 
+遷移到動態憑證有很多好處。明顯的好處是不需要手動輪換的長期有效憑證。由於這些長期有效的憑證通常在團隊和應用程式堆疊之間共享，它們更容易被濫用或誤用。但是，當您遷移到動態憑證時，使用動態憑證時，每個應用程式實例都可以檢索唯一的憑證來訪問所需的平台。如果該應用程式實例被終止（考慮容器化或自動擴展），憑證將被 Vault 失效，不會影響環境中的其他實例或應用程式。
 
-Dynamic secrets also eliminate the manual process of rotating credentials. Rather than rotating the credentials once a year, these highly privileged creds are now rotated once a month, once a week, or once every hour. For example, consider how you might use Terraform to deploy resources on your public or private cloud. You likely create a credential on the target platform and use it repeatedly via environment variables or sensitive workspace variables in TFC/TFE. But why are you giving Terraform highly privileged credentials that are valid 24/7/365 when your Terraform runs only take 15 minutes each day? Switch to dynamic credentials. Using a combination of Vault secrets engine and the Vault provider for Terraform, you can have Terraform generate a dynamic credential for the platform it needs to access for resource deployment or management.
+動態密鑰還消除了手動輪換憑證的過程。與每年輪換一次憑證不同，這些高度特權的憑證現在每月、每週或每小時輪換一次。例如，考慮您如何使用 Terraform 在公共或私有雲上部署資源。您可能在目標平台上創建一個憑證，並通過環境變數或 TFC/TFE 中的敏感工作區變數重複使用它。但是，為什麼您要給 Terraform 高度特權的憑證，這些憑證在 24/7/365 有效，而您的 Terraform 運行每天只需要 15 分鐘？切換到動態憑證。使用 Vault 密鑰引擎和 Terraform 的 Vault 提供者的組合，您可以讓 Terraform 為其需要訪問的平台生成動態憑證以進行資源部署或管理。
 
-## Configure a Dynamic Secrets Engine
+## 配置動態密鑰引擎
 
-With that long-winded introduction out of the way, let's talk about how we can accomplish this goal of using dynamic credentials. HashiCorp Vault offers a plethora of secrets engines that generate dynamic credentials or data, such as:
+有了這個冗長的介紹，讓我們談談如何實現使用動態憑證的目標。HashiCorp Vault 提供了大量生成動態憑證或數據的密鑰引擎，例如：
 •	AWS
 •	Azure
 •	GCP
 •	Active Directory
 •	AliCloud
 •	Consul
-•	Databases (supports about 15 different database platforms)
-•	PKI certificates
+•	數據庫（支援約 15 個不同的數據庫平台）
+•	PKI 證書
 •	Kubernetes
 •	RabbitMQ
 •	SSH
 •	Terraform Cloud
 
-I think you'd agree that's a lot of options for a single platform.  The cool thing is that you can use as many of these secrets engines as you want, and even enable many of the same type of secrets engine. Let's take a look at how we would enable one of these, using AWS as the example.
+我想您會同意，對於單個平台來說，這有很多選項。很酷的是，您可以使用任意數量的這些密鑰引擎，甚至可以啟用許多相同類型的密鑰引擎。讓我們看看如何啟用其中一個，使用 AWS 作為範例。
 
-Each secrets engine must be enabled on a path, and all interactions with the secrets engine is then done using the path. Because of this, each secrets engine must be enabled on a unique path so Vault knows where to route the request. To enable a secrets engine, use the following structure for the command `vault secrets enable -path=<name> <secrets_engine_type>`. Enabling the AWS secrets engine on the path of `cloud` would look like this:
+每個密鑰引擎必須在路徑上啟用，然後使用該路徑完成與密鑰引擎的所有交互。因此，每個密鑰引擎必須在唯一路徑上啟用，以便 Vault 知道將請求路由到哪裡。要啟用密鑰引擎，請使用以下命令結構 `vault secrets enable -path=<name> <secrets_engine_type>`。在 `cloud` 路徑上啟用 AWS 密鑰引擎將如下所示：
 
 `vault secrets engine -path=cloud aws`
 
-> Note that if you do not provide the path flag, the secrets engine will be enabled on the default path, which is the same name of the secrets engine type. For example, the AWS secrets engine would be enabled at aws/.
+> 請注意，如果您不提供路徑標誌，密鑰引擎將在預設路徑上啟用，該路徑與密鑰引擎類型的名稱相同。例如，AWS 密鑰引擎將在 aws/ 上啟用。
 
-Ok, so we've got a secrets engine enabled, let's start configuring it. Configuration of a secrets engine generally requires a few things. The first is a way for Vault to communicate with the platform (in this case, AWS). Just like any other AWS client, Vault needs credentials to authenticate to the target platform to perform actions. In the case of AWS, you can provide Vault with an Access Key and Secret Key or use an IAM role if Vault was deployed on AWS.
+好的，所以我們已經啟用了密鑰引擎，讓我們開始配置它。密鑰引擎的配置通常需要幾件事。首先是 Vault 與平台（在這種情況下是 AWS）通信的方式。就像任何其他 AWS 客戶端一樣，Vault 需要憑證來對目標平台進行身份驗證以執行操作。對於 AWS，您可以為 Vault 提供訪問密鑰和秘密密鑰，或者如果 Vault 部署在 AWS 上，則使用 IAM 角色。
 
-In addition to authentication, Vault needs the proper authorization to perform actions on the platform. For AWS, that equates to having an IAM policy attached to the credentials you will give to Vault. Depending on the type of credential you want to generate (Vault supports 3 types for AWS), the policy should allow permission to create/manage/delete a user, generate keys, manage the keys, etc. These policies are provided by HashiCorp in their documentation. I also have some pre-defined policies for Vault [on my GitHub](https://github.com/btkrausen/hashicorp).
+除了身份驗證之外，Vault 還需要在平台上執行操作的適當授權。對於 AWS，這等同於在您將提供給 Vault 的憑證上附加 IAM 政策。根據您想要生成的憑證類型（Vault 為 AWS 支援 3 種類型），政策應該允許創建/管理/刪除用戶、生成密鑰、管理密鑰等權限。這些政策由 HashiCorp 在其文檔中提供。我在 [我的 GitHub](https://github.com/btkrausen/hashicorp) 上也有一些 Vault 的預定義政策。
 
-To provide credentials to Vault to access your AWS account, you can use the following command:
+要為 Vault 提供訪問 AWS 帳戶的憑證，您可以使用以下命令：
 
 ```
 vault write aws/config/root \
@@ -53,11 +53,11 @@ vault write aws/config/root \
     region=us-east-1
 ```
 
-> Although you can add your credentials using this configuration, you can also provide them using environment variables as well.
+> 雖然您可以使用此配置添加憑證，但您也可以使用環境變數提供它們。
 
-Ok, now Vault has access to our AWS account, it doesn't yet know what credentials to create and the level of access those credentials should have in your AWS account. Each unique requirement for credentials will be defined in a role (that's a Vault role, not to be confused with an AWS role). Roles are used to map a user to a set of permissions on the platform. For example, you can create a role for a developer that provides read-only access to the AWS account, or you can create a role for Terraform that provides a broader set of privileges to create, manage, and delete resources. Roles can be used by many applications, but keep in mind that a different role will be required for each UNIQUE set of permissions you want to give the Vault client.
+好的，現在 Vault 可以訪問我們的 AWS 帳戶，它還不知道要創建什麼憑證以及這些憑證在 AWS 帳戶中應該具有的訪問級別。每個唯一的憑證要求都將在角色中定義（這是 Vault 角色，不要與 AWS 角色混淆）。角色用於將用戶映射到平台上的權限集合。例如，您可以為開發人員創建一個角色，該角色提供對 AWS 帳戶的只讀訪問，或者您可以為 Terraform 創建一個角色，該角色提供更廣泛的權限集來創建、管理和刪除資源。角色可以被許多應用程式使用，但請記住，您想要給 Vault 客戶端的每個唯一權限集都需要不同的角色。
 
-Let's create our first role. This role will be for our developer who needs read-only access to an AWS so they can obtain logs for troubleshooting an application. The role name will be `developer`.
+讓我們創建我們的第一個角色。此角色將用於需要對 AWS 進行只讀訪問的開發人員，以便他們可以獲取日誌來故障排除應用程式。角色名稱將是 `developer`。
 
 ```
 vault write aws/roles/developer \
@@ -65,29 +65,28 @@ vault write aws/roles/developer \
    credential_type=iam_user
 ```
 
-> In this example, I used the IAM_USER credential type but for production environments, I'd recommend using ASSUME_ROLE so you can have a
+> 在這個範例中，我使用了 IAM_USER 憑證類型，但對於生產環境，我建議使用 ASSUME_ROLE，這樣您就可以有一個
 
-When a developer requests credentials, they will be tied to the AWS-managed policy named ` arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess`. You can use AWS-managed policies, Customer-Managed policies, or simply provide the policy within the Vault role configuration and Vault will create the inline policy when the user is created.
+當開發人員請求憑證時，它們將與名為 ` arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess` 的 AWS 管理政策綁定。您可以使用 AWS 管理政策、客戶管理政策，或者簡單地在 Vault 角色配置中提供政策，Vault 將在創建用戶時創建內聯政策。
 
-## Let's Get Credentials
+## 讓我們獲取憑證
 
-Ok, we have the secrets engine mounted (enabled!), the secrets engine configured to access our account, and now we have a role. The next logical step is to test it and obtain our first set of dynamic credentials. Since the role we created is named `developer`, that will come into play for the path needed to get credentials. To get creds, use the following command:
+好的，我們已經掛載（啟用！）了密鑰引擎，配置了密鑰引擎以訪問我們的帳戶，現在我們有了一個角色。下一步邏輯步驟是測試它並獲得我們的第一組動態憑證。由於我們創建的角色名為 `developer`，這將在獲取憑證所需的路徑中發揮作用。要獲取憑證，請使用以下命令：
 
 `vault read aws/creds/developer`
 
-If successful, Vault should have returned a set of credentials that the client can use to interact directly with AWS. Woohoo! 
+如果成功，Vault 應該返回一組客戶端可以用來直接與 AWS 交互的憑證。哇！
 
-Keep in mind that when the lease (TTL) expires, Vault will go back and delete the credentials on AWS, permanently invaliding them.
+請記住，當租約（TTL）過期時，Vault 將返回並刪除 AWS 上的憑證，永久使它們失效。
 
-## Day 2 Ops 
+## Day 2 運維
 
-The last thing I wanted to touch on was managing the credentials used by Vault to access the platform. The whole purpose of a dynamic secrets engine is to eliminate your static, long-lived credentials. However, the first step here was to provide Vault…..static, long-lived credentials to access the platform? Hmm…sounds somewhat counterproductive, right? What if THAT credential gets compromised or shared?
+我想談的最後一件事是管理 Vault 用來訪問平台的憑證。動態密鑰引擎的全部目的是消除您的靜態、長期有效的憑證。然而，這裡的第一步是為 Vault 提供...靜態、長期有效的憑證來訪問平台？嗯...聽起來有點適得其反，對吧？如果該憑證被洩露或共享怎麼辦？
 
-Fear not, as Vault provides a simple endpoint for secrets engines which allows Vault to quickly rotate that 'root' credential. You can hit this endpoint as often as needed to rotate the credential Vault uses to access the platform. In this example, you can use the following command to rotate the AWS credential we provided above.
+不用擔心，因為 Vault 為密鑰引擎提供了一個簡單的端點，允許 Vault 快速輪換該「root」憑證。您可以根據需要經常訪問此端點，以輪換 Vault 用來訪問平台的憑證。在這個範例中，您可以使用以下命令輪換我們上面提供的 AWS 憑證。
 
 `vault write -f aws/config/rotate-root`
 
-Once you run this command, only AWS and Vault know the credentials. No human user has the root credential, and even a Vault administrator can read back the full access key and secret key. This operation can be run as often as needed to meet your internal security policies for credential rotation.
+一旦您運行此命令，只有 AWS 和 Vault 知道憑證。沒有人類用戶擁有 root 憑證，甚至 Vault 管理員也無法讀回完整的訪問密鑰和秘密密鑰。此操作可以根據需要運行，以滿足您內部憑證輪換的安全政策。
 
-See you on [Day 39](day39.md)
-
+請參閱 [Day 39](day39.md)

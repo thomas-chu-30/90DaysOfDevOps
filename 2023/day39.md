@@ -1,48 +1,48 @@
-# Getting Hands-On with HashiCorp Vault 
+# 動手實踐 HashiCorp Vault
 
-A quick note to thank Bryan for the opening aspects of this Secrets Management section, @MichaelCade1 here to wrap things up and get some hands-on scenarios so that we can get some practical touch points and scenarios with HashiCorp Vault. 
+快速說明，感謝 Bryan 為密鑰管理部分開頭，@MichaelCade1 在這裡總結並提供一些動手場景，以便我們可以獲得一些實際的接觸點和 HashiCorp Vault 的場景。
 
-A lot of what I will cover here can be found in existing [HashiCorp Tutorials](https://developer.hashicorp.com/vault) These resources from HashiCorp will go into a lot more different scenarios as well. 
+我在這裡涵蓋的很多內容可以在現有的 [HashiCorp 教程](https://developer.hashicorp.com/vault) 中找到。HashiCorp 的這些資源還將涵蓋更多不同的場景。
 
-## HashiCorp Vault CLI 
+## HashiCorp Vault CLI
 
-The first thing I want to walk through is getting the HashiCorp Vault CLI installed on our local machine. We have a great walkthrough from [HashiCorp on getting the CLI installed on your local machine.](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-install) 
+我想首先介紹的是在本地機器上安裝 HashiCorp Vault CLI。我們有一個很好的 [HashiCorp 在本地機器上安裝 CLI 的教程](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-install)。
 
-I am on my MacOS device but other instructions are also shown in the above link. 
+我在我的 MacOS 設備上，但上面的鏈接中也顯示了其他說明。
 
 `brew tap hashicorp/tap`
 
 `brew install hashicorp/tap/vault`
 
-Now when you run the `vault` command you should have access to the vault binary and sub commands. 
+現在當您運行 `vault` 命令時，您應該可以訪問 vault 二進制檔案和子命令。
 
 ![](images\day39-1.png)
 
-## Getting Vault up and running on Kubernetes
+## 在 Kubernetes 上啟動 Vault
 
-If you have been following along to any other sections in this project you will likely have seen that I am a big fan of Minikube when it comes to getting a local Kubernetes cluster up and running for learning or local development purposes. 
+如果您一直在關注此專案中的任何其他部分，您可能會看到我是 Minikube 的忠實粉絲，當涉及到為學習或本地開發目的啟動本地 Kubernetes 集群時。
 
-Vault is not exclusive in anyway to Kubernetes but I wanted to cover this scenario, HashiCorp also have a cloud SaaS option for Vault but it can be deployed many places. 
+Vault 絕不專屬於 Kubernetes，但我想涵蓋這個場景，HashiCorp 還有一個用於 Vault 的雲端 SaaS 選項，但它可以部署在許多地方。
 
-I use the below command to get my minikube up and running, you could just use `minikube start` but this is my go to for other demonstrations. 
+我使用下面的命令來啟動我的 minikube，您可以使用 `minikube start`，但這是我用於其他演示的首選。
 
 `minikube start --addons volumesnapshots,csi-hostpath-driver --apiserver-port=6443 --container-runtime=containerd -p demo --kubernetes-version=1.26.0`
 
-Now we have our cluster hopefully up and running, we will now use helm to deploy vault to our cluster. A quick google for helm installation steps will provide you with the how to make that happen. If you are on macos though then you can use homebrew to install 
+現在我們希望我們的集群已經啟動並運行，我們將使用 helm 將 vault 部署到我們的集群。快速搜索 helm 安裝步驟將為您提供如何實現這一點的方法。如果您在 macos 上，則可以使用 homebrew 安裝
 
 `brew install helm`
 
-Add the Hashicorp helm repo. 
+添加 Hashicorp helm 儲存庫。
 
 `helm repo add hashicorp https://helm.releases.hashicorp.com`
 
-There are several options and charts available to us within the repository, by running `helm search repo hashicorp` you will find the available hashicorp products and charts. 
+儲存庫中有幾個選項和圖表可供我們使用，通過運行 `helm search repo hashicorp` 您將找到可用的 hashicorp 產品和圖表。
 
 ![](images\day39-2.png)
 
-For the rest of this walkthrough we will be taking this [tutorial](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-minikube-raft) However we are going to be deploying vault to a dedicated namespace vs the default namespace. 
+對於本教程的其餘部分，我們將採用這個[教程](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-minikube-raft) 但是我們將把 vault 部署到專用的命名空間，而不是預設命名空間。
 
-We will first create this file using the following command. 
+我們將首先使用以下命令創建此檔案。
 
 ```
 cat > helm-vault-raft-values.yml <<EOF
@@ -55,20 +55,20 @@ server:
 EOF
 ```
 
-I have added this file to a folder called day39 in the repository. 
+我已將此檔案添加到儲存庫中名為 day39 的資料夾中。
 
-We will use the following command now to deploy vault using helm. 
+我們現在將使用以下命令使用 helm 部署 vault。
 
 `helm install vault hashicorp/vault --namespace vault --values helm-vault-raft-values.yml --create-namespace`
 
-By running `kubectl get pods -n vault` you should see the below output, it is expected to see the 3 pods in a 0/1 running state we are going to work through this next. 
+通過運行 `kubectl get pods -n vault` 您應該看到下面的輸出，預期看到 3 個 Pod 處於 0/1 運行狀態，我們接下來將處理這個問題。
 
 ![](images/day39-3.png)
 
 
-Next we will initialise vault-0 with the following command, 
+接下來，我們將使用以下命令初始化 vault-0，
 
-***"This command generates a root key that it disassembles into key shares -key-shares=1 and then sets the number of key shares required to unseal Vault -key-threshold=1. These key shares are written to the output as unseal keys in JSON format"***
+***"此命令生成一個根密鑰，將其分解為密鑰份額 -key-shares=1，然後設置解封 Vault 所需的密鑰份額數量 -key-threshold=1。這些密鑰份額以 JSON 格式作為解封密鑰寫入輸出"***
 
 ```
 kubectl exec vault-0 -n vault -- vault operator init \
@@ -77,31 +77,31 @@ kubectl exec vault-0 -n vault -- vault operator init \
     -format=json > cluster-keys.json
 ```
 
-We can then display the unseal key with jq again on macos if you want to get that installed you can do this with `brew install jq`
+然後我們可以使用 jq 再次顯示解封密鑰，如果您想在 macos 上安裝它，可以使用 `brew install jq`
 
-On your local machine you will now see a file called cluster-keys.json. The command to display the key is: 
+在您的本地機器上，您現在將看到一個名為 cluster-keys.json 的檔案。顯示密鑰的命令是：
 
 `jq -r ".unseal_keys_b64[]" cluster-keys.json`
 
-The output should look like this, 
+輸出應該如下所示，
 
 ![](images/day39-4.png)
 
-We will then create a variable based on that key 
+我們將根據該密鑰創建一個變數
 
 `VAULT_UNSEAL_KEY=$(jq -r ".unseal_keys_b64[]" cluster-keys.json)`
 
-We can then go ahead and unseal our vault-0 pod with the following command: 
+然後我們可以使用以下命令解封我們的 vault-0 pod：
 
 `kubectl exec vault-0 -n vault -- vault operator unseal $VAULT_UNSEAL_KEY`
 
-This should display 
+這應該顯示
 
 ![](images/day39-5.png)
 
-At this stage if you run `kubectl get pods -n vault` you should now see the vault-0 pod in a 1/1 running state. 
+在此階段，如果您運行 `kubectl get pods -n vault`，您現在應該看到 vault-0 pod 處於 1/1 運行狀態。
 
-We will now join our other two pods vault-1 and vault-2 to our raft cluster using the following command. 
+我們現在將使用以下命令將其他兩個 pod vault-1 和 vault-2 加入到我們的 raft 集群中。
 
 ```
 kubectl exec -ti vault-1 -n vault -- vault operator raft join http://vault-0.vault-internal:8200
@@ -109,7 +109,7 @@ kubectl exec -ti vault-1 -n vault -- vault operator raft join http://vault-0.vau
 kubectl exec -ti vault-2 -n vault -- vault operator raft join http://vault-0.vault-internal:8200
 ```
 
-We can now unseal the two vault pods mentioned above with the following command. 
+我們現在可以使用以下命令解封上面提到的兩個 vault pod。
 
 ```
 kubectl exec vault-1 -n vault -- vault operator unseal $VAULT_UNSEAL_KEY
@@ -117,17 +117,17 @@ kubectl exec vault-1 -n vault -- vault operator unseal $VAULT_UNSEAL_KEY
 kubectl exec vault-2 -n vault -- vault operator unseal $VAULT_UNSEAL_KEY
 ```
 
-Take another look at the `kubectl get pods -n vault` command. Below is an output of all the recent commands. 
+再看一下 `kubectl get pods -n vault` 命令。下面是所有最近命令的輸出。
 
 ![](images/day39-6.png)
 
-## Enable Key-Value secret engine 
+## 啟用鍵值密鑰引擎
 
-In order for us to enable the secret engine we need to use the root token. This was also exported to the cluster-keys.json file we saw and used earlier for our unseal keys. If not following along you can see this JSON file in the day39 folder. 
+為了啟用密鑰引擎，我們需要使用 root token。這也被導出到我們之前看到並用於解封密鑰的 cluster-keys.json 檔案中。如果沒有跟隨，您可以在 day39 資料夾中看到此 JSON 檔案。
 
 `jq -r ".root_token" cluster-keys.json`
 
-We must now exec into our vault-0 pod to enable the secret engine. 
+我們現在必須 exec 進入我們的 vault-0 pod 以啟用密鑰引擎。
 
 `kubectl exec --stdin=true --tty=true vault-0 -n vault -- /bin/sh`
 
@@ -136,34 +136,34 @@ We must now exec into our vault-0 pod to enable the secret engine.
 
 `vault secrets enable -path=secret kv-v2`
 
-## Creating a new secret for our app 
+## 為我們的應用程式創建新密鑰
 
-As a simple test we want to create an application in its own namespace within our Kubernetes cluster to then communicate with vault in its own namespace. 
+作為一個簡單的測試，我們想在 Kubernetes 集群中創建一個應用程式，在其自己的命名空間中，然後與其自己命名空間中的 vault 通信。
 
-This is one thing that is not defined in the tutorial linked, and I wanted to provide a bit more real life use case because yes the default namespace can be used but that doesn't mean it should be. 
+這是連結教程中未定義的一件事，我想提供更多真實的使用案例，因為是的，可以使用預設命名空間，但這並不意味著應該使用它。
 
 `vault kv put secret/devwebapp/config username='90DaysOfDevOps' password='90DaysOfDevOps'`
 
-We can confirm what we have just created with the following command: 
+我們可以使用以下命令確認我們剛剛創建的內容：
 
 `vault kv get secret/devwebapp/config`
 
-You can see the above commands ran in my terminal below. 
+您可以在下面的終端中看到上面運行的命令。
 
 ![](images/day39-8.png)
 
-Next we need to enable the Kubernetes authentication method.
+接下來我們需要啟用 Kubernetes 身份驗證方法。
 
 `vault auth enable kubernetes`
 
-Configure the Kubernetes authentication method to use the location of the Kubernetes API.
+配置 Kubernetes 身份驗證方法以使用 Kubernetes API 的位置。
 
 ```
 vault write auth/kubernetes/config \
     kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"
 ```
 
-We can now create our policy named devwebapp that enables the read capability for secrets at path secret/data/devwebapp/config
+我們現在可以創建名為 devwebapp 的政策，該政策啟用對路徑 secret/data/devwebapp/config 的密鑰的讀取能力
 
 ```
 vault policy write devwebapp - <<EOF
@@ -173,7 +173,7 @@ path "secret/data/devwebapp/config" {
 EOF
 ```
 
-Create a Kubernetes authentication role named devweb-app, this has been taken from the tutorial from Hashicorp but notice that we define a namespace other than default. 
+創建一個名為 devweb-app 的 Kubernetes 身份驗證角色，這已從 Hashicorp 的教程中採用，但請注意我們定義了一個非預設的命名空間。
 
 ```
 vault write auth/kubernetes/role/devweb-app \
@@ -182,23 +182,23 @@ vault write auth/kubernetes/role/devweb-app \
         policies=devwebapp \
         ttl=24h
 ```
-Now we can exit our vault-0 pod. 
+現在我們可以退出我們的 vault-0 pod。
 
 `exit`
 
-## Deploying our Application 
+## 部署我們的應用程式
 
-As mentioned now back into our Kubernetes cluster, it is time to create and deploy our application to complete this demo. 
+如前所述，現在回到我們的 Kubernetes 集群，是時候創建和部署我們的應用程式以完成此演示。
 
-Firstly, create the application namespace with
+首先，使用以下命令創建應用程式命名空間
 
 `kubectl create ns devwebapp`
 
-We will now create our serviceaccount. 
+我們現在將創建我們的服務帳戶。
 
 `kubectl create sa internal-app -n devwebapp`
 
-Now for our application, we will create the following yaml file and you will find this in the day39 folder. 
+現在對於我們的應用程式，我們將創建以下 yaml 檔案，您將在 day39 資料夾中找到它。
 
 ```
 cat > devwebapp.yaml <<EOF
@@ -220,24 +220,24 @@ spec:
       image: jweissig/app:0.0.1
 EOF
 ```
-We will be deploying this to our newly created namespace with the following command. 
+我們將使用以下命令將其部署到我們新創建的命名空間。
 
-`kubectl create -f devwebapp.yaml -n devwebapp` 
+`kubectl create -f devwebapp.yaml -n devwebapp`
 
-Check the status of the pods. 
+檢查 Pod 的狀態。
 
 `kubectl get pods -n devwebapp`
 
-Finally we can confirm that we have the correct credentials stored in our app. 
+最後，我們可以確認我們在應用程式中存儲了正確的憑證。
 
 `kubectl exec --stdin=true --tty=true devwebapp -n devwebapp -c devwebapp -- cat /vault/secrets/credentials.txt`
 
-Confirmation of this can be seen below, but hopefully you are seeing the same output as I have got below. 
+可以在下面看到對此的確認，但希望您看到與我下面相同的輸出。
 
 ![](images/day39-9.png)
 
-I wanted to also add a resource from Nathanael Frappart, Nathanael covers everything in much more detail. 
+我還想添加來自 Nathanael Frappart 的資源，Nathanael 更詳細地涵蓋了所有內容。
 
 [Vault kubernetes auth with AKS](https://nfrappart.github.io/2023/07/20/kubernetes-auth-aks.html)
 
-See you on [Day 40](day40.md)
+請參閱 [Day 40](day40.md)

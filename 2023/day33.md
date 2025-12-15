@@ -1,43 +1,43 @@
-# Application runtime policies
+# 應用程式運行時策略
 
-## Introduction 
+## 簡介
 
-Application runtime policies are a set of rules and controls that determine how an application behaves at runtime. These policies are implemented to ensure that an application behaves securely and within the constraints of its intended purpose.
+應用程式運行時策略是一組規則和控制措施，決定應用程式在運行時的行為。實施這些策略是為了確保應用程式安全地運行並在其預期用途的約束範圍內。
 
-Some common examples of runtime policies include access controls, and network restrictions. Access controls determine who has access to various parts of an application and what level of access they have. Application policies dictate what system resources an application can consume. Network restrictions can control which network resources an application can access and limit what kind of network traffic it can send or receive.
+一些常見的運行時策略範例包括訪問控制和網路限制。訪問控制決定誰可以訪問應用程式的各個部分以及他們擁有的訪問級別。應用程式策略規定應用程式可以消耗哪些系統資源。網路限制可以控制應用程式可以訪問哪些網路資源，並限制它可以發送或接收的網路流量類型。
 
-Runtime policies can be implemented in several ways, including through the use of security frameworks, application-specific configuration settings, or specialized security software. For example, some web application firewalls (WAFs) are designed to enforce runtime policies for web applications by analyzing incoming traffic and blocking or allowing requests based on predefined policies.
+運行時策略可以通過多種方式實施，包括使用安全框架、應用程式特定的配置設置或專門的安全軟體。例如，一些 Web 應用程式防火牆（WAF）旨在通過分析傳入流量並根據預定義的策略阻止或允許請求來為 Web 應用程式執行運行時策略。
 
-Effective implementation of application runtime policies can help mitigate security risks and ensure that an application behaves as intended. By monitoring and enforcing policies at runtime, organizations can reduce the likelihood of unauthorized access, data breaches, and other security incidents that can result in loss or damage to critical assets. Additionally, application runtime policies can help ensure that an application is performing optimally and can deliver its intended functionality without disruption or unexpected behavior.
+有效實施應用程式運行時策略可以幫助降低安全風險並確保應用程式按預期運行。通過在運行時監控和執行策略，組織可以降低未授權訪問、數據洩露和其他可能導致關鍵資產損失或損壞的安全事件的發生可能性。此外，應用程式運行時策略可以幫助確保應用程式以最佳方式運行，並可以在不中斷或意外行為的情況下提供其預期功能。
 
-Defining and maintaining application runtime policies can be a challenging task for a number of reasons.
+定義和維護應用程式運行時策略可能是一項具有挑戰性的任務，原因如下：
 
-1. Modern applications can be very complex, with multiple components and dependencies, making it difficult to define a clear set of policies that cover all possible scenarios. Adding to microservice architecture to this complexity is even increasing the challenge.
+1. 現代應用程式可能非常複雜，具有多個組件和依賴項，使得難以定義一套涵蓋所有可能情況的清晰策略。將微服務架構添加到這種複雜性中，甚至增加了挑戰。
 
-2. Rapidly changing applications and technology: Technology is constantly evolving, with new applications and platforms being developed and updated regularly. This means that policies that were once effective may quickly become outdated, requiring frequent updates.
+2. 快速變化的應用程式和技術：技術在不斷發展，新的應用程式和平台定期開發和更新。這意味著曾經有效的策略可能很快變得過時，需要頻繁更新。
 
-3. Application policies must strike a balance between providing strong security measures and not hindering user productivity. This can be a delicate balance to achieve, as overly strict policies can make it difficult for users to perform their work, while overly permissive policies can leave the system vulnerable to security breaches.
+3. 應用程式策略必須在提供強大的安全措施和不阻礙用戶生產力之間取得平衡。這可能是一個微妙的平衡，因為過於嚴格的策略可能使用戶難以執行他們的工作，而過於寬鬆的策略可能使系統容易受到安全漏洞的影響。
 
-4. Implementing and enforcing application policies can require significant resources, including time, money, and expertise. Organizations may face budgetary and staffing limitations that make it difficult to fully implement and maintain application policies.
+4. 實施和執行應用程式策略可能需要大量資源，包括時間、金錢和專業知識。組織可能面臨預算和人員限制，使得難以完全實施和維護應用程式策略。
 
-In this session, we will see how application and network policies can be implemented and see an interesting approach: generating policies using monitoring application behavior.
+在本節中，我們將看到如何實施應用程式和網路策略，並看到一個有趣的方法：使用監控應用程式行為來生成策略。
 
-## Kubernetes Pod security contexts
+## Kubernetes Pod 安全上下文
 
-Let's start a new Minikube (in anticipation of the next part, we are already creating it with a CNI that implements network policies).
+讓我們啟動一個新的 Minikube（預期下一部分，我們已經使用實現網路策略的 CNI 創建它）。
 ```bash
 minikube start --cni cilium
 ```
 
-Let's take the simple example of an Nginx web-server. We want to make it more secure than the default settings of the container. Kubernetes and container runtime gives an option to create `securityContext` configuration which limits the container runtime in different aspects:
+讓我們以一個簡單的 Nginx Web 伺服器為例。我們希望使其比容器的預設設置更安全。Kubernetes 和容器運行時提供了一個選項來創建 `securityContext` 配置，該配置在不同方面限制容器運行時：
 
-### User and group ID of the container
+### 容器的用戶和組 ID
 
-Containers use user and group `0` (root) by default. Root on the host machine is not the same as root in the container. Defining the difference between these two is beyond our scope, but in short, the containerized root is confined by the container boundaries. Despite this, an attack that can penetrate a container that is running as root has much more attack surface for container escape than a container that runs as a non-root.
+容器預設使用用戶和組 `0`（root）。主機上的 root 與容器中的 root 不同。定義這兩者之間的差異超出了我們的範圍，但簡而言之，容器化的 root 受到容器邊界的限制。儘管如此，能夠穿透以 root 身份運行的容器的攻擊比以非 root 身份運行的容器具有更大的容器逃逸攻擊面。
 
-Therefore it is important to define a user ID different from than root in the `securityContext`. **Note:** you have to make sure that the container is built to run as non-root. Running `nginx:latest` as a non-root user will fail since the file permissions in the container image are built for root user.
+因此，在 `securityContext` 中定義一個不同於 root 的用戶 ID 很重要。**注意：** 您必須確保容器構建為以非 root 身份運行。以非 root 用戶身份運行 `nginx:latest` 將失敗，因為容器映像中的檔案權限是為 root 用戶構建的。
 
-Here is an example of creating a Nginx instance in Kubernetes which is not running as root.
+以下是在 Kubernetes 中創建不以 root 身份運行的 Nginx 實例的範例。
 
 ```bash
 kubectl apply -f - << EOF
@@ -57,16 +57,15 @@ spec:
 EOF
 ```
 
-Note the `runAsUser` and `runAsGroup` fields where we are limiting the user ID of who is running this container. There is an additional field that was set here called `allowPrivilegeEscalation`. It removes the capability of the processes running inside the container to escalate privileges using [sticky bit](https://en.wikipedia.org/wiki/Sticky_bit).
+請注意 `runAsUser` 和 `runAsGroup` 欄位，我們在其中限制運行此容器的用戶 ID。這裡還設置了一個名為 `allowPrivilegeEscalation` 的附加欄位。它移除了容器內運行的進程使用[粘滯位](https://en.wikipedia.org/wiki/Sticky_bit)提升權限的能力。
 
+### 運行時系統調用策略
 
-### Runtime system call policies
+預設情況下，每個進程都被允許使用內核的任何系統調用。內核可能會根據其邏輯決定不完成這些系統調用，但一般來說，有 500+ 個系統調用可供應用程式使用。
 
-By default, every process is allowed to use any system calls of the kernel. The kernel might decide not to complete these system calls depending on its logic, but in general 500+ system calls are available for applications. 
+如果攻擊者穿透了容器，她/他可以嘗試使用所有這些系統調用來欺騙內核逃逸容器或造成其他損害。實際上，容器化應用程式只使用 500+ 個系統調用中的有限數量，通常它們不太容易受到漏洞的影響。因此，限制容器化應用程式可以執行的系統調用是一個很好的防禦措施。
 
-If an attacker penetrated a container, she/he can try to use all these system calls to trick kernel to escape the container or do other damage. In practice, containerized applications are using only a limited number of system calls out of the 500+ and usually, they are less prone to vulnerabilities. For this reason, it is a good defense to limit the system calls a containerized application can do.
-
-The configuration in `securityContext` enables users to implement restrictions on a container using [seccomp](https://kubernetes.io/docs/tutorials/security/seccomp/). From version 1.25, Kubernetes has a default application seccomp profile called `RuntimeDefault`. It is a permissive restriction, but it is a good start. See here how to create a Pod with this policy:
+`securityContext` 中的配置使用戶能夠使用 [seccomp](https://kubernetes.io/docs/tutorials/security/seccomp/) 在容器上實施限制。從版本 1.25 開始，Kubernetes 有一個名為 `RuntimeDefault` 的預設應用程式 seccomp 配置檔案。這是一個寬鬆的限制，但這是一個好的開始。請參閱如何創建具有此策略的 Pod：
 
 ```bash
 kubectl apply -f - << EOF
@@ -89,30 +88,30 @@ spec:
 EOF
 ```
 
-Note, this enables 90% of all system calls to the application and limits a few. This won't break most applications but will limit the attacker to some extent. 
+請注意，這為應用程式啟用了 90% 的所有系統調用並限制了少數。這不會破壞大多數應用程式，但會在一定程度上限制攻擊者。
 
-See later how to tailor this to your application.
+稍後請參閱如何為您的應用程式量身定制此配置。
 
-## Kubernetes native network policies
+## Kubernetes 原生網路策略
 
-By default, Pods in a Kubernetes cluster have no limits on network communication. Any Pod can talk to any other Pod in the "Pod network". Creating micro-segmentation around Pods is an important way to limit the "blast radius" of an attack: only enable network connections which are required by the application.
+預設情況下，Kubernetes 集群中的 Pod 對網路通信沒有限制。任何 Pod 都可以與「Pod 網路」中的任何其他 Pod 通信。在 Pod 周圍創建微分段是限制攻擊「爆炸半徑」的重要方法：僅啟用應用程式所需的網路連接。
 
-Let's create another Nginx deployment and service in the cluster with:
+讓我們在集群中創建另一個 Nginx 部署和服務：
 ```bash
 kubectl create deployment nginx --image=nginx
 kubectl expose deployment nginx --port=80
 ```
 
-Now let's test the connection from another Pod:
+現在讓我們從另一個 Pod 測試連接：
 ```bash
 kubectl run curl --rm -ti --image=curlimages/curl:latest -- sh
 ```
-Now you can use curl to test the connection from the new Pod:
+現在您可以使用 curl 從新 Pod 測試連接：
 ```bash
 curl nginx
 ```
 
-Now let's apply a network policy that only enables access to Nginx Pod from other Pods that are marked "nginx:client" label
+現在讓我們應用一個網路策略，僅允許標記為「nginx:client」標籤的其他 Pod 訪問 Nginx Pod
 
 ```bash
 kubectl apply -f - << EOF
@@ -132,65 +131,64 @@ spec:
 EOF
 ```
 
-Running the same test as above will fail:
+運行與上面相同的測試將失敗：
 ```bash
 kubectl run curl --rm -ti --image=curlimages/curl:latest -- sh
 ```
-This should timeout:
+這應該會超時：
 ```bash
 curl --connect-timeout 1 nginx
 ```
 
-If we want it to work, we need to add the label "nginx: client" to the curl Pod:
+如果我們希望它工作，我們需要將標籤「nginx: client」添加到 curl Pod：
 ```bash
 kubectl run curl --rm -ti --labels="nginx=client" --image=curlimages/curl:latest -- sh
 ```
-Now the request will succeed:
+現在請求將成功：
 ```bash
 curl --connect-timeout 1 nginx
 ```
 
 🆒 😄
 
-This is a simple example of how Kubernetes native network policies working.
+這是 Kubernetes 原生網路策略如何工作的簡單範例。
 
+## 從應用程式行為生成策略
 
-## Generating policies from application behavior
+正如在簡介中討論的那樣，定義這些策略存在一些相當大的複雜性。
 
-As it was discussed in the intro, there is some considerable complexity in defining these policies.
+一方面，正確定義它們需要時間，並且隨著變化，這些策略往往會破壞應用程式。這導致從業者定義寬鬆的策略。
 
-On one hand, it takes time to define them properly and with changes, these policies tend to break applications. This causes practitioners to define lenient policies. 
+另一方面，如果它們定義得不夠嚴格，它們在保護您的系統方面就不那麼有效。
 
-On the other hand, if they are not defined strictly enough, they are less effective in protecting your systems.
+不過還是有希望的 😉
 
-There is hope though 😉
+較新的技術正在努力監控應用程式行為（網路和運行時），並自動將它們轉換為策略。
 
-Newer technologies are striving to monitor application behavior (both network and runtime) and turn them automatically to policies.
+一個很好的例子是 [Inspektor Gadget](https://www.inspektor-gadget.io/)。
 
-A great example is [Inspektor Gadget](https://www.inspektor-gadget.io/).
+我們將在這裡看到如何安裝它，並看看它如何生成網路和 seccomp 配置檔案。
 
-We will see here how to install it and see how it generates network and seccomp profiles.
-
-You can install the controller of Inspektor Gadget using [krew](https://krew.sigs.k8s.io/).
+您可以使用 [krew](https://krew.sigs.k8s.io/) 安裝 Inspektor Gadget 的控制器。
 ```bash
 kubectl krew install gadget
 ```
-and install Gadgets with
+並使用以下命令安裝 Gadgets：
 ```bash
 kubectl gadget deploy
 ```
 
-Now you can start monitoring the above Nginx Pod and generating seccomp profile for it:
+現在您可以開始監控上述 Nginx Pod 並為其生成 seccomp 配置檔案：
 ```bash
 kubectl gadget advise seccomp-profile start -n default -p $(kubectl get pods | grep nginx | head -n 1 | awk '{print $1}')
 ```
 
-This command started monitoring and returns a trace ID, if you think that you got enough activity stop the tracing with:
+此命令開始監控並返回追蹤 ID，如果您認為已經有足夠的活動，請使用以下命令停止追蹤：
 ```bash
 kubectl gadget advise seccomp-profile stop <traceid>
 ```
 
-Example:
+範例：
 ```bash
 $ kubectl gadget advise seccomp-profile stop jd4VM2jWhnONfakF
 {
@@ -259,17 +257,17 @@ $ kubectl gadget advise seccomp-profile stop jd4VM2jWhnONfakF
 }
 ```
 
-The same tool helps you to generate network policy. Let's start network monitoring with this command:
+同一個工具可以幫助您生成網路策略。讓我們使用此命令開始網路監控：
 ```bash
 kubectl gadget advise network-policy monitor -p $(kubectl get pods | grep nginx | head -n 1 | awk '{print $1}') --output /tmp/network.log
 ```
 
-When you think the monitoring have seen enough activity, you can stop with `ctrl-c`. Then generate the policy yaml with this command:
+當您認為監控已經看到足夠的活動時，可以使用 `ctrl-c` 停止。然後使用此命令生成策略 yaml：
 ```bash
 kubectl gadget advise network-policy report --input /tmp/network.log 
 ```
 
-This is the policy you get:
+這是您獲得的策略：
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -292,7 +290,7 @@ spec:
   - Egress
 status: {}
 ```
-### Summary
-These were examples of how to turn behavior to policy! Good stuff 😃
+### 總結
+這些是將行為轉換為策略的範例！好東西 😃
 
-See you on [Day 34](day34.md).
+請參閱 [Day 34](day34.md)。
