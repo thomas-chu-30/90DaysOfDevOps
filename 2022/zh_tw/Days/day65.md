@@ -1,5 +1,5 @@
 ---
-title: '#90DaysOfDevOps - Ansible Playbooks - Day 65'
+title: '#90DaysOfDevOps - Ansible Playbooks - 第 65 天'
 published: false
 description: 90DaysOfDevOps - Ansible Playbooks
 tags: 'devops, 90daysofdevops, learning'
@@ -7,25 +7,26 @@ cover_image: null
 canonical_url: null
 id: 1049054
 ---
-### Ansible Playbooks 
 
-In this section we will take a look at the main reason that I can see at least for Ansible, I mean it is great to take a single command and hit many different servers to perform simple commands such as rebooting a long list of servers and saving the hassle of having to connect to each one individually.
+### Ansible Playbooks
 
-But what about actually taking a bare operating system and declaring the software and services we want running on that system and making sure they are all running in that desired state.
+在本節中，我們將查看我至少可以看到的 Ansible 的主要原因，我的意思是使用單個指令並命中許多不同的伺服器來執行簡單的指令（例如重啟一長串伺服器並節省必須單獨連接到每個伺服器的麻煩）是很棒的。
 
-This is where ansible playbooks come in. A playbook enables us to take our group of servers and perform configuration and installation tasks against that group.
+但是，實際採用裸作業系統並聲明我們希望在那個系統上運行的軟體和服務，並確保它們都在所需狀態下運行呢？
 
-### Playbook format
+這就是 ansible playbooks 的用武之地。Playbook 使我們能夠獲取伺服器組並對該組執行配置和安裝任務。
+
+### Playbook 格式
 
 Playbook > Plays > Tasks
 
-For anyone that comes from a sports background you may have come across the term playbook, a playbook then tells the team how you will play made up of various plays and tasks, if we think of the plays as the set pieces within the sport or game, and the tasks are associated to each play, you can have multiple tasks to make up a play and in the playbook you may have multiple different plays.
+對於任何來自體育背景的人，你可能遇到過 playbook 這個術語，playbook 告訴團隊你將如何玩，由各種 plays 和 tasks 組成，如果我們將 plays 視為運動或遊戲中的固定套路，tasks 與每個 play 相關聯，你可以有多個 tasks 組成一個 play，在 playbook 中，你可能有多個不同的 plays。
 
-These playbooks are written in YAML (YAML ain’t markup language) you will find a lot of the sections we have covered so far especially Containers and Kubernetes to feature YAML formatted configuration files.
+這些 playbooks 用 YAML（YAML 不是標記語言）編寫，你會發現我們到目前為止涵蓋的許多部分，特別是容器和 Kubernetes，都以 YAML 格式的配置檔案為特色。
 
-Let’s take a look at a simple playbook called playbook.yml.
+讓我們看一下一個名為 playbook.yml 的簡單 playbook。
 
-```
+```Yaml
 - name: Simple Play
   hosts: localhost
   connection: local
@@ -37,30 +38,30 @@ Let’s take a look at a simple playbook called playbook.yml.
         msg: "{{ ansible_os_family }}"
 ```
 
-You will find the above file [simple_play](days/../Configmgmt/simple_play.yml). If we then use the `ansible-playbook simple_play.yml` command we will walk through the following steps. 
+你會在 [simple_play](days/../Configmgmt/simple_play.yml) 找到上面的檔案。如果我們然後使用 `ansible-playbook simple_play.yml` 指令，我們將演練以下步驟。
 
 ![](Images/Day65_config1.png)
 
-You can see the first task of "gathering steps" happened, but we didn't trigger or ask for this? This module is automatically called by playbooks to gather useful variables about remote hosts. [ansible.builtin.setup](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/setup_module.html)
+你可以看到第一個「收集步驟」任務發生了，但我們沒有觸發或要求這個？此模組由 playbooks 自動調用以收集有關遠程主機的有用變數。[ansible.builtin.setup](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/setup_module.html)
 
-Our second task was to set a ping, this is not an ICMP ping but a python script to report back `pong` on successful connectivity to remote or localhost. [ansible.builtin.ping](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html) 
+我們的第二個任務是設置 ping，這不是 ICMP ping，而是一個 python 腳本，在成功連接到遠程或 localhost 時報告 `pong`。[ansible.builtin.ping](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html)
 
-Then our third or really our second defined task as the first one will run unless you disable was the printing of a message telling us our OS. In this task we are using conditionals, we could run this playbook against all different types of operating systems and this would return the OS name. We are simply messaging this output for ease but we could add a task to say something like: 
+然後我們的第三個或第二個定義的任務，因為第一個將運行，除非你禁用，是打印告訴我們 OS 的消息。在此任務中，我們使用條件，我們可以針對所有不同類型的作業系統運行此 playbook，這將返回 OS 名稱。我們只是為了方便而消息化此輸出，但我們可以添加一個任務來說明：
 
-``` 
-tasks: 
+```Yaml
+tasks:
   - name: "shut down Debian flavoured systems"
-    command: /sbin/shutdown -t now 
+    command: /sbin/shutdown -t now
     when: ansible_os_family == "Debian"
-``` 
-
-### Vagrant to setup our environment
-
-We are going to use Vagrant to set up our node environment, I am going to keep this at a reasonable  4 nodes but you can hopefully see that this could easily be 300 or 3000 and this is the power of Ansible and other configuration management tools to be able to configure your servers.
-
-You can find this file located here ([Vagrantfile](Configmgmt/Vagrantfile))
-
 ```
+
+### Vagrant 設置我們的環境
+
+我們將使用 Vagrant 設置節點環境，我將保持在合理的 4 個節點，但你可以看到這可能很容易是 300 或 3000，這就是 Ansible 和其他配置管理工具能夠配置伺服器的力量。
+
+你可以在此處找到此檔案（[Vagrantfile](Configmgmt/Vagrantfile)）
+
+```Vagrant
 Vagrant.configure("2") do |config|
   servers=[
     {
@@ -97,7 +98,7 @@ config.vm.base_address = 600
     config.vm.define machine[:hostname] do |node|
       node.vm.box = machine[:box]
       node.vm.hostname = machine[:hostname]
-    
+
       node.vm.network :public_network, bridge: "Intel(R) Ethernet Connection (7) I219-V", ip: machine[:ip]
       node.vm.network "forwarded_port", guest: 22, host: machine[:ssh_port], id: "ssh"
 
@@ -111,49 +112,51 @@ config.vm.base_address = 600
 end
 ```
 
-Use the `vagrant up` command to spin these machines up in VirtualBox, You might be able to add more memory and you might also want to define a different private_network address for each machine but this works in my environment. Remember our control box is the Ubuntu desktop we deployed during the Linux section. 
+使用 `vagrant up` 指令在 VirtualBox 中啟動這些機器，你可能能夠添加更多內存，你可能還想為每台機器定義不同的 private_network 地址，但這在我的環境中有效。記住我們的控制盒是我們在 Linux 部分部署的 Ubuntu 桌面。
 
-If you are resource contrained then you can also run `vagrant up web01 web02` to only bring up the webservers that we are using here. 
+如果你資源受限，那麼你也可以運行 `vagrant up web01 web02` 只啟動我們在這裡使用的 Web 伺服器。
 
-### Ansible host configuration
+### Ansible 主機配置
 
-Now that we have our environment ready, we can check ansible and for this we will use our Ubuntu desktop (You could use this but you can equally use any Linux based machine on your network accessible to the network below) as our control, let’s also add the new nodes to our group in the ansible hosts file, you can think of this file as an inventory, an alternative to this could be another inventory file that is called on as part of your ansible command with `-i filename` this could be useful vs using the host file as you can have different files for different environments, maybe production, test and staging. Because we are using the default hosts file we do not need to specify as this would be the default used.
+現在我們已經準備好環境，我們可以檢查 ansible，為此，我們將使用 Ubuntu 桌面（你可以使用這個，但你也可以使用網路上訪問下面網路的任何基於 Linux 的機器）作為控制，讓我們也在 ansible hosts 檔案中將新節點添加到我們的組，你可以將此檔案視為清單，替代方案可能是另一個清單檔案，作為 ansible 指令的一部分使用 `-i filename` 調用，這可能比使用主機檔案有用，因為你可以為不同環境（可能是生產、測試和預備）擁有不同的檔案。因為我們使用預設 hosts 檔案，我們不需要指定，因為這將是使用的預設值。
 
-I have added the following to the default hosts file. 
+我已將以下內容添加到預設 hosts 檔案。
 
-```
+```Text
 [control]
 ansible-control
 
-[proxy] 
+[proxy]
 loadbalancer
 
-[webservers] 
+[webservers]
 web01
 web02
 
-[database] 
+[database]
 db01
 
 ```
+
 ![](Images/Day65_config2.png)
 
-Before moving on we want to make sure we can run a command against our nodes, let’s run `ansible nodes -m command -a hostname` this simple command will test that we have connectivity and report back our host names.
+在繼續之前，我們想確保可以對節點運行指令，讓我們運行 `ansible nodes -m command -a hostname` 這個簡單的指令將測試我們有連接性並報告我們的主機名。
 
-Also note that I have added these nodes and IPs to my Ubuntu control node within the /etc/hosts file to ensure connectivity. We might also need to do SSH configuration for each node from the Ubuntu box.
+另外，請注意，我已將這些節點和 IP 添加到 Ubuntu 控制節點內的 /etc/hosts 檔案中，以確保連接性。我們可能還需要從 Ubuntu 盒為每個節點進行 SSH 配置。
 
-```
+```Text
 192.168.169.140 ansible-control
 192.168.169.130 db01
 192.168.169.131 web01
 192.168.169.132 web02
 192.168.169.133 loadbalancer
 ```
+
 ![](Images/Day65_config3.png)
 
-At this stage we want to run through setting up SSH keys between your control and your server nodes. This is what we are going to do next, another way here could be to add variables into your hosts file to give username and password. I would advise against this as this is never going to be a best practice. 
+在這個階段，我們想演練在控制和伺服器節點之間設置 SSH 密鑰。這是我們接下來要做的事情，這裡的另一種方法是在主機檔案中添加變數以提供用戶名和密碼。我建議不要這樣做，因為這永遠不會是最佳實踐。
 
-To set up SSH and share amongst your nodes, follow the steps below, you will be prompted for passwords (`vagrant`) and you will likely need to hit `y` a few times to accept. 
+要設置 SSH 並在節點之間共享，請按照以下步驟操作，你將被提示輸入密碼（`vagrant`），你可能需要多次點擊 `y` 來接受。
 
 `ssh-keygen`
 
@@ -163,30 +166,29 @@ To set up SSH and share amongst your nodes, follow the steps below, you will be 
 
 ![](Images/Day65_config6.png)
 
-Now if you have all of your VMs switched on then you can run the `ssh-copy-id web01 && ssh-copy-id web02 && ssh-copy-id loadbalancer && ssh-copy-id db01` this will prompt you for your password in our case our password is `vagrant`
+現在如果你已打開所有 VM，那麼你可以運行 `ssh-copy-id web01 && ssh-copy-id web02 && ssh-copy-id loadbalancer && ssh-copy-id db01` 這將提示你輸入密碼，在我們的情況下，我們的密碼是 `vagrant`
 
-I am not running all my VMs and only running the webservers so I issued `ssh-copy-id web01 && ssh-copy-id web02` 
+我沒有運行所有 VM，只運行 Web 伺服器，所以我發出了 `ssh-copy-id web01 && ssh-copy-id web02`
 
 ![](Images/Day65_config7.png)
 
-Before running any playbooks I like to make sure that I have simple connectivity with my groups so I have ran `ansible webservers -m ping` to test connectivity. 
+在運行任何 playbooks 之前，我喜歡確保與我的組有簡單的連接性，所以我運行了 `ansible webservers -m ping` 來測試連接性。
 
 ![](Images/Day65_config4.png)
 
+### 我們的第一個「真正的」Ansible Playbook
 
-### Our First "real" Ansible Playbook
-Our first Ansible playbook is going to configure our webservers, we have grouped these in our hosts file under the grouping [webservers].  
+我們的第一個 Ansible playbook 將配置 Web 伺服器，我們已將這些分組在主機檔案中的 [webservers] 分組下。
 
-Before we run our playbook we can confirm that our web01 and web02 do not have apache installed. The top of the screenshot below is showing you the folder and file layout I have created within my ansible control to run this playbook, we have the `playbook1.yml`, then in the templates folder we have the `index.html.j2` and `ports.conf.j2` files. You can find these files in the folder listed above in the repository. 
+在運行 playbook 之前，我們可以確認 web01 和 web02 沒有安裝 apache。下面截圖的頂部顯示了我在 ansible 控制中創建的資料夾和檔案佈局，以運行此 playbook，我們有 `playbook1.yml`，然後在 templates 資料夾中，我們有 `index.html.j2` 和 `ports.conf.j2` 檔案。你可以在儲存庫中上面列出的資料夾中找到這些檔案。
 
-Then we SSH into web01 to check if we have apache installed? 
+然後我們 SSH 到 web01 檢查是否安裝了 apache？
 
 ![](Images/Day65_config8.png)
 
-You can see from the above that we have not got apache installed on our web01 so we can fix this by running the below playbook. 
+你可以從上面看到我們在 web01 上沒有安裝 apache，所以我們可以通過運行下面的 playbook 來修復這個。
 
-
-```
+```Yaml
 - hosts: webservers
   become: yes
   vars:
@@ -224,52 +226,53 @@ You can see from the above that we have not got apache installed on our web01 so
         name: apache2
         state: restarted
 ```
-Breaking down the above playbook: 
 
-- `- hosts: webservers` this is saying that our group to run this playbook on is a group called webservers
-- `become: yes` means that our user running the playbook will become root on our remote systems. You will be prompted for the root password. 
-- We then have `vars` and this defines some environment variables we want throughout our webservers. 
+分解上面的 playbook：
 
-Following this we start our tasks, 
+- `- hosts: webservers` 這表示我們運行此 playbook 的組是一個名為 webservers 的組
+- `become: yes` 意味著運行 playbook 的用戶將在遠程系統上成為 root。你將被提示輸入 root 密碼。
+- 然後我們有 `vars`，這定義了我們在整個 Web 伺服器中想要的一些環境變數。
 
-- Task 1 is to ensure that apache is running the latest version
-- Task 2 is writing the ports.conf file from our source found in the templates folder. 
-- Task 3 is creating a basic index.html file 
-- Task 4 is making sure apache is running 
+接下來，我們開始任務，
 
-Finally we have a handlers section, [Handlers: Running operations on change](https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html)
+- 任務 1 是確保 apache 運行最新版本
+- 任務 2 是從 templates 資料夾中找到的源寫入 ports.conf 檔案。
+- 任務 3 是創建一個基本的 index.html 檔案
+- 任務 4 是確保 apache 正在運行
 
-"Sometimes you want a task to run only when a change is made on a machine. For example, you may want to restart a service if a task updates the configuration of that service, but not if the configuration is unchanged. Ansible uses handlers to address this use case. Handlers are tasks that only run when notified. Each handler should have a globally unique name."
+最後，我們有一個 handlers 部分，[Handlers: Running operations on change](https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html)
 
-At this stage you might be thinking but we have deployed 5 VMs (including our Ubuntu Desktop machine which is acting as our Ansible Control) The other systems will come into play during the rest of the section. 
+「有時你希望任務只在機器上進行更改時運行。例如，如果任務更新該服務的配置，你可能希望重啟服務，但如果配置未更改，則不重啟。Ansible 使用 handlers 來解決此用例。Handlers 是僅在通知時運行的任務。每個 handler 應該有一個全局唯一的名稱。」
 
-### Run our Playbook
+在這個階段，你可能會想我們已經部署了 5 個 VM（包括充當 Ansible 控制的 Ubuntu Desktop 機器）其他系統將在本節的其餘部分發揮作用。
 
-We are now ready to run our playbook against our nodes. To run our playbook we can use the `ansible-playbook playbook1.yml` We have defined our hosts that our playbook will run against within the playbook and this will walkthrough our tasks that we have defined. 
+### 運行我們的 Playbook
 
-When the command is complete we get an output showing our plays and tasks, this may take some time you can see from the below image that this took a while to go and install our desired state. 
+我們現在準備對節點運行 playbook。要運行 playbook，我們可以使用 `ansible-playbook playbook1.yml` 我們已在 playbook 內定義了 playbook 將運行的主機，這將演練我們定義的任務。
+
+當指令完成時，我們會得到一個顯示我們的 plays 和 tasks 的輸出，這可能需要一些時間，你可以從下面的圖像中看到，這需要一段時間來安裝我們的所需狀態。
 
 ![](Images/Day65_config9.png)
 
-We can then double check this by jumping into a node and checking we have the installed software on our node.
+然後我們可以通過跳入節點並檢查節點上已安裝的軟體來再次檢查這一點。
 
 ![](Images/Day65_config10.png)
 
-Just to round this out as we have deployed two standalone webservers with the above we can now navigate to the respective IPs that we defined and get our new website. 
+只是為了完成這個，因為我們已經用上面的內容部署了兩個獨立的 Web 伺服器，我們現在可以導航到我們定義的相應 IP 並獲得我們的新網站。
 
 ![](Images/Day65_config11.png)
 
-We are going to build on this playbook as we move through the rest of this section. I am interested as well in taking our Ubuntu desktop and seeing if we could actually bootstrap our applications and configuration using Ansible so we might also touch this. You saw that we can use local host in our commands we can also run playbooks against our local host for example.
+我們將在本節的其餘部分中在此 playbook 的基礎上構建。我也對採用 Ubuntu 桌面並查看是否可以使用 Ansible 引導應用程式和配置感興趣，所以我們也可能觸及這一點。你看到我們可以在指令中使用本地主機，我們也可以對本地主機運行 playbooks，例如。
 
-Another thing to add here is that we are only really working with Ubuntu VMs but Ansible is agnostic to the target systems. The alternatives that we have previously mentioned to manage your systems could be server by server (not scalable when you get over a large amount of servers, plus a pain even with 3 nodes) we can also use shell scripting which again we covered in the Linux section but these nodes are potentially different so yes it can be done but then someone needs to maintain and manage those scripts. Ansible is free and hits the easy button vs having to have a specialised script.
+這裡要添加的另一件事是，我們實際上只使用 Ubuntu VM，但 Ansible 與目標系統無關。我們之前提到的管理系統的替代方案可能是逐個伺服器（當你超過大量伺服器時不可擴展，即使有 3 個節點也很痛苦）我們也可以使用 shell 腳本，我們在 Linux 部分再次涵蓋了這一點，但這些節點可能不同，所以是的，可以完成，但然後有人需要維護和管理這些腳本。Ansible 是免費的，並且擊中了簡單按鈕，而不是必須擁有專門的腳本。
 
-## Resources 
+## 資源
 
 - [What is Ansible](https://www.youtube.com/watch?v=1id6ERvfozo)
 - [Ansible 101 - Episode 1 - Introduction to Ansible](https://www.youtube.com/watch?v=goclfp6a2IQ)
 - [NetworkChuck - You need to learn Ansible right now!](https://www.youtube.com/watch?v=5hycyr-8EKs&t=955s)
 - [Your complete guide to Ansible](https://www.youtube.com/playlist?list=PLnFWJCugpwfzTlIJ-JtuATD2MBBD7_m3u)
 
-This final playlist listed above is where a lot of the code and ideas came from for this section, a great resource and walkthrough in video format. 
+上面列出的最終播放列表是本節中很多代碼和想法的來源，這是一個很好的資源和視頻格式的演練。
 
-See you on [Day 66](day66.md)
+我們[第 66 天](day66.md)見

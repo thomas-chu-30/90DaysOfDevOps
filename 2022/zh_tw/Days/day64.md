@@ -1,88 +1,87 @@
 ---
-title: '#90DaysOfDevOps - Ansible: Getting Started - Day 64'
+title: '#90DaysOfDevOps - Ansible：開始使用 - 第 64 天'
 published: false
-description: '90DaysOfDevOps - Ansible: Getting Started'
-tags: "devops, 90daysofdevops, learning"
+description: '90DaysOfDevOps - Ansible：開始使用'
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048765
 ---
-## Ansible: Getting Started
 
-We covered a little what Ansible is in the [big picture session yesterday](day63.md) But we are going to get started with a little more information on top of that here. Firstly Ansible comes from RedHat. Secondly it is agentles, connects via SSH and runs commands. Thirdly it is cross platform (Linux & macOS, WSL2) and open-source (there is also a paid for enterprise option) Ansible pushes configuration vs other models. 
+## Ansible：開始使用
 
-### Ansible Installation 
-As you might imagine, RedHat and the Ansible team have done a fantastic job around documenting Ansible. This generally starts with the installation steps which you can find [here](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) Remember we said that Ansible is an agentless automation tool, the tool is deployed to a system referred to as a "Control Node" from this control node is manages machines and other devices (possibly network) over SSH. 
+我們在[昨天的大圖景課程](day63.md)中稍微涵蓋了 Ansible 是什麼，但我們將在這裡在此基礎上開始使用更多資訊。首先 Ansible 來自 RedHat。其次，它是無代理的，通過 SSH 連接並運行指令。第三，它是跨平台的（Linux 和 macOS、WSL2）和開源的（還有一個付費的企業選項）Ansible 推送配置與其他模型相比。
 
-It does state in the above linked documentation that the Windows OS cannot be used as the control node. 
+### Ansible 安裝
 
-For my control node and for at least this demo I am going to use the Linux VM we created way back in the [Linux section](day20.md) as my control node. 
+正如你可能想像的那樣，RedHat 和 Ansible 團隊在記錄 Ansible 方面做得非常出色。這通常從安裝步驟開始，你可以在[這裡](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)找到。記住我們說過 Ansible 是一個無代理自動化工具，該工具部署到稱為「控制節點」的系統，從此控制節點通過 SSH 管理機器和其他設備（可能是網路）。
 
-This system was running Ubuntu and the installation steps simply needs the following commands. 
+上面連結的文件確實說明 Windows OS 不能用作控制節點。
 
-```
+對於我的控制節點，至少這個演示，我將使用我們在 [Linux 部分](day20.md)中創建的 Linux VM 作為我的控制節點。
+
+該系統運行 Ubuntu，安裝步驟只需要以下指令。
+
+```Shell
 sudo apt update
 sudo apt install software-properties-common
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 ```
-Now we should have ansible installed on our control node, you can check this by running `ansible --version` and you should see something similar to this below. 
+
+現在我們應該在控制節點上安裝了 ansible，你可以通過運行 `ansible --version` 來檢查這一點，你應該看到類似下面的內容。
 
 ![](Images/Day64_config1.png)
 
-Before we then start to look at controlling other nodes in our environment, we can also check functionality of ansible by running a command against our local machine `ansible localhost -m ping` will use an [Ansible Module](https://docs.ansible.com/ansible/2.9/user_guide/modules_intro.html) and this is a quick way to perform a single task across many different systems. I mean it is not much fun with just the local host but imagine you wanted to get something or make sure all your systems were up and you had 1000+ servers and devices. 
+在我們開始查看控制環境中的其他節點之前，我們也可以通過對本地機器運行指令來檢查 ansible 的功能 `ansible localhost -m ping` 將使用 [Ansible Module](https://docs.ansible.com/ansible/2.9/user_guide/modules_intro.html)，這是在許多不同系統上執行單個任務的快速方法。我的意思是只有本地主機沒有太多樂趣，但想像你想要獲取某些東西或確保所有系統都啟動，你有 1000+ 伺服器和設備。
 
 ![](Images/Day64_config2.png)
 
-Or an actual real life use for a module might be something like `ansible webservers --m service -a "name=httpd state=started"` this will tell us if all of our webservers have the httpd service running. I have glossed over the webservers term used in that command. 
+或者模組的實際真實使用可能是 `ansible webservers -m service -a "name=httpd state=started"` 這將告訴我們所有 Web 伺服器是否都有 httpd 服務運行。我已經略過了該指令中使用的 webservers 術語。
 
-### hosts 
+### hosts
 
-The way I used localhost above to run a simple ping module against the system, I cannot specify another machine on my network, for example in the environment I am using my Windows host where VirtualBox is running has a network adapter with the IP 10.0.0.1 but you can see below that I can reach by pinging but I cannot use ansible to perform that task. 
+我上面使用 localhost 對系統運行簡單 ping 模組的方式，我無法指定網路上的另一台機器，例如在我使用的環境中，運行 VirtualBox 的 Windows 主機有一個 IP 為 10.0.0.1 的網路適配器，但你可以看到下面我可以通過 ping 到達，但我無法使用 ansible 執行該任務。
 
 ![](Images/Day64_config3.png)
 
-In order for us to specify our hosts or the nodes that we want to automate with these tasks we need to define them. We can define them by navigating to the /etc/ansible directory on your system. 
+為了指定我們的主機或我們希望使用這些任務自動化的節點，我們需要定義它們。我們可以通過導航到系統上的 /etc/ansible 目錄來定義它們。
 
 ![](Images/Day64_config4.png)
 
-The file we want to edit is the hosts file, using a text editor we can jump in and define our hosts. The hosts file contains lots of great instructions on how to use and modify the file. We want to scroll down to the bottom and we are going to create a new group called [windows] and we are going to add our `10.0.0.1` IP address for that host. Save the file. 
+我們要編輯的檔案是主機檔案，使用文字編輯器我們可以跳入並定義我們的主機。主機檔案包含大量關於如何使用和修改檔案的說明。我們想向下滾動到底部，我們將創建一個名為 [windows] 的新組，我們將為該主機添加 `10.0.0.1` IP 地址。保存檔案。
 
 ![](Images/Day64_config5.png)
 
-However remember I said you will need to have SSH available to enable ansible to connect to your system. As you can see below when I run `ansible windows -m ping` we get an unreachable because things failed to connect via SSH. 
+但是，記住我說過你需要有 SSH 可用才能讓 Ansible 連接到你的系統。正如你在下面看到的，當我運行 `ansible windows -m ping` 時，我們得到不可達，因為通過 SSH 連接失敗。
 
 ![](Images/Day64_config6.png)
 
-I have now also started adding some additional hosts to our inventory, another name for this file as this is where you are going to define all of your devices, could be network devices, switches and routers for example also would be added here and grouped. In our hosts file though I have also added in my credentials for accessing the linux group of systems. 
+我現在也開始向我們的清單中添加一些額外的主機，此檔案的另一個名稱，因為這是你將定義所有設備的地方，可能是網路設備、交換機和路由器，例如也會添加到此處並分組。但在我們的主機檔案中，我還添加了訪問 Linux 系統組的憑證。
 
 ![](Images/Day64_config7.png)
 
-Now if we run `ansible linux -m ping` we get a success as per below. 
+現在如果我們運行 `ansible Linux -m ping`，我們會得到成功，如下所示。
 
 ![](Images/Day64_config8.png)
 
-We then have the node requirements, these are the target systems you wish to automate the configuration on. We are not installing anything for Ansible on these (I mean we might be installing software but there is no client from Ansible we need) Ansible will make a connection over SSH and send anything over SFTP. (If you so desire though and you have SSH configured you could use SCP vs SFTP.) 
+然後我們有節點要求，這些是你希望自動化配置的目標系統。我們在這些上不為 Ansible 安裝任何東西（我的意思是我們可能正在安裝軟體，但沒有我們需要的 Ansible 客戶端）Ansible 將通過 SSH 建立連接並通過 SFTP 發送任何內容。（如果你願意並且配置了 SSH，你可以使用 SCP vs SFTP。）
 
-### Ansible Commands 
+### Ansible 指令
 
-You saw that we were able to run `ansible linux -m ping` against our Linux machine and get a response, basically with Ansible we have the ability to run many adhoc commands. But obviously you can run this against a group of systems and get that information back. [ad hoc commands](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html)
+你看到我們能夠對 Linux 機器運行 `ansible Linux -m ping` 並獲得響應，基本上，使用 Ansible 我們可以運行許多臨時指令。但你可以對一組系統運行此操作並獲取該資訊。[臨時指令](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html)
 
-If you find yourself repeating commands or even worse you are having to log into individual systems to run these commands then Ansible can help there. For example the simple command below would give us the output of all the operating system details for all of the systems we add to our linux group. 
+如果你發現自己重複指令，或者更糟糕的是，你必須登入單個系統來運行這些指令，那麼 Ansible 可以在那裡提供幫助。例如，下面的簡單指令將為我們添加到 Linux 組的所有系統提供所有作業系統詳細資訊的輸出。
 `ansible linux -a "cat /etc/os-release"`
 
-Other use cases could be to reboot systems, copy files, manage packers and users. You can also couple ad hoc commands with Ansible modules. 
+其他用例可能是重啟系統、複製檔案以及管理打包器和用戶。你還可以將臨時指令與 Ansible 模組結合使用。
 
-Ad hoc commands use a declarative model, calculating and executing the actions required to reach a specified final state. They achieve a form of idempotence by checking the current state before they begin and doing nothing unless the current state is different from the specified final state.
+臨時指令使用聲明式模型，計算並執行達到指定最終狀態所需的操作。它們通過在開始前檢查當前狀態來實現某種形式的冪等性，除非當前狀態與指定的最終狀態不同，否則不執行任何操作。
 
-## Resources 
+## 資源
 
 - [What is Ansible](https://www.youtube.com/watch?v=1id6ERvfozo)
 - [Ansible 101 - Episode 1 - Introduction to Ansible](https://www.youtube.com/watch?v=goclfp6a2IQ)
 - [NetworkChuck - You need to learn Ansible right now!](https://www.youtube.com/watch?v=5hycyr-8EKs&t=955s)
 
-
-See you on [Day 65](day65.md)
-
-
-
+我們[第 65 天](day65.md)見

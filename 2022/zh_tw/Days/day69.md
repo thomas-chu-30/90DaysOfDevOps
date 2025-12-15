@@ -1,58 +1,59 @@
 ---
-title: '#90DaysOfDevOps - All other things Ansible - Automation Controller (Tower), AWX, Vault - Day 69'
+title: '#90DaysOfDevOps - Ansible 的其他內容 - Automation Controller (Tower)、AWX、Vault - 第 69 天'
 published: false
-description: '90DaysOfDevOps - All other things Ansible - Automation Controller (Tower), AWX, Vault'
-tags: "devops, 90daysofdevops, learning"
+description: '90DaysOfDevOps - Ansible 的其他內容 - Automation Controller (Tower)、AWX、Vault'
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048714
 ---
-## All other things Ansible - Automation Controller (Tower), AWX, Vault
 
-Rounding out the section on Configuration Management I wanted to have a look into the other areas that you might come across when dealing with Ansible.  
+## Ansible 的其他內容 - Automation Controller (Tower)、AWX、Vault
 
-There are a lot of products that make up the Ansible Automation platform. 
+結束配置管理部分，我想查看處理 Ansible 時可能遇到的其他領域。
 
-Red Hat Ansible Automation Platform is a foundation for building and operating automation across an organization. The platform includes all the tools needed to implement enterprise-wide automation.
+有很多產品組成了 Ansible Automation 平台。
+
+Red Hat Ansible Automation Platform 是在組織中構建和運營自動化的基礎。該平台包括實現企業範圍自動化所需的所有工具。
 
 ![](Images/Day69_config1.png)
 
-I will try and cover some of these in this post. But for more information then the official Red Hat Ansible site is going to have lots more information. [Ansible.com](https://www.ansible.com/?hsLang=en-us)
+我將嘗試在本文章中涵蓋其中一些。但有關更多資訊，官方 Red Hat Ansible 網站將有更多資訊。[Ansible.com](https://www.ansible.com/?hsLang=en-us)
 
-### Ansible Automation Controller | AWX 
+### Ansible Automation Controller | AWX
 
-I have bundled these two together because the Automation Controller and AWX are very similar in what they offer. 
+我將這兩個捆綁在一起，因為 Automation Controller 和 AWX 在它們提供的內容上非常相似。
 
-The AWX project or AWX for short is an open-source community project, sponsored by Red Hat that enables you to better control your Ansible projects within your environments. AWX is the upstream project from which the automation controller component is derived. 
+AWX 專案或簡稱 AWX 是一個開源社群專案，由 Red Hat 贊助，使你能夠更好地控制環境中的 Ansible 專案。AWX 是從中派生出 automation controller 組件的上游專案。
 
-If you are looking for an enterprise solution then you will be looking for the Automation Controller or you might have previously heard this as Ansible Tower. The Ansible Automation Controller is the control plane for the Ansible Automation Platform. 
+如果你正在尋找企業解決方案，那麼你將尋找 Automation Controller，或者你可能以前聽說過這個作為 Ansible Tower。Ansible Automation Controller 是 Ansible Automation Platform 的控制平面。
 
-Both AWX and the Automation Controller bring the following features above everything else we have covered in this section thus far. 
+AWX 和 Automation Controller 都帶來了以下功能，超越了我們在本節中迄今為止涵蓋的所有內容。
 
-- User Interface 
-- Role Based Access Control 
-- Workflows 
-- CI/CD integration 
+- 用戶界面
+- 基於角色的訪問控制
+- 工作流程
+- CI/CD 整合
 
-The Automation Controller is the enterprise offering where you pay for your support. 
+Automation Controller 是企業產品，你為支持付費。
 
-We are going to take a look at deploying AWX within our minikube Kubernetes environment. 
+我們將查看在 minikube Kubernetes 環境中部署 AWX。
 
-### Deploying Ansible AWX 
+### 部署 Ansible AWX
 
-AWX does not need to be deployed to a Kubernetes cluster, the [github](https://github.com/ansible/awx) for AWX from ansible will give you that detail. However starting in version 18.0, the AWX Operator is the preferred way to install AWX. 
+AWX 不需要部署到 Kubernetes 集群，來自 ansible 的 AWX [github](https://github.com/ansible/awx) 將為你提供該詳細資訊。但是，從版本 18.0 開始，AWX Operator 是安裝 AWX 的首選方式。
 
-First of all we need a minikube cluster. We can do this if you followed along during the Kubernetes section by creating a new minikube cluster with the `minikube start --cpus=4 --memory=6g --addons=ingress` command. 
+首先，我們需要一個 minikube 集群。如果你在 Kubernetes 部分跟隨，我們可以通過使用 `minikube start --cpus=4 --memory=6g --addons=ingress` 指令創建新的 minikube 集群來執行此操作。
 
 ![](Images/Day69_config2.png)
 
-The official [Ansible AWX Operator](https://github.com/ansible/awx-operator) can be found here. As stated in the install instructions you should clone this repository and then run through the deployment. 
+官方 [Ansible AWX Operator](https://github.com/ansible/awx-operator) 可以在這裡找到。正如安裝說明中所述，你應該克隆此儲存庫，然後運行部署。
 
-I forked the repo above and then ran `git clone https://github.com/MichaelCade/awx-operator.git` my advice is you do the same and do not use my repository as I might change things or it might not be there. 
+我分叉了上面的 repo，然後運行了 `git clone https://github.com/MichaelCade/awx-operator.git` 我的建議是你做同樣的事情，不要使用我的儲存庫，因為我可能會更改內容或它可能不存在。
 
-In the cloned repository you will find a awx-demo.yml file we need to change `NodePort` for `ClusterIP` as per below: 
+在克隆的儲存庫中，你會找到一個 awx-demo.yml 檔案，我們需要將 `NodePort` 更改為 `ClusterIP`，如下所示：
 
-```
+```Yaml
 ---
 apiVersion: awx.ansible.com/v1beta1
 kind: AWX
@@ -62,81 +63,81 @@ spec:
   service_type: ClusterIP
 ```
 
-The next step is to define our namespace where we will be deploying the awx operator, using the `export NAMESPACE=awx` command then followed by `make deploy` we will start the deployment. 
+下一步是定義我們將部署 awx operator 的命名空間，使用 `export NAMESPACE=awx` 指令，然後是 `make deploy`，我們將開始部署。
 
 ![](Images/Day69_config3.png)
 
-In checking we have our new namespace and we have our awx-operator-controller pod running in our namespace. `kubectl get pods -n awx`
+在檢查中，我們有新的命名空間，並且我們的 awx-operator-controller pod 在命名空間中運行。`kubectl get pods -n awx`
 
 ![](Images/Day69_config4.png)
 
-Within the cloned repository you will find a file called awx-demo.yml we now want to deploy this into our Kubernetes cluser and our awx namespace. `kubectl create -f awx-demo.yml -n awx`
+在克隆的儲存庫中，你會找到一個名為 awx-demo.yml 的檔案，我們現在想將其部署到 Kubernetes 集群和 awx 命名空間中。`kubectl create -f awx-demo.yml -n awx`
 
 ![](Images/Day69_config5.png)
 
-You can keep an eye on the progress with `kubectl get pods -n awx -w` which will keep a visual watch on what is happening. 
+你可以使用 `kubectl get pods -n awx -w` 關注進度，這將持續視覺監控正在發生的事情。
 
-You should have something that resembles the image you see below when everything is running. 
+當一切運行時，你應該有類似於你在下面看到的圖像。
 
 ![](Images/Day69_config6.png)
 
-Now we should be able to access our awx deployment after running in a new terminal `minikube service awx-demo-service --url -n $NAMESPACE` to expose this through the minikube ingress. 
+現在我們應該能夠在運行新終端機 `minikube service awx-demo-service --url -n $NAMESPACE` 後訪問我們的 awx 部署，以通過 minikube ingress 公開此功能。
 
 ![](Images/Day69_config7.png)
 
-If we then open a browser to that address [] you can see we are prompted for username and password. 
+如果我們然後打開瀏覽器到該地址 []，你可以看到我們被提示輸入用戶名和密碼。
 
 ![](Images/Day69_config8.png)
 
-The username by default is admin, to get the password we can run the following command to get this `kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" -n awx| base64 --decode`
+預設用戶名是 admin，要獲取密碼，我們可以運行以下指令來獲取此 `kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" -n awx| base64 --decode`
 
 ![](Images/Day69_config9.png)
 
-Obviously this then gives you a UI to manage your playbook and configuration management tasks in a centralised location, it also allows you as a team to work together vs what we have been doing so far here where we have been running from one ansible control station. 
+這為你提供了一個 UI，可以在集中位置管理 playbook 和配置管理任務，它還允許你作為團隊一起工作，而不是我們到目前為止在這裡所做的，我們從一個 ansible 控制站運行。
 
-This is another one of those areas where you could probably go and spend another length of time walking through the capabilities within this tool. 
+這是你可以去並花更多時間演練此工具內功能的另一個領域。
 
-I will call out a great resource from Jeff Geerling, which goes into more detail on using Ansible AWX. [Ansible 101 - Episode 10 - Ansible Tower and AWX](https://www.youtube.com/watch?v=iKmY4jEiy_A&t=752s) 
+我將指出來自 Jeff Geerling 的一個很好的資源，它更詳細地介紹了使用 Ansible AWX。[Ansible 101 - Episode 10 - Ansible Tower and AWX](https://www.youtube.com/watch?v=iKmY4jEiy_A&t=752s)
 
-In this video he also goes into great detail on the differences between Automation Controller (Previously Ansible Tower) and Ansible AWX (Free and Open Source).
+在這個視頻中，他還詳細介紹了 Automation Controller（以前是 Ansible Tower）和 Ansible AWX（免費和開源）之間的差異。
 
-### Ansible Vault 
+### Ansible Vault
 
-`ansible-vault` allows us to encrypt and decrypt Ansible data files. Throughout this section we have skipped over and we have put some of our sensitive information in plain text. 
+`ansible-vault` 允許我們加密和解密 Ansible 數據檔案。在本節中，我們跳過並將一些敏感資訊放在純文字中。
 
-Built in to the Ansible binary is `ansible-vault` which allows us to mask away this sensitive information. 
+內建於 Ansible 二進位檔的是 `ansible-vault`，它允許我們掩蓋此敏感資訊。
 
 ![](Images/Day69_config10.png)
 
-Secrets Management has progressively become another area in which more time should have been spent alongside tools such as HashiCorp Vault or the AWS Key Management Service. I will mark this as an area to dive deeper into.
+Secrets Management 已逐漸成為另一個應該花更多時間的領域，與 HashiCorp Vault 或 AWS Key Management Service 等工具一起。我將標記這是一個需要更深入研究的領域。
 
-I am going to link a great resource and demo to run through from Jeff Geerling again [Ansible 101 - Episode 6 - Ansible Vault and Roles](https://www.youtube.com/watch?v=JFweg2dUvqM)
+我將再次連結來自 Jeff Geerling 的一個很好的資源和演示來演練 [Ansible 101 - Episode 6 - Ansible Vault and Roles](https://www.youtube.com/watch?v=JFweg2dUvqM)
 
-### Ansible Galaxy (Docs)
+### Ansible Galaxy（文件）
 
-Now, we have already used `ansible-galaxy` to create some of our roles and file structure for our demo project. But we also have [Ansible Galaxy documentation](https://galaxy.ansible.com/docs/)
+現在，我們已經使用 `ansible-galaxy` 為演示專案創建了一些 roles 和檔案結構。但我們還有 [Ansible Galaxy 文件](https://galaxy.ansible.com/docs/)
 
-"Galaxy is a hub for finding and sharing Ansible content."
+「Galaxy 是查找和共享 Ansible 內容的中心。」
 
-### Ansible Testing
+### Ansible 測試
 
-- [Ansible Molecule](https://molecule.readthedocs.io/en/latest/) - Molecule project is designed to aid in the development and testing of Ansible roles
+- [Ansible Molecule](https://molecule.readthedocs.io/en/latest/) - molecule 專案旨在幫助開發和測試 Ansible roles
 
-- [Ansible Lint](https://ansible-lint.readthedocs.io/en/latest/) - CLI tool for linting playbooks, roles and collections
+- [Ansible Lint](https://ansible-lint.readthedocs.io/en/latest/) - 用於 linting playbooks、roles 和 collections 的 CLI 工具
 
-### Other Resource 
+### 其他資源
 
 - [Ansible Documentation](https://docs.ansible.com/ansible/latest/index.html)
 
-## Resources 
+## 資源
 
 - [What is Ansible](https://www.youtube.com/watch?v=1id6ERvfozo)
 - [Ansible 101 - Episode 1 - Introduction to Ansible](https://www.youtube.com/watch?v=goclfp6a2IQ)
 - [NetworkChuck - You need to learn Ansible right now!](https://www.youtube.com/watch?v=5hycyr-8EKs&t=955s)
 - [Your complete guide to Ansible](https://www.youtube.com/playlist?list=PLnFWJCugpwfzTlIJ-JtuATD2MBBD7_m3u)
 
-This final playlist listed above is where a lot of the code and ideas came from for this section, a great resource and walkthrough in video format. 
+上面列出的最終播放列表是本節中很多代碼和想法的來源，這是一個很好的資源和視頻格式的演練。
 
-This post wraps up our look into configuration management, we next move into CI/CD Pipelines and some of the tools and processes that we might see and use out there to achieve this workflow for our application development and release. 
+這篇文章結束了我們對配置管理的了解，接下來我們轉向 CI/CD Pipelines 以及我們可能看到和使用的一些工具和流程，以實現應用程式開發和發布的工作流程。
 
-See you on [Day 70](day70.md)
+我們[第 70 天](day70.md)見

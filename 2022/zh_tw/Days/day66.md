@@ -1,33 +1,34 @@
 ---
-title: '#90DaysOfDevOps - Ansible Playbooks Continued... - Day 66'
+title: '#90DaysOfDevOps - Ansible Playbooks 繼續... - 第 66 天'
 published: false
-description: 90DaysOfDevOps - Ansible Playbooks Continued...
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - Ansible Playbooks 繼續...
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048712
 ---
-## Ansible Playbooks Continued...
 
-In our last section we started with creating our small lab using a Vagrantfile to deploy 4 machines and we used our Linux machine we created in that section as our ansible control system. 
+## Ansible Playbooks（繼續）
 
-We also ran through a few scenarios of playbooks and at the end we had a playbook that made our web01 and web02 individual webservers. 
+在上一節中，我們開始使用 Vagrantfile 創建小型實驗室來部署 4 台機器，我們使用在該節中創建的 Linux 機器作為 ansible 控制系統。
+
+我們還演練了一些 playbooks 場景，最後我們有了一個使 web01 和 web02 成為獨立 Web 伺服器的 playbook。
 
 ![](Images/Day66_config1.png)
 
-### Keeping things tidy
+### 保持整潔
 
-Before we get into further automation and deployment we should cover the ability to keep our playbook lean and tidy and how we can separate our taks and handlers into subfolders. 
+在我們進入進一步的自動化和部署之前，我們應該涵蓋保持 playbook 精簡和整潔的能力，以及如何將任務和處理程序分離到子資料夾中。
 
-we are basically going to copy our tasks into their own file within a folder.
+我們將把任務複製到資料夾內的檔案中。
 
-```
+```Yaml
 - name: ensure apache is at the latest version
   apt: name=apache2 state=latest
 
 - name: write the apache2 ports.conf config file
-  template: 
-    src=templates/ports.conf.j2 
+  template:
+    src=templates/ports.conf.j2
     dest=/etc/apache2/ports.conf
   notify: restart apache
 
@@ -44,48 +45,48 @@ we are basically going to copy our tasks into their own file within a folder.
     state: started
 ```
 
-and the same for the handlers. 
+處理程序也是如此。
 
-```
+```Yaml
 - name: restart apache
   service:
     name: apache2
     state: restarted
 ```
 
-then within our playbook now named `playbook2.yml` we point to these files. All of which can be found at [ansible-scenario2](Days/../Configmgmt/ansible-scenario2/)
+然後在我們現在命名為 `playbook2.yml` 的 playbook 中，我們指向這些檔案。所有這些都可以在 [ansible-scenario2](Days/../Configmgmt/ansible-scenario2/) 找到
 
-You can test this on your control machine. If you have copied the files from the repository you should have noticed something changed in the "write a basic index.html file"
+你可以在控制機器上測試這個。如果你從儲存庫複製了檔案，你應該注意到「write a basic index.html file」中發生了一些變化
 
 ![](Images/Day66_config2.png)
 
-Let's find out what simple change I made. Using `curl web01:8000` 
+讓我們找出我做了什麼簡單的更改。使用 `curl web01:8000`
 
 ![](Images/Day66_config3.png)
 
-We have just tidied up our playbook and started to separate areas that could make a playbook very overwhelming at scale.
+我們剛剛整理了 playbook，並開始分離可能使 playbook 在大規模時非常令人難以承受的區域。
 
-### Roles and Ansible Galaxy
+### Roles 和 Ansible Galaxy
 
-At the moment we have deployed 4 VMs and we have configured 2 of these VMs as our webservers but we have some more specific functions namely, a database server and a loadbalancer or proxy. In order for us to do this and tidy up our repository we can use roles within Ansible. 
+目前我們已經部署了 4 個 VM，我們已將其中 2 個 VM 配置為 Web 伺服器，但我們還有一些更具體的功能，即資料庫伺服器和負載平衡器或代理。為了做到這一點並整理儲存庫，我們可以在 Ansible 中使用 roles。
 
-To do this we will use the `ansible-galaxy` command which is there to manage ansible roles in shared repositories. 
+為此，我們將使用 `ansible-galaxy` 指令，該指令用於管理共享儲存庫中的 ansible roles。
 
 ![](Images/Day66_config4.png)
 
-We are going to use `ansible-galaxy` to create a role for apache2 which is where we are going to put our specifics for our webservers. 
+我們將使用 `ansible-galaxy` 為 apache2 創建一個 role，這是我們將放置 Web 伺服器特定內容的地方。
 
 ![](Images/Day66_config5.png)
 
-The above command `ansible-galaxy init roles/apache2` will create the folder structure that we have shown above. Our next step is we need to move our existing tasks and templates to the relevant folders in the new structure. 
+上面的指令 `ansible-galaxy init roles/apache2` 將創建我們上面顯示的資料夾結構。我們的下一步是我們需要將現有任務和模板移動到新結構中的相關資料夾。
 
 ![](Images/Day66_config6.png)
 
-Copy and paste is easy to move those files but we also need to make a change to the tasks/main.yml so that we point this to the apache2_install.yml. 
+複製和粘貼很容易移動這些檔案，但我們還需要對 tasks/main.yml 進行更改，以便我們將其指向 apache2_install.yml。
 
-We also need to change our playbook now to refer to our new role. In the playbook1.yml and playbook2.yml we determine our tasks and handlers in different ways as we changed these between the two versions. We need to change our playbook to use this role as per below: 
+我們還需要更改 playbook 以引用新 role。在 playbook1.yml 和 playbook2.yml 中，我們以不同方式確定任務和處理程序，因為我們在兩個版本之間更改了這些。我們需要更改 playbook 以使用此 role，如下所示：
 
-```
+```Yaml
 - hosts: webservers
   become: yes
   vars:
@@ -98,32 +99,32 @@ We also need to change our playbook now to refer to our new role. In the playboo
 
 ![](Images/Day66_config7.png)
 
-We can now run our playbook again this time with the new playbook name `ansible-playbook playbook3.yml` you will notice the depreciation, we can fix that next.  
+我們現在可以再次運行 playbook，這次使用新的 playbook 名稱 `ansible-playbook playbook3.yml`，你會注意到棄用，我們可以接下來修復它。
 
 ![](Images/Day66_config8.png)
 
-Ok, the depreciation although our playbook ran we should fix our ways now, in order to do that I have changed the include option in the tasks/main.yml to now be import_tasks as per below. 
+好的，雖然我們的 playbook 運行了，但我們現在應該修復我們的方式，為此，我已將 tasks/main.yml 中的 include 選項更改為現在是 import_tasks，如下所示。
 
 ![](Images/Day66_config9.png)
 
-You can find these files in the [ansible-scenario3](Days/Configmgmt/ansible-scenario3)
+你可以在 [ansible-scenario3](Days/Configmgmt/ansible-scenario3) 找到這些檔案
 
-We are also going to create a few more roles whilst using `ansible-galaxy` we are going to create: 
+我們還將在使用 `ansible-galaxy` 時創建更多 roles，我們將創建：
 
-- common = for all of our servers (`ansible-galaxy init roles/common`)
-- nginx = for our loadbalancer (`ansible-galaxy init roles/nginx`)
+- common = 用於所有伺服器（`ansible-galaxy init roles/common`）
+- nginx = 用於負載平衡器（`ansible-galaxy init roles/nginx`）
 
 ![](Images/Day66_config10.png)
 
-I am going to leave this one here and in the next session we will start working on those other nodes we have deployed but have not done anything with yet. 
+我將把這個留在這裡，在下一節中，我們將開始處理我們已部署但尚未做任何事情的節點。
 
-## Resources 
+## 資源
 
 - [What is Ansible](https://www.youtube.com/watch?v=1id6ERvfozo)
 - [Ansible 101 - Episode 1 - Introduction to Ansible](https://www.youtube.com/watch?v=goclfp6a2IQ)
 - [NetworkChuck - You need to learn Ansible right now!](https://www.youtube.com/watch?v=5hycyr-8EKs&t=955s)
 - [Your complete guide to Ansible](https://www.youtube.com/playlist?list=PLnFWJCugpwfzTlIJ-JtuATD2MBBD7_m3u)
 
-This final playlist listed above is where a lot of the code and ideas came from for this section, a great resource and walkthrough in video format. 
+上面列出的最終播放列表是本節中很多代碼和想法的來源，這是一個很好的資源和視頻格式的演練。
 
-See you on [Day 67](day67.md)
+我們[第 67 天](day67.md)見

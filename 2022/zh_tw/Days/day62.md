@@ -1,98 +1,122 @@
 ---
-title: '#90DaysOfDevOps - Testing, Tools & Alternatives - Day 62'
+title: '#90DaysOfDevOps - 測試、工具和替代方案 - 第 62 天'
 published: false
-description: '90DaysOfDevOps - Testing, Tools & Alternatives'
+description: '90DaysOfDevOps - 測試、工具和替代方案'
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1049053
 ---
-## Testing, Tools & Alternatives
 
-As we close out this section on Infrastructure as Code we must mention about testing our code, the various different tools available and then some of the alternatives to Terraform to achieve this. As I said at the start of the section my focus was on Terraform because it is firstly free and open source, secondly it is cross platform and agnostic to environments. But there are also alternatives out there that should be considered but the overall goal is to make people aware that this is the way to deploy your infrastructure. 
+## 測試、工具和替代方案
 
-### Code Rot 
+當我們結束基礎設施即代碼部分時，我們必須提到測試代碼、可用的各種工具，然後是 Terraform 的一些替代方案來實現這一點。正如我在本節開始時所說，我的重點是 Terraform，因為首先它是免費和開源的，其次它是跨平台且與環境無關的。但還有其他替代方案應該考慮，但總體目標是讓人們意識到這是部署基礎設施的方式。
 
-The first area I want to cover in this session is code rot, unlike application code, infrastructure as code might get used and then not for a very long time. Lets take the example that we are going to be using Terraform to deploy our VM environment in AWS, perfect and it works first time and we have our environment, but this environment doesnt change too often so the code gets left the state possibly or hopefully stored in a central location but the code does not change. 
+### 代碼腐化
 
-What if something changes in the infrastructure? But it is done out of band, or other things change in our environment. 
+我想在本節中涵蓋的第一個領域是代碼腐化，與應用程式代碼不同，基礎設施即代碼可能會被使用，然後很長時間不再使用。讓我們舉一個例子，我們將使用 Terraform 在 AWS 中部署 VM 環境，完美，它第一次工作，我們有了環境，但這個環境不會經常更改，所以代碼被留下，狀態可能或希望存儲在中央位置，但代碼不會更改。
 
-- Out of band changes 
-- Unpinned versions 
-- Deprecated dependancies 
-- Unapplied changes 
+如果基礎設施中發生某些變化怎麼辦？但它是帶外完成的，或者環境中的其他事物發生變化。
 
-### Testing 
+- 帶外更改
+- 未固定的版本
+- 已棄用的依賴項
+- 未應用的更改
 
-Another huge area that follows on from code rot and in general is the ability to test your IaC and make sure all areas are working the way they should. 
+### 測試
 
-First up there are some built in testing commands we can take a look at: 
+從代碼腐化延續下來的另一個巨大領域，總的來說，是測試 IaC 並確保所有領域按應有的方式工作的能力。
 
-| Command               | Description                                                                                | 
-| --------------------- | ------------------------------------------------------------------------------------------ |
-| `terraform fmt`       | Rewrite Terraform configuration files to a canonical format and style.                     | 
-| `terraform validate`  | Validates the configuration files in a directory, referring only to the configuration      | 
-| `terraform plan`      | Creates an execution plan, which lets you preview the changes that Terraform plans to make | 
-| Custom validation     | Validation of your input variables to ensure they match what you would expect them to be   |
+首先，有一些內建測試指令我們可以查看：
 
-We also have some testing tools available external to Terraform: 
+| 指令              | 描述                                                                                |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| `terraform fmt`   | 將 Terraform 配置檔案重寫為規範格式和樣式。                                          |
+| `terraform validate` | 驗證目錄中的配置檔案，僅參考配置                                                      |
+| `terraform plan`  | 創建執行計劃，讓你預覽 Terraform 計劃進行的更改                                       |
+| Custom validation | 驗證輸入變數以確保它們符合你的預期                                                     |
+
+我們還有一些 Terraform 外部可用的測試工具：
 
 - [tflint](https://github.com/terraform-linters/tflint)
 
-    - Find possible errors
-    - Warn about deprecated syntax, unused declarations.
-    - Enforce best practices, naming conventions.
+  - 查找可能的錯誤
+  - 警告已棄用的語法和未使用的聲明。
+  - 強制執行最佳實踐和命名約定。
 
-Scanning tools 
+掃描工具
 
-- [checkov](https://www.checkov.io/) - scans cloud infrastructure configurations to find misconfigurations before they're deployed.
-- [tfsec](https://aquasecurity.github.io/tfsec/v1.4.2/) - static analysis security scanner for your Terraform code.
-- [terrascan](https://github.com/accurics/terrascan) - static code analyzer for Infrastructure as Code.
-- [terraform-compliance](https://terraform-compliance.com/) - a lightweight, security and compliance focused test framework against terraform to enable negative testing capability for your infrastructure-as-code.
-- [snyk](https://docs.snyk.io/products/snyk-infrastructure-as-code/scan-terraform-files/scan-and-fix-security-issues-in-terraform-files) - scans your Terraform code for misconfigurations and security issues 
+- [checkov](https://www.checkov.io/) - 掃描雲基礎設施配置以在部署前發現配置錯誤。
+- [tfsec](https://aquasecurity.github.io/tfsec/v1.4.2/) - Terraform 代碼的靜態分析安全掃描器。
+- [terrascan](https://github.com/accurics/terrascan) - 基礎設施即代碼的靜態代碼分析器。
+- [terraform-compliance](https://terraform-compliance.com/) - 一個輕量級、安全和合規性重點的測試框架，針對 terraform 以啟用基礎設施即代碼的負面測試能力。
+- [snyk](https://docs.snyk.io/products/snyk-infrastructure-as-code/scan-terraform-files/scan-and-fix-security-issues-in-terraform-files) - 掃描 Terraform 代碼以查找配置錯誤和安全問題
 
-Managed Cloud offering 
+託管雲產品
 
-- [Terraform Sentinel](https://www.terraform.io/cloud-docs/sentinel) - embedded policy-as-code framework integrated with the HashiCorp Enterprise products. It enables fine-grained, logic-based policy decisions, and can be extended to use information from external sources.
+- [Terraform Sentinel](https://www.terraform.io/cloud-docs/sentinel) - 與 HashiCorp 企業產品整合的嵌入式策略即代碼框架。它啟用細粒度、基於邏輯的策略決策，並可以擴展以使用來自外部來源的資訊。
 
-Automated testing
+### 自動化測試
 
-- [Terratest](https://terratest.gruntwork.io/) - Terratest is a Go library that provides patterns and helper functions for testing infrastructure
+- [Terratest](https://terratest.gruntwork.io/) - Terratest 是一個 Go 庫，提供測試基礎設施的模式和輔助函數
+- Terratest 使為基礎設施代碼編寫自動化測試變得更容易。它為常見的基礎設施測試提供各種輔助函數和模式。
+- 在 2022/Days/IaC/Terratest 找到代碼
+- 運行此應用程式
+  * git clone #repo_url# <br />
+  * cd test  <br />
+  * go mod init "<MODULE_NAME>"  <br />
+  **MODULE_NAME 將是 github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>**  <br />
+  * go mod init github.com/<FOLDER-PATH>  <br/>
+  * go run
 
-Worth a mention 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-- [Terraform Cloud](https://cloud.hashicorp.com/products/terraform) - Terraform Cloud is HashiCorp’s managed service offering. It eliminates the need for unnecessary tooling and documentation for practitioners, teams, and organizations to use Terraform in production.
+go mod init "<MODULE_NAME>" 將在 test 資料夾中創建 go.mod 檔案。 <br />
+* go.mod 檔案是 GoLang 中依賴管理的根。
+* 專案中需要或將要使用的所有模組都在 go.mod 檔案中維護。
+* 它為我們將在專案中使用/導入的所有套件創建條目。
+* 它減少了手動獲取每個依賴項的工作。
 
-- [Terragrunt](https://terragrunt.gruntwork.io/) - Terragrunt is a thin wrapper that provides extra tools for keeping your configurations DRY, working with multiple Terraform modules, and managing remote state. 
+在第一次運行 **go test** 時，你將獲得創建的 go.sum 檔案。 <br />
+* go.sum 檔案在第一次執行 **go test** 或 **go build** 時創建。
+* 它安裝所有具有特定版本（最新）的套件
+* 我們不需要編輯或修改此檔案。
 
-- [Atlantis](https://www.runatlantis.io/) -  Terraform Pull Request Automation 
+值得提及
 
-### Alternatives 
+- [Terraform Cloud](https://cloud.hashicorp.com/products/terraform) - Terraform Cloud 是 HashiCorp 的託管服務產品。它消除了從業者、團隊和組織在生產中使用 Terraform 時對不必要的工具和文件的需求。
 
-We mentioned on Day 57 when we started this section that there were some alternatives and I very much plan on exploring this following on from this challenge. 
+- [Terragrunt](https://terragrunt.gruntwork.io/) - Terragrunt 是一個薄包裝器，提供額外工具來保持配置 DRY，使用多個 Terraform 模組，並管理遠程狀態。
 
-| Cloud Specific                  | Cloud Agnostic | 
-| ------------------------------- | -------------- |
-| AWS CloudFormation              | Terraform      | 
-| Azure Resource Manager          | Pulumi         | 
-| Google Cloud Deployment Manager |                | 
+- [Atlantis](https://www.runatlantis.io/) - Terraform Pull Request 自動化
 
-I have used AWS CloudFormation probably the most out of the above list and native to AWS but I have not used the others other than Terraform. As you can imagine the cloud specific versions are very good in that particular cloud but if you have multiple cloud environments then you are going to struggle to migrate those configurations or you are going to have multiple management planes for your IaC efforts. 
+### 替代方案
 
-I think an interesting next step for me is to take some time and learn more about [Pulumi](https://www.pulumi.com/) 
- 
-From a Pulumi comparison on their site 
+我們在第 57 天開始本節時提到有一些替代方案，我非常計劃在完成此挑戰後探索這一點。
 
-*"Both Terraform and Pulumi offer a desired state infrastructure as code model where the code represents the desired infrastructure state and the deployment engine compares this desired state with the stack’s current state and determines what resources need to be created, updated or deleted."*
+| 雲端特定                  | 雲端無關 |
+| ------------------------- | -------- |
+| AWS CloudFormation        | Terraform |
+| Azure Resource Manager    | Pulumi   |
+| Google Cloud Deployment Manager |          |
 
-The biggest difference I can see is that unlike the HashiCorp Configuration Language (HCL) Pulumi allows for general purpose languages like Python, TypeScript, JavaScript, Go and .NET. 
+我在上述列表中可能使用 AWS CloudFormation 最多，並且是 AWS 原生的，但我沒有使用除 Terraform 之外的其他工具。正如你可以想像的那樣，雲端特定版本在該特定雲端中非常好，但如果你有多個雲端環境，那麼你將難以遷移這些配置，或者你將為 IaC 工作擁有多個管理平面。
 
-A quick overview [Introduction to Pulumi: Modern Infrastructure as Code](https://www.youtube.com/watch?v=QfJTJs24-JM) I like the ease and choices you are prompted with and want to get into this a little more. 
+我認為對我來說一個有趣的下一步是花一些時間了解更多關於 [Pulumi](https://www.pulumi.com/) 的資訊
 
-This wraps up the Infrastructure as code section and next we move on to that little bit of overlap with configuration management and in particular as we get past the big picture of configuration management we are going to be using Ansible for some of those tasks and demos. 
+來自他們網站上的 Pulumi 比較
 
-## Resources 
-I have listed a lot of resources down below and I think this topic has been covered so many times out there, If you have additional resources be sure to raise a PR with your resources and I will be happy to review and add them to the list. 
+> 「Terraform 和 Pulumi 都提供所需狀態基礎設施即代碼模型，其中代碼表示所需的基礎設施狀態，部署引擎將此所需狀態與堆疊的當前狀態進行比較，並確定需要創建、更新或刪除的資源。」
+
+我能看到的最大區別是，與 HashiCorp 配置語言 (HCL) 不同，Pulumi 允許使用通用程式語言，如 Python、TypeScript、JavaScript、Go 和 .NET。
+
+快速概述 [Introduction to Pulumi: Modern Infrastructure as Code](https://www.youtube.com/watch?v=QfJTJs24-JM) 我喜歡你被提示的輕鬆和選擇，並想更深入地了解這一點。
+
+這結束了基礎設施即代碼部分，接下來我們轉向與配置管理的一點重疊，特別是當我們通過配置管理的大圖景時，我們將使用 Ansible 來完成其中一些任務和演示。
+
+## 資源
+
+我在下面列出了很多資源，我認為這個主題已經被涵蓋了很多次，如果你有其他資源，請務必通過 PR 提出你的資源，我很樂意審查並將它們添加到列表中。
 
 - [What is Infrastructure as Code? Difference of Infrastructure as Code Tools](https://www.youtube.com/watch?v=POPP2WTJ8es)
 - [Terraform Tutorial | Terraform Course Overview 2021](https://www.youtube.com/watch?v=m3cKkYXl-8o)
@@ -100,10 +124,10 @@ I have listed a lot of resources down below and I think this topic has been cove
 - [Terraform Course - From BEGINNER to PRO!](https://www.youtube.com/watch?v=7xngnjfIlK4&list=WL&index=141&t=16s)
 - [HashiCorp Terraform Associate Certification Course](https://www.youtube.com/watch?v=V4waklkBC38&list=WL&index=55&t=111s)
 - [Terraform Full Course for Beginners](https://www.youtube.com/watch?v=EJ3N-hhiWv0&list=WL&index=39&t=27s)
-- [KodeKloud -  Terraform for DevOps Beginners + Labs: Complete Step by Step Guide!](https://www.youtube.com/watch?v=YcJ9IeukJL8&list=WL&index=16&t=11s)
+- [KodeKloud - Terraform for DevOps Beginners + Labs: Complete Step by Step Guide!](https://www.youtube.com/watch?v=YcJ9IeukJL8&list=WL&index=16&t=11s)
 - [Terraform Simple Projects](https://terraform.joshuajebaraj.com/)
 - [Terraform Tutorial - The Best Project Ideas](https://www.youtube.com/watch?v=oA-pPa0vfks)
 - [Awesome Terraform](https://github.com/shuaibiyy/awesome-terraform)
 - [Pulumi - IaC in your favorite programming language!](https://www.youtube.com/watch?v=vIjeiDcsR3Q&t=51s)
 
-See you on [Day 63](day63.md)
+我們[第 63 天](day63.md)見

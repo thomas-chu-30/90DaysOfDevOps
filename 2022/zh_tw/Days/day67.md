@@ -1,26 +1,28 @@
 ---
-title: '#90DaysOfDevOps - Using Roles & Deploying a Loadbalancer - Day 67'
+title: '#90DaysOfDevOps - 使用 Roles 和部署負載平衡器 - 第 67 天'
 published: false
-description: 90DaysOfDevOps - Using Roles & Deploying a Loadbalancer
-tags: "devops, 90daysofdevops, learning"
+description: '90DaysOfDevOps - 使用 Roles 和部署負載平衡器'
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048713
 ---
-## Using Roles & Deploying a Loadbalancer
 
-In the last session we covered roles and used the `ansible-galaxy` command to help create our folder structures for some roles that we are going to use. We finished up with a much tidier working repository for our configuration code as everything is hidden away in our role folders. 
+## 使用 Roles 和部署負載平衡器
 
-However we have only used the apache2 role and have a working playbook3.yaml to handle our webservers. 
+在上一節中，我們涵蓋了 roles 並使用 `ansible-galaxy` 指令幫助為我們將使用的一些 roles 創建資料夾結構。我們完成了一個更整潔的工作儲存庫，用於配置代碼，因為所有內容都隱藏在 role 資料夾中。
 
-At this point if you have only used `vagrant up web01 web02` now is the time to run `vagrant up loadbalancer` this will bring up another Ubuntu system that we will use as our Load Balancer/Proxy. 
+但是，我們只使用了 apache2 role，並且有一個工作的 playbook3.yaml 來處理 Web 伺服器。
 
-We have already defined this new machine in our hosts file, but we do not have the ssh key configured until it is available, so we need to also run `ssh-copy-id loadbalancer` when the system is up and ready. 
+此時，如果你只使用了 `vagrant up web01 web02`，現在是運行 `vagrant up loadbalancer` 的時候了，這將啟動另一個 Ubuntu 系統，我們將用作負載平衡器/代理。
+
+我們已經在主機檔案中定義了這台新機器，但在它可用之前，我們沒有配置 ssh 密鑰，所以我們還需要在系統啟動並準備好時運行 `ssh-copy-id loadbalancer`。
 
 ### Common role
-I created at the end of yesterdays session the role of `common`, common will be used across all of our servers where as the other roles are specific to use cases, now the applications I am going to install as common as spurious and I cannot see many reasons for this to be the case but it shows the objective. In our common role folder structure, navigate to tasks folder and you will have a main.yml. In this yaml we need to point this to our install_tools.yml file and we do this by adding a line `- import_tasks: install_tools.yml` this used to be `include` but this is going to be depreciated soon enough so we are using import_tasks. 
 
-```
+我在昨天課程結束時創建了 `common` role，common 將在所有伺服器上使用，而其他 roles 特定於用例，現在我要安裝的應用程式與虛假的一樣常見，我看不到很多理由，但它顯示了目標。在我們的 common role 資料夾結構中，導航到 tasks 資料夾，你將有一個 main.yml。在此 YAML 中，我們需要將其指向我們的 install_tools.yml 檔案，我們通過添加一行 `- import_tasks: install_tools.yml` 來執行此操作，這曾經是 `include`，但這很快就會被棄用，所以我們使用 import_tasks。
+
+```Yaml
 - name: "Install Common packages"
   apt: name={{ item }} state=latest
   with_items:
@@ -29,9 +31,9 @@ I created at the end of yesterdays session the role of `common`, common will be 
    - figlet
 ```
 
-In our playbook we then add in the common role for each host block. 
+然後在我們的 playbook 中，我們為每個主機塊添加 common role。
 
-```
+```Yaml
 - hosts: webservers
   become: yes
   vars:
@@ -45,13 +47,13 @@ In our playbook we then add in the common role for each host block.
 
 ### nginx
 
-The next phase is for us to install and configure nginx on our loadbalancer vm. Like the common folder structure, we have the nginx based on the last session. 
+下一階段是在負載平衡器 VM 上安裝和配置 nginx。與 common 資料夾結構一樣，我們基於上一節有 nginx。
 
-First of all we are going to add a host block to our playbook. This block will include our common role and then our new nginx role. 
+首先，我們將在 playbook 中添加主機塊。此塊將包括我們的 common role，然後是新的 nginx role。
 
-The playbook can be found here. [playbook4.yml](Days/../Configmgmt/ansible-scenario4/playbook4.yml)
+可以在這裡找到 playbook。[playbook4.yml](Days/../Configmgmt/ansible-scenario4/playbook4.yml)
 
-```
+```Yaml
 - hosts: webservers
   become: yes
   vars:
@@ -62,32 +64,32 @@ The playbook can be found here. [playbook4.yml](Days/../Configmgmt/ansible-scena
     - common
     - apache2
 
-- hosts: proxy 
+- hosts: proxy
   become: yes
-  roles: 
+  roles:
     - common
     - nginx
 ```
 
-In order for this to mean anything, we have to define our tasks that we wish to run, in the same way we will modify the main.yml in tasks to point to two files this time, one for installation and one for configuration. 
+為了使這有意義，我們必須定義我們希望運行的任務，同樣，我們將修改 tasks 中的 main.yml 以指向兩個檔案，一個用於安裝，一個用於配置。
 
-There are some other files that I have modified based on the outcome we desire, take a look in the folder [ansible-scenario4](Days/Configmgmt/ansible-scenario4) for all the files changed. You should check the folders tasks, handlers and templates in the nginx folder and you will find those additional changes and files. 
+根據我們期望的結果，我修改了一些其他檔案，查看資料夾 [ansible-scenario4](Days/Configmgmt/ansible-scenario4) 以了解所有更改的檔案。你應該檢查 nginx 資料夾中的 tasks、handlers 和 templates 資料夾，你會找到那些額外的更改和檔案。
 
-### Run the updated playbook 
+### 運行更新的 playbook
 
-Since yesterday we have added the common role which will now install some packages on our system and then we have also added our nginx role which includes installation and configuration. 
+自昨天以來，我們添加了 common role，現在將在系統上安裝一些套件，然後我們還添加了 nginx role，包括安裝和配置。
 
-Let's run our playbook4.yml using the `ansible-playbook playbook4.yml`
+讓我們使用 `ansible-playbook playbook4.yml` 運行 playbook4.yml
 
 ![](Images/Day67_config1.png)
 
-Now that we have our webservers and loadbalancer configured we should now be able to go to http://192.168.169.134/ which is the IP address of our loadbalancer. 
+現在我們已經配置了 Web 伺服器和負載平衡器，我們現在應該能夠訪問 http://192.168.169.134/，這是負載平衡器的 IP 地址。
 
 ![](Images/Day67_config2.png)
 
-If you are following along and you do not have this state then it could be down to the server IP addresses you have in your environment. The file can be found in `templates\mysite.j2` and looks similar to the below: You would need to update with your webserver IP addresses. 
+如果你正在跟隨並且沒有這種狀態，那麼這可能是由於環境中的伺服器 IP 地址。檔案可以在 `templates\mysite.j2` 中找到，看起來類似於下面：你需要使用 Web 伺服器 IP 地址進行更新。
 
-```
+```J2
     upstream webservers {
         server 192.168.169.131:8000;
         server 192.168.169.132:8000;
@@ -96,24 +98,25 @@ If you are following along and you do not have this state then it could be down 
     server {
         listen 80;
 
-        location / {   
+        location / {
                 proxy_pass http://webservers;
         }
     }
 ```
-I am pretty confident that what we have installed is all good but let's use an adhoc command using ansible to check these common tools installation. 
+
+我非常有信心我們安裝的內容都很好，但讓我們使用 ansible 的臨時指令來檢查這些常用工具的安裝。
 
 `ansible loadbalancer -m command -a neofetch`
 
 ![](Images/Day67_config3.png)
 
-## Resources 
+## 資源
 
 - [What is Ansible](https://www.youtube.com/watch?v=1id6ERvfozo)
 - [Ansible 101 - Episode 1 - Introduction to Ansible](https://www.youtube.com/watch?v=goclfp6a2IQ)
 - [NetworkChuck - You need to learn Ansible right now!](https://www.youtube.com/watch?v=5hycyr-8EKs&t=955s)
 - [Your complete guide to Ansible](https://www.youtube.com/playlist?list=PLnFWJCugpwfzTlIJ-JtuATD2MBBD7_m3u)
 
-This final playlist listed above is where a lot of the code and ideas came from for this section, a great resource and walkthrough in video format. 
+上面列出的最終播放列表是本節中很多代碼和想法的來源，這是一個很好的資源和視頻格式的演練。
 
-See you on [Day 68](day68.md)
+我們[第 68 天](day68.md)見

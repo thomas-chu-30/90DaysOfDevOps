@@ -1,31 +1,32 @@
 ---
-title: '#90DaysOfDevOps - Kubernetes & Multiple Environments - Day 61'
+title: '#90DaysOfDevOps - Kubernetes 和多環境 - 第 61 天'
 published: false
-description: 90DaysOfDevOps - Kubernetes & Multiple Environments
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - Kubernetes 和多環境
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048743
 ---
-## Kubernetes & Multiple Environments 
 
-So far during this section on Infrastructure as code we have looked at deploying virtual machines albeit to virtualbox but the premise is the same really as we define in code what we want our virtual machine to look like and then we deploy. The same for Docker containers and in this session we are going to take a look at how Terraform can be used to interact with resources supported by Kubernetes.
+## Kubernetes 和多環境
 
-I have been using Terraform to deploy my Kubernetes clusters for demo purposes across the 3 main cloud providers and you can find the repository [tf_k8deploy](https://github.com/MichaelCade/tf_k8deploy)
+到目前為止，在基礎設施即代碼部分，我們已經研究了部署虛擬機器，儘管是到 VirtualBox，但前提確實是相同的，因為我們在代碼中定義我們希望虛擬機器看起來的樣子，然後我們部署。Docker 容器也是如此，在本節中，我們將查看如何使用 Terraform 與 Kubernetes 支持的資源交互。
 
-However you can also use Terraform to interact with objects within the Kubernetes cluster, this could be using the [Kubernetes provider](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs) or it could be using the [Helm provider](https://registry.terraform.io/providers/hashicorp/helm/latest) to manage your chart deployments. 
+我一直在使用 Terraform 在 3 個主要雲提供商中部署我的 Kubernetes 集群用於演示目的，你可以找到儲存庫 [tf_k8deploy](https://github.com/MichaelCade/tf_k8deploy)
 
-Now we could use `kubectl` as we have showed in previous sections. But there are some benefits to using Terraform in your Kubernetes environment. 
+但是，你也可以使用 Terraform 與 Kubernetes 集群內的物件交互，這可以使用 [Kubernetes provider](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs) 或使用 [Helm provider](https://registry.terraform.io/providers/hashicorp/helm/latest) 來管理你的 chart 部署。
 
-- Unified workflow - if you have used terraform to deploy your clusters, you could use the same workflow and tool to deploy within your Kubernetes clusters
+現在我們可以使用 `kubectl`，正如我們在之前的章節中所示。但在 Kubernetes 環境中使用 Terraform 有一些好處。
 
-- Lifecycle management - Terraform is not just a provisioning tool, its going to enable change, updates and deletions. 
+- 統一工作流程 - 如果你使用 Terraform 部署集群，你可以使用相同的工作流程和工具在 Kubernetes 集群內部署
 
-### Simple Kubernetes Demo
+- 生命週期管理 - Terraform 不僅是配置工具，它還將啟用更改、更新和刪除。
 
-Much like the demo we created in the last session we can now deploy nginx into our Kubernetes cluster, I will be using minikube here again for demo purposes. We create our Kubernetes.tf file and you can find this in the [folder](2022/Days/IaC/Kubernetes/kubernetes.tf)
+### 簡單的 Kubernetes 演示
 
-In that file we are going to define our Kubernetes provider, we are going to point to our kubeconfig file, create a namespace called nginx, then we will create a deployment which contains 2 replicas and finally a service. 
+就像我們在上一個課程中創建的演示一樣，我們現在可以將 nginx 部署到 Kubernetes 集群中，我將再次使用 minikube 進行演示。我們創建 Kubernetes.tf 檔案，你可以在[資料夾](2022/Days/IaC/Kubernetes/Kubernetes.tf)中找到它
+
+在該檔案中，我們將定義 Kubernetes provider，我們將指向 kubeconfig 檔案，創建一個名為 nginx 的命名空間，然後我們將創建一個包含 2 個副本的部署，最後是服務。
 
 ```
 terraform {
@@ -93,65 +94,69 @@ resource "kubernetes_service" "test" {
 }
 ```
 
-The first thing we have to do in our new project folder is run the `terraform init` command. 
+我們在新專案資料夾中要做的第一件事是運行 `terraform init` 指令。
 
 ![](Images/Day61_IAC1.png)
 
-And then before we run the `terraform apply` command, let me show you that we have no namespaces. 
+然後在我們運行 `terraform apply` 指令之前，讓我向你展示我們沒有命名空間。
 
 ![](Images/Day61_IAC2.png)
 
-When we run our apply command this is going to create those 3 new resources, namespace, deployment and service within our Kubernetes cluster. 
+當我們運行 apply 指令時，這將在 Kubernetes 集群內創建這 3 個新資源，命名空間、部署和服務。
 
 ![](Images/Day61_IAC3.png)
 
-We can now take a look at the deployed resources within our cluster. 
+我們現在可以查看集群內已部署的資源。
 
 ![](Images/Day61_IAC4.png)
 
-Now because we are using minikube and you will have seen in the previous section this has its own limitations when we try and play with the docker networking for ingress. But if we simply issue the `kubectl port-forward -n nginx svc/nginx 30201:80` command and open a browser to http://localhost:30201/ we should see our NGINX page. 
+現在因為我們使用 minikube，正如你在上一節中看到的，當我們嘗試使用 docker 網路進行 ingress 時，這有其局限性。但如果我們簡單地發出 `kubectl port-forward -n nginx svc/nginx 30201:80` 指令並打開瀏覽器到 `http://localhost:30201/`，我們應該看到我們的 NGINX 頁面。
 
 ![](Images/Day61_IAC5.png)
 
-If you want to try out more detailed demos with Terraform and Kubernetes then the [HashiCorp Learn site](https://learn.hashicorp.com/tutorials/terraform/kubernetes-provider) is fantastic to run through. 
+如果你想嘗試 Terraform 和 Kubernetes 的更詳細演示，那麼 [HashiCorp Learn 網站](https://learn.hashicorp.com/tutorials/terraform/kubernetes-provider) 非常適合運行。
 
+### 多環境
 
-### Multiple Environments 
+如果我們想採用我們已經運行的任何演示，但現在希望有特定的生產、預備和開發環境看起來相同並利用此代碼，有兩種方法可以使用 Terraform 實現這一點
 
-If we wanted to take any of the demos we have ran through but wanted to now have specific production, staging and development environments looking exactly the same and leveraging this code there are two approaches to achieve this with Terraform 
+- `terraform workspaces` - 單個後端內的多個命名部分
 
-- `terraform workspaces` - multiple named sections within a single backend 
+- 檔案結構 - 目錄佈局提供分離，模組提供重用。
 
-- file structure - Directory layout provides separation, modules provide reuse. 
+不過，上述每一種都有其優缺點。
 
-Each of the above do have their pros and cons though. 
+### terraform workspaces
 
-### terraform workspaces 
+優點
 
-Pros 
-- Easy to get started 
-- Convenient terraform.workspace expression 
-- Minimises code duplication 
+- 易於開始
+- 方便的 terraform.workspace 表達式
+- 最小化代碼重複
 
-Cons
-- Prone to human error (we were trying to eliminate this by using TF)
-- State stored within the same backend 
-- Codebase doesnt unambiguously show deployment configurations.
+缺點
 
-### File Structure 
+- 容易出現人為錯誤（我們試圖通過使用 TF 來消除這一點）
+- 狀態存儲在同一後端內
+- 代碼庫沒有明確顯示部署配置。
 
-Pros 
-- Isolation of backends 
-    - improved security 
-    - decreased potential for human error 
-- Codebase fully represents deployed state
+### 檔案結構
 
-Cons 
-- Multiple terraform apply required to provision environments 
-- More code duplication, but can be minimised with modules. 
+優點
 
-## Resources 
-I have listed a lot of resources down below and I think this topic has been covered so many times out there, If you have additional resources be sure to raise a PR with your resources and I will be happy to review and add them to the list. 
+- 後端隔離
+  - 改進的安全性
+  - 減少人為錯誤的可能性
+- 代碼庫完全代表已部署狀態
+
+缺點
+
+- 需要多個 terraform apply 來配置環境
+- 更多代碼重複，但可以通過模組最小化。
+
+## 資源
+
+我在下面列出了很多資源，我認為這個主題已經被涵蓋了很多次，如果你有其他資源，請務必通過 PR 提出你的資源，我很樂意審查並將它們添加到列表中。
 
 - [What is Infrastructure as Code? Difference of Infrastructure as Code Tools](https://www.youtube.com/watch?v=POPP2WTJ8es)
 - [Terraform Tutorial | Terraform Course Overview 2021](https://www.youtube.com/watch?v=m3cKkYXl-8o)
@@ -159,9 +164,9 @@ I have listed a lot of resources down below and I think this topic has been cove
 - [Terraform Course - From BEGINNER to PRO!](https://www.youtube.com/watch?v=7xngnjfIlK4&list=WL&index=141&t=16s)
 - [HashiCorp Terraform Associate Certification Course](https://www.youtube.com/watch?v=V4waklkBC38&list=WL&index=55&t=111s)
 - [Terraform Full Course for Beginners](https://www.youtube.com/watch?v=EJ3N-hhiWv0&list=WL&index=39&t=27s)
-- [KodeKloud -  Terraform for DevOps Beginners + Labs: Complete Step by Step Guide!](https://www.youtube.com/watch?v=YcJ9IeukJL8&list=WL&index=16&t=11s)
+- [KodeKloud - Terraform for DevOps Beginners + Labs: Complete Step by Step Guide!](https://www.youtube.com/watch?v=YcJ9IeukJL8&list=WL&index=16&t=11s)
 - [Terraform Simple Projects](https://terraform.joshuajebaraj.com/)
 - [Terraform Tutorial - The Best Project Ideas](https://www.youtube.com/watch?v=oA-pPa0vfks)
 - [Awesome Terraform](https://github.com/shuaibiyy/awesome-terraform)
 
-See you on [Day 62](day62.md)
+我們[第 62 天](day62.md)見
