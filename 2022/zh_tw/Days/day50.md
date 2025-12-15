@@ -1,50 +1,52 @@
 ---
-title: '#90DaysOfDevOps - Choosing your Kubernetes platform - Day 50'
+title: '#90DaysOfDevOps - 選擇你的 Kubernetes 平台 - 第 50 天'
 published: false
-description: 90DaysOfDevOps - Choosing your Kubernetes platform
+description: 90DaysOfDevOps - 選擇你的 Kubernetes 平台
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1049046
 ---
-## Choosing your Kubernetes platform 
 
-I wanted to use this session to breakdown some of the platforms or maybe distributions is a better term to use here, one thing that has been a challenge in the Kubernetes world is removing complexity. 
+## 選擇你的 Kubernetes 平台
 
-Kubernetes the hard way walks through how to build out from nothing to a full blown functional Kubernetes cluster, obviously this is to the extreme but more and more at least the people I am speaking to are wanting to remove that complexity and run a managed Kubernetes cluster. The issue there is that it costs more money but the benefits could be if you use a managed service do you really need to know the underpinning node architecture and what is happening from a Control Plane node point of view when generally you do not have access to this. 
+我想使用這個課程來分解一些平台，或者也許分發是這裡使用的更好術語，Kubernetes 世界中的一個挑戰是消除複雜性。
 
-Then we have the local development distributions that enable us to use our own systems and run a local version of Kubernetes so developers can have the full working environment to run their apps in the platform they are intended for. 
+Kubernetes the hard way 演練如何從零構建到功能齊全的 Kubernetes 集群，這是非常極端的，但越來越多至少我交談的人希望消除這種複雜性並運行託管的 Kubernetes 集群。那裡的問題是它花費更多錢，但好處可能是如果你使用託管服務，你是否需要了解底層節點架構以及從控制平面節點的角度來看正在發生什麼，通常你無法訪問它。
 
-The general basis of all of these concepts is that they are all a flavour of Kubernetes which means we should be able to freely migrate and move our workloads where we need them to suit our requirements. 
+然後我們有本地開發分發，使我們能夠使用我們的系統並運行 Kubernetes 的本地版本，以便開發人員可以擁有完整的工作環境來在它們為之設計的平台上運行他們的應用程式。
 
-A lot of our choice will also depend on what investments have been made. I mentioned the developer experience as well but some of those local Kubernetes environments that run our laptops are great for getting to grips with the technology without spending any money. 
+所有這些概念的總體基礎是它們都是 Kubernetes 的一種風味，這意味著我們應該能夠根據需要自由遷移和移動我們的工作負載以滿足我們的需求。
 
-### Bare-Metal Clusters 
+我們的很多選擇也取決於已經做出的投資。我也提到了開發人員體驗，但一些在我們的筆記型電腦上運行的本地 Kubernetes 環境非常適合在不花費任何錢的情況下掌握這項技術。
 
-An option for many could be running your Linux OS straight onto a number of physical servers to create our cluster, it could also be Windows but I have not heard much about the adoption rate around Windows, Containers and Kubernetes. Obviously if you are a business and you have made a CAPEX decision to buy your physical servers then this might be the way in which you go when building out your Kubernetes cluster, the management and admin side here means you are going to have to build yourself and manage everything from the ground up. 
+### 裸機集群
 
-### Virtualisation 
+對許多人來說，一個選項可能是將你的 Linux OS 直接運行到幾個物理伺服器上以創建我們的集群，它也可以是 Windows，但我沒有聽到太多關於 Windows、容器和 Kubernetes 的採用率。如果你是一家企業，並且你已經做出了 CAPEX 決定購買你的物理伺服器，那麼這可能是你在構建 Kubernetes 集群時的方式，管理和管理方面意味著你將不得不自己構建並從頭開始管理一切。
 
-Regardless of test and learning environments or enterprise ready Kubernetes clusters virtualisation is a great way to go, typically the ability to spin up virtual machines to act as your nodes and then cluster those together. You have the underpinning architecture, effciency and speed of virtualisation as well as leveraging that existing spend. VMware for example offers a great solution for both Virtual Machines and Kubernetes in various different flavours. 
+### 虛擬化
 
-My first ever Kubernetes cluster was build based on Virtualisation using Microsoft Hyper-V on an old server that I had which was capable of running a few VMs as my nodes. 
+無論是測試和學習環境還是企業就緒的 Kubernetes 集群，虛擬化都是一個很好的方式，通常是啟動虛擬機器作為你的節點的能力，然後將它們集群在一起。你擁有底層架構、虛擬化的效率和速度，以及利用現有支出。例如，VMware 為虛擬機器和 Kubernetes 提供了多種風味的出色解決方案。
 
-### Local Desktop options 
+我的第一個 Kubernetes 集群是基於虛擬化構建的，使用 Microsoft Hyper-V 在我擁有的一台舊伺服器上，它能夠運行幾個 VM 作為我的節點。
 
-There are a number of options when it comes to running a local Kubernetes cluster on your desktop or laptop. This as previously said gives developers the ability to see what their app will look like without having to have multiple costly or complex clusters. Personally this has been one that I have used a lot and in particular I have been using minikube. It has some great functionality and add ons which changes the way you get something up and running. 
+### 本地桌面選項
 
-### Kubernetes Managed Services 
-I have mentioned virtualisation, and this can be achieved with hypervisors locally but we know from previous sections we could also leverage VMs in the public cloud to act as our nodes. What I am talking about here with Kubernetes managed services are the offerings we see from the large hyperscalers but also from MSPs removing layers of management and control away from the end user, this could be removing the control plane from the end user this is what happens with Amazon EKS, Microsoft AKS and Google Kubernetes Engine. (GKE)
+在桌面或筆記型電腦上運行本地 Kubernetes 集群時，有幾個選項。如前所述，這為開發人員提供了查看應用程式外觀的能力，而無需擁有多個昂貴或複雜的集群。就個人而言，這是我使用很多的一個，特別是，我一直在使用 minikube。它有一些很棒的功能和附加元件，改變了你啟動和運行某些東西的方式。
 
-### Overwhelming choice  
+### Kubernetes 託管服務
 
-I mean choice is great but there is a point where things become overwhelming and this is really not an depth look into all options within each catagory listed above. On top of the above we also have OpenShift which is from Red Hat and this option can really be ran across the options above in all the major cloud providers and probably today gives the best overall useability to the admins regardless where clusters are deployed. 
+我已經提到了虛擬化，這可以通過本地的虛擬機管理程式來實現，但我們從前面的部分知道，我們也可以利用公共雲中的 VM 作為我們的節點。我在這裡談論的 Kubernetes 託管服務是我們從大型超規模提供商看到的產品，也從 MSP 中移除終端用戶的管理和控制層，這可能是從終端用戶移除控制平面，這就是 Amazon EKS、Microsoft AKS 和 Google Kubernetes Engine (GKE) 發生的情況。
 
-So where do you start from your learning perspective, as I said I started with the virtualisation route but that was because I had access to a physical server which I could use for the purpose, I appreciate and in fact since then I no longer have this option. 
+### 選擇太多
 
-My actual advice now would be to use Minikube as a first option or Kind (Kubernetes in Docker) but Minikube gives us some additional benefits which almost abstracts the complexity out as we can just use add ons and get things built out really quickly and we can then blow it away when we are finished, we can run multiple clusters, we can run it almost anywhere, cross platform and hardware agnostic. 
+我的意思是選擇很好，但在某些時候事情變得令人難以承受，這不是對上面列出的每個類別中所有選項的深入了解。除了上述之外，我們還有來自 Red Hat 的 OpenShift，這個選項可以在上面列出的所有主要雲提供商的所有選項中運行，並且可能今天為管理員提供了最佳的整體可用性，無論集群部署在哪裡。
 
-I have been through a bit of a journey with my learning around Kubernetes so I am going to leave the platform choice and specifics here to list out the options that i have tried to give me a better understanding around Kubernetes the platform and where it can run. What I might do with the below blog posts is take another look at these update them and bring them more into here vs them being links to blog posts. 
+那麼從學習的角度來看，你從哪裡開始，正如我所說，我從虛擬化路線開始，但那是因為我可以訪問一台物理伺服器，我可以將其用於此目的，我感謝並且實際上，從那時起我不再有這個選項。
+
+我現在的實際建議是使用 Minikube 作為第一個選項或 Kind (Kubernetes in Docker)，但 Minikube 為我們提供了一些額外的好處，幾乎抽象了複雜性，因為我們可以使用附加元件並快速構建東西，然後當我們完成時可以將其刪除，我們可以運行多個集群，我們幾乎可以在任何地方運行它，跨平台和硬體無關。
+
+我在學習 Kubernetes 的過程中經歷了一段旅程，所以我將在這裡留下平台選擇和具體細節，列出我嘗試過的選項，以便更好地了解 Kubernetes 平台以及它可以在哪裡運行。我可能對下面的部落格文章做的是再看一下這些更新並將它們更多地帶到這裡，而不是將它們連結到部落格文章。
 
 - [Kubernetes playground – How to choose your platform](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-1)
 - [Kubernetes playground – Setting up your cluster](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-2)
@@ -56,22 +58,22 @@ I have been through a bit of a journey with my learning around Kubernetes so I a
 - [Getting started with CIVO Cloud](https://vzilla.co.uk/vzilla-blog/getting-started-with-civo-cloud)
 - [Minikube - Kubernetes Demo Environment For Everyone](https://vzilla.co.uk/vzilla-blog/project_pace-kasten-k10-demo-environment-for-everyone)
 
-### What we will cover in the series on Kubernetes 
+### 我們將在 Kubernetes 系列中涵蓋的內容
 
-- Kubernetes Architecture 
-- Kubectl Commands 
-- Kubernetes YAML 
-- Kubernetes Ingress 
+- Kubernetes 架構
+- Kubectl 指令
+- Kubernetes YAML
+- Kubernetes Ingress
 - Kubernetes Services
-- Helm Package Manager 
-- Persistant Storage 
-- Stateful Apps 
+- Helm 套件管理器
+- 持久儲存
+- 有狀態應用程式
 
-## Resources 
+## 資源
 
 - [Kubernetes Documentation](https://kubernetes.io/docs/home/)
 - [TechWorld with Nana - Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]](https://www.youtube.com/watch?v=X48VuDVv0do)
 - [TechWorld with Nana - Kubernetes Crash Course for Absolute Beginners](https://www.youtube.com/watch?v=s_o8dwzRlu4)
 - [Kunal Kushwaha - Kubernetes Tutorial for Beginners | What is Kubernetes? Architecture Simplified!](https://www.youtube.com/watch?v=KVBON1lA9N8)
 
-See you on [Day 51](day51.md) 
+我們[第 51 天](day51.md)見

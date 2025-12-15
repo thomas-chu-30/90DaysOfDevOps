@@ -1,136 +1,134 @@
 ---
-title: '#90DaysOfDevOps - The Big Picture: Containers - Day 42'
+title: '#90DaysOfDevOps - 概述：容器 - 第 42 天'
 published: false
-description: 90DaysOfDevOps - The Big Picture Containers
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - 概述容器
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048826
 ---
-## The Big Picture: Containers
 
-We are now starting the next section and this section is going to be focused on containers in particular we are going to be looking into Docker getting into some of the key areas to understand more about Containers. 
+## 概述：容器
 
-I will also be trying to get some hands-on here to create the container that we can use during this section but also future sections later on in the challenge. 
+我們現在開始下一部分，這部分將專注於容器，特別是我們將深入研究 Docker，了解一些關鍵領域，以便更好地理解容器。
 
-As always this first post is going to be focused on the big picture of how we got here and what it all means. 
+我也將嘗試在這裡進行一些實際操作，創建我們在本部分以及挑戰後續部分中使用的容器。
 
-#History of platforms and application development
-#do we want to talk about Virtualisation & Containerisation 
+一如既往，這第一篇將專注於我們如何到達這裡以及這一切意味著什麼的大圖。
 
-### Why another way to run applications? 
+#平台和應用程式開發的歷史
+#我們想談論虛擬化和容器化嗎
 
-The first thing we have to take a look at is why do we need another way to run our software or applications? Well it is just that choice is great, we can run our applications in many different forms, we might see applications deployed on physical hardware with an operating system and a single application deployed there, we might see the virtual machine or cloud-based IaaS instances running our application which then integrate into a database again in a VM or as PaaS offering in the public cloud. Or we might see our applications running in containers. 
+### 為什麼需要另一種運行應用程式的方式？
 
-None of the above options is wrong or right, but they each have their reasons to exist and I also strongly believe that none of these is going away. I have seen a lot of content that walks into Containers vs Virtual Machines and there really should not be an argument as that is more like apples vs pears argument where they are both fruit (ways to run our applications) but they are not the same. 
+我們必須首先了解為什麼需要另一種方式來運行我們的軟體或應用程式？好吧，選擇很好，我們可以以許多不同的形式運行我們的應用程式，我們可能會看到應用程式部署在帶有作業系統的物理硬體上，並且在那裡部署單個應用程式，我們可能會看到虛擬機器或基於雲端的 IaaS 實例運行我們的應用程式，然後再次整合到資料庫中，無論是在 VM 中還是在公共雲中的 PaaS 產品中。或者我們可能會看到我們的應用程式在容器中運行。
 
-I would also say that if you were starting and you were developing an application you should lean towards containers simply because we will get into some of these areas later, but it's about efficiency, speed and size. But that also comes with a price, if you have no idea about containers then it's going to be a learning curve to force yourself to understand the why and get into that mindset. If you have developed your applications a particular way or you are not in a greenfield environment then you might have more pain points to deal with before even considering containers. 
+上述選項都不是錯誤或正確的，但它們各自都有存在的理由，我也堅信這些都不會消失。我已經看到很多內容涉及容器與虛擬機器的比較，真的不應該有爭論，因為這更像是蘋果與梨的爭論，它們都是水果（運行我們應用程式的方式），但它們並不相同。
 
-We have many different choices then when it comes to downloading a given piece of software, there are a variety of different operating systems that we might be using. And specific instructions for what we need to do to install our applications. 
+我還想說，如果你剛開始並且正在開發應用程式，你應該傾向於容器，僅僅因為我們稍後會進入這些領域，但這是關於效率、速度和大小。但這也有一個代價，如果你對容器一無所知，那麼將有一個學習曲線來強迫自己理解為什麼並進入那種思維模式。如果你已經以特定方式開發了應用程式，或者你不在綠地環境中，那麼在考慮容器之前，你可能需要處理更多的痛點。
+
+當涉及到下載給定的軟體時，我們有很多不同的選擇，我們可能使用各種不同的作業系統。以及我們需要做什麼來安裝應用程式的具體說明。
 
 ![](Images/Day42_Containers1.png)
 
-More and more recently I am finding that the applications we might have once needed a full server OS, A VM, Physical or cloud instance are now releasing container-based versions of their software. I find this interesting as this opens the world of containers and then Kubernetes to everyone and not just a focus on application developers. 
+最近我越來越多地發現，我們曾經可能需要完整伺服器 OS、VM、物理或雲端實例的應用程式現在正在發布其軟體的基於容器的版本。我發現這很有趣，因為這向每個人開放了容器和 Kubernetes 的世界，而不僅僅是專注於應用程式開發人員。
 
 ![](Images/Day42_Containers2.png)
 
-As you can probably tell as I have said before, I am not going to advocate that the answer is containers, what's the question! But I would like to discuss how this is another option for us to be aware of when we deploy our applications. 
+正如你可能從我之前所說的那樣，我不會主張答案是容器，問題是什麼！但我想討論這是在部署應用程式時我們應該意識到的另一個選項。
 
 ![](Images/Day42_Containers4.png)
 
-We have had container technology for a long time, so why now over the last say 10 years has this become popular, I would say even more popular in the last 5. We have had containers for decades. It comes down to the challenge containers or should I say images as well, to how we distribute our software, because if we just have container technology, then we still will have many of the same problems we've had with software management. 
+我們已經擁有容器技術很長時間了，那麼為什麼在過去 10 年中這變得流行，我會說在過去 5 年甚至更受歡迎。我們擁有容器已經幾十年了。這歸結為容器的挑戰，或者我也應該說圖像，關於我們如何分發我們的軟體，因為如果我們只有容器技術，那麼我們仍然會有許多與軟體管理相同的問題。
 
-If we think about Docker as a tool, the reason that it took off, is because of the ecosystem of images that are easy to find and use. Simple to get on your systems and get up and running. A major part of this is consistency across the entire space, of all these different challenges that we face with software. It doesn't matter if it's MongoDB or nodeJS, the process to get either of those up and running will be the same. The process to stop either of those is the same. All of these issues will still exist, but the nice thing is, when we bring good container and image technology together, we now have a single set of tools to help us tackle all of these different problems. Some of those issues are listed below: 
+如果我們將 Docker 視為一個工具，它起飛的原因是因為圖像生態系統易於查找和使用。簡單地在你的系統上獲得並啟動和運行。這的主要部分是整個空間的一致性，我們在軟體方面面臨的所有這些不同挑戰。無論是 MongoDB 還是 nodeJS，獲取它們並運行它們的過程都是相同的。停止它們的過程也是相同的。所有這些問題仍然會存在，但好處是，當我們將良好的容器和圖像技術結合在一起時，我們現在有一套工具來幫助我們解決所有這些不同的問題。下面列出了一些這些問題：
 
-- We first have to find software on the internet. 
-- We then have to download this software. 
-- Do we trust the source? 
-- Do we then need a license? Which License? 
-- Is it compatible with different platforms? 
-- What is the package? binary? Executable? Package manager? 
-- How do we configure the software? 
-- Dependencies? Did the overall download have us covered or do we need them as well? 
-- Dependencies of Dependencies? 
-- How do we start the application? 
-- How do we stop the application? 
-- Will it auto-restart? 
-- Start on boot? 
-- Resource conflicts? 
-- Conflicting libraries? 
-- Port Conflicts
-- Security for the software? 
-- Software updates? 
-- How can I remove the software? 
+- 我們首先必須在網際網路上找到軟體。
+- 然後我們必須下載這個軟體。
+- 我們信任來源嗎？
+- 我們需要許可證嗎？哪個許可證？
+- 它與不同平台相容嗎？
+- 什麼是套件？二進位檔？可執行檔？套件管理器？
+- 我們如何配置軟體？
+- 依賴項？整體下載是否涵蓋了我們，還是我們也需要它們？
+- 依賴項的依賴項？
+- 我們如何啟動應用程式？
+- 我們如何停止應用程式？
+- 它會自動重啟嗎？
+- 啟動時啟動？
+- 資源衝突？
+- 衝突的庫？
+- 端口衝突
+- 軟體的安全性？
+- 軟體更新？
+- 我如何移除軟體？
 
-We can split the above into 3 areas of the complexity of the software that containers and images do help with these. 
+我們可以將上述內容分為軟體複雜性的 3 個領域，容器和圖像確實有助於這些領域。
 
-| Distribution | Installation | Operation          |
-| ------------ | ------------ | -----------------  |
-| Find         | Install      | Start              |
-| Download     | Configuration| Security           |
-| License      | Uninstall    | Ports              |
-| Package      | Dependencies | Resource Conflicts |
-| Trust        | Platform     | Auto-Restart       |
-| Find         | Libraries    | Updates            |
+| 分發     | 安裝       | 操作           |
+| -------- | ---------- | -------------- |
+| 尋找     | 安裝       | 啟動           |
+| 下載     | 配置       | 安全性         |
+| 許可證   | 卸載       | 端口           |
+| 套件     | 依賴項     | 資源衝突       |
+| 信任     | 平台       | 自動重啟       |
+| 尋找     | 庫         | 更新           |
 
-Containers and images are going to help us remove some of these challenges that we have with possibly other software and applications. 
+容器和圖像將幫助我們消除我們在其他軟體和應用程式方面遇到的這些挑戰。
 
-At a high level we could move installation and operation into the same list, Images are going to help us from a distribution point of view and containers help with the installation and operations. 
+在高層次上，我們可以將安裝和操作移到同一個列表中，圖像將從分發角度幫助我們，容器幫助安裝和操作。
 
-Ok, probably sounds great and exciting but we still need to understand what is a container and now I have mentioned images so let's cover those areas next. 
+好的，可能聽起來很棒和令人興奮，但我們仍然需要理解什麼是容器，現在我已經提到了圖像，所以讓我們接下來涵蓋這些領域。
 
-Another thing you might have seen a lot when we talk about Containers for software development is the analogy used alongside shipping containers, shipping containers are used to ship various goods across the seas using large vessels. 
+當我們談論軟體開發的容器時，你可能會看到很多的是與運輸容器一起使用的類比，運輸容器用於使用大型船舶跨海運輸各種貨物。
 
 ![](Images/Day42_Containers5.png)
 
-What does this have to do with our topic of containers? Think about the code that software developers write, how can we ship that particular code from one machine to another machine?
+這與我們的容器主題有什麼關係？想想軟體開發人員編寫的程式碼，我們如何將該特定程式碼從一台機器運送到另一台機器？
 
-If we think about what we touched on before about software distribution, installation and operations but now we start to build this out into an environment visual. We have hardware and an operating system where you will run multiple applications. For example, nodejs has certain dependencies and needs certain libraries. If you then want to install MySQL then it needs its required libraries and dependencies. Each software application will have its library and dependency. We might be massively lucky and not have any conflicts between any of our applications where specific libraries and dependencies are clashing causing issues but the more applications the more chance or risk of conflicts. However, this is not about that one deployment when everything fixes your software applications are going to be updated and then we can also introduce these conflicts. 
+如果我們考慮之前提到的關於軟體分發、安裝和操作的內容，但現在我們開始將其構建成環境視覺效果。我們有硬體和作業系統，你將在其中運行多個應用程式。例如，nodejs 有某些依賴項並需要某些庫。如果你然後想要安裝 MySQL，那麼它需要其所需的庫和依賴項。每個軟體應用程式都有自己的庫和依賴項。我們可能非常幸運，我們的任何應用程式之間都沒有衝突，其中特定庫和依賴項發生衝突導致問題，但應用程式越多，衝突的機會或風險就越大。但是，這不僅僅是那一次部署，當一切都修復時，你的軟體應用程式將被更新，然後我們也可以引入這些衝突。
 
 ![](Images/Day42_Containers6.png)
 
-Containers can help solve this problem. Containers help **build** your application, **ship** the application, **deploy** and **scale** these applications with ease independently. let's look at the architecture, you will have hardware and operating system then on top of it you will have a container engine like docker which we will cover later. The container engine software helps create containers that package the libraries and dependencies along with it so that you can move this container seamlessly from one machine to another machine without worrying about the libraries and dependencies since they come as a part of a package which is nothing but the container so you can have different containers this container can be moved across the systems without worrying about the underlying dependencies that the application
-needs to run because everything the application needs to run is packaged as
-a container that you can move. 
+容器可以幫助解決這個問題。容器幫助**構建**你的應用程式，**運送**應用程式，**部署**和**擴展**這些應用程式，輕鬆地獨立進行。讓我們看看架構，你將有硬體和作業系統，然後在其上你將有一個容器引擎，如我們稍後將涵蓋的 docker。容器引擎軟體幫助創建容器，將庫和依賴項一起打包，這樣你就可以無縫地將此容器從一台機器移動到另一台機器，而不必擔心庫和依賴項，因為它們作為套件的一部分，這只是容器，所以你可以有不同的容器，這個容器可以在系統之間移動，而不必擔心應用程式需要運行的底層依賴項，因為應用程式需要運行的一切都打包為你可以移動的容器。
 
 ![](Images/Day42_Containers7.png)
 
-### The advantages of these containers 
+### 這些容器的優勢
 
-- Containers help package all the dependencies within the container and
-isolate it. 
+- 容器幫助將所有依賴項打包在容器內並隔離它。
 
-- It is easy to manage the containers 
+- 易於管理容器
 
-- The ability to move from one system to another. 
+- 能夠從一個系統移動到另一個系統。
 
-- Containers help package the software and you can easily ship it without any duplicate efforts 
+- 容器幫助打包軟體，你可以輕鬆運送它，無需任何重複工作
 
-- Containers are easily scalable.
+- 容器易於擴展。
 
-Using containers you can scale independent containers and use a load balancer
-or a service which help split the traffic and you can scale the applications horizontally. Containers offer a lot of flexibility and ease how you manage your applications 
+使用容器，你可以擴展獨立的容器並使用負載平衡器或服務來幫助分流流量，你可以水平擴展應用程式。容器在如何管理應用程式方面提供了很多靈活性和便利性
 
-### What is a container? 
+### 什麼是容器？
 
-When we run applications on our computer, this could be the web browser or VScode that you are using to read this post. That application is running as a process or what is known as a process. On our laptops or systems, we tend to run multiple applications or as we said processes. When we open a new application or click on the application icon this is an application we would like to run, sometimes this application might be a service that we just want to run in the background, our operating system is full of services that are running in the background providing you with the user experience you get with your system. 
+當我們在電腦上運行應用程式時，這可能是你用於閱讀此文章的網頁瀏覽器或 VScode。該應用程式作為進程或稱為進程的東西運行。在我們的筆記型電腦或系統上，我們傾向於運行多個應用程式或正如我們所說的進程。當我們打開一個新應用程式或點擊應用程式圖標時，這是我們想要運行的應用程式，有時這個應用程式可能是我們只想在後台運行的服務，我們的作業系統充滿了在後台運行的服務，為你提供你與系統獲得的用戶體驗。
 
-That application icon represents a link to an executable somewhere on your file system, the operating system then loads that executable into memory. Interestingly, that executable is sometimes referred to as an image when we're talking about a process. 
+該應用程式圖標代表你文件系統某處可執行檔案的連結，作業系統然後將該可執行檔案載入到內存中。有趣的是，當我們談論進程時，該可執行檔案有時被稱為圖像。
 
-Containers are processes, A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. 
+容器是進程，容器是軟體的標準單元，它打包程式碼及其所有依賴項，以便應用程式從一個計算環境快速可靠地運行到另一個計算環境。
 
-Containerised software will always run the same, regardless of the infrastructure. Containers isolate software from its environment and ensure that it works uniformly despite differences for instance between development and staging.
+容器化軟體將始終以相同的方式運行，無論基礎設施如何。容器將軟體與其環境隔離，並確保它統一工作，儘管例如開發和暫存之間的差異。
 
-I mentioned images in the last section when it comes to how and why containers and images combined made containers popular in our ecosystem. 
+我在上一節中提到了圖像，當涉及到容器和圖像結合如何以及為什麼使容器在我們的生態系統中流行時。
 
-### What is an Image? 
+### 什麼是圖像？
 
-A container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings. Container images become containers at runtime. 
+容器圖像是一個輕量級、獨立的、可執行的軟體套件，包含運行應用程式所需的一切：程式碼、運行時、系統工具、系統庫和設定。容器圖像在運行時成為容器。
 
-## Resources 
+## 資源
 
 - [TechWorld with Nana - Docker Tutorial for Beginners](https://www.youtube.com/watch?v=3c-iBn73dDE)
 - [Programming with Mosh - Docker Tutorial for Beginners](https://www.youtube.com/watch?v=pTFZFxd4hOI)
 - [Docker Tutorial for Beginners - What is Docker? Introduction to Containers](https://www.youtube.com/watch?v=17Bl31rlnRM&list=WL&index=128&t=61s)
+- [Introduction to Container By Red Hat](https://www.redhat.com/en/topics/containers)
 
-See you on [Day 43](day43.md) 
+我們[第 43 天](day43.md)見

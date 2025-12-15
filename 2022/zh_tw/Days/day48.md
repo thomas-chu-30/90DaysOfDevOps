@@ -1,119 +1,115 @@
 ---
-title: '#90DaysOfDevOps - Alternatives to Docker - Day 48'
+title: '#90DaysOfDevOps - Docker 的替代方案 - 第 48 天'
 published: false
-description: 90DaysOfDevOps - Alternatives to Docker
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - Docker 的替代方案
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048807
 ---
-## Alternatives to Docker
 
-I did say at the very beginning of this section that we were going to be using Docker, simply because resource wise there is so much and the community is very big, but also this was really where the indents to making containers popular really came from. I would encourage you to go and watch some of the history around Docker and how it came to be, I found it very useful. 
+## Docker 的替代方案
 
-But as I have alluded to there are other alternatives to Docker. If we think about what Docker is and what we have covered. It is a platform for developing, testing, deploying, and managing applications.
+我確實在本節開始時說過我們將使用 Docker，僅僅是因為資源方面有很多，而且社群非常大，但這也是真正使容器流行的出發點。我鼓勵你去觀看一些關於 Docker 的歷史以及它是如何產生的，我發現這非常有用。
 
-I want to highlight a few alternatives to Docker that you might or will in the future see out in the wild. 
+但正如我所暗示的那樣，Docker 還有其他替代方案。如果我們考慮 Docker 是什麼以及我們涵蓋的內容。它是一個用於開發、測試、部署和管理應用程式的平台。
+
+我想強調一些 Docker 的替代方案，你可能會或將來會在野外看到。
 
 ### Podman
 
-What is Podman? Podman is a daemonless container engine for developing, managing, and running OCI Containers on your Linux System. Containers can either be run as root or in rootless mode. 
+什麼是 Podman？Podman 是一個無守護進程的容器引擎，用於在 Linux 系統上開發、管理和運行 OCI 容器。容器可以以 root 模式或 rootless 模式運行。
 
-I am going to be looking at this from a Windows point of view but know that like Docker there is no requirement for virtualisation there as it will use the underlying OS which is cannot do in the Windows world. 
+我將從 Windows 的角度來看這個，但要知道，像 Docker 一樣，不需要虛擬化，因為它將使用底層 OS，這在 Windows 世界中無法做到。
 
-Podman can be ran under WSL2 although not as sleak as the experience with Docker Desktop. There is also a Windows remote client where you can connect to a Linux VM where your containers will run. 
+Podman 可以在 WSL2 下運行，儘管不如 Docker Desktop 的體驗那麼流暢。還有一個 Windows 遠程客戶端，你可以連接到 Linux VM，你的容器將在其中運行。
 
-My Ubuntu on WSL2 is the 20.04 release. Following the next steps will enable you to install Podman on your WSL instance. 
+我在 WSL2 上的 Ubuntu 是 20.04 版本。按照接下來的步驟，你將能夠在 WSL 實例上安裝 Podman。
 
-```
+```Shell
 echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" |
 sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
 ```
 
-Add the GPG Key 
+添加 GPG 密鑰
 
-``` 
+```Shell
 curl -L "https://download.opensuse.org/repositories/devel:/kubic:\
 /libcontainers:/stable/xUbuntu_20.04/Release.key" | sudo apt-key add -
 ```
 
-Run a system update and upgrade with the `sudo apt-get update && sudo apt-get upgrade` command. Finally we can install podman using `sudo apt install podman` 
+使用 `sudo apt-get update && sudo apt-get upgrade` 指令運行系統更新和升級。最後，我們可以使用 `sudo apt install podman` 安裝 podman
 
-We can now use a lot of the same commands we have been using for docker, note though that we do not have that nice docker desktop UI. You can see below I used `podman images` and I have nothing after install then I used `podman pull ubuntu` to pull down the ubuntu container image. 
+我們現在可以使用很多我們一直用於 docker 的相同指令，請注意我們沒有漂亮的 docker desktop UI。你可以在下面看到我使用了 `podman images`，安裝後我沒有任何東西，然後我使用了 `podman pull ubuntu` 來拉取 ubuntu 容器圖像。
 
 ![](Images/Day48_Containers1.png)
 
-We can then run our Ubuntu image using `podman run -dit ubuntu` and `podman ps` to see our running image. 
+然後我們可以使用 `podman run -dit ubuntu` 運行我們的 Ubuntu 圖像，並使用 `podman ps` 查看我們運行的圖像。
 
 ![](Images/Day48_Containers2.png)
 
-To then get into that container we can run `podman attach dazzling_darwin` your container name will most likely be different. 
+然後要進入該容器，我們可以運行 `podman attach dazzling_darwin` 你的容器名稱可能會不同。
 
 ![](Images/Day48_Containers3.png)
 
-If you are moving from docker to podman it is also common to change your config file to have `alias docker=podman` that way any command you run with docker will in fact use podman. 
+如果你從 docker 遷移到 podman，更改配置檔案以設置 `alias docker=podman` 也很常見，這樣你使用 docker 運行的任何指令都會使用 podman。
 
-### LXC 
+### LXC
 
-LXC is a containerisation engine that enables users again to create multiple isolateed Linux container environments. Unlike Docker LXC acts as a hypervisor for create multiple Linux machines with separeate system files, networking features. Was around before Docker and then made a short comeback due to Docker shortcomings. 
+LXC 是一個容器化引擎，使用戶能夠再次創建多個隔離的 Linux 容器環境。與 Docker 不同，LXC 充當創建多個具有獨立系統檔案和網路功能的 Linux 機器的虛擬機管理程式。在 Docker 之前就存在，然後由於 Docker 的缺點而短暫復興。
 
-LXC is as lightweight though as docker, and easily deployed. 
+LXC 與 docker 一樣輕量級且易於部署。
 
-### Containerd 
+### Containerd
 
-A standalone container runtime. Containerd brings simplicity and robustness as well as of course portability. Containerd was formerly a tool that runs as part of Docker container services until Docker decided to graduate its components into standalone components.
+一個獨立的容器運行時。Containerd 帶來了簡單性和穩健性以及當然的可移植性。Containerd 以前是一個作為 Docker 容器服務一部分運行的工具，直到 Docker 決定將其組件畢業為獨立組件。
 
-A project in the Cloud Native Computing Foundation, placing it in the same class with popular container tools like Kubernetes, Prometheus, and CoreDNS.
+Cloud Native Computing Foundation 的一個專案，將其置於與 Kubernetes、Prometheus 和 CoreDNS 等流行容器工具相同的類別中。
 
-### Other Docker tooling
+### 其他 Docker 工具
 
-We could also mention toolings and options around Rancher, VirtualBox but we can cover them off in more detail another time.  
+我們還可以提及圍繞 Rancher 和 VirtualBox 的工具和選項，但我們可以在另一個時間更詳細地涵蓋它們。
 
-[**Gradle**](https://gradle.org/) 
+[**Gradle**](https://gradle.org/)
 
-- Build scans allow teams to collaboratively debug their scripts and track the history of all builds.
-- Execution options give teams the ability to continuously build so that whenever changes are inputted, the task is automatically executed.
-- The custom repository layout gives teams the ability to treat any file directory structure as an artifact repository.
+- 構建掃描允許團隊協作調試他們的腳本並追蹤所有構建的歷史。
+- 執行選項為團隊提供持續構建的能力，以便每當輸入更改時，任務都會自動執行。
+- 自定義儲存庫佈局為團隊提供了將任何檔案目錄結構視為工件儲存庫的能力。
 
-[**Packer**](https://packer.io/) 
+[**Packer**](https://packer.io/)
 
-- Ability to create multiple machine images in parallel to save developer time and increase efficiency.
-- Teams can easily debug builds using Packer’s debugger, which inspects failures and allows teams to try out solutions before restarting builds.
-- Support with many platforms via plugins so teams can customize their builds.
+- 能夠並行創建多個機器圖像以節省開發人員時間並提高效率。
+- 團隊可以使用 Packer 的調試器輕鬆調試構建，該調試器檢查失敗並允許團隊在重新啟動構建之前嘗試解決方案。
+- 通過外掛程式支持許多平台，因此團隊可以自定義他們的構建。
 
-[**Logspout**](https://github.com/gliderlabs/logspout) 
+[**Logspout**](https://github.com/gliderlabs/logspout)
 
-- Logging tool - The tool’s customisability allows teams to ship the same logs to multiple destinations.
-- Teams can easily manage their files because the tool only requires access to the Docker socket.
-- Completely open-sourced and easy to deploy.
+- 日誌記錄工具 - 工具的可自定義性允許團隊將相同的日誌運送到多個目的地。
+- 團隊可以輕鬆管理他們的檔案，因為該工具只需要訪問 Docker socket。
+- 完全開源且易於部署。
 
 [**Logstash**](https://www.elastic.co/products/logstash)
 
-- Customize your pipeline using Logstash’s pluggable framework.
-- Easily parse and transform your data for analysis and to deliver business value.
-- Logstash’s variety of outputs let you route your data where you want.
+- 使用 Logstash 的可插入框架自定義你的管道。
+- 輕鬆解析和轉換數據以進行分析並提供業務價值。
+- Logstash 的多種輸出讓你可以將數據路由到你想要的位置。
 
 [**Portainer**](https://www.portainer.io/)
 
-- Utilise pre-made templates or create your own to deploy applications.
-- Create teams and assign roles and permissions to team members.
-- Know what is running in each environment using the tool’s dashboard.
+- 利用預製模板或創建自己的模板來部署應用程式。
+- 創建團隊並為團隊成員分配角色和權限。
+- 使用工具的儀表板了解每個環境中運行的內容。
 
-
-
-
-## Resources 
+## 資源
 
 - [TechWorld with Nana - Docker Tutorial for Beginners](https://www.youtube.com/watch?v=3c-iBn73dDE)
 - [Programming with Mosh - Docker Tutorial for Beginners](https://www.youtube.com/watch?v=pTFZFxd4hOI)
 - [Docker Tutorial for Beginners - What is Docker? Introduction to Containers](https://www.youtube.com/watch?v=17Bl31rlnRM&list=WL&index=128&t=61s)
 - [WSL 2 with Docker getting started](https://www.youtube.com/watch?v=5RQbdMn04Oc)
-- [Blog on gettng started building a docker image](https://stackify.com/docker-build-a-beginners-guide-to-building-docker-images/)
+- [Blog on getting started building a docker image](https://stackify.com/docker-build-a-beginners-guide-to-building-docker-images/)
 - [Docker documentation for building an image](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [YAML Tutorial: Everything You Need to Get Started in Minute](https://www.cloudbees.com/blog/yaml-tutorial-everything-you-need-get-started)
 - [Podman | Daemonless Docker | Getting Started with Podman](https://www.youtube.com/watch?v=Za2BqzeZjBk)
-- [LXC - Guide to building a LXC Lab](https://www.youtube.com/watch?v=cqOtksmsxfg)
-- 
+- [LXC - Guide to building an LXC Lab](https://www.youtube.com/watch?v=cqOtksmsxfg)
 
-
-See you on [Day 49](day49.md) 
+我們[第 49 天](day49.md)見

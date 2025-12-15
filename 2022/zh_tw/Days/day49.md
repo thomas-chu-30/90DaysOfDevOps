@@ -1,236 +1,234 @@
 ---
-title: '#90DaysOfDevOps - The Big Picture: Kubernetes - Day 49'
+title: '#90DaysOfDevOps - 概述：Kubernetes - 第 49 天'
 published: false
-description: 90DaysOfDevOps - The Big Picture Kubernetes
+description: 90DaysOfDevOps - 概述 Kubernetes
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1049049
 ---
-## The Big Picture: Kubernetes
 
-In the last section we covered Containers, Containers fall short when it comes to scale and orchestration alone. The best we can do is use docker-compose to bring up multiple containers together. When it comes to Kubernetes which is a Container Orchestrator, this gives us the ability to scale up and down in an automated way or based on the load of your applications and services. 
+## 概述：Kubernetes
 
-As a platform Kubernetes offers the ability to orchestrate containers according to your requirements and desired state. We are going to cover Kubernetes in this section as it is growing rapidly as the next wave of infrastructure. I would also suggest that from a DevOps perspective Kubernetes is just one platform that you will need to have a basic understanding of, you will also need to understand bare metal, virtualisation and most likely cloud based services as well. Kubernetes is just another option to run our applications. 
+在上一節中，我們涵蓋了容器，容器在擴展和編排方面存在不足。我們能做的最好的就是使用 docker-compose 一起啟動多個容器。當談到 Kubernetes（一個容器編排器）時，這為我們提供了以自動化方式或基於應用程式和服務負載進行擴展的能力。
 
-### What is Container Orchestration?
+作為一個平台，Kubernetes 提供了根據你的需求和所需狀態編排容器的能力。我們將在本節中涵蓋 Kubernetes，因為它作為下一波基礎設施正在快速增長。我還建議從 DevOps 的角度來看，Kubernetes 只是你需要基本了解的一個平台，你還需要了解裸機、虛擬化以及很可能還有基於雲端的服務。Kubernetes 只是運行我們應用程式的另一個選項。
 
-I have mentioned Kubernetes and I have mentioned Container Orchestration, Kubernetes is the technology where as the container orchestration is the concept or the process behind the technology. Kubernetes is not the only Container Orchestration platform we also have Docker Swarm, HashiCorp Nomad and others. But Kubernetes is going from strength to strength so I want to cover Kubernetes but wanted to say that it is not the only one out there. 
+### 什麼是容器編排？
 
-### What is Kubernetes?
+我提到了 Kubernetes，也提到了容器編排，Kubernetes 是技術，而容器編排是技術背後的概念或過程。Kubernetes 不是唯一的容器編排平台，我們還有 Docker Swarm、HashiCorp Nomad 等。但 Kubernetes 正在不斷發展，所以我想涵蓋 Kubernetes，但想說這不是唯一的一個。
 
-The first thing you should read if you are new to Kubernetes is the official documentation, My experience of really deep diving into Kubernetes a little over a year ago was that this is going to be a steep learning curve. Coming from a virtualisation and storage background I was thinking how daunting this felt. 
+### 什麼是 Kubernetes？
 
-But actually the community, free learning resources and documentation is actually amazing. [Kubernetes.io](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) 
+如果你是 Kubernetes 的新手，你應該閱讀的第一件事是官方文件，一年多前我真正深入研究 Kubernetes 的經驗是這將是一條陡峭的學習曲線。來自虛擬化和儲存背景，我思考這感覺多麼令人生畏。
 
-*Kubernetes is a portable, extensible, open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.*
+但社群、免費學習資源和文件都很棒。[Kubernetes.io](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
 
-Important things to note from the above qoute, Kubernetes is Open-Source with a rich history that goes back to Google who donated the project to the Cloud Native computing foundation (CNCF) and it has now been progressed by the open-source community as well as large enterprise vendors contributing to make Kubernetes what it is today. 
+_Kubernetes 是一個可移植、可擴展的開源平台，用於管理容器化工作負載和服務，促進聲明式配置和自動化。它擁有一個龐大、快速增長的生態系統。Kubernetes 服務、支持和工具廣泛可用。_
 
-I mentioned above that containers are great and in the previous section we spoke about how containers and container images have changed and accelerated the adoption of cloud-native systems. But containers alone are not going to give you the production ready experience you need from your application. Kubernetes gives us the following: 
+從上述引用中要注意的重要事項，Kubernetes 是開源的，有著豐富的歷史，可以追溯到 Google，該公司將專案捐贈給了 Cloud Native Computing Foundation (CNCF)，現在已經由開源社群以及大型企業供應商推進，為使 Kubernetes 成為今天的樣子做出了貢獻。
 
-- Service discovery and load balancing Kubernetes can expose a container using the DNS name or using their own IP address. If traffic to a container is high, Kubernetes is able to load balance and distribute the network traffic so that the deployment is stable.
+我上面提到容器很棒，在上一節中，我們談到了容器和容器圖像如何改變和加速雲原生系統的採用。但僅容器無法為你提供應用程式所需的生產就緒體驗。Kubernetes 為我們提供以下功能：
 
-- Storage orchestration Kubernetes allows you to automatically mount a storage system of your choice, such as local storages, public cloud providers, and more.
+- **服務發現和負載平衡** Kubernetes 可以使用 DNS 名稱或 IP 地址公開容器。如果對容器的流量很高，Kubernetes 可以負載平衡並分發網路流量，以便部署穩定。
 
-- Automated rollouts and rollbacks You can describe the desired state for your deployed containers using Kubernetes, and it can change the actual state to the desired state at a controlled rate. For example, you can automate Kubernetes to create new containers for your deployment, remove existing containers and adopt all their resources to the new container.
+- **儲存編排** Kubernetes 允許你自動掛載你選擇的儲存系統，例如本地儲存、公共雲提供商等。
 
-- Automatic bin packing You provide Kubernetes with a cluster of nodes that it can use to run containerized tasks. You tell Kubernetes how much CPU and memory (RAM) each container needs. Kubernetes can fit containers onto your nodes to make the best use of your resources.
+- **自動推出和回滾** 你可以使用 Kubernetes 描述已部署容器的所需狀態，它可以以受控速率將實際狀態更改為所需狀態。例如，你可以自動化 Kubernetes 為部署創建新容器，移除現有容器並將其所有資源採用到新容器。
 
-- Self-healing Kubernetes restarts containers that fail, replaces containers, kills containers that don't respond to your user-defined health check, and doesn't advertise them to clients until they are ready to serve.
+- **自動 bin 打包** 你為 Kubernetes 提供一個節點集群，它可以用它來運行容器化任務。你告訴 Kubernetes 每個容器需要多少 CPU 和內存 (RAM)。Kubernetes 可以將容器安裝到你的節點上，以最好地利用你的資源。
 
-- Secret and configuration management Kubernetes lets you store and manage sensitive information, such as passwords, OAuth tokens, and SSH keys. You can deploy and update secrets and application configuration without rebuilding your container images, and without exposing secrets in your stack configuration. 
+- **自修復** Kubernetes 重啟失敗的容器，替換容器，殺死不響應用戶定義健康檢查的容器，並且在它們準備好服務之前不會向客戶端公佈它們。
 
-Kubernetes provides you with a framework to run distributed systems resiliently.
+- **機密和配置管理** Kubernetes 允許你儲存和管理敏感資訊，例如密碼、OAuth 令牌和 SSH 密鑰。你可以部署和更新機密和應用程式配置，而無需重建容器圖像，也無需在堆疊配置中公開機密。
 
-Container Orchestration manages the deployment, placement, and lifecycle of containers.​
+Kubernetes 為你提供了一個彈性運行分散式系統的框架。
 
-It also has many other responsibilities: ​
+容器編排管理容器的部署、放置和生命週期。
 
-- Cluster management federates hosts into one target.​
+它還有許多其他職責：
 
-- Schedule management distributes containers across nodes through the scheduler.
-    ​
-- Service discovery knows where containers are located and distributes client requests across them.​
+- 集群管理將主機聯合成一個目標。
 
-- Replication ensures that the right number of nodes and containers are available for the requested workload.​
+- 調度管理通過調度器在節點之間分發容器。
+- 服務發現知道容器所在的位置，並在它們之間分發客戶端請求。
 
-- Health management detects and replaces unhealthy​ containers and nodes.
+- 複製確保有正確數量的節點和容器可用於請求的工作負載。
 
-### Main Kubernetes Components 
+- 健康管理檢測並替換不健康的容器和節點。
 
-Kubernetes is a container orchestrator to provision, manage, and scale apps. You can use it to manage the lifecycle of containerized apps in a cluster of nodes, which is a collection of worker machines such as VMs or physical machines.​
+### 主要 Kubernetes 組件
 
-Your apps might need many other resources to run, such as volumes, networks, and secrets that can help you connect to databases, talk to firewalled back ends, and secure keys. With Kubernetes, you can add those resources into your app. Infrastructure resources that your apps need are managed declaratively.​
+Kubernetes 是一個容器編排器，用於配置、管理和擴展應用程式。你可以使用它來管理節點集群中容器化應用程式的生命週期，節點是工作機器的集合，例如 VM 或物理機器。
 
-The key paradigm of Kubernetes is its declarative model. You provide the state that you want and Kubernetes makes it happen. If you need five instances, you don't start five separate instances on your own. Instead, you tell Kubernetes that you need five instances, and Kubernetes automatically reconciles the state. If something goes wrong with one of your instances and it fails, Kubernetes still knows the state that you want and creates instances on an available node.​
+你的應用程式可能需要許多其他資源來運行，例如卷、網路和機密，可以幫助你連接到資料庫、與防火牆後端通信並保護密鑰。使用 Kubernetes，你可以將這些資源添加到應用程式。應用程式需要的基礎設施資源以聲明方式管理。
 
-### Node
+Kubernetes 的關鍵範例是其聲明式模型。你提供你想要的狀態，Kubernetes 使其實現。如果你需要五個實例，你不會自己啟動五個單獨的實例。相反，你告訴 Kubernetes 你需要五個實例，Kubernetes 自動協調狀態。如果你的實例之一出現問題並失敗，Kubernetes 仍然知道你想要的狀態並在可用節點上創建實例。
 
-**Control Plane**
+### 節點
 
-Every Kubernetes cluster requires a Control Plane node, the control plane's components make global decisions about the cluster (for example, scheduling), as well as detecting and responding to cluster events. 
+#### 控制平面
+
+每個 Kubernetes 集群都需要一個控制平面節點，控制平面的組件對集群做出全局決策（例如，調度），以及檢測和響應集群事件。
 
 ![](Images/Day49_Kubernetes1.png)
 
-**Worker Node**
- A worker machine that runs Kubernetes workloads. It can be a physical (bare metal) machine or a virtual machine (VM). Each node can host one or more pods. Kubernetes nodes are managed by a control plane
+#### 工作節點
+
+運行 Kubernetes 工作負載的工作機器。它可以是物理（裸機）機器或虛擬機器 (VM)。每個節點可以託管一個或多個 Pod。Kubernetes 節點由控制平面管理
 
 ![](Images/Day49_Kubernetes2.png)
 
-There are other node types but I won't be covering them here. 
+還有其他節點類型，但我不會在這裡涵蓋它們。
 
-**kubelet**​
+#### kubelet
 
-An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.​
+在集群中每個節點上運行的代理。它確保容器在 Pod 中運行。
 
-The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn't manage containers which were not created by Kubernetes.​
+kubelet 接受通過各種機制提供的一組 PodSpecs，並確保在那些 PodSpecs 中描述的容器正在運行並且健康。kubelet 不管理不是由 Kubernetes 創建的容器。
 
 ![](Images/Day49_Kubernetes3.png)
 
-**kube-proxy​**
+#### kube-proxy
 
-kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.​
+kube-proxy 是在集群中每個節點上運行的網路代理，實現 Kubernetes Service 概念的一部分。
 
-kube-proxy maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster.​
+kube-proxy 維護節點上的網路規則。這些網路規則允許從集群內或外的網路會話到你的 Pod 的網路通信。
 
-kube-proxy uses the operating system packet filtering layer if there is one and it's available. Otherwise, kube-proxy forwards the traffic itself.​
+如果存在並且可用，kube-proxy 使用作業系統數據包過濾層。否則，kube-proxy 自己轉發流量。
 
 ![](Images/Day49_Kubernetes4.png)
 
-**Container runtime**​
+#### 容器運行時
 
-The container runtime is the software that is responsible for running containers.​
+容器運行時是負責運行容器的軟體。
 
-Kubernetes supports several container runtimes: Docker, containerd, CRI-O, and any implementation of the Kubernetes CRI (Container Runtime Interface).​
+Kubernetes 支持多種容器運行時：Docker、containerd、CRI-O 和 Kubernetes CRI（容器運行時介面）的任何實現。
 
 ![](Images/Day49_Kubernetes5.png)
-​
-### Cluster
 
-A cluster is a group of nodes, where a node can be a physical machine or virtual machines. Each of the nodes will have the container runtime (Docker) and will also be running a kubelet service, which is an agent that takes in the commands from the Master controller (more on that later) and a Proxy, that is used to proxy connections to the Pods from another component (Services, that we will see later).​
+### 集群
 
-On our control plane which can be made highly available will contain some unique roles compared to the worker nodes, the most important will be the kube API server, this is where any communication will take place in order to get information or push information to our Kubernetes cluster. 
+集群是一組節點，其中節點可以是物理機器或虛擬機器。每個節點都將具有容器運行時（Docker），並且還將運行 kubelet 服務，這是一個從主控制器接收指令的代理（稍後會有更多內容）和一個代理，用於將連接到 Pod 從另一個組件（服務，我們稍後會看到）代理。
 
-**Kube API-Server**
+我們的控制平面可以高可用，與工作節點相比將包含一些獨特的角色，最重要的是 kube API 伺服器，這是任何通信發生以獲取資訊或將資訊推送到我們的 Kubernetes 集群的地方。
 
-The Kubernetes API server validates and configures data for the api objects which include pods, services, replicationcontrollers, and others. The API Server services REST operations and provides the frontend to the cluster's shared state through which all other components interact.
+#### Kube API-Server
 
-**Scheduler**
+Kubernetes API 伺服器驗證和配置 API 物件的數據，包括 Pod、服務、複製控制器等。API 伺服器服務 REST 操作，並提供集群共享狀態的前端，所有其他組件通過它進行交互。
 
-The Kubernetes scheduler is a control plane process which assigns Pods to Nodes. The scheduler determines which Nodes are valid placements for each Pod in the scheduling queue according to constraints and available resources. The scheduler then ranks each valid Node and binds the Pod to a suitable Node.
+#### 調度器
 
-**Controller Manager**
+Kubernetes 調度器是一個控制平面進程，將 Pod 分配給節點。調度器根據約束和可用資源確定調度隊列中每個 Pod 的有效放置節點。然後調度器對每個有效節點進行排名，並將 Pod 綁定到合適的節點。
 
-The Kubernetes controller manager is a daemon that embeds the core control loops shipped with Kubernetes. In applications of robotics and automation, a control loop is a non-terminating loop that regulates the state of the system. In Kubernetes, a controller is a control loop that watches the shared state of the cluster through the apiserver and makes changes attempting to move the current state towards the desired state.
+#### 控制器管理器
 
-**etcd**
+Kubernetes 控制器管理器是一個守護進程，嵌入了 Kubernetes 附帶的核心控制循環。在機器人和自動化應用中，控制循環是一個非終止循環，調節系統的狀態。在 Kubernetes 中，控制器是一個控制循環，通過 apiserver 監視集群的共享狀態，並進行更改以嘗試將當前狀態移動到所需狀態。
 
-Consistent and highly-available key value store used as Kubernetes' backing store for all cluster data.
+#### etcd
+
+一致且高度可用的鍵值儲存，用作 Kubernetes 的所有集群數據的後端儲存。
 
 ![](Images/Day49_Kubernetes6.png)
 
-**kubectl**
+#### kubectl
 
-In order to manage this from a CLI point of view we have kubectl, kubectl interacts with the API server. 
+為了從 CLI 角度管理這個，我們有 kubectl，kubectl 與 API 伺服器交互。
 
-The Kubernetes command-line tool, kubectl, allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resources, and view logs.
+Kubernetes 命令列工具 kubectl 允許你針對 Kubernetes 集群運行指令。你可以使用 kubectl 部署應用程式、檢查和管理集群資源以及查看日誌。
 
 ![](Images/Day49_Kubernetes7.png)
 
 ### Pods
 
-A Pod is a group of containers that form a logical application. For e.g. If you have a web application that is running a NodeJS container and also a MySQL container, then both these containers will be located in a single Pod. A Pod can also share common data volumes and they also share the same networking namespace. Remember that Pods are ephemeral and they could be brought up and down by the Master Controller. Kubernetes uses a simple but effective means to identify the Pods via the concepts of Labels (name – values).​
+Pod 是形成邏輯應用程式的一組容器。例如，如果你有一個運行 NodeJS 容器的 Web 應用程式，還有一個 MySQL 容器，那麼這兩個容器都將位於單個 Pod 中。Pod 還可以共享公共數據卷，它們還共享相同的網路命名空間。請記住，Pod 是短暫的，它們可以由主控制器啟動和關閉。Kubernetes 使用簡單但有效的方法通過標籤（名稱 - 值）的概念來識別 Pod。
 
-​- Pods handle Volumes, Secrets, and configuration for containers.​
+- Pod 處理容器的卷、機密和配置。
 
-- Pods are ephemeral. They are intended to be restarted automatically when they die.​
+- Pod 是短暫的。它們旨在在死亡時自動重啟。
 
-- Pods are replicated when the app is scaled horizontally by the ReplicationSet. Each Pod will run the same container code.​
+- 當應用程式由 ReplicationSet 水平擴展時，Pod 被複製。每個 Pod 將運行相同的容器程式碼。
 
-- Pods live on Worker Nodes.​
+- Pod 存在於工作節點上。
 
 ![](Images/Day49_Kubernetes8.png)
-​
+
 ### Deployments
 
-- You can just decide to run Pods but when they die they die. ​
+- 你可以決定運行 Pod，但當它們死亡時，它們就死了。
 
-- A Deployment will enable your pod to run continuously. ​
+- Deployment 將使你的 Pod 持續運行。
 
-- Deployments allow you to update a running app without downtime. ​
+- Deployments 允許你更新運行的應用程式而不停機。
 
-- Deployments also specify a strategy to restart Pods when they die
+- Deployments 還指定了當 Pod 死亡時重啟 Pod 的策略
 
 ![](Images/Day49_Kubernetes9.png)
 
 ### ReplicaSets
 
-- The Deployment can also create​ the ReplicaSet ​
+- Deployment 也可以創建 ReplicaSet
 
-- A ReplicaSet ensures your app has the desired number of Pods​
+- ReplicaSet 確保你的應用程式具有所需數量的 Pod
 
-- ReplicaSets will create and scale Pods based on the Deployment ​
+- ReplicaSets 將根據 Deployment 創建和擴展 Pod
 
-- Deployments, ReplicaSets, Pods are not exclusive but can be
-
+- Deployments、ReplicaSets 和 Pods 不是互斥的，但可以是
 
 ### StatefulSets
 
-- Does your App require you to keep information about its state? ​
+- 你的應用程式是否需要你保留有關其狀態的資訊？
 
-- A database needs state​
+- 資料庫需要狀態
 
-- A StatefulSet’s Pods are not interchangeable.​
+- StatefulSet 的 Pod 不可互換。
 
-- Each Pod has a unique, persistent identifier that the controller maintains over any rescheduling.​
-
-- Each Pod has a unique, persistent identifier that the controller maintains over any rescheduling.​
+- 每個 Pod 都有一個唯一的、持久的標識符，控制器在任何重新調度時都保持該標識符。
 
 ![](Images/Day49_Kubernetes10.png)
 
 ### DaemonSets
 
-- DaemonSets are for continuous process ​
+- DaemonSets 用於持續進程
 
-- They run one Pod per Node. ​
+- 它們在每個節點上運行一個 Pod。
 
-- Each new node added to the cluster gets a pod started​​
+- 添加到集群的每個新節點都會啟動一個 Pod
 
-- Useful for background tasks such as monitoring and log collection ​
+- 對於背景任務（如監控和日誌收集）很有用
 
-​- Each Pod has a unique, persistent identifier that the controller maintains over any rescheduling.
+- 每個 Pod 都有一個唯一的、持久的標識符，控制器在任何重新調度時都保持該標識符。
 
 ![](Images/Day49_Kubernetes11.png)
 
-### Services 
+### Services
 
-- A single endpoint to access Pods ​
+- 訪問 Pod 的單一端點
 
-- a unified way to route traffic to a cluster and eventually to a list of Pods. ​
+- 一種統一的方式，將流量路由到集群，最終路由到 Pod 列表。
 
-- By using a Service, Pods can be brought up and down without affecting anything..
+- 通過使用服務，可以啟動和關閉 Pod，而不會影響任何東西。
 
-This is just a quick overview and notes around the fundamental building blocks of Kubernetes, we can take this knowledge and add in some other areas around Storage and Ingress to enhance our applications but we then also have a lot of choices on where our Kubernetes cluster runs. The next session will focus on those options on where can I run a Kubernetes cluster, whilst also exploring some specifics around Storage.
+這只是圍繞 Kubernetes 基本構建塊的快速概述和筆記，我們可以獲取這些知識並添加儲存和 Ingress 等其他領域來增強我們的應用程式，但我們也有許多關於 Kubernetes 集群運行位置的選擇。下一節將專注於這些選項，我可以在哪裡運行 Kubernetes 集群，同時也探索儲存的一些具體內容。
 
 ![](Images/Day49_Kubernetes12.png)
 
-### What we will cover in the series on Kubernetes 
+### 我們將在 Kubernetes 系列中涵蓋的內容
 
-- Kubernetes Architecture 
-- Kubectl Commands 
-- Kubernetes YAML 
-- Kubernetes Ingress 
+- Kubernetes 架構
+- Kubectl 指令
+- Kubernetes YAML
+- Kubernetes Ingress
 - Kubernetes Services
-- Helm Package Manager 
-- Persistant Storage 
-- Stateful Apps 
+- Helm 套件管理器
+- 持久儲存
+- 有狀態應用程式
 
-## Resources 
+## 資源
 
 - [Kubernetes Documentation](https://kubernetes.io/docs/home/)
 - [TechWorld with Nana - Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]](https://www.youtube.com/watch?v=X48VuDVv0do)
 - [TechWorld with Nana - Kubernetes Crash Course for Absolute Beginners](https://www.youtube.com/watch?v=s_o8dwzRlu4)
 - [Kunal Kushwaha - Kubernetes Tutorial for Beginners | What is Kubernetes? Architecture Simplified!](https://www.youtube.com/watch?v=KVBON1lA9N8)
 
-See you on [Day 50](day50.md) 
+我們[第 50 天](day50.md)見

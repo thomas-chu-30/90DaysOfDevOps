@@ -1,76 +1,75 @@
 ---
-title: '#90DaysOfDevOps - The anatomy of a Docker Image - Day 45'
+title: '#90DaysOfDevOps - Docker 圖像的結構 - 第 45 天'
 published: false
-description: 90DaysOfDevOps - The anatomy of a Docker Image
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - Docker 圖像的結構
+tags: 'DevOps, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048777
 ---
-## The anatomy of a Docker Image
+## Docker 圖像的結構
 
-In the last session we covered some basics of how we can use Docker Desktop combined with DockerHub to deploy and run some verified images. A recap on what an image is, you won't forget things if I keep mentioning. 
+在上一節中，我們涵蓋了一些基礎知識，關於如何使用 Docker Desktop 結合 DockerHub 來部署和運行一些經過驗證的圖像。回顧一下圖像是什麼，如果我繼續提到它們，你不會忘記它們。
 
-A Docker image is a read-only template that contains a set of instructions for creating a container that can run on the Docker platform. It provides a convenient way to package up applications and preconfigured server environments, which you can use for your own private use or share publicly with other Docker users. Docker images are also the starting point for anyone using Docker for the first time.
+Docker 圖像是一個只讀模板，包含一組用於創建可以在 Docker 平台上運行的容器的指令。它提供了一種方便的方式來打包應用程式和預配置的伺服器環境，你可以用於私人使用或與其他 Docker 用戶公開共享。Docker 圖像也是任何首次使用 Docker 的人的起點。
 
-What happens if we want to create our own Docker image? For us to do this we would create a Dockerfile. You saw how we could take that Ubuntu container image and we could add our software and we would have our container image with the software that we wanted and everything is good, however if that container is shut down or thrown away then all those software updates and installations go away there is no repeatable version of what we had done. So that is great for showing off the capabilities but it doesn't help with the transport of images across multiple environments with the same set of software installed each time the container is ran. 
+如果我們想創建自己的 Docker 圖像怎麼辦？為了做到這一點，我們將創建一個 Dockerfile。你看到了我們如何獲取 Ubuntu 容器圖像並添加我們的軟體，我們將擁有帶有我們想要的軟體的容器圖像，一切都很好，但是，如果該容器關閉或丟棄，那麼所有那些軟體更新和安裝都會消失，沒有可重複的版本我們所做的工作。所以這對於展示功能很有用，但它不能幫助在多個環境中傳輸圖像，每次運行容器時都安裝相同的軟體集。
 
-### What is a Dockerfile 
+### 什麼是 Dockerfile
 
-A dockerfile is a text file that contains commands you would normally execute manually in order to build a docker image. Docker can build images automatically by reading the instructions we have in our dockerfile.
+dockerfile 是一個文字檔案，包含你通常手動執行以構建 docker 圖像的指令。Docker 可以通過讀取我們在 dockerfile 中的指令自動構建圖像。
 
-Each of the files that make up a docker image is known as a layer. these layers form a series of images, built on top of each other in stages. Each layer is dependant on the layer immediatly below it. The order of your layers is key to the effciency of the lifecycle management of your docker images. 
+構成 docker 圖像的每個檔案都被稱為一層。這些層形成一系列圖像，分階段相互構建。每一層都依賴於緊鄰其下方的層。你的層的順序是 docker 圖像生命週期管理效率的關鍵。
 
-We should organise our layers that change most often as high in the stack as possible, this is because when you make changes to a layer in your image, Docker not only rebuilds that particular layer but all layers built from it. Therefore a change to a layer at the top involves the least amount of work to rebuild the entire image. 
+我們應該將最常更改的層組織在堆疊中盡可能高的位置，這是因為當你對圖像中的層進行更改時，Docker 不僅會重建該特定層，還會重建從它構建的所有層。因此，對頂層的更改涉及重建整個圖像的最少工作量。
 
-Each time docker launches a container from an image (like we ran yesterday) it adds a writeable layer, known as the container layer. This stores all changes to the container throughout its runtime. This layer is the only difference between a live operational container and the source image itself. Any number of like for like containers can share access to the same underlying image while maintaining their own individual state. 
+每次 docker 從圖像啟動容器時（就像我們昨天運行的），它都會添加一個可寫層，稱為容器層。這存儲整個運行時對容器的所有更改。這一層是活動運行容器和源圖像本身之間的唯一區別。任意數量的同類容器可以共享對同一底層圖像的訪問，同時維護它們的狀態。
 
-Back to the example we used yesterday with the Ubuntu image. We could run that same command multiple times and on the first container we could go and install pinta and on the second we could install figlet two different applications, different purpose, different size etc etc. Each container that we deployed share the same image but not the same state and then that state is then gone when we remove the container. 
+回到我們昨天使用的 Ubuntu 圖像範例。我們可以多次運行相同的指令，在第一個容器上我們可以安裝 pinta，在第二個容器上我們可以安裝 figlet，有兩個不同的應用程式，不同的目的，不同的大小等。我們部署的每個容器共享相同的圖像，但不是相同的狀態，然後當我們移除容器時，該狀態就會消失。
 
 ![](Images/Day45_Containers1.png)
 
-Following the example above with the Ubuntu image, but also many other ready built container images available on DockerHub and other third party repositories. These images are generally known as the parent image. It is the foundations upon which all other layers are build and provides the basic building blocks for our container environments. 
+遵循上面使用 Ubuntu 圖像的範例，但也遵循 DockerHub 和其他第三方儲存庫中可用的許多其他預構建容器圖像。這些圖像通常被稱為父圖像。它是構建所有其他層的基礎，並為我們的容器環境提供基本構建塊。
 
-Together with a set of individual layer files, a Docker image also includes an additional file known as a manifest. This is essentially a description of the image in JSON format and comprises information such as image tags, a digital signature, and details on how to configure the container for different types of host platforms.
+除了一組單獨的層檔案外，Docker 圖像還包含一個稱為 manifest 的額外檔案。這本質上是 JSON 格式的圖像描述，包含圖像標籤、數位簽名以及如何為不同類型的主機平台配置容器的詳細資訊等資訊。
 
 ![](Images/Day45_Containers2.png)
 
-### How to create a docker image 
+### 如何創建 docker 圖像
 
- There are two ways we can create a docker image. We can do it a little on the fly with the process that we started yesterday, we pick our base image we spin up that container, we install all of the software and depenancies that we wish to have on our container. 
+我們可以通過兩種方式創建 docker 圖像。我們可以稍微動態地使用我們昨天開始的過程，我們選擇基線圖像啟動該容器，並安裝我們希望在容器上擁有的所有軟體和依賴項。
 
- Then we can use the `docker commit container name` then we have a local copy of this image under docker images and in our docker desktop images tab. 
+然後我們可以使用 `docker commit container name`，然後我們在 docker images 和我們的 docker desktop images 標籤下擁有此圖像的本地副本。
 
- Super simple, I would not recommend this method unless you want to understand the process, it is going to be very difficult to manage lifecycle management this way and a lot of manual configuration/reconfiguration. But it is the quickest and most simple ways to build a docker image. Great for testing, troubleshooting, validating dependencies etc. 
+超級簡單，我不會推薦這種方法，除非你想了解這個過程，這種方式管理生命週期管理會非常困難，而且有很多手動配置/重新配置。但這是構建 docker 圖像最快和最簡單的方法。非常適合測試、故障排除、驗證依賴項等。
 
-The way we intend to build our image is through a dockerfile. Which gives us a clean, compact and repeatable way to create our images. Much easier lifecycle management and easy integration into Continous integration and Continous delivery procesess. But as you might gathered it is a little more difficult than the first mentioned process. 
+我們打算構建圖像的方式是通過 dockerfile。這為我們提供了一種乾淨、緊湊和可重複的方式來創建我們的圖像。更容易的生命週期管理，易於整合到持續整合和持續交付流程中。但正如你可能猜到的那樣，這比第一個提到的過程要困難一些。
 
-Using the dockerfile method is much more in tune with real-world, enterprise grade container deployments. 
+使用 dockerfile 方法更符合實際世界的企業級容器部署。
 
-A dockerfile is a three-step process whereby you create the dockerfile and add the commands you need to assemble the image. 
+dockerfile 是一個三步過程，你創建 dockerfile 並添加組裝圖像所需的指令。
 
-The following table shows some of the dockerfile statements we will be using or that you will most likely be using. 
+下表顯示了我們將使用或你最可能使用的某些 dockerfile 語句。
 
-| Command    | Purpose                                                                                                                                     |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| FROM       | To specify the parent image.                                                                                                                |
-| WORKDIR    | To set the working directory for any commands that follow in the Dockerfile.                                                                |
-| RUN        | To install any applications and packages required for your container.                                                                       |
-| COPY       | To copy over files or directories from a specific location.                                                                                 |
-| ADD        | As COPY, but also able to handle remote URLs and unpack compressed files.                                                                   |
-| ENTRYPOINT | Command that will always be executed when the container starts. If not specified, the default is /bin/sh -c                                 |
-| .md       | Arguments passed to the entrypoint. If ENTRYPOINT is not set (defaults to /bin/sh -c), the .mdwill be the commands the container executes. |
-| EXPOSE     | To define which port through which to access your container application.                                                                    |
-| LABEL      | To add metadata to the image.                                                                                                               |
+| 指令      | 目的                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------------ |
+| FROM      | 指定父圖像。                                                                                           |
+| WORKDIR   | 為 Dockerfile 中遵循的任何指令設置工作目錄。                                                           |
+| RUN       | 安裝容器所需的任何應用程式和套件。                                                                   |
+| COPY      | 從特定位置複製檔案或目錄。                                                                           |
+| ADD       | 與 COPY 相同，但也能處理遠程 URL 和解壓縮壓縮檔案。                                                   |
+| ENTRYPOINT | 容器啟動時始終執行的指令。如果未指定，預設為 /bin/sh -c                                            |
+| CMD       | 傳遞給入口點的參數。如果未設置 ENTRYPOINT（預設為 /bin/sh -c），CMD 將是容器執行的指令。            |
+| EXPOSE    | 定義通過哪個端口訪問容器應用程式。                                                                   |
+| LABEL     | 向圖像添加元數據。                                                                                     |
 
+現在我們有了如何構建第一個 dockerfile 的詳細資訊，我們可以創建一個工作目錄並創建我們的 dockerfile。我在這個儲存庫中創建了一個工作目錄，你可以看到我必須瀏覽的檔案和資料夾。[Containers](Containers)
 
-Now we have the detail on how to build our first dockerfile we can create a working directory and create our dockerfile. I have created a working directory within this repository where you can see the files and folders I have to walk through. [Containers](Days/Containers)
+在這個目錄中，我將創建一個 .dockerignore 檔案，類似於我們在上一節中使用的 .gitignore。此檔案將列出在 Docker 構建過程中可能創建的任何檔案，你想從最終構建中排除這些檔案。
 
-In this directory I am going to create a .dockerignore file similar to the .gitignore we used in the last section. This file will list any files that would otherwise be created during the Docker build process, which you want to exclude from the final build.
+記住，關於容器的一切都是關於緊湊、盡可能快，沒有膨脹。
 
-Remember everything about containers is about being compact, as fast as possible with no bloat. 
-
-I want to create a very simple Dockerfile with the below layout also can be found in the folder linked above. 
+我想創建一個非常簡單的 Dockerfile，佈局如下，也可以在上面連結的資料夾中找到。
 
 ```
 # Use the official Ubuntu 18.04 as base
@@ -81,34 +80,33 @@ RUN apt-get install -y nginx curl
 RUN rm -rf /var/lib/apt/lists/*
 ```
 
-Navigate to this directory in your terminal, and then run `docker build -t 90daysofdevops:0.1 .` we are using the `-t` and then setting an image name and tag. 
+在你的終端機中導航到此目錄，然後運行 `docker build -t 90daysofdevops:0.1 .` 我們使用 `-t` 然後設置圖像名稱和標籤。
 
 ![](Images/Day45_Containers3.png)
 
-Now we have created our image we can then go and run our image using Docker Desktop or we could use the docker command line. I have used Docker Desktop I have fired up a container and you can see that we have `curl` available to us in the cli of the container. 
+現在我們已經創建了圖像，我們可以使用 Docker Desktop 或我們可以使用 docker 命令列來運行我們的圖像。我使用了 Docker Desktop，我已經啟動了一個容器，你可以看到我們在容器的 cli 中有 `curl` 可用。
 
 ![](Images/Day45_Containers4.png)
 
-Whilst in Docker Desktop there is also the ability to leverage the UI to do some more tasks with this new image. 
+在 Docker Desktop 中，還可以利用 UI 對此新圖像執行更多任務。
 
 ![](Images/Day45_Containers5.png)
 
-We can inspect our image, in doing so you see very much the dockerfile and the lines of code that we wanted to run within our container. 
+我們可以檢查我們的圖像，這樣做你會看到很多 dockerfile 和我們想要在容器內運行的程式碼行。
 
 ![](Images/Day45_Containers6.png)
 
-We have a pull option, now this would fail for us because this image is not hosted anywhere so we would get that as an error. However we do have a Push to hub which would enable us to push our image to DockerHub. 
+我們有一個 pull 選項，現在這對我們來說會失敗，因為這個圖像沒有託管在任何地方，所以我們會得到錯誤。但是，我們確實有一個 Push to hub，這將使我們能夠將圖像推送到 DockerHub。
 
-If you are using the same `docker build` we ran earlier then this would not work either, you would need the build command to be `docker build -t {{username}}/{{imagename}}:{{version}}`
+如果你使用與我們之前運行的相同的 `docker build`，那麼這也不會工作，你需要構建指令是 `docker build -t {{username}}/{{imagename}}:{{version}}`
 
 ![](Images/Day45_Containers7.png)
 
-Then if we go and take a look in our DockerHub repository you can see that we just pushed a new image. Now in Docker Desktop we would be able to use that pull tab. 
+然後，如果我們去查看我們的 DockerHub 儲存庫，你可以看到我們剛剛推送了一個新圖像。現在在 Docker Desktop 中，我們將能夠使用該 pull 標籤。
 
 ![](Images/Day45_Containers8.png)
 
-
-## Resources 
+## 資源
 
 - [TechWorld with Nana - Docker Tutorial for Beginners](https://www.youtube.com/watch?v=3c-iBn73dDE)
 - [Programming with Mosh - Docker Tutorial for Beginners](https://www.youtube.com/watch?v=pTFZFxd4hOI)
@@ -117,4 +115,4 @@ Then if we go and take a look in our DockerHub repository you can see that we ju
 - [Blog on gettng started building a docker image](https://stackify.com/docker-build-a-beginners-guide-to-building-docker-images/)
 - [Docker documentation for building an image](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
-See you on [Day 46](day46.md) 
+我們[第 46 天](day46.md)見
