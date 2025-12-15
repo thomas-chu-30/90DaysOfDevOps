@@ -1,65 +1,65 @@
-## 2022 Reflection & Welcome 2023
+## 2022 年回顧與歡迎 2023
 
-Hey everyone and welcome to the 2023 edition of #90DaysOfDevOps in this Day 1 post the plan is to reflect on the 2022 edition and some statistics, feedback, and ideas that we have had during the year. 
+大家好，歡迎來到 2023 年版的 #90DaysOfDevOps。在這第 1 天的文章中，我們計劃回顧 2022 年版的一些統計數據、反饋和我們在過去一年中的想法。
 
-### 2022 Recap 
+### 2022 年回顧
 
-First, WOW! To think that the mission I thought up on New Year’s Eve 2021 was to spend the first 90 days of 2022 learning and documenting that learning, basically writing some notes after watching some much smarter people than me on YouTube. 
+首先，哇！回想我在 2021 年除夕夜想到的任務，是在 2022 年的前 90 天學習並記錄這些學習，基本上是在觀看一些比我聰明得多的人在 YouTube 上的影片後寫一些筆記。
 
-Fast forward a year, and we have some amazing numbers on the repository, I think I mentioned at least somewhere in the repository, but I know I have mentioned elsewhere many times any content is worth doing if it helps even just one person, to have the numbers that we have here from stars to forks is incredible. 
+快轉一年，我們在儲存庫上有一些驚人的數字，我想我至少在儲存庫的某個地方提到過，但我知道我在其他地方多次提到，任何內容只要幫助到一個人就值得去做，從星標到分叉的這些數字令人難以置信。
 
 ![](images/day01-1.jpg)
 
-Also, nearly **500** watchers of the repository! 
+此外，將近 **500** 位儲存庫的關注者！
 
-First, I want to thank everyone for sharing the repository with the community. Hearing that Microsoft and other massive tech vendors have shared this with their teams is humbling. 
+首先，我想感謝每個人與社群分享這個儲存庫。聽到微軟和其他大型科技供應商與他們的團隊分享了這個，讓我感到謙遜。
 
-Secondly, I would like to thank the contributors. This started out as a place to take notes and learn in public, and it wasn't until a few days in that saw people correcting my poor spelling and grammar. (I am sure the same will happen this year) But the biggest and most amazing thing was the community that started to translate the repository into their native language! How amazing to think this was happening and helping non-native English speakers learn more about the powers of DevOps. 
+其次，我想感謝貢獻者。這最初是一個公開記筆記和學習的地方，直到幾天後才看到人們糾正我糟糕的拼寫和語法。（我確信今年也會發生同樣的情況）但最令人驚奇的是社群開始將儲存庫翻譯成他們的母語！想想這正在發生並幫助非英語母語者了解更多 DevOps 的力量，真是太棒了。
 
 ![](images/day01-2.png)
 
-If you would like to find the amazing contributors on the repository, then you can head to the [Contributors](https://github.com/MichaelCade/90DaysOfDevOps/blob/main/Contributors.md)
+如果您想找到儲存庫上令人驚嘆的貢獻者，可以前往 [Contributors](https://github.com/MichaelCade/90DaysOfDevOps/blob/main/Contributors.md)
 
-### Continuous Learning 
+### 持續學習
 
-I mentioned and mentioned a lot that we are never done learning, if you think you are then you picked the wrong industry as things are changing all the time and at a rapid pace. 
+我多次提到，我們永遠不會停止學習，如果您認為自己已經完成了學習，那麼您選錯了行業，因為事情一直在快速變化。
 
-It is for that reason we must keep learning, learning for some is a challenge and for those people, I urge you to find a medium that you enjoy. I have always enjoyed documenting something I learn to like this and then getting hands-on. The premise of this project is exactly that, it is about a foundational knowledge of some of the key areas of DevOps and the tooling that achieves this, you are not going to be a graduated DevOps engineer by following along but you are going to have a better understanding of terminology and getting hands-on with some technologies that maybe you do not see on a day-to-day basis. 
+正是出於這個原因，我們必須繼續學習，對某些人來說學習是一個挑戰，對於這些人，我強烈建議您找到一個您喜歡的媒介。我一直很享受像這樣記錄我學到的東西，然後動手實踐。這個專案的前提正是如此，它是關於 DevOps 一些關鍵領域和實現這一目標的工具的基礎知識，您不會通過跟隨學習而成為畢業的 DevOps 工程師，但您將更好地理解術語並動手實踐一些您可能在日常工作中看不到的技術。
 
-I also want to add that everyone is constantly evolving and learning, it doesn't matter if you are the CTO of a software company or a Systems Administrator wanting to learn more about automation, everyone is learning, and that little imposter syndrome feeling is normal. My advice is to run towards it vs running away from it and you will absolutely reap the rewards, also learn what you enjoy this makes learning more enjoyable. 
+我還想補充一點，每個人都在不斷進化和學習，無論您是軟體公司的 CTO 還是想要了解更多自動化的系統管理員，每個人都在學習，那種小小的冒名頂替綜合症感覺是正常的。我的建議是迎向它而不是逃避它，您絕對會收穫回報，同時學習您喜歡的東西，這使學習更加愉快。
 
-### Security focused 
+### 安全重點
 
-For those that have been following along, you will have known that the biggest area we missed out on in the 2022 edition was security aptly named DevSecOps and how we integrate security into that infinite DevOps cycle to ensure we are always thinking about security. 
+對於一直關注的人來說，您會知道我們在 2022 年版中錯過的最大領域是安全，恰當地命名為 DevSecOps，以及我們如何將安全整合到無限的 DevOps 循環中，以確保我們始終考慮安全。
 
-In this edition, we will be diving headfirst into the security processes and principles as it obtains to DevSecOps heavily in this version and getting to some more topics that we missed in the first round. 
+在這個版本中，我們將深入探討與 DevSecOps 相關的安全流程和原則，並在本版本中大量涉及，並涵蓋我們在第一輪中錯過的一些更多主題。
 
-### A little help from my friends 
+### 朋友的一點幫助
 
-The 2022 edition was the equivalent of writing a blog post each day. We were well over 100k words and if we were to spin this into an eBook which was an option and instructions can be found in the repository if you so wish but you would find over 700 pages of A4 paper in total. The book idea is not dead and buried and I am working on a smaller version behind the scenes that might be a nice giveaway at a conference near you along with our amazing stickers. 
+2022 年版相當於每天寫一篇部落格文章。我們超過 10 萬字，如果我們要將其轉換為電子書（這是一個選項，如果您願意，可以在儲存庫中找到說明），您會發現總共超過 700 頁 A4 紙。書籍的想法並沒有被埋葬，我正在幕後製作一個較小的版本，可能會在您附近的會議上作為贈品，還有我們令人驚嘆的貼紙。
 
-Another gap for me and maybe this was the authenticity of the project as I was just starting to learn and documenting that learning journey in some of these areas. This time around I have asked some friends in the community to help. 
+對我來說另一個差距，也許這是專案的真實性，因為我剛剛開始學習並記錄我在這些領域的一些學習旅程。這次我請社群中的一些朋友幫忙。
 
-There are two reasons for this: 
+這有兩個原因：
 
-1. I think it is important to get different perspectives across topics and also, we are all going to learn best if we hear from subject matter experts in those specific topic areas. 
+1. 我認為在主題中獲得不同的觀點很重要，而且，如果我們聽到這些特定主題領域的專家意見，我們都會學得最好。
 
-2. Some of the friends that will be helping here will have the opportunity to grow their brand and potentially even speak at events about their topics and the over the project. 
+2. 一些將在這裡提供幫助的朋友將有機會發展他們的品牌，並可能甚至就他們的主題和整個專案在活動中發言。
 
-You can find the 2023 authors on the opening 2023.md page with links to their bios and contact details. 
+您可以在開頭的 2023.md 頁面上找到 2023 年的作者，其中包含他們的簡介和聯繫詳情的連結。
 
-I think it is also time to be very clear about the project. Nobody is being paid to write, nobody is being paid to talk about the project. I was approached about sponsorship several times, but the premise of this project is for it to remain impartial, free and for the community. Yes, we have used some projects and products throughout but none of the companies have sponsored or had a say in what has been written. 
+我認為現在也是時候非常清楚地說明這個專案了。沒有人因為寫作而獲得報酬，沒有人因為談論這個專案而獲得報酬。我多次被接洽關於贊助，但這個專案的前提是保持公正、免費和為社群服務。是的，我們在整個過程中使用了 some 專案和產品，但沒有任何公司贊助或對所寫內容有任何發言權。
 
-Finally, my employer Veeam Software, I am extremely lucky to have a company that enables me to be part of the community and document my learnings without interference. I don't work a traditional 9-5 and I am sure many people reading this do not either, but I am free to create content like this project. 
+最後，我的雇主 Veeam Software，我非常幸運能有一家公司讓我能夠成為社群的一部分，並在不受干擾的情況下記錄我的學習。我不做傳統的朝九晚五工作，我確信閱讀本文的許多人也不是，但我可以自由地創建像這個專案這樣的內容。
 
-### Resources 
+### 資源
 
-Throughout the project and the previous 2022 edition you will find the resources section, this is a list of content that I or my fellow authors have been through and if you want to learn more than you are reading here go and grab this content. 
+在整個專案和之前的 2022 年版中，您會找到資源部分，這是我或我的共同作者已經瀏覽過的內容列表，如果您想了解更多，請去獲取這些內容。
 
-You can find the 2022 edition [here](https://github.com/MichaelCade/90DaysOfDevOps/blob/main/2022.md)
+您可以在[這裡](https://github.com/MichaelCade/90DaysOfDevOps/blob/main/2022.md)找到 2022 年版
 
-But also some community members have been busy at work transforming and creating a new look and feel through [GitHub Pages](https://www.90daysofdevops.com/#/)
+但也有一些社群成員一直在忙於通過 [GitHub Pages](https://www.90daysofdevops.com/#/) 轉換和創建新的外觀和感覺
 
-On the [2023 page](https://www.90daysofdevops.com/#/2023) you will also find ways to interact and join the community. 
+在 [2023 頁面](https://www.90daysofdevops.com/#/2023) 上，您還會找到互動和加入社群的方式。
 
-With that said let's get into things with [Day 2](day02.md).
+話雖如此，讓我們開始 [Day 2](day02.md) 的內容。

@@ -1,75 +1,75 @@
-# Day 9: SAST Implementation with SonarCloud
+# Day 9：使用 SonarCloud 實現 SAST
 
-SonarCloud is a cloud-based platform that provides static code analysis to help developers find and fix code quality issues in their projects. It is designed to work with a variety of programming languages and tools, including Java, C#, JavaScript, and more.
+SonarCloud 是一個基於雲的平台，提供靜態代碼分析，幫助開發人員在他們的專案中查找和修復代碼品質問題。它設計用於與各種編程語言和工具配合使用，包括 Java、C#、JavaScript 等。
 
-SonarCloud offers a range of features to help developers improve the quality of their code, including:
+SonarCloud 提供一系列功能來幫助開發人員改善代碼品質，包括：
 
-- **Static code analysis**: SonarCloud analyzes the source code of a project and checks for issues such as coding style violations, potential bugs, security vulnerabilities, and other problems. It provides developers with a detailed report of the issues it finds, along with suggestions for how to fix them.
-- **Code review**: SonarCloud integrates with code review tools like GitHub pull requests, allowing developers to receive feedback on their code from their peers before it is merged into the main branch. This helps to catch issues early on in the development process, reducing the risk of bugs and other issues making it into production.
-- **Continuous integration**: SonarCloud can be integrated into a continuous integration (CI) pipeline, allowing it to automatically run static code analysis on every code commit. This helps developers catch issues early and fix them quickly, improving the overall quality of their codebase.
-- **Collaboration**: SonarCloud includes tools for team collaboration, such as the ability to assign issues to specific team members and track the progress of code review and issue resolution.
-- **Customization**: SonarCloud allows developers to customize the rules and configurations used for static code analysis, so they can tailor the analysis to fit the specific needs and coding standards of their team.
+- **靜態代碼分析**：SonarCloud 分析專案的源代碼，檢查諸如編碼風格違規、潛在錯誤、安全漏洞和其他問題。它為開發人員提供詳細的問題報告，以及如何修復它們的建議。
+- **代碼審查**：SonarCloud 與代碼審查工具（如 GitHub pull requests）整合，允許開發人員在代碼合併到主分支之前從同行那裡獲得反饋。這有助於在開發過程早期發現問題，降低錯誤和其他問題進入生產環境的風險。
+- **持續整合**：SonarCloud 可以整合到持續整合（CI）管道中，允許它在每次代碼提交時自動運行靜態代碼分析。這有助於開發人員及早發現問題並快速修復，改善代碼庫的整體品質。
+- **協作**：SonarCloud 包括團隊協作工具，例如將問題分配給特定團隊成員並跟踪代碼審查和問題解決進度的能力。
+- **自定義**：SonarCloud 允許開發人員自定義用於靜態代碼分析的規則和配置，以便他們可以根據團隊的特定需求和編碼標準定制分析。
 
-Overall, SonarCloud is a valuable tool for developers looking to improve the quality of their code and reduce the risk of issues making it into production. It helps teams collaborate and catch problems early on in the development process, leading to faster, more efficient development and fewer bugs in the final product.
+總的來說，SonarCloud 對於希望改善代碼品質並降低問題進入生產環境風險的開發人員來說是一個有價值的工具。它幫助團隊協作並在開發過程早期發現問題，從而實現更快、更高效的開發，並在最終產品中減少錯誤。
 
-Read more about SonarCloud [here](https://docs.sonarcloud.io/)
+在此處閱讀更多關於 SonarCloud 的資訊 [here](https://docs.sonarcloud.io/)
 
-### Integrate SonarCloud with GitHub Actions
+### 將 SonarCloud 與 GitHub Actions 整合
 
-- Sign up for a [SonarCloud](https://sonarcloud.io/) account with your GitHub Account.
-- From the dashboard, click on “Import an organization from GitHub”
+- 使用您的 GitHub 帳戶註冊 [SonarCloud](https://sonarcloud.io/) 帳戶。
+- 從儀表板，點擊「從 GitHub 導入組織」
     
 ![](images/day09-1.png)
     
-- Authorise and install SonarCloud app to access your GitHub account.
+- 授權並安裝 SonarCloud 應用程式以訪問您的 GitHub 帳戶。
     
 ![](images/day09-2.png)
     
-- Select the repository (free tier supports only public repositories) you want to analyze and click "Install"
+- 選擇您要分析的儲存庫（免費層僅支持公共儲存庫），然後點擊「安裝」
 ![](images/day09-3.png)
     
-- In SonarCloud you can now create an organisation.
+- 現在您可以在 SonarCloud 中創建組織。
 
 ![](images/day09-4.png)
 ![](images/day09-5.png)
 
-- Now click on “Analyze a new Project”
+- 現在點擊「分析新專案」
 
 ![](images/day09-6.png)
 
-- Click on setup to add the Project.
+- 點擊設置以添加專案。
 
 ![](images/day09-7.png)
 
-- Now on the SonarCloud dashboard you can the project.
+- 現在在 SonarCloud 儀表板上您可以看到專案。
 
 ![](images/day09-8.png)
 
-- To setup the GitHub Actions, click on the project, then on **Information** > **Last analysis method**
+- 要設置 GitHub Actions，點擊專案，然後點擊 **Information** > **Last analysis method**
 
 ![](images/day09-9.png)
 
-- Click on **GitHub Actions**
+- 點擊 **GitHub Actions**
 
 ![](images/day09-10.png)
 
-- This will show some steps to integrate SonarCloud with GitHub actions. At the top you will see SONAR_TOKEN, we will add that as Github Secrets later.
+- 這將顯示一些將 SonarCloud 與 GitHub actions 整合的步驟。在頂部您會看到 SONAR_TOKEN，我們稍後會將其添加為 Github Secrets。
 
 ![](images/day09-11.png)
 
-- Next thing you will see is the yaml file for the GitHub Workflow
+- 接下來您會看到 GitHub Workflow 的 yaml 文件
 
 ![](images/day09-12.png)
 
-- You will also see a configuration file that we will have to add in the source code repo
+- 您還會看到一個配置文件，我們必須將其添加到源代碼儲存庫中
 
 ![](images/day09-13.png)
 ![](images/day09-14.png)
 
-- At the bottom of page, disable the Automatic Analysis
+- 在頁面底部，禁用自動分析
 ![](images/day09-15.png)
 
-- Now go the source code repo and add the following configuration `sonar-project.properties` in the root directory.
+- 現在轉到源代碼儲存庫，在根目錄中添加以下配置 `sonar-project.properties`。
 
 ```yaml
 sonar.projectKey=prateekjaindev_nodejs-todo-app-demo
@@ -86,7 +86,7 @@ sonar.organization=prateekjaindev
 #sonar.sourceEncoding=UTF-8
 ```
 
-- Update or add the GitHub actions workflow with the following job in the `.github/workflows` directory
+- 在 `.github/workflows` 目錄中更新或添加具有以下作業的 GitHub actions 工作流程
 
 ```yaml
 name: SonarScan
@@ -110,23 +110,23 @@ jobs:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 ```
-- Now go to GitHub and add GitHub Secret named SOANR_TOKEN.
+- 現在轉到 GitHub 並添加名為 SOANR_TOKEN 的 GitHub Secret。
 ![](images/day09-16.png)
-- As soon as you commit the changes, the workflow will trigger.
+- 一旦您提交更改，工作流程就會觸發。
 ![](images/day09-17.png)
-- Now after every commit, you can check the updated reports on the SonarCloud dashboard.
+- 現在在每次提交後，您可以在 SonarCloud 儀表板上檢查更新的報告。
 ![](images/day09-18.png)
 
-### Quality Gates
+### 品質閘道
 
-A quality gate is an indicator that tells you whether your code meets the minimum level of quality required for your project. It consists of a set of conditions that are applied to the results of each analysis. If the analysis results meet or exceed the quality gate conditions then it shows a **Passed** status otherwise, it shows a **Failed** status.
+品質閘道是一個指標，告訴您您的代碼是否滿足專案所需的最低品質水準。它由一組應用於每次分析結果的條件組成。如果分析結果滿足或超過品質閘道條件，則顯示 **Passed** 狀態，否則顯示 **Failed** 狀態。
 
-By default SonarCloud comes with a default quality gate “Sonar way”. You can edit or create new one in the Organisation Settings.
+默認情況下，SonarCloud 帶有一個默認品質閘道「Sonar way」。您可以在組織設置中編輯或創建新的。
 ![](images/day09-19.png)
-### Resources
+### 資源
 
 - [SonarCloud Documentation](https://docs.sonarcloud.io/)
 - [How to create Quality gates on SonarQube](https://www.youtube.com/watch?v=8_Xt9vchlpY)
 - [Source Code of the repo I used for SAST implementation](https://github.com/prateekjaindev/nodejs-todo-app-demo)
 
-In the next part [Day 10](day10.md), we will discuss Software Composition Analysis (SCA).
+在下一部分 [Day 10](day10.md) 中，我們將討論軟體組合分析（SCA）。

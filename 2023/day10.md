@@ -1,33 +1,33 @@
-# Day 10: Software Composition Analysis Overview
+# Day 10：軟體組合分析概述
 
-Software composition analysis (SCA) is a process that helps developers identify the open source libraries, frameworks, and components that are included in their software projects. SCA tools scan the codebase of a software project and provide a report that lists all the open source libraries, frameworks, and components that are being used. This report includes information about the licenses and vulnerabilities of these open source libraries and components, as well as any security risks that may be associated with them.
+軟體組合分析（SCA）是一個幫助開發人員識別其軟體專案中包含的開源庫、框架和組件的過程。SCA 工具掃描軟體專案的代碼庫，並提供一份報告，列出所有正在使用的開源庫、框架和組件。此報告包括有關這些開源庫和組件的許可證和漏洞的資訊，以及可能與它們相關的任何安全風險。
 
-There are several benefits to using SCA tools in software development projects. These benefits include:
+在軟體開發專案中使用 SCA 工具有幾個好處。這些好處包括：
 
-1. **Improved security**: By identifying the open source libraries and components that are being used in a project, developers can assess the security risks associated with these libraries and components. This allows them to take appropriate measures to fix any vulnerabilities and protect their software from potential attacks.
-2. **Enhanced compliance**: SCA tools help developers ensure that they are using open source libraries and components that are compliant with the appropriate licenses. This is particularly important for companies that have strict compliance policies and need to ensure that they are not infringing on any third-party intellectual property rights.
-3. **Improved efficiency**: SCA tools can help developers save time and effort by automating the process of identifying and tracking open source libraries and components. This allows developers to focus on more important tasks, such as building and testing their software.
-4. **Reduced risk**: By using SCA tools, developers can identify and fix vulnerabilities in open source libraries and components before they become a problem. This helps to reduce the risk of security breaches and other issues that could damage the reputation of the software and the company.
-5. **Enhanced quality**: By identifying and addressing any vulnerabilities in open source libraries and components, developers can improve the overall quality of their software. This leads to a better user experience and a higher level of customer satisfaction.
+1. **改善安全性**：通過識別專案中使用的開源庫和組件，開發人員可以評估與這些庫和組件相關的安全風險。這使他們能夠採取適當的措施來修復任何漏洞並保護他們的軟體免受潛在攻擊。
+2. **增強合規性**：SCA 工具幫助開發人員確保他們使用的開源庫和組件符合適當的許可證。這對於具有嚴格合規政策並需要確保不侵犯任何第三方知識產權的公司尤其重要。
+3. **提高效率**：SCA 工具可以通過自動化識別和跟踪開源庫和組件的過程來幫助開發人員節省時間和精力。這使開發人員能夠專注於更重要的任務，例如構建和測試他們的軟體。
+4. **降低風險**：通過使用 SCA 工具，開發人員可以在開源庫和組件中的漏洞成為問題之前識別和修復它們。這有助於降低安全漏洞和其他可能損害軟體和公司聲譽的問題的風險。
+5. **增強品質**：通過識別和解決開源庫和組件中的任何漏洞，開發人員可以改善軟體的整體品質。這導致更好的用戶體驗和更高的客戶滿意度。
 
-In addition to these benefits, SCA tools can also help developers to identify any potential legal issues that may arise from the use of open source libraries and components. For example, if a developer is using a library that is licensed under a copyleft license, they may be required to share any changes they make to the library with the community.
+除了這些好處之外，SCA 工具還可以幫助開發人員識別可能因使用開源庫和組件而產生的任何潛在法律問題。例如，如果開發人員使用在 copyleft 許可證下許可的庫，他們可能需要與社群分享他們對庫所做的任何更改。
 
-Despite these benefits, there are several challenges associated with SCA:
+儘管有這些好處，但與 SCA 相關的幾個挑戰：
 
-1. **Scale**: As the use of open source software has become more widespread, the number of components that need to be analyzed has grown exponentially. This can make it difficult for organizations to keep track of all the components they are using and to identify any potential issues.
-2. **Complexity**: Many software applications are made up of a large number of components, some of which may have been added years ago and are no longer actively maintained. This can make it difficult to understand the full scope of an application and to identify any potential issues.
-3. **False positives**: SCA tools can generate a large number of alerts, some of which may be false positives. This can be frustrating for developers who have to review and dismiss these alerts, and it can also lead to a lack of trust in the SCA tool itself.
-4. **Lack of standardization**: There is no standard way to conduct SCA, and different tools and approaches can produce different results. This can make it difficult for organizations to compare the results of different SCA tools and to determine which one is best for their needs.
+1. **規模**：隨著開源軟體的使用變得更加廣泛，需要分析的組件數量呈指數級增長。這可能使組織難以跟踪他們使用的所有組件並識別任何潛在問題。
+2. **複雜性**：許多軟體應用程式由大量組件組成，其中一些可能是在幾年前添加的，不再積極維護。這可能使理解應用程式的完整範圍並識別任何潛在問題變得困難。
+3. **誤報**：SCA 工具可以生成大量警報，其中一些可能是誤報。這對於必須審查和駁回這些警報的開發人員來說可能令人沮喪，也可能導致對 SCA 工具本身缺乏信任。
+4. **缺乏標準化**：沒有進行 SCA 的標準方法，不同的工具和方法可能產生不同的結果。這可能使組織難以比較不同 SCA 工具的結果並確定哪一個最適合他們的需求。
 
-Overall, SCA tools provide a number of benefits to software developers and can help to improve the security, compliance, efficiency, risk management, and quality of software projects. By using these tools, developers can ensure that they are using open source libraries and components that are compliant with the appropriate licenses, free of vulnerabilities, and of high quality. This helps to protect the reputation of their software and the company, and leads to a better user experience.
+總的來說，SCA 工具為軟體開發人員提供了許多好處，可以幫助改善軟體專案的安全性、合規性、效率、風險管理和品質。通過使用這些工具，開發人員可以確保他們使用的開源庫和組件符合適當的許可證、沒有漏洞且品質高。這有助於保護他們的軟體和公司的聲譽，並帶來更好的用戶體驗。
 
-### SCA Tools (Opensource or Free Tier)
-- **[OWASP Dependncy Check](https://owasp.org/www-project-dependency-check/)**: Dependency-Check is a Software Composition Analysis (SCA) tool that attempts to detect publicly disclosed vulnerabilities contained within a project’s dependencies. It does this by determining if there is a Common Platform Enumeration (CPE) identifier for a given dependency. If found, it will generate a report linking to the associated CVE entries.
-- **[Snyk](https://snyk.io/product/open-source-security-management/)**: Snyk Open Source provides a developer-first SCA solution, helping developers find, prioritize, and fix security vulnerabilities and license issues in open source dependencies.
+### SCA 工具（開源或免費層）
+- **[OWASP Dependency Check](https://owasp.org/www-project-dependency-check/)**：Dependency-Check 是一個軟體組合分析（SCA）工具，試圖檢測專案依賴項中包含的公開披露的漏洞。它通過確定給定依賴項是否存在通用平台枚舉（CPE）標識符來做到這一點。如果找到，它將生成一份報告，連結到相關的 CVE 條目。
+- **[Snyk](https://snyk.io/product/open-source-security-management/)**：Snyk Open Source 提供開發人員優先的 SCA 解決方案，幫助開發人員查找、優先排序和修復開源依賴項中的安全漏洞和許可證問題。
 
-### Resources
+### 資源
 
 - [Software Composition Analysis (SCA): What You Should Know](https://www.aquasec.com/cloud-native-academy/supply-chain-security/software-composition-analysis-sca/)
-- [Software Composition Analysis 101: Knowing what’s inside your apps - Magno Logan](https://www.youtube.com/watch?v=qyVDHH4T1oo)
+- [Software Composition Analysis 101: Knowing what's inside your apps - Magno Logan](https://www.youtube.com/watch?v=qyVDHH4T1oo)
 
-In the next part [Day 11](day11.md), we will discuss Dependency Check and integrate it with GitHub Actions.
+在下一部分 [Day 11](day11.md) 中，我們將討論 Dependency Check 並將其與 GitHub Actions 整合。

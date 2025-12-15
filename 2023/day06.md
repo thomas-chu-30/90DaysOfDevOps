@@ -1,69 +1,69 @@
-## Hands-On: Building a weak app
+## 動手實作：構建一個弱應用程式
 
-Nobody really sets out to build a weak or vulnerable app... do they? 
+沒有人真的會去構建一個弱或易受攻擊的應用程式...對吧？
 
-No is the correct answer, nobody should or does set out to build a weak application, and nobody intends on using packages or other open-source software that brings its own vulnerabilities. 
+不，這是正確的答案，沒有人應該或會去構建一個弱應用程式，也沒有人打算使用帶來自己漏洞的套件或其他開源軟體。
 
-In this final introduction section into DevSecOps, I want to attempt to build and raise awareness of some of the misconfigurations and weaknesses that might fall by the wayside. Then later over the next 84 days or even sooner we are going to hear from some subject matter experts in the security space on how to prevent bad things and weak applications from being created. 
+在這個 DevSecOps 的最後介紹部分，我想嘗試構建並提高對一些可能被忽略的錯誤配置和弱點的認識。然後在接下來的 84 天甚至更早，我們將聽到安全領域的一些主題專家關於如何防止壞事和弱應用程式被創建。
 
-### Building our first weak application 
+### 構建我們的第一個弱應用程式
 
-<span style="color:red">**Important Message: This exercise is to highlight bad and weaknesses in an application, Please do try this at home but beware this is bad practice**</span>
+<span style="color:red">**重要訊息：此練習旨在突出應用程式中的不良和弱點，請在家嘗試，但請注意這是不良實踐**</span>
 
-At this stage, I am not going to run through my software development environment in any detail. I would generally be using VScode on Windows with WSL2 enabled. We might then use Vagrant to provision dedicated compute instances to VirtualBox all of which I covered throughout the 2022 sections of #90DaysOfDevOps mostly in the Linux section. 
+在這個階段，我不會詳細介紹我的軟體開發環境。我通常會在啟用 WSL2 的 Windows 上使用 VScode。然後我們可能會使用 Vagrant 來配置專用的計算實例到 VirtualBox，所有這些我在 #90DaysOfDevOps 的 2022 部分中都有涵蓋，主要在 Linux 部分。
 
-### Bad Coding Practices or Coding Bad Practices 
+### 不良編碼實踐或編碼不良實踐
 
-It is very easy to copy and paste into GitHub! 
+將代碼複製貼上到 GitHub 非常容易！
 
-How many people check end-to-end the package that they include in your code? 
+有多少人會端到端檢查他們在代碼中包含的套件？
 
-We also must consider: 
+我們還必須考慮：
 
-- Do we trust the user/maintainer 
-- Not validating input on our code 
-- Hardcoding secrets vs env or secrets management 
-- Trusting code without validation 
-- Adding your secrets to public repositories (How many people have done this?)
+- 我們是否信任用戶/維護者
+- 不在我們的代碼上驗證輸入
+- 硬編碼密鑰 vs 環境變數或密鑰管理
+- 未經驗證就信任代碼
+- 將您的密鑰添加到公共儲存庫（有多少人這樣做過？）
 
- Now going back to the overall topic, DevSecOps, everything we are doing or striving towards is faster iterations of our application or software, but this means we can introduce defects and risks faster. 
+現在回到整體主題，DevSecOps，我們所做或努力實現的一切都是應用程式或軟體的更快迭代，但這意味著我們可以更快地引入缺陷和風險。
 
- We will also likely be deploying our infrastructure with code, another risk is including bad code here that lets bad actors in via defects. 
+我們還可能使用代碼部署我們的基礎設施，另一個風險是在這裡包含不良代碼，讓不良行為者通過缺陷進入。
 
- Deployments will also include application configuration management, another level of possible defects. 
+部署還將包括應用程式配置管理，這是另一個可能的缺陷層級。
 
- However! Faster iterations can and do mean faster fixes as well. 
+然而！更快的迭代可以並且確實意味著更快的修復。
 
- ### OWASP - Open Web Application Security Project 
+### OWASP - 開放 Web 應用程式安全專案
 
-*"[OWASP](https://owasp.org/) is a non-profit foundation that works to improve the security of software. Through community-led open-source software projects, hundreds of local chapters worldwide, tens of thousands of members, and leading educational and training conferences, the OWASP Foundation is the source for developers and technologists to secure the web."*
+*"[OWASP](https://owasp.org/) 是一個非營利基金會，致力於改善軟體的安全性。通過社群主導的開源軟體專案、全球數百個本地分會、數萬名成員以及領先的教育和培訓會議，OWASP 基金會是開發人員和技術人員保護 Web 的來源。"*
 
-If we look at their most recent data set and their [top 10](https://owasp.org/www-project-top-ten/) we can see the following big ticket items for why things go bad and wrong. 
+如果我們查看他們最新的數據集和他們的 [前 10 名](https://owasp.org/www-project-top-ten/)，我們可以看到以下導致事情變壞和錯誤的大項目。
 
-1. Broken Access Control 
-2. Cryptographic Failures 
-3. Injection (2020 #1)
-4. Insecure Design (New for 2021)
-5. Security Misconfiguration 
-6. Vulnerable and Outdated Components (2020 #9)
-7. Identification and authentication failures (2020 #2)
-8. Software and Data integrity failures (New for 2021)
-9. Security logging and monitoring failures (2020 #10)
-10. Server-side request forgery (SSRF)
+1. 破壞的訪問控制
+2. 加密失敗
+3. 注入（2020 年 #1）
+4. 不安全設計（2021 年新增）
+5. 安全錯誤配置
+6. 易受攻擊和過時的組件（2020 年 #9）
+7. 識別和身份驗證失敗（2020 年 #2）
+8. 軟體和數據完整性失敗（2021 年新增）
+9. 安全日誌記錄和監控失敗（2020 年 #10）
+10. 伺服器端請求偽造（SSRF）
 
-### Back to the App 
+### 回到應用程式
 
-<span style="color:red">**The warning above still stands, I will deploy this to a local VirtualBox VM IF you do decide to deploy this to a cloud instance then please firstly be careful and secondly know how to lock down your cloud provider to only your own remote IP!**</span>
+<span style="color:red">**上面的警告仍然有效，我將把它部署到本地 VirtualBox VM 如果您決定將其部署到雲實例，請首先小心，其次知道如何將您的雲提供商鎖定到您自己的遠程 IP！**</span>
 
-Ok I think that is enough warnings, I am sure we might see the red warnings over the next few weeks some more as we get deeper into discussing this topic.
+好的，我認為警告已經足夠了，我確信在接下來的幾週中，當我們更深入地討論這個主題時，我們可能會看到更多紅色警告。
 
-The application that I am going to be using will be from [DevSecOps.org](https://github.com/devsecops/bootcamp/blob/master/Week-2/README.md) This was one of their bootcamps years ago but still allows us to show what a bad app looks like. 
+我將使用的應用程式將來自 [DevSecOps.org](https://github.com/devsecops/bootcamp/blob/master/Week-2/README.md) 這是他們幾年前的一個訓練營，但仍然允許我們展示一個壞應用程式是什麼樣子。
 
-Having the ability to see a bad or a weak application means we can start to understand how to secure it.
+能夠看到一個壞的或弱的應用程式意味著我們可以開始理解如何保護它。
 
-Once again, I will be using VirtualBox on my local machine and I will be using the following vagrantfile (link here to intro on vagrant)
+再次，我將在本地機器上使用 VirtualBox，我將使用以下 vagrantfile（這裡連結到 vagrant 介紹）
 
-The first alarm bell is that this vagrant box was created over 2 years ago! 
+第一個警報是這個 vagrant box 是在 2 年多前創建的！
 
 ```
 Vagrant.configure("2") do |config|
@@ -74,75 +74,75 @@ Vagrant.configure("2") do |config|
 end
 end
 ```
-If navigate to this folder, you can use `vagrant up` to spin up your centos7 machine in your environment. 
+如果導航到此資料夾，您可以使用 `vagrant up` 在您的環境中啟動您的 centos7 機器。
 
 ![](images/day06-1.png)
 
 
-Then we will need to access our machine, you can do this with `vagrant ssh` 
+然後我們需要訪問我們的機器，您可以使用 `vagrant ssh` 來完成此操作
 
-We are then going to install MariaDB as a local database to use in our application. 
+然後我們將安裝 MariaDB 作為本地數據庫在我們的應用程式中使用。
 
 `sudo yum -y install mariadb mariadb-server mariadb-devel`
 
-start the service with
+使用以下命令啟動服務
 
 `sudo systemctl start mariadb.service`
 
-We have to install some dependencies, this is also where I had to change what the Bootcamp suggested as NodeJS was not available in the current repositories. 
+我們必須安裝一些依賴項，這也是我必須更改訓練營建議的地方，因為 NodeJS 在當前儲存庫中不可用。
 
 `sudo yum -y install links`
 `sudo yum install --assumeyes epel-release`
 `sudo yum install --assumeyes nodejs`
 
-You can confirm you have node installed with `node -v` and `npm -v` (npm should be installed as a dependency)
+您可以使用 `node -v` 和 `npm -v` 確認您已安裝 node（npm 應該作為依賴項安裝）
 
-For this app we will be using ruby a language we have not covered at all yet and we will not really get into much detail about it, I will try and find some good resources and add them below. 
+對於這個應用程式，我們將使用 ruby，這是我們尚未完全涵蓋的語言，我們不會真正深入了解它，我會嘗試找到一些好的資源並在下面添加。
 
-Install with 
+使用以下命令安裝
 
 `curl -L https://get.rvm.io | bash -s stable`
 
-You might with the above be asked to add keys follow those steps. 
+使用上面的命令，您可能會被要求添加密鑰，請按照這些步驟操作。
 
-For us to use rvm we need to do the following: 
+為了讓我們使用 rvm，我們需要執行以下操作：
 
 `source /home/vagrant/.rvm/scripts/rvm`
 
-and finally, install it with 
+最後，使用以下命令安裝它
 
 `rvm install ruby-2.7`
 
-the reason for this long-winded process is basically because the centos7 box we are using is old and old ruby is shipped in the normal repository etc. 
+這個冗長過程的原因基本上是因為我們正在使用的 centos7 box 很舊，舊的 ruby 在正常儲存庫等中提供。
 
-Check installation and version with
+使用以下命令檢查安裝和版本
 
 `ruby --version`
 
-We next need the Ruby on Rails framework which can be gathered using the following command. 
+我們接下來需要 Ruby on Rails 框架，可以使用以下命令獲取。
 
 `gem install rails`
 
-Next, we need git and we can get this with 
+接下來，我們需要 git，我們可以使用以下命令獲取
 
 `sudo yum install git`
 
-Just for the record and not sure if it is required, I also had Redis installed on my machine as I was doing something else but it actually still might be needed so these are the steps. 
+僅供記錄，不確定是否需要，我的機器上也安裝了 Redis，因為我正在做其他事情，但它實際上可能仍然需要，所以這些是步驟。
 
 ```
 sudo yum install epel-release
 sudo yum install redis
 ```
 
-The above could be related to turbo streams but I did not have time to learn more about ruby on rails. 
+上面的可能與 turbo streams 有關，但我沒有時間了解更多關於 ruby on rails 的內容。
 
-Now let’s finally create our application (for the record I went through a lot to make sure these steps worked on my system so I am sending you all the luck)
+現在讓我們最終創建我們的應用程式（為了記錄，我經歷了很多以確保這些步驟在我的系統上工作，所以我向您發送所有運氣）
 
-create the app with the following, calling it what you wish 
+使用以下命令創建應用程式，隨您喜歡命名
 
 `rails new myapp --skip-turbolinks --skip-spring --skip-test-unit -d mysql `
 
-next, we will create the database and schema: 
+接下來，我們將創建數據庫和架構：
 
 ```
 cd myapp
@@ -150,19 +150,19 @@ bundle exec rake db:create
 bundle exec rake db:migrate
 ```
 
-We can then run our app with `bundle exec rails server -b 0.0.0.0` 
+然後我們可以使用 `bundle exec rails server -b 0.0.0.0` 運行我們的應用程式
 
 ![](images/day06-2.png)
 
-Then open a browser to hit that box, I had to change my VirtualBox VM networking to bridged vs NAT so that I would be able to navigate to it vs using vagrant ssh. 
+然後打開瀏覽器訪問該 box，我必須將我的 VirtualBox VM 網路更改為橋接而不是 NAT，這樣我才能導航到它，而不是使用 vagrant ssh。
 
 ![](images/day06-3.png)
 
-Now we need to **scaffold** a basic model 
+現在我們需要 **scaffold** 一個基本模型
 
-A scaffold is a set of automatically generated files which forms the basic structure of a Rails project.
+Scaffold 是一組自動生成的文件，形成 Rails 專案的基本結構。
 
-We do this with the following commands: 
+我們使用以下命令執行此操作：
 
 ```
 bundle exec rails generate scaffold Bootcamp name:string description:text dates:string
@@ -171,13 +171,13 @@ bundle exec rake db:migrate
 
 ![](images/day06-4.png)
 
-Add a default route to config/routes.rb
+在 config/routes.rb 中添加默認路由
 
 `root bootcamps#index`
 
 ![](images/day06-5.png)
 
-Now edit app/views/bootcamps/show.html.erb and make the description field a raw field. Add the below. 
+現在編輯 app/views/bootcamps/show.html.erb 並使描述欄位成為原始欄位。添加以下內容。
 
 ```
 <p>
@@ -185,15 +185,15 @@ Now edit app/views/bootcamps/show.html.erb and make the description field a raw 
   <%=raw @bootcamp.description %>
 </p>
 ```
-Now why this is all relevant is that using raw in the description field means that this field now becomes a potential XSS target. Or cross-site scripting. 
+現在為什麼這一切都相關是因為在描述欄位中使用 raw 意味著這個欄位現在成為潛在的 XSS 目標。或跨站腳本。
 
-This can be explained better with a video [What is Cross-Site Scripting?](https://youtu.be/DxsmEXicXEE)
+這可以通過影片更好地解釋 [What is Cross-Site Scripting?](https://youtu.be/DxsmEXicXEE)
 
-The rest of the Bootcamp goes on to add in search functionality which also increases the capabilities around an XSS attack and this is another great example of a demo attack you could try out on a [vulnerable app](https://www.softwaretestinghelp.com/cross-site-scripting-xss-attack-test/).
+訓練營的其餘部分繼續添加搜索功能，這也增加了 XSS 攻擊的能力，這是您可以嘗試在 [易受攻擊的應用程式](https://www.softwaretestinghelp.com/cross-site-scripting-xss-attack-test/) 上進行演示攻擊的另一個很好的例子。
 
-### Create search functionality 
+### 創建搜索功能
 
-In app/controllers/bootcamps_controller.rb, we'll add the following logic to the index method:
+在 app/controllers/bootcamps_controller.rb 中，我們將在 index 方法中添加以下邏輯：
 
 ```
 def index
@@ -206,7 +206,7 @@ def index
 end
 ```
 
-In app/views/bootcamps/index.html.erb, we'll add the search field:
+在 app/views/bootcamps/index.html.erb 中，我們將添加搜索欄位：
 
 ```
 <h1>Search</h1>
@@ -218,11 +218,11 @@ In app/views/bootcamps/index.html.erb, we'll add the search field:
 <h1>Listing Bootcamps</h1>
 ```
 
-Massive thanks for [DevSecOps.org](https://www.devsecops.org/) this is where I found the old but great walkthrough with a few tweaks above, there is also so much more information to be found there. 
+非常感謝 [DevSecOps.org](https://www.devsecops.org/) 這是我找到舊但很好的演練的地方，上面有一些調整，那裡還有更多資訊可以找到。
 
-With that much longer walkthrough than anticipated I am going to hand over to the next sections and authors to highlight how not to do this and how to make sure we are not releasing bad code or vulnerabilities out there into the wild. 
+有了這個比預期更長的演練，我將移交給下一節和作者，以突出如何不做這個，以及如何確保我們不會將不良代碼或漏洞發布到野外。
 
-## Resources 
+## 資源
 
 - [devsecops.org](https://www.devsecops.org/)
 
@@ -240,5 +240,4 @@ With that much longer walkthrough than anticipated I am going to hand over to th
 
 - [Cloud Advocate - DevSecOps Pipeline CI Process - Real world example!](https://www.youtube.com/watch?v=ipe08lFQZU8&list=PLsKoqAvws1pvg7qL7u28_OWfXwqkI3dQ1&index=7&t=204s)
 
-See you on [Day 7](day07.md) Where we will start a new section on Secure Coding.  
-
+在 [Day 7](day07.md) 見，我們將開始關於安全編碼的新部分。

@@ -1,35 +1,35 @@
-# Day 7: Secure Coding Overview
+# Day 7：安全編碼概述
 
-Secure coding is the practice of writing software in a way that ensures the security of the system and the data it processes. It involves designing, coding, and testing software with security in mind to prevent vulnerabilities and protect against potential attacks.
+安全編碼是一種編寫軟體的實踐，確保系統及其處理的數據的安全性。它涉及在設計、編碼和測試軟體時考慮安全性，以預防漏洞並保護免受潛在攻擊。
 
-There are several key principles of secure coding that developers should follow:
+開發人員應該遵循幾個關鍵的安全編碼原則：
 
-1. Input validation: It is important to validate all user input to ensure that it is in the expected format and does not contain any malicious code or unexpected characters. This can be achieved through the use of regular expressions, data type checks, and other validation techniques.
-2. Output encoding: Output data should be properly encoded to prevent any potential injection attacks. For example, HTML output should be properly escaped to prevent cross-site scripting (XSS) attacks, and SQL queries should be parameterized to prevent SQL injection attacks.
-3. Access control: Access control involves restricting access to resources or data to only those users who are authorized to access them. This can include implementing authentication and authorization protocols, as well as enforcing least privilege principles to ensure that users have only the access rights they need to perform their job duties.
-4. Error handling: Error handling is the process of properly handling errors and exceptions that may occur during the execution of a program. This can include logging errors, displaying appropriate messages to users, and mitigating the impact of errors on system security.
-5. Cryptography: Cryptography should be used to protect sensitive data and communications, such as passwords, financial transactions, and sensitive documents. This can be achieved through the use of encryption algorithms and secure key management practices.
-6. Threat Modeling: Document, locate, address, and validate are the four steps to threat modeling. To securely code, you need to examine your software for areas susceptible to increased threats of attack. Threat modeling is a multi-stage process that should be integrated into the software lifecycle from development, testing, and production.
-7. Secure storage: Secure storage involves properly storing and handling sensitive data, such as passwords and personal information, to prevent unauthorized access or tampering. This can include using encryption, hashing, and other security measures to protect data at rest and in transit.
-8. Secure architecture: Secure architecture is the foundation of a secure system. This includes designing systems with security in mind, using secure frameworks and libraries, and following secure design patterns.
+1. 輸入驗證：驗證所有用戶輸入很重要，以確保它符合預期格式，並且不包含任何惡意代碼或意外字符。這可以通過使用正則表達式、數據類型檢查和其他驗證技術來實現。
+2. 輸出編碼：輸出數據應該正確編碼，以防止任何潛在的注入攻擊。例如，HTML 輸出應該正確轉義以防止跨站腳本（XSS）攻擊，SQL 查詢應該參數化以防止 SQL 注入攻擊。
+3. 訪問控制：訪問控制涉及限制對資源或數據的訪問，僅限於被授權訪問它們的用戶。這可以包括實施身份驗證和授權協議，以及執行最小權限原則，以確保用戶僅具有執行其工作職責所需的訪問權限。
+4. 錯誤處理：錯誤處理是正確處理程式執行期間可能發生的錯誤和異常的過程。這可以包括記錄錯誤、向用戶顯示適當的訊息，以及減輕錯誤對系統安全的影響。
+5. 加密：應該使用加密來保護敏感數據和通信，例如密碼、金融交易和敏感文檔。這可以通過使用加密算法和安全密鑰管理實踐來實現。
+6. 威脅建模：記錄、定位、解決和驗證是威脅建模的四個步驟。為了安全編碼，您需要檢查您的軟體中容易受到攻擊威脅增加的區域。威脅建模是一個多階段過程，應該整合到從開發、測試到生產的軟體生命週期中。
+7. 安全存儲：安全存儲涉及正確存儲和處理敏感數據，例如密碼和個人資訊，以防止未授權訪問或篡改。這可以包括使用加密、哈希和其他安全措施來保護靜態和傳輸中的數據。
+8. 安全架構：安全架構是安全系統的基礎。這包括在設計系統時考慮安全性、使用安全框架和庫，以及遵循安全設計模式。
 
-There are several tools and techniques that can be used to help ensure that code is secure, including Static Application Security Testing (SAST), Software Composition Analysis (SCA), and Secure Code Review.
+有幾種工具和技術可以用來幫助確保代碼是安全的，包括靜態應用程式安全測試（SAST）、軟體組合分析（SCA）和安全代碼審查。
 
-### Static Application Security Testing (SAST)
+### 靜態應用程式安全測試（SAST）
 
-SAST is a method of testing software code for security vulnerabilities during the development phase. It involves analyzing the source code of a program without executing it, looking for vulnerabilities such as injection attacks, cross-site scripting (XSS), and other common security issues. SAST tools can be integrated into the software development process to provide ongoing feedback and alerts about potential vulnerabilities as the code is being written.
+SAST 是在開發階段測試軟體代碼以查找安全漏洞的方法。它涉及在不執行代碼的情況下分析程式的源代碼，尋找注入攻擊、跨站腳本（XSS）和其他常見安全問題等漏洞。SAST 工具可以整合到軟體開發過程中，在編寫代碼時提供持續的反饋和關於潛在漏洞的警報。
 
-### Software Composition Analysis (SCA)
+### 軟體組合分析（SCA）
 
-SCA is a method of analyzing the third-party components and libraries that are used in a software application. It helps to identify any vulnerabilities or security risks that may be present in these components, and can alert developers to the need to update or replace them. SCA can be performed manually or with the use of automated tools.
+SCA 是一種分析軟體應用程式中使用的第三方組件和庫的方法。它有助於識別這些組件中可能存在的任何漏洞或安全風險，並可以提醒開發人員需要更新或替換它們。SCA 可以手動執行或使用自動化工具執行。
 
-### Secure Code Reviews
+### 安全代碼審查
 
-Secure Code Review is a process of reviewing software code with the goal of identifying and addressing potential security vulnerabilities. It is typically performed by a team of security experts who are familiar with common coding practices and security best practices. Secure Code Review can be done manually or with the use of automated tools, and may involve a combination of SAST and SCA techniques.
+安全代碼審查是審查軟體代碼以識別和解決潛在安全漏洞的過程。它通常由熟悉常見編碼實踐和安全最佳實踐的安全專家團隊執行。安全代碼審查可以手動執行或使用自動化工具執行，可能涉及 SAST 和 SCA 技術的組合。
 
-In summary, Overall, secure coding is a crucial practice that helps protect software and its users from security vulnerabilities and attacks. By following best practices and keeping software up to date, developers can help ensure that their software is as secure as possible.
+總之，安全編碼是一種重要的實踐，有助於保護軟體及其用戶免受安全漏洞和攻擊。通過遵循最佳實踐並保持軟體更新，開發人員可以幫助確保他們的軟體盡可能安全。
 
-### Resources
+### 資源
 
 - [Secure Coding Best Practices | OWASP Top 10 Proactive Control](https://www.youtube.com/watch?v=8m1N2t-WANc)
 
@@ -39,4 +39,4 @@ In summary, Overall, secure coding is a crucial practice that helps protect soft
 
 - [Secure Coding Guidelines And Best Practices For Developers](https://www.softwaretestinghelp.com/guidelines-for-secure-coding/)
 
-In the next part [Day 8](day08.md), we will discuss Static Application Security Testing (SAST) in more detail.
+在下一部分 [Day 8](day08.md) 中，我們將更詳細地討論靜態應用程式安全測試（SAST）。

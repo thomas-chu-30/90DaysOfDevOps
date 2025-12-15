@@ -1,56 +1,56 @@
-## Open Source Security 
+## 開源安全
 
-Open-source software has become widely used over the past few years due to its collaborative and community/public nature. 
+開源軟體在過去幾年中由於其協作和社群/公共性質而得到廣泛使用。
 
-The term Open Source refers to software in the public domain that people can freely use, modify, and share. 
+開源一詞指的是公共領域中的軟體，人們可以自由使用、修改和分享。
 
-The main reason for this surge of adoption and interest in Open Source is the speed of augmenting proprietary code developed in-house and this in turn can accelerate time to market. Meaning that leveraging OSS can speed up application development and help get your commercial product to market faster.
+採用開源和對開源興趣激增的主要原因是增強內部開發的專有代碼的速度，這反過來可以加速上市時間。這意味著利用 OSS 可以加快應用程式開發，並幫助您更快地將商業產品推向市場。
 
-### What is Open-Source Security? 
+### 什麼是開源安全？
 
-Open-source security refers to the practice of ensuring the safety and security of computer systems and networks that use open-source software. As we said above Open-source software is software that is freely available to use, modify, and distribute, and it is typically developed by a community of volunteers however there is a huge uptake from big software vendors that also contribute back to open-source, you only need to look at the Kubernetes repository to see which vendors are heavily invested there. 
+開源安全是指確保使用開源軟體的電腦系統和網路的安全性和安全性的實踐。正如我們上面所說，開源軟體是可以自由使用、修改和分發的軟體，通常由志願者社群開發，但大型軟體供應商也有大量採用，他們也為開源做出貢獻，您只需要查看 Kubernetes 儲存庫就可以看到哪些供應商在那裡大量投資。
 
-Because open-source software is freely available, it can be widely used and studied, which can help to improve its security. However, it is important to ensure that open-source software is used responsibly and that any vulnerabilities are addressed in a timely manner to maintain its security.
+因為開源軟體可以自由獲得，它可以被廣泛使用和研究，這有助於改善其安全性。然而，重要的是要確保開源軟體被負責任地使用，並且及時解決任何漏洞以維護其安全性。
 
-### Understanding OSS supply chain security
-I would normally document my findings based on a longer form video into a paragraph here but as this is 10mins I thought it made sense to link the resource here [Understanding Open-Source Supply Chain Security] (https://www.youtube.com/watch?v=pARGj6j0-ZY)
+### 理解 OSS 供應鏈安全
+我通常會根據較長形式的影片將我的發現記錄成這裡的段落，但由於這是 10 分鐘，我認為在這裡連結資源是有意義的 [Understanding Open-Source Supply Chain Security] (https://www.youtube.com/watch?v=pARGj6j0-ZY)
 
-Be it a commercial product leveraging OSS or an OSS project using packages or other OSS code we must have an awareness from top to bottom and provide better visibility between projects. 
+無論是使用 OSS 的商業產品還是使用套件或其他 OSS 代碼的 OSS 專案，我們都必須從上到下了解，並在專案之間提供更好的可見性。
 
-### 3 As of OSS Security 
+### OSS 安全的 3 個 A
 
-Another resource I found useful here from IBM, will be linked below in the resources section. 
+我在這裡找到的另一個有用的資源來自 IBM，將在下面資源部分連結。
 
-- **Assess** - Look at the project health, how active is the repository, how responsive are the maintainers? If these show a bad sign, then you are not going to be happy about the security of the project. 
+- **評估 (Assess)** - 查看專案健康狀況，儲存庫有多活躍，維護者有多響應？如果這些顯示出不好的跡象，那麼您不會對專案的安全性感到滿意。
 
-At this stage, we can also check the security model, code reviews, data validations, and test coverage for security. How does the project handle CVEs? 
+在這個階段，我們還可以檢查安全模型、代碼審查、數據驗證和安全測試覆蓋率。專案如何處理 CVE？
 
-What dependencies does this project have? Explore the health of these in turn as you need to be sure the whole stack is good. 
+這個專案有什麼依賴項？依次探索這些的健康狀況，因為您需要確保整個堆疊都是好的。
 
-- **Adopt** - If you are going to take this on within your software or as a standalone app within your own stack, who is going to manage and maintain it? Set some policies on who internally will overlook the project and support the community. 
+- **採用 (Adopt)** - 如果您要在您的軟體中或在您自己的堆疊中作為獨立應用程式採用這個，誰將管理和維護它？制定一些關於誰將在內部監督專案並支持社群的政策。
 
-- **Act** - Security is the responsibility of everyone, not just the maintainers, as a user you should also act and assist with the project. 
+- **行動 (Act)** - 安全是每個人的責任，不僅僅是維護者，作為用戶，您也應該行動並協助專案。
 
-### Log4j Vulnerability
+### Log4j 漏洞
 
-In early 2022 we had a vulnerability that seemed to massively hit the headlines (Log4j (CVE-2021-44228) RCE Vulnerability)
+在 2022 年初，我們有一個似乎大規模成為頭條新聞的漏洞（Log4j (CVE-2021-44228) RCE 漏洞）
 
-Log4j is a very common library for logging within Java. The vulnerability would in turn affect millions of java-based applications.  
+Log4j 是 Java 中非常常見的日誌記錄庫。該漏洞反過來會影響數百萬基於 Java 的應用程式。
 
-A malicious actor could use this vulnerability within the application to gain access to a system. 
+惡意行為者可以在應用程式中使用此漏洞來獲得對系統的訪問權限。
 
-Two big things I mentioned, 
+我提到的兩件大事，
 
-- **millions** of applications will have this package being used.  
-- **malicious actors** could leverage this to gain access or plant malware into an environment. 
+- **數百萬**應用程式將使用這個套件。
+- **惡意行為者**可以利用這個來獲得訪問權限或在環境中植入惡意軟體。
 
-The reason I am raising this is that security never stops, the growth of Open-Source adoption has increased this attack vector on applications, and this is why there needs to be an overall effort on security from day 0. 
+我提出這個的原因是安全永遠不會停止，開源採用的增長增加了應用程式的攻擊向量，這就是為什麼需要從第 0 天開始對安全進行整體努力。
 
-## Resources 
+## 資源
 
 - [Open Source Security Foundation](https://openssf.org/)
 - [Snyk - State of open source security 2022](https://snyk.io/reports/open-source-security/)
 - [IBM - The 3 A's of Open Source Security](https://www.youtube.com/watch?v=baZH6CX6Zno)
 - [Log4j (CVE-2021-44228) RCE Vulnerability Explained](https://www.youtube.com/watch?v=0-abhd-CLwQ)
 
-See you on [Day 6](day06.md).
+在 [Day 6](day06.md) 見。

@@ -1,79 +1,79 @@
-## Think Like an Attacker
+## 像攻擊者一樣思考
 
-Yesterday we covered what is DevSecOps, in this post we are going to look at some of the characteristics of an attacker. For us to think about the attacker we must think like an attacker. 
+昨天我們涵蓋了什麼是 DevSecOps，在這篇文章中，我們將探討攻擊者的一些特徵。為了思考攻擊者，我們必須像攻擊者一樣思考。
 
-### Characteristics of an Attacker
+### 攻擊者的特徵
 
-First and foremost, all businesses and software is an attack vectors to an attacker, there is no safe place we can only make places safer and less attractive for people to attack. 
+首先，所有企業和軟體對攻擊者來說都是攻擊向量，沒有安全的地方，我們只能讓地方更安全，對人們來說攻擊的吸引力更小。
 
 ![](images/day03-2.jpg)
-***[image from this source](https://www.trainerize.me/articles/outrun-bear/)***
+***[圖片來源](https://www.trainerize.me/articles/outrun-bear/)***
 
-With that in mind, attackers are a constant threat! 
+考慮到這一點，攻擊者是一個持續的威脅！
 
-Attackers will identify gaps in security by running attacks in a specific order to gain access, pull data and be successful in their mission. 
+攻擊者將通過按特定順序運行攻擊來識別安全漏洞，以獲得訪問權限、提取數據並成功完成他們的任務。
 
-Attackers can be lucky, but they will absolutely work on targeted attacks. 
+攻擊者可能很幸運，但他們絕對會進行針對性攻擊。
 
-Compromises can be slow and persistent or fast to get to a breach. Not all attacks are going to be the same. 
+妥協可能是緩慢而持久的，也可能是快速達到違規。並非所有攻擊都會相同。
 
-### Motivations of an Attacker
+### 攻擊者的動機
 
-As a DevOps team, you are going to be provisioning infrastructure, and software and protecting these environments likely spanning multiple clouds, virtualisation, and containerisation on platforms. 
+作為 DevOps 團隊，您將配置基礎設施和軟體，並保護這些環境，可能跨越多個雲、虛擬化和平台上的容器化。
 
-We must consider the following: 
+我們必須考慮以下問題：
 
-- **How** would they attack us? 
-- **Why** would they attack us? 
-- **What** do we have that is valuable to an attacker? 
+- **如何**攻擊者會攻擊我們？
+- **為什麼**攻擊者會攻擊我們？
+- **什麼**我們擁有的對攻擊者有價值的東西？
 
-The motivations of an attacker will also be different depending on the attacker. I mean it could just be for fun... We have probably all been there, in school and just gone a little too deep into the network looking for more information. Who has a story to tell? 
+攻擊者的動機也會因攻擊者而異。我的意思是，這可能只是為了樂趣...我們可能都經歷過，在學校時，只是深入網路尋找更多資訊。誰有故事要講？
 
-But as we have seen in the media, attacks are more aligned to monetary, fraud or even political attacks on businesses and organisations. 
+但正如我們在媒體上看到的那樣，攻擊更傾向於針對企業和組織的貨幣、欺詐甚至政治攻擊。
 
-In the Kubernetes space, we have even seen attackers leveraging and using the computing power of an environment to mine cryptocurrency. 
+在 Kubernetes 領域，我們甚至看到攻擊者利用和使用環境的計算能力來挖掘加密貨幣。
 
-At the heart of this attack is likely going to be **DATA** 
+這次攻擊的核心可能是 **數據**
 
-A company’s data is likely going to be extremely valuable to the company but also potentially out in the wild. It is why we put so much emphasis on protecting this data, ensuring that the data is secure and encrypted. 
+公司的數據對公司來說可能非常有價值，但也可能在野外。這就是為什麼我們如此強調保護這些數據，確保數據安全並加密。
 
-### Attack Maps 
+### 攻擊地圖
 
-We now have a motive and some of the characteristics of an attacker or a group of attackers, if this is a planned attack then you are going to need a plan, you are going to need to identify what services and data you are targeting.
+我們現在有了動機和攻擊者或攻擊者群體的一些特徵，如果這是一個計劃好的攻擊，那麼您將需要一個計劃，您將需要識別您要攻擊的服務和數據。
 
-An **attack** map is a visual representation of an attack on a computer network. It shows the various stages of the attack, the tools and techniques used by the attacker, and the points of entry and exit into the network. Attack maps can be used to analyse the details of past attacks, identify vulnerabilities in a network, and plan defences against future attacks. They can also be used to communicate information about an attack to non-technical stakeholders, such as executives or legal teams.
+**攻擊**地圖是對電腦網路攻擊的視覺表示。它顯示攻擊的各個階段、攻擊者使用的工具和技術，以及進入和退出網路的點。攻擊地圖可用於分析過去攻擊的細節、識別網路中的漏洞，並規劃針對未來攻擊的防禦。它們還可用於向非技術利益相關者（如高管或法律團隊）傳達有關攻擊的資訊。
 
-You can see from the above description that an Attack Map should be created on both sides or both teams (teams-wise this is something I am going to cover in a later post)
+您可以從上面的描述中看到，攻擊地圖應該在雙方或兩個團隊上創建（從團隊角度來說，這是我將在後面的文章中涵蓋的內容）
 
-If you were to create an Attack Map of your home network or your business some of the things, you would want to capture would be: 
+如果您要創建家庭網路或企業的攻擊地圖，您想要捕獲的一些內容將是：
 
-- Capture a graphical representation of your app including all communication flows and technologies being used. 
+- 捕獲應用程式的圖形表示，包括所有通信流程和使用的技術。
 
-- A list of potential vulnerabilities and areas of attack.
+- 潛在漏洞和攻擊區域的列表。
 
-- Consider confidentiality, integrity and availability for each connection/interaction within the app. 
+- 考慮應用程式內每個連接/互動的機密性、完整性和可用性。
 
-- Map the attacks/vulnerabilities
+- 映射攻擊/漏洞
 
-An attack map might look something like this with a key explaining what each number represents. 
+攻擊地圖可能看起來像這樣，帶有一個解釋每個數字代表什麼的鍵。
 
 ![](images/day03-1.png)
 
-From this map we might consider there to be a denial of service or some malicious insider attack and access to S3 bucket to prevent the application saving data or causing it to save bad data. 
+從這個地圖中，我們可能會考慮拒絕服務或一些惡意內部攻擊，以及訪問 S3 存儲桶以防止應用程式保存數據或導致它保存壞數據。
 
-This map then is never final, in the same way that your application continuously moves forward through feedback, this attack map also needs to be tested against, which provides feedback which in turn means the security posture is strengthened against these attacks. You could call this "Continuous Response" in the Security Feedback loop. 
+這個地圖永遠不是最終的，就像您的應用程式通過反饋不斷前進一樣，這個攻擊地圖也需要進行測試，這提供了反饋，反過來意味著安全態勢針對這些攻擊得到加強。您可以將此稱為安全反饋循環中的「持續響應」。
 
-At a bare minimum, we should be following a good, better, best model to better the security posture. 
+至少，我們應該遵循良好、更好、最佳模型來改善安全態勢。
 
-- **Good** - Identify security design constraints and controls that need to be built into the software to reduce an attack. 
+- **良好** - 識別需要內建到軟體中的安全設計約束和控制，以減少攻擊。
 
-- **Better** - Prioritise and build security in for issues found later in the software cycle. 
+- **更好** - 優先考慮並在軟體週期中稍後發現的問題中內建安全。
 
-- **Best** - Build automation into script deployment to detect issues, unit testing, security testing, black box testing
+- **最佳** - 將自動化內建到腳本部署中以檢測問題、單元測試、安全測試、黑盒測試
 
-Security is a design constraint - albeit an inconvenient one.
+安全是一個設計約束——儘管是一個不方便的約束。
 
-## Resources 
+## 資源
 
 - [devsecops.org](https://www.devsecops.org/)
 
@@ -91,4 +91,4 @@ Security is a design constraint - albeit an inconvenient one.
 
 - [Cloud Advocate - DevSecOps Pipeline CI Process - Real world example!](https://www.youtube.com/watch?v=ipe08lFQZU8&list=PLsKoqAvws1pvg7qL7u28_OWfXwqkI3dQ1&index=7&t=204s)
 
-See you on [Day 4](day04.md) 
+在 [Day 4](day04.md) 見

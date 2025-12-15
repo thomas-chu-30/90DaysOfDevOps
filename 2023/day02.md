@@ -1,72 +1,72 @@
-## The Big Picture: DevSecOps
+## 大局觀：DevSecOps
 
-Welcome to Day 2 of the 2023 edition here in this first module of the next 6 days we are going look at the foundational overview around DevSecOps. 
+歡迎來到 2023 年版的第 2 天，在這第一個模組的接下來 6 天中，我們將探討 DevSecOps 的基礎概述。
 
-### What is DevSecOps? 
+### 什麼是 DevSecOps？
 
-DevSecOps is a software development approach that aims to bring together development, security, and operations teams to build and maintain secure software applications. It is based on the principles of continuous integration, continuous delivery, and continuous deployment, which aim to deliver software updates and features more quickly and frequently. In DevSecOps, security is an integral part of the software development process, rather than an afterthought. This means that security testing, monitoring, and other security measures are built into the software development life cycle (SDLC) from the beginning, rather than being added later. DevSecOps aims to improve collaboration and communication between development, security, and operations teams, to create a more efficient and effective software development process.
+DevSecOps 是一種軟體開發方法，旨在將開發、安全和運營團隊聚集在一起，以構建和維護安全的軟體應用程式。它基於持續整合、持續交付和持續部署的原則，旨在更快、更頻繁地交付軟體更新和功能。在 DevSecOps 中，安全是軟體開發過程的組成部分，而不是事後的想法。這意味著安全測試、監控和其他安全措施從一開始就內建在軟體開發生命週期（SDLC）中，而不是稍後添加。DevSecOps 旨在改善開發、安全和運營團隊之間的協作和溝通，以創建更高效、更有效的軟體開發過程。
 
-### DevSecOps vs DevOps 
+### DevSecOps vs DevOps
 
-I use the "vs" lightly here again but if we think back to the 2022 edition and the goal of DevOps is to improve the speed, reliability, and quality of software releases.
+我在這裡輕描淡寫地使用「vs」，但如果我們回顧 2022 年版，DevOps 的目標是提高軟體發布的速度、可靠性和品質。
 
-DevSecOps is an extension of the DevOps philosophy that emphasizes the integration of security practices into the software development process. The goal of DevSecOps is to build security measures into the software development process so that security is an integral part of the software from the start, rather than an afterthought. This helps to reduce the risk of security vulnerabilities being introduced into the software and makes it easier to identify and fix any issues that do arise.
+DevSecOps 是 DevOps 理念的延伸，強調將安全實踐整合到軟體開發過程中。DevSecOps 的目標是將安全措施內建到軟體開發過程中，使安全從一開始就是軟體的組成部分，而不是事後的想法。這有助於降低將安全漏洞引入軟體的風險，並使識別和修復任何出現的問題變得更容易。
 
-DevOps focuses on improving collaboration and communication between developers and operations staff to improve the speed, reliability, and quality of software releases, while DevSecOps focuses on integrating security practices into the software development process to reduce the risk of security vulnerabilities and improve the overall security of the software.
+DevOps 專注於改善開發人員和運營人員之間的協作和溝通，以提高軟體發布的速度、可靠性和品質，而 DevSecOps 專注於將安全實踐整合到軟體開發過程中，以降低安全漏洞的風險並提高軟體的整體安全性。
 
-### Automated Security 
+### 自動化安全
 
-Automated security refers to the use of technology to perform security tasks without the need for human intervention. This can include things like security software that monitors a network for threats and takes action to block them, or systems that use artificial intelligence to analyse security footage and identify unusual activity. Automated security systems are designed to make security processes more efficient and effective, and to help reduce the workload on security personnel.
+自動化安全是指使用技術來執行安全任務，而無需人工干預。這可以包括監控網路威脅並採取行動阻止它們的安全軟體，或使用人工智慧分析安全錄影並識別異常活動的系統。自動化安全系統旨在使安全流程更高效、更有效，並有助於減少安全人員的工作量。
 
-A key component of all things DevSecOps is the ability to automate a lot of the tasks at hand when creating and delivering software, when we add security from the start it means we also need to consider the automation aspect of security. 
+DevSecOps 所有內容的關鍵組成部分是能夠自動化創建和交付軟體時的許多任務，當我們從一開始就添加安全時，這意味著我們還需要考慮安全的自動化方面。
 
-### Security at Scale (Containers and Microservices)
+### 規模化安全（容器和微服務）
 
-We know that the scale and dynamic infrastructure that has been enabled by containerisation and microservices have changed the way that most organisations do business. 
+我們知道，容器化和微服務所實現的規模和動態基礎設施已經改變了大多數組織的業務方式。
 
-This is also why we must bring that automated security into our DevOps principles to ensure that specific container security guidelines are met. 
+這也是為什麼我們必須將自動化安全帶入我們的 DevOps 原則，以確保滿足特定的容器安全準則。
 
-What I mean by this is with cloud-native technologies we cannot only have static security policies and posture; our security model also must be dynamic with the workload in hand and how that is running. 
+我的意思是，對於雲原生技術，我們不能只有靜態安全策略和態勢；我們的安全模型也必須與手頭的工作負載以及它的運行方式保持動態。
 
-DevOps teams will need to include automated security to protect the overall environment and data, as well as continuous integration and continuous delivery processes. 
+DevOps 團隊需要包括自動化安全來保護整體環境和數據，以及持續整合和持續交付流程。
 
-The below list is taken from a [RedHat blog post](https://www.redhat.com/en/topics/devops/what-is-devsecops)
+以下列表取自 [RedHat 部落格文章](https://www.redhat.com/en/topics/devops/what-is-devsecops)
 
-- Standardise and automate the environment: Each service should have the least privilege possible to minimize unauthorized connections and access.
+- 標準化和自動化環境：每個服務都應該具有盡可能少的權限，以最小化未授權的連接和訪問。
 
-- Centralise user identity and access control capabilities: Tight access control and centralised authentication mechanisms are essential for securing microservices since authentication is initiated at multiple points.
+- 集中化用戶身份和訪問控制功能：緊密的訪問控制和集中化身份驗證機制對於保護微服務至關重要，因為身份驗證在多個點啟動。
 
-- Isolate containers running microservices from each other and the network: This includes both in-transit and at-rest data since both can represent high-value targets for attackers.
+- 將運行微服務的容器彼此隔離並與網路隔離：這包括傳輸中和靜態數據，因為兩者都可能成為攻擊者的高價值目標。
 
-- Encrypt data between apps and services: A container orchestration platform with integrated security features helps minimize the chance of unauthorized access.
+- 加密應用程式和服務之間的數據：具有整合安全功能的容器編排平台有助於最小化未授權訪問的機會。
 
-- Introduce secure API gateways: Secure APIs increase authorization and routing visibility. By reducing exposed APIs, organizations can reduce surfaces of attacks.
+- 引入安全 API 網關：安全 API 增加了授權和路由可見性。通過減少暴露的 API，組織可以減少攻擊面。
 
-### Security is HOT right now
+### 安全現在很熱門
 
-One thing you will have seen regardless of your background is that security is hot all over the industry, this is partly to do with security breaches appearing in global news and big brands being affected by security vulnerabilities or following potential bad practices allowing bad actors into the networks of these companies. It is fair to say or at least from my perspective the creation of software is much more achievable and obtainable now than it ever has. But in creating software it is increasingly exposed with vulnerabilities and the like which allows the bad actors to cause havoc and sometimes hold data to ransom or shut down businesses causing mayhem. We have discussed so far what is DevSecOps but I think it is also worthwhile exploring the cybersecurity side of the attack vector and why we protect our software supply chain to help avoid these cyber-attacks. 
+無論您的背景如何，您都會看到的一件事是，安全在整個行業都很熱門，這部分與出現在全球新聞中的安全漏洞以及大品牌受到安全漏洞影響或遵循潛在的不良做法，允許不良行為者進入這些公司的網路有關。公平地說，或者至少從我的角度來看，軟體的創建現在比以往任何時候都更容易實現和獲得。但在創建軟體時，它越來越容易受到漏洞等的影響，這允許不良行為者造成破壞，有時會將數據作為贖金或關閉企業造成混亂。到目前為止，我們已經討論了什麼是 DevSecOps，但我認為也值得探索攻擊向量的網路安全方面，以及為什麼我們保護我們的軟體供應鏈以幫助避免這些網路攻擊。
 
-### Cybersecurity vs DevSecOps
+### 網路安全 vs DevSecOps
 
-As the heading goes it is not really a vs but more of a difference between the two topics. But I think it is important to raise this as really this will explain why Security must be part of that DevOps process, principles, and methodology. 
+正如標題所示，這並不是真正的「vs」，而是兩個主題之間的差異。但我認為提出這一點很重要，因為這將解釋為什麼安全必須成為 DevOps 流程、原則和方法的一部分。
 
-Cybersecurity is the practice of protecting computer systems and networks from digital attacks, theft, and damage. It involves identifying and addressing vulnerabilities, implementing security measures, and monitoring systems for threats.
+網路安全是保護電腦系統和網路免受數位攻擊、盜竊和損壞的實踐。它涉及識別和解決漏洞、實施安全措施以及監控系統威脅。
 
-DevSecOps, on the other hand, is a combination of development, security, and operations practices. It is a philosophy that aims to integrate security into the development process, rather than treating it as a separate step. This involves collaboration between development, security, and operations teams throughout the entire software development lifecycle (SDLC).
+另一方面，DevSecOps 是開發、安全和運營實踐的組合。這是一種旨在將安全整合到開發過程中的理念，而不是將其視為單獨的步驟。這涉及開發、安全和運營團隊在整個軟體開發生命週期（SDLC）中的協作。
 
-Some key differences between cybersecurity and DevSecOps include:
+網路安全和 DevSecOps 之間的一些關鍵差異包括：
 
-**Focus**: Cybersecurity is primarily focused on protecting systems from external threats, while DevSecOps focuses on integrating security into the development process.
+**重點**：網路安全主要專注於保護系統免受外部威脅，而 DevSecOps 專注於將安全整合到開發過程中。
 
-**Scope**: Cybersecurity covers a wider range of topics, including network security, data security, application security, and more. DevSecOps, on the other hand, is specifically focused on improving the security of software development and deployment.
+**範圍**：網路安全涵蓋更廣泛的主題，包括網路安全、數據安全、應用程式安全等。另一方面，DevSecOps 特別專注於改善軟體開發和部署的安全性。
 
-**Approach**: Cybersecurity typically involves implementing security measures after the development process is complete, while DevSecOps involves integrating security into the development process from the start.
+**方法**：網路安全通常涉及在開發過程完成後實施安全措施，而 DevSecOps 涉及從一開始就將安全整合到開發過程中。
 
-**Collaboration**: Cybersecurity often involves collaboration between IT and security teams, while DevSecOps involves collaboration between development, security, and operations teams.
+**協作**：網路安全通常涉及 IT 和安全團隊之間的協作，而 DevSecOps 涉及開發、安全和運營團隊之間的協作。
 
-## Resources 
+## 資源
 
-Over the course of the 90 Days, we will have a daily resources list that will bring relevant content that will help continue the topics and where you can go to find out more. 
+在 90 天的過程中，我們將有一個每日資源列表，其中將帶來相關內容，這些內容將有助於繼續這些主題，以及您可以前往了解更多資訊的地方。
 
 - [TechWorld with Nana - What is DevSecOps? DevSecOps explained in 8 Mins](https://www.youtube.com/watch?v=nrhxNNH5lt0&list=PLsKoqAvws1pvg7qL7u28_OWfXwqkI3dQ1&index=1&t=19s)
 
@@ -82,4 +82,4 @@ Over the course of the 90 Days, we will have a daily resources list that will br
 
 - [Cloud Advocate - DevSecOps Pipeline CI Process - Real world example!](https://www.youtube.com/watch?v=ipe08lFQZU8&list=PLsKoqAvws1pvg7qL7u28_OWfXwqkI3dQ1&index=7&t=204s)
 
-Hopefully this gave you a taster for what you can expect for this module and some of the resources above will help provide more depth on the topic, In the post on [Day 3](day03.md) we will be taking a look at what an attacker thinks like which is why we have to protect from the start.
+希望這能讓您對這個模組的期望有所了解，上面的一些資源將有助於提供有關該主題的更多深度，在 [Day 3](day03.md) 的文章中，我們將探討攻擊者的思考方式，這就是為什麼我們必須從一開始就保護。

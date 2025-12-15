@@ -1,54 +1,54 @@
-# Day 8: SAST Overview
+# Day 8：SAST 概述
 
-Static Application Security Testing (SAST) is a method of evaluating the security of an application by analyzing the source code of the application without executing the code. SAST is also known as white-box testing as it involves testing the internal structure and workings of an application.
+靜態應用程式安全測試（SAST）是一種通過分析應用程式的源代碼而不執行代碼來評估應用程式安全性的方法。SAST 也被稱為白盒測試，因為它涉及測試應用程式的內部結構和工作方式。
 
-SAST is performed early in the software development lifecycle (SDLC) as it allows developers to identify and fix vulnerabilities before the application is deployed. This helps prevent security breaches and minimizes the risk of costly security incidents.
+SAST 在軟體開發生命週期（SDLC）的早期執行，因為它允許開發人員在應用程式部署之前識別和修復漏洞。這有助於預防安全漏洞並最小化昂貴安全事件的風險。
 
-One of the primary benefits of SAST is that it can identify vulnerabilities that may not be detected by other testing methods such as dynamic testing or manual testing. This is because SAST analyzes the entire codebase and can identify vulnerabilities that may not be detectable by other testing methods.
+SAST 的主要好處之一是它可以識別其他測試方法（如動態測試或手動測試）可能無法檢測到的漏洞。這是因為 SAST 分析整個代碼庫，可以識別其他測試方法可能無法檢測到的漏洞。
 
-There are several types of vulnerabilities that SAST can identify, including:
+SAST 可以識別幾種類型的漏洞，包括：
 
-- **Input validation vulnerabilities**: These vulnerabilities occur when an application does not adequately validate user input, allowing attackers to input malicious code or data that can compromise the security of the application.
-- **Cross-site scripting (XSS) vulnerabilities**: These vulnerabilities allow attackers to inject malicious scripts into web applications, allowing them to steal sensitive information or manipulate the application for their own gain.
-- **Injection vulnerabilities**: These vulnerabilities allow attackers to inject malicious code or data into the application, allowing them to gain unauthorized access to sensitive information or execute unauthorized actions.
-- **Unsafe functions and libraries**: These vulnerabilities occur when an application uses unsafe functions or libraries that can be exploited by attackers.
-- **Security misconfigurations**: These vulnerabilities occur when an application is not properly configured, allowing attackers to gain access to sensitive information or execute unauthorized actions.
+- **輸入驗證漏洞**：當應用程式沒有充分驗證用戶輸入時會發生這些漏洞，允許攻擊者輸入可能危及應用程式安全性的惡意代碼或數據。
+- **跨站腳本（XSS）漏洞**：這些漏洞允許攻擊者將惡意腳本注入 Web 應用程式，允許他們竊取敏感資訊或操縱應用程式以獲得自己的利益。
+- **注入漏洞**：這些漏洞允許攻擊者將惡意代碼或數據注入應用程式，允許他們獲得對敏感資訊的未授權訪問或執行未授權的操作。
+- **不安全函數和庫**：當應用程式使用可能被攻擊者利用的不安全函數或庫時會發生這些漏洞。
+- **安全錯誤配置**：當應用程式配置不當時會發生這些漏洞，允許攻擊者獲得對敏感資訊的訪問權限或執行未授權的操作。
 
-### SAST Tools (with free tier plan)
+### SAST 工具（帶免費層計劃）
 
-- **[SonarCloud](https://www.sonarsource.com/products/sonarcloud/)**: SonarCloud is a cloud-based code analysis service designed to detect code quality issues in 25+ different programming languages, continuously ensuring the maintainability, reliability and security of your code.
-- **[Snyk](https://snyk.io/)**: Snyk is a platform allowing you to scan, prioritize, and fix security vulnerabilities in your own code, open source dependencies, container images, and Infrastructure as Code (IaC) configurations.
-- **[Semgrep](https://semgrep.dev/)**: Semgrep is a fast, open source, static analysis engine for finding bugs, detecting dependency vulnerabilities, and enforcing code standards.
+- **[SonarCloud](https://www.sonarsource.com/products/sonarcloud/)**：SonarCloud 是一個基於雲的代碼分析服務，旨在檢測 25+ 種不同編程語言中的代碼品質問題，持續確保代碼的可維護性、可靠性和安全性。
+- **[Snyk](https://snyk.io/)**：Snyk 是一個平台，允許您掃描、優先排序和修復您自己的代碼、開源依賴項、容器映像和基礎設施即代碼（IaC）配置中的安全漏洞。
+- **[Semgrep](https://semgrep.dev/)**：Semgrep 是一個快速、開源的靜態分析引擎，用於查找錯誤、檢測依賴項漏洞並執行代碼標準。
 
-## How SAST Works?
+## SAST 如何工作？
 
-SAST tools typically use a variety of techniques to analyze the sourced code, including pattern matching, rule-based analysis, and data flow analysis. 
+SAST 工具通常使用各種技術來分析源代碼，包括模式匹配、基於規則的分析和數據流分析。
 
-Pattern matching involves looking for specific patterns in the code that may indicate a vulnerability, such as the use of a known vulnerable library or the execution of user input without proper sanitization. 
+模式匹配涉及在代碼中尋找可能表示漏洞的特定模式，例如使用已知易受攻擊的庫或執行未經適當清理的用戶輸入。
 
-Rule-based analysis involves the use of a set of predefined rules to identify potential vulnerabilities, such as the use of weak cryptography or the lack of input validation. 
+基於規則的分析涉及使用一組預定義規則來識別潛在漏洞，例如使用弱加密或缺乏輸入驗證。
 
-Data flow analysis involves tracking the flow of data through the application and identifying potential vulnerabilities that may arise as a result, such as the handling of sensitive data in an insecure manner.
+數據流分析涉及跟踪數據通過應用程式的流動，並識別可能因此產生的潛在漏洞，例如以不安全的方式處理敏感數據。
 
-## Consideration while using SAST Tools
+## 使用 SAST 工具時的考慮事項
 
-1. It is important to ensure that the tool is properly configured and that it is being used in a way that is consistent with best practices. This may include setting the tool's sensitivity level to ensure that it is properly identifying vulnerabilities, as well as configuring the tool to ignore certain types of vulnerabilities that are known to be benign.
-2. SAST tools are not a replacement for manual code review. While these tools can identify many potential vulnerabilities, they may not be able to identify all of them, and it is important for developers to manually review the code to ensure that it is secure.
-3. SAST is just one aspect of a comprehensive application security program. While it can be an important tool for identifying potential vulnerabilities, it is not a replacement for other security measures, such as secure coding practices, testing in the production environment, and ongoing monitoring and maintenance.
+1. 重要的是要確保工具配置正確，並且以符合最佳實踐的方式使用。這可能包括設置工具的敏感度級別以確保它正確識別漏洞，以及配置工具以忽略已知為良性的某些類型的漏洞。
+2. SAST 工具不能替代手動代碼審查。雖然這些工具可以識別許多潛在漏洞，但它們可能無法識別所有漏洞，開發人員手動審查代碼以確保其安全是很重要的。
+3. SAST 只是全面應用程式安全計劃的一個方面。雖然它可以是識別潛在漏洞的重要工具，但它不能替代其他安全措施，例如安全編碼實踐、在生產環境中測試以及持續監控和維護。
 
-### Challenges associated with SAST
+### 與 SAST 相關的挑戰
 
-- **False positives**: Automated SAST tools can sometimes identify potential vulnerabilities that are not actually vulnerabilities. This can lead to a large number of false positives that need to be manually reviewed, increasing the time and cost of the testing process.
-- **Limited coverage**: SAST can only identify vulnerabilities in the source code that is analyzed. If an application uses external libraries or APIs, these may not be covered by the SAST process.
-- **Code complexity**: SAST can be more challenging for larger codebases or codebases that are written in languages that are difficult to analyze.
-- **Limited testing**: SAST does not execute the code and therefore cannot identify vulnerabilities that may only occur when the code is executed.
+- **誤報**：自動化 SAST 工具有時會識別實際上不是漏洞的潛在漏洞。這可能導致大量需要手動審查的誤報，增加測試過程的時間和成本。
+- **有限覆蓋**：SAST 只能識別所分析源代碼中的漏洞。如果應用程式使用外部庫或 API，這些可能不在 SAST 過程的覆蓋範圍內。
+- **代碼複雜性**：對於較大的代碼庫或用難以分析的語言編寫的代碼庫，SAST 可能更具挑戰性。
+- **有限測試**：SAST 不執行代碼，因此無法識別可能僅在執行代碼時發生的漏洞。
 
-Despite these challenges, SAST is a valuable method of evaluating the security of an application and can help organizations prevent security breaches and minimize the risk of costly security incidents. By identifying and fixing vulnerabilities early in the SDLC, organizations can build more secure applications and improve the overall security of their systems.
+儘管存在這些挑戰，SAST 是一種評估應用程式安全性的有價值的方法，可以幫助組織預防安全漏洞並最小化昂貴安全事件的風險。通過在 SDLC 早期識別和修復漏洞，組織可以構建更安全的應用程式並改善其系統的整體安全性。
 
-### Resources
+### 資源
 
 - [SAST- Static Analysis with lab by Practical DevSecOps](https://www.youtube.com/watch?v=h37zp5g5tO4)
 - [SAST – All About Static Application Security Testing](https://www.mend.io/resources/blog/sast-static-application-security-testing/)
 - [SAST Tools : 15 Top Free and Paid Tools](https://www.appsecsanta.com/sast-tools)
 
-In the next part [Day 9](day09.md), we will discuss SonarCloud and integrate it with different CI/CD tools.
+在下一部分 [Day 9](day09.md) 中，我們將討論 SonarCloud 並將其與不同的 CI/CD 工具整合。
