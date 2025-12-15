@@ -1,28 +1,28 @@
 # DAST
-DAST, or Dynamic Application Security Testing, is a technique that is used to evaluate the security of an application by simulating attacks from external sources.
-Idea is to automate as much as possible black-box penetration testing. 
-It can be used for acquiring the low-hanging fruits so a real human’s time will be spared and additionally for generating traffic to other security tools (e.g. IAST). 
+DAST，或動態應用程式安全測試，是一種通過模擬來自外部來源的攻擊來評估應用程式安全性的技術。
+想法是盡可能自動化黑盒滲透測試。
+它可用於獲取低懸的果實，從而節省真實人類的時間，並另外為其他安全工具（例如 IAST）生成流量。
 
-Nevertheless, It is an essential component of the SSDLC, as it helps organizations uncover potential vulnerabilities early in the development process, before the application is deployed to production. By conducting DAST testing, organizations can prevent security incidents and protect their data and assets from being compromised by attackers.
+然而，它是 SSDLC 的重要組成部分，因為它有助於組織在應用程式部署到生產環境之前在開發過程中早期發現潛在漏洞。通過進行 DAST 測試，組織可以預防安全事件並保護其數據和資產免受攻擊者的破壞。
 
-## Tools
+## 工具
 
-There are various open-source tools available for conducting DAST, such as ZAP, Burp Suite, and Arachni. These tools can simulate different types of attacks on the application, such as SQL injection, cross-site scripting, and other common vulnerabilities. For example, if an application is vulnerable to SQL injection, a DAST tool can send a malicious SQL query to the application, such as ' OR 1=1 --, and evaluate its response to determine if it is vulnerable. If the application is vulnerable, it may return all records from the database, indicating that the SQL injection attack was successful.
-As some of the tests could be quite invasive (for example it may include ‘DROP TABLE’ or something similar) or at least put a good amount of test data into the databases or even DOS the app, 
-__DAST tools should never run against a production environment!!!__ 
-All tools have the possibility for authentication into the application and this could lead to production credentials compromise. Also when run authenticated scans against the testing environment, use suitable roles (if RBAC model exists, for the application, of course), e.g. DAST shouldn’t use role that have the possibility to delete or modify other users because this way the whole environment can became unusable.
-As with other testing methodologies it is necessary to analyze the scope, so not unneeded targets are scanned. 
+有各種開源工具可用於進行 DAST，例如 ZAP、Burp Suite 和 Arachni。這些工具可以模擬對應用程式的不同類型的攻擊，例如 SQL 注入、跨站腳本和其他常見漏洞。例如，如果應用程式容易受到 SQL 注入攻擊，DAST 工具可以向應用程式發送惡意 SQL 查詢，例如 ' OR 1=1 --，並評估其響應以確定它是否易受攻擊。如果應用程式易受攻擊，它可能會返回數據庫中的所有記錄，表明 SQL 注入攻擊成功。
+由於某些測試可能相當具有侵入性（例如，它可能包括 'DROP TABLE' 或類似的內容）或至少將大量測試數據放入數據庫，甚至對應用程式進行 DOS，
+__DAST 工具永遠不應該針對生產環境運行！！！__
+所有工具都有對應用程式進行身份驗證的可能性，這可能導致生產憑證洩露。此外，在針對測試環境運行經過身份驗證的掃描時，請使用適當的角色（如果應用程式存在 RBAC 模型，當然），例如 DAST 不應該使用具有刪除或修改其他用戶可能性的角色，因為這樣整個環境可能變得無法使用。
+與其他測試方法一樣，有必要分析範圍，以便不會掃描不需要的目標。
 
-## Usage
-Common error is scanning compensating security controls (e.g. WAF) instead of the real application. DAST is in its core an application security testing tool and should be used against actual applications, not against security mitigations. As it uses pretty standardized attacks, external controls can block the attacking traffic and this way to cover potentially exploitable flows (as per definition adversary would be able to eventually bypass such measures)
-Actual scans are quite slow, so sometimes they should be run outside of the DevOps pipeline. Good example is running them nightly or during the weekend. Some of the simple tools (zap / arachny, …) could be used into pipelines but often, due to the nature of the scan can slow down the whole development process.
-Once the DAST testing is complete, the results are analyzed to identify any vulnerabilities that were discovered. The organization can then take appropriate remediation steps to address the vulnerabilities and improve the overall security of the application. This may involve fixing the underlying code, implementing additional security controls, such as input validation and filtering, or both.
-In conclusion, the use of DAST in the SSDLC is essential for ensuring the security of an application. By conducting DAST testing and identifying vulnerabilities early in the development process, organizations can prevent security incidents and protect their assets from potential threats. Open-source tools, such as ZAP, Burp Suite, and Arachni, can be used to conduct DAST testing and help organizations improve their overall security posture.
-As with all other tools part of DevSecOps pipeline DAST should not be the only scanner in place and as with all others, it is not a substitute for penetration test and good development practices.
+## 使用
+常見錯誤是掃描補償安全控制（例如 WAF）而不是真正的應用程式。DAST 的核心是應用程式安全測試工具，應該針對實際應用程式使用，而不是針對安全緩解措施。由於它使用相當標準化的攻擊，外部控制可以阻止攻擊流量，這樣可以覆蓋潛在可利用的流程（根據定義，對手最終能夠繞過此類措施）
+實際掃描相當慢，因此有時應該在 DevOps 管道之外運行它們。一個很好的例子是在夜間或週末運行它們。一些簡單的工具（zap / arachny，...）可以在管道中使用，但通常，由於掃描的性質，可能會減慢整個開發過程。
+一旦 DAST 測試完成，將分析結果以識別發現的任何漏洞。然後，組織可以採取適當的補救步驟來解決漏洞並改善應用程式的整體安全性。這可能涉及修復底層代碼、實施額外的安全控制（例如輸入驗證和過濾），或兩者兼而有之。
+總之，在 SSDLC 中使用 DAST 對於確保應用程式的安全性至關重要。通過進行 DAST 測試並在開發過程早期識別漏洞，組織可以預防安全事件並保護其資產免受潛在威脅。開源工具，例如 ZAP、Burp Suite 和 Arachni，可用於進行 DAST 測試並幫助組織改善其整體安全態勢。
+與 DevSecOps 管道的所有其他工具一樣，DAST 不應該是唯一的掃描器，與所有其他工具一樣，它不能替代滲透測試和良好的開發實踐。
 
-## Some useful links and open-source tools:
+## 一些有用的連結和開源工具：
 - https://github.com/zaproxy/zaproxy
 - https://www.arachni-scanner.com/
 - https://owasp.org/www-project-devsecops-guideline/latest/02b-Dynamic-Application-Security-Testing 
 
-See you on [Day 19](day19.md).
+在 [Day 19](day19.md) 見。

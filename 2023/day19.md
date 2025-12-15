@@ -1,41 +1,41 @@
-# IAST (Interactive Application Security Testing)
+# IAST（互動式應用程式安全測試）
 
-IAST is a type of security testing tool that is designed to identify vulnerabilities in web applications and help developers fix them. It works by injecting a small agent into the application's runtime environment and monitoring its behaviour in real-time. This allows IAST tools to identify vulnerabilities as they occur, rather than relying on static analysis or simulated attacks. 
+IAST 是一種安全測試工具，旨在識別 Web 應用程式中的漏洞並幫助開發人員修復它們。它通過在應用程式的運行時環境中注入一個小代理並實時監控其行為來工作。這允許 IAST 工具在漏洞發生時識別它們，而不是依賴靜態分析或模擬攻擊。
 
-IAST works through software instrumentation, or the use of instruments to monitor an application as it runs and gather information about what it does and how it performs. IAST solutions instrument applications by deploying agents and sensors in running applications and continuously analyzing all application interactions initiated by manual tests, automated tests, or a combination of both to identify vulnerabilities in real time Instrumentation.
-IAST agent is running inside the application and monitoring for known attack patterns. As it is part of the application, it can monitor traffic between different components (either as classic MVC deployments and in microservices deployment).
+IAST 通過軟體檢測工作，或使用儀器在應用程式運行時監控應用程式並收集有關它做什麼以及如何執行的資訊。IAST 解決方案通過在運行的應用程式中部署代理和傳感器來檢測應用程式，並持續分析由手動測試、自動化測試或兩者組合啟動的所有應用程式交互，以實時識別漏洞檢測。
+IAST 代理在應用程式內部運行並監控已知的攻擊模式。由於它是應用程式的一部分，它可以監控不同組件之間的流量（無論是經典的 MVC 部署還是微服務部署）。
 
-## For IAST to be used, there are few prerequisites.
+## 要使用 IAST，有一些先決條件。
 
-- Application should be instrumented (inject the agent).
-- Traffic should be generated - via manual or automated tests. Another possible approach is via DAST tools (OWASP ZAP can be used for example).
+- 應用程式應該被檢測（注入代理）。
+- 應該生成流量 - 通過手動或自動化測試。另一種可能的方法是通過 DAST 工具（例如可以使用 OWASP ZAP）。
 
-## Advantages
+## 優勢
 
-One of the main advantages of IAST tools is that they can provide detailed and accurate information about vulnerabilities and how to fix them. This can save developers a lot of time and effort, as they don't have to manually search for vulnerabilities or try to reproduce them in a testing environment. IAST tools can also identify vulnerabilities that might be missed by other testing methods, such as those that require user interaction or are triggered under certain conditions. Testing time depends on the tests used (as IAST is not a standalone system) and with faster tests (automated tests) can be included into CI/CD pipelines. It can be used to detect different kind of vulnerabilities and due to the nature of the tools (it looks for “real traffic only) false positives/negatives findings are relatively rear compared to other testing types.
-IAST can be used in two flavours - as a typical testing tool and as real-time protection (it is called RAST in this case). Both work at the same principles and can be used together.
+IAST 工具的主要優勢之一是它們可以提供有關漏洞以及如何修復它們的詳細和準確資訊。這可以為開發人員節省大量時間和精力，因為他們不必手動搜索漏洞或嘗試在測試環境中重現它們。IAST 工具還可以識別其他測試方法可能遺漏的漏洞，例如需要用戶交互或在某些條件下觸發的漏洞。測試時間取決於使用的測試（因為 IAST 不是獨立系統），並且使用更快的測試（自動化測試）可以包含在 CI/CD 管道中。它可用於檢測不同類型的漏洞，由於工具的性質（它只查找「真實流量」），與其他測試類型相比，誤報/誤報發現相對較少。
+IAST 可以以兩種方式使用 - 作為典型的測試工具和作為實時保護（在這種情況下稱為 RAST）。兩者都遵循相同的原則，可以一起使用。
 
-## There are several disadvantages of the technology as well:
+## 該技術也有幾個缺點：
 
-- It is relatively new technology so there is not a lot of knowledge and experience both for the security teams and for the tools builders (open-source or commercial).
-- The solution cannot be used alone - something (or someone) should generate traffic patterns. It is important that all possible endpoints are queried during the tests.
-- Findings are based on traffic. This is especially true if used for testing alone - if there is no traffic to a portion of the app / site it would not be tested so no findings are going to be generated.
-- Due to need of instrumentation of the app, it can be fairly complex, especially compared to the source scanning tools (SAST or SCA).
+- 它是一種相對較新的技術，因此對於安全團隊和工具構建者（開源或商業）來說，沒有很多知識和經驗。
+- 該解決方案不能單獨使用 - 某些東西（或某人）應該生成流量模式。重要的是在測試期間查詢所有可能的端點。
+- 發現基於流量。如果僅用於測試，這尤其如此 - 如果沒有流量到應用程式/站點的一部分，它將不會被測試，因此不會生成發現。
+- 由於需要檢測應用程式，它可能相當複雜，特別是與源掃描工具（SAST 或 SCA）相比。
 
-There are several different IAST tools available, each with its own features and capabilities.
+有多種不同的 IAST 工具可用，每種工具都有自己的功能和能力。
 
-## Some common features of IAST tools include:
+## IAST 工具的一些常見功能包括：
 
-- Real-time monitoring: IAST tools monitor the application's behaviour in real-time, allowing them to identify vulnerabilities as they occur.
-- Vulnerability identification: IAST tools can identify a wide range of vulnerabilities, including injection attacks, cross-site scripting (XSS), and cross-site request forgery (CSRF).
-- Remediation guidance: IAST tools often provide detailed information about how to fix identified vulnerabilities, including code snippets and recommendations for secure coding practices.
-- Integration with other tools: IAST tools can often be integrated with other security testing tools, such as static code analysis or penetration testing tools, to provide a more comprehensive view of an application's security.
+- 實時監控：IAST 工具實時監控應用程式的行為，允許它們在漏洞發生時識別漏洞。
+- 漏洞識別：IAST 工具可以識別各種漏洞，包括注入攻擊、跨站腳本（XSS）和跨站請求偽造（CSRF）。
+- 補救指導：IAST 工具通常提供有關如何修復已識別漏洞的詳細資訊，包括代碼片段和安全編碼實踐的建議。
+- 與其他工具的整合：IAST 工具通常可以與其他安全測試工具整合，例如靜態代碼分析或滲透測試工具，以提供應用程式安全性的更全面視圖。
 
-IAST tools can be a valuable addition to a developer's toolkit, as they can help identify and fix vulnerabilities in real-time, saving time and effort. If you are a developer and are interested in using an IAST tool, there are many options available, so it is important to research and compare different tools to find the one that best fits your needs.
+IAST 工具可以成為開發人員工具包的有價值的補充，因為它們可以幫助實時識別和修復漏洞，節省時間和精力。如果您是開發人員並且有興趣使用 IAST 工具，有很多選項可用，因此研究和比較不同的工具以找到最適合您需求的工具很重要。
 
-## Tool example
+## 工具示例
 
-There are almost no open-source tools on the market. Example is the commercial tool: Contrast Community Edition (CE) - Fully featured version for 1 app and up to 5 users (some Enterprise features disabled). Contrast CE supports Java and .NET only. 
-Can be found here - https://www.contrastsecurity.com/contrast-community-edition
+市場上幾乎沒有開源工具。示例是商業工具：Contrast Community Edition (CE) - 適用於 1 個應用程式和多達 5 個用戶的完整功能版本（某些企業功能已禁用）。Contrast CE 僅支持 Java 和 .NET。
+可以在這裡找到 - https://www.contrastsecurity.com/contrast-community-edition
 
-See you on [Day 20](day20.md).
+在 [Day 20](day20.md) 見。

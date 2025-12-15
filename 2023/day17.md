@@ -1,27 +1,27 @@
-# Fuzzing Advanced
+# 模糊測試進階
 
-Yesterday we learned what fuzzing is and how to write fuzz tests (unit tests with fuzzy inputs).
-However, fuzz testing goes beyond just unit testing.
-We can use this methodology to test our web application by fuzzing the requests sent to our server.
+昨天我們學習了什麼是模糊測試以及如何編寫模糊測試（帶有模糊輸入的單元測試）。
+然而，模糊測試不僅僅是單元測試。
+我們可以使用這種方法通過模糊發送到我們伺服器的請求來測試我們的 Web 應用程式。
 
-Today, we will take a practical approach to fuzzy testing a web server.
+今天，我們將採用實用的方法來模糊測試 Web 伺服器。
 
-Different tools can help us do this.
+不同的工具可以幫助我們做到這一點。
 
-Such tools are [Burp Intruder](https://portswigger.net/burp/documentation/desktop/tools/intruder) and [SmartBear](https://smartbear.com/).
-However, there are proprietary tools that require a paid license to use them.
+這樣的工具是 [Burp Intruder](https://portswigger.net/burp/documentation/desktop/tools/intruder) 和 [SmartBear](https://smartbear.com/)。
+然而，有一些專有工具需要付費許可證才能使用它們。
 
-That is why for our demonstration today we are going to use a simple open-source CLI written in Go that was inspired by Burp Intruder and provides similar functionality.
-It is called [httpfuzz](https://github.com/JonCooperWorks/httpfuzz).
+這就是為什麼在今天的演示中，我們將使用一個簡單的用 Go 編寫的開源 CLI，它受到 Burp Intruder 的啟發並提供類似功能。
+它被稱為 [httpfuzz](https://github.com/JonCooperWorks/httpfuzz)。
 
 
-## Getting started
+## 開始使用
 
-This tool is quite simple.
-We provide it a template for our requests (in which we have defined placeholders for the fuzzy data), a wordlist (the fuzzy data) and `httpfuzz` will render the requests and send them to our server.
+這個工具相當簡單。
+我們為它提供請求模板（其中我們定義了模糊數據的佔位符）、單詞列表（模糊數據），`httpfuzz` 將渲染請求並將它們發送到我們的伺服器。
 
-First, we need to define a template for our requests.
-Create a file named `request.txt` with the following content:
+首先，我們需要為我們的請求定義一個模板。
+創建一個名為 `request.txt` 的檔案，內容如下：
 
 ```text
 POST / HTTP/1.1
@@ -39,33 +39,33 @@ Content-Length: 35
 }
 ```
 
-This is a valid HTTP `POST` request to the `/` route with JSON body.
-The "\`" symbol in the body defines a placeholder that will be substituted with the data we provide.
+這是一個有效的 HTTP `POST` 請求，發送到帶有 JSON 主體的 `/` 路由。
+主體中的 "\`" 符號定義了一個佔位符，將用我們提供的數據替換。
 
-`httpfuzz` can also fuzz the headers, path, and URL params.
+`httpfuzz` 還可以模糊標頭、路徑和 URL 參數。
 
-Next, we need to provide a wordlist of inputs that will be placed in the request.
-Create a file named `data.txt` with the following content:
+接下來，我們需要提供一個將放置在請求中的輸入單詞列表。
+創建一個名為 `data.txt` 的檔案，內容如下：
 
 ```text
 SOME_NAME
 Mozilla/5.0 (Linux; Android 7.0; SM-G930VC Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/58.0.3029.83 Mobile Safari/537.36
 ```
 
-In this file, we defined two inputs that will be substituted inside the body.
-In a real-world scenario, you should put much more data here for proper fuzz testing.
+在此檔案中，我們定義了兩個將替換到主體中的輸入。
+在實際場景中，您應該在這裡放置更多數據以進行適當的模糊測試。
 
-Now that we have our template and our inputs, let's run the tool.
-Unfortunately, this tool is not distributed as a binary, so we will have to build it from source.
-Clone the repo and run:
+現在我們有了模板和輸入，讓我們運行該工具。
+不幸的是，此工具不是作為二進制文件分發的，因此我們必須從源代碼構建它。
+克隆儲存庫並運行：
 
 ```shell
 go build -o httpfuzz cmd/httpfuzz.go
 ```
 
-(requires to have a recent version of Go installed on your machine).
+（需要在您的機器上安裝最新版本的 Go）。
 
-Now that we have the binary let's run it:
+現在我們有了二進制文件，讓我們運行它：
 
 ```shell
 ./httpfuzz \
@@ -78,20 +78,20 @@ Now that we have the binary let's run it:
    --proxy-url http://localhost:8080 \
 ```
 
-- `httpfuzz` is the binary we are invoking.
-- `--wordlist data.txt` is the file with inputs we provided.
-- `--seed-request requests.txt` is the request template.
-- `--target-header User-Agent` tells `httpfuzz` to use the provided inputs in the place of the `User-Agent` header.
-- `--target-param fuzz` tells `httpfuzz` to use the provided inputs as values for the `fuzz` URL parameter.
-- `--delay-ms 50` tells `httpfuzz` to wait 50 ms between the requests.
-- `--skip-cert-verify` tells `httpfuzz` to not do any TLS verification.
-- `--proxy-url http://localhost:8080` tells `httpfuzz` where our HTTP server is.
+- `httpfuzz` 是我們正在調用的二進制文件。
+- `--wordlist data.txt` 是我們提供的輸入檔案。
+- `--seed-request requests.txt` 是請求模板。
+- `--target-header User-Agent` 告訴 `httpfuzz` 在 `User-Agent` 標頭的位置使用提供的輸入。
+- `--target-param fuzz` 告訴 `httpfuzz` 將提供的輸入用作 `fuzz` URL 參數的值。
+- `--delay-ms 50` 告訴 `httpfuzz` 在請求之間等待 50 毫秒。
+- `--skip-cert-verify` 告訴 `httpfuzz` 不進行任何 TLS 驗證。
+- `--proxy-url http://localhost:8080` 告訴 `httpfuzz` 我們的 HTTP 伺服器在哪裡。
 
-We have 2 inputs and 3 places to place them (in the body, the `User-Agent` header, and the `fuzz` parameter).
-This means that `httpfuzz` will generate 6 requests and send them to our server.
+我們有 2 個輸入和 3 個放置它們的位置（在主體中、`User-Agent` 標頭和 `fuzz` 參數中）。
+這意味著 `httpfuzz` 將生成 6 個請求並將它們發送到我們的伺服器。
 
-Let's run it and see what happens.
-I wrote a simple web server that logs all requests so that we can see what is coming into our server:
+讓我們運行它，看看會發生什麼。
+我編寫了一個簡單的 Web 伺服器，記錄所有請求，以便我們可以看到進入我們伺服器的內容：
 
 ```shell
 $ ./httpfuzz \
@@ -106,7 +106,7 @@ $ ./httpfuzz \
 httpfuzz: httpfuzz.go:164: Sending 6 requests
 ```
 
-and the server logs:
+伺服器日誌：
 
 ```text
 -----
@@ -135,19 +135,19 @@ User-Agent header = [PostmanRuntime/7.26.3]
 Name = Mozilla/5.0 (Linux; Android 7.0; SM-G930VC Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/58.0.3029.83 Mobile Safari/537.36
 ```
 
-We see that we have received 6 HTTP requests.
+我們看到我們收到了 6 個 HTTP 請求。
 
-Two of them have a value from our values file for the `User-Agent` header, and 4 have the default header from the template.
-Two of them have a value from our values file for the `fuzz` query parameter, and 4 have the default header from the template.
-Two of them have a value from our values file for the `Name` body property, and 4 have the default header from the template.
+其中兩個在 `User-Agent` 標頭中具有我們值檔案中的值，4 個具有模板中的默認標頭。
+其中兩個在 `fuzz` 查詢參數中具有我們值檔案中的值，4 個具有模板中的默認標頭。
+其中兩個在 `Name` 主體屬性中具有我們值檔案中的值，4 個具有模板中的默認標頭。
 
-A slight improvement of the tool could be to make different permutations of these requests (for example, a request that has both `?fuzz=` and `User-Agent` as values from the values file).
+該工具的輕微改進可能是對這些請求進行不同的排列（例如，一個請求同時具有 `?fuzz=` 和 `User-Agent` 作為值檔案中的值）。
 
-Notice how `httpfuzz` does not give us any information about the outcome of the requests.
-To figure that out, we need to either set up some sort of monitoring for our server or write a `httpfuzz` plugin that will process the results in a meaningful for us way.
-Let's do that.
+請注意，`httpfuzz` 不會為我們提供有關請求結果的任何資訊。
+要弄清楚這一點，我們需要為我們的伺服器設置某種監控，或者編寫一個 `httpfuzz` 插件，以對我們有意義的方式處理結果。
+讓我們這樣做。
 
-To write a custom plugin, we need to implement the [`Listener`](https://github.com/JonCooperWorks/httpfuzz/blob/master/plugin.go#L13) interface:
+要編寫自定義插件，我們需要實現 [`Listener`](https://github.com/JonCooperWorks/httpfuzz/blob/master/plugin.go#L13) 接口：
 
 ```go
 // Listener must be implemented by a plugin to users to hook the request - response transaction.
@@ -184,13 +184,13 @@ func New(logger *log.Logger) (httpfuzz.Listener, error) {
 }
 ```
 
-Now we need to build our plugin first:
+現在我們需要先構建我們的插件：
 
 ```shell
 go build -buildmode=plugin -o log exampleplugins/log/log.go
 ```
 
-and then we can plug it into `httpfuzz` via the `--post-request` flag:
+然後我們可以通過 `--post-request` 標誌將其插入到 `httpfuzz` 中：
 
 ```shell
 $ ./httpfuzz \
@@ -212,20 +212,20 @@ httpfuzz: log.go:15: Got 200 response from the server
 httpfuzz: log.go:15: Got 200 response from the server
 ```
 
-Voila!
-Now we can at least see what the response code from the server was.
+完成了！
+現在我們至少可以看到來自伺服器的響應代碼是什麼。
 
-Of course, we can write much more sophisticated plugins that output much more data, but for the purpose of this exercise, that is enough.
+當然，我們可以編寫更複雜的插件，輸出更多數據，但對於本練習的目的，這就足夠了。
 
-## Summary
+## 總結
 
-Fuzzing is a really powerful testing technique that goes way beyond unit testing.
+模糊測試是一種非常強大的測試技術，遠遠超出了單元測試。
 
-Fuzzing can be extremely useful for testing HTTP servers by substituting parts of valid HTTP requests with data that could potentially expose vulnerabilities or deficiencies in our server.
+通過用可能暴露我們伺服器中漏洞或缺陷的數據替換有效 HTTP 請求的部分，模糊測試對於測試 HTTP 伺服器非常有用。
 
-There are many tools that can help us in fuzzy testing our web applications, both free and paid ones.
+有許多工具可以幫助我們模糊測試我們的 Web 應用程式，既有免費的也有付費的。
 
-## Resources
+## 資源
 
 [OWASP: Fuzzing](https://owasp.org/www-community/Fuzzing)
 
@@ -241,4 +241,4 @@ There are many tools that can help us in fuzzy testing our web applications, bot
 
 [Fuzzing the CNCF Landscape](https://youtu.be/zIyIZxAZLzo)
 
-See you on [Day 18](day18.md).
+在 [Day 18](day18.md) 見。

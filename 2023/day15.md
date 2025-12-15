@@ -1,27 +1,27 @@
-# Container Image Scanning Advanced
+# 容器映像掃描進階
 
 ## SBOM
 
-**SBOM** stands for **S**oftware **B**ill **O**f **M**aterials.
+**SBOM** 代表 **S**oftware **B**ill **O**f **M**aterials（軟體物料清單）。
 
-It is a list of all the components that make up a software application or system.
-It includes information about the various third-party libraries, frameworks, and other open-source or proprietary components that are used to build the software.
-An SBOM can also include details about the versions of these components, their licensing information, and any known vulnerabilities or security issues.
+它是構成軟體應用程式或系統的所有組件的列表。
+它包括有關用於構建軟體的各種第三方庫、框架和其他開源或專有組件的資訊。
+SBOM 還可以包括有關這些組件的版本、其許可證資訊以及任何已知漏洞或安全問題的詳細資訊。
 
-The objective of an SBOM is to list these components, providing software users visibility over what is included in a software product, and allowing them to avoid components that can be harmful for security or legal reasons.
+SBOM 的目標是列出這些組件，為軟體用戶提供對軟體產品中包含的內容的可見性，並允許他們避免可能因安全或法律原因而有害的組件。
 
-Usage of SBOMs became more common the past years, after few big supply chain attacks [this](https://www.immuniweb.com/blog/5-biggest-supply-chain-attacks-in-2022-so-far.html) and [last year](https://cyolo.io/blog/top-5-supply-chain-attacks-of-2021/).
+在過去幾年，在幾次大型供應鏈攻擊之後，SBOM 的使用變得更加普遍 [今年](https://www.immuniweb.com/blog/5-biggest-supply-chain-attacks-in-2022-so-far.html) 和 [去年](https://cyolo.io/blog/top-5-supply-chain-attacks-of-2021/)。
 
-In the context of a container image, an SBOM for a container image will contain:
+在容器映像的上下文中，容器映像的 SBOM 將包含：
 
-- the Linux packages and libraries installed in the containers
-- the language-specific packages installed for the application running in the container (e.g. Python packages, Go packages, etc.)
+- 容器中安裝的 Linux 套件和庫
+- 為容器中運行的應用程式安裝的特定語言套件（例如 Python 套件、Go 套件等）
 
-There are tool that can help you extract the SBOM from a container images.
+有工具可以幫助您從容器映像中提取 SBOM。
 
-One such tool is [syft](https://github.com/anchore/syft).
+其中一個工具是 [syft](https://github.com/anchore/syft)。
 
-For example, we can use syft to generate the SBOM for the `ubuntu:latest` container image:
+例如，我們可以使用 syft 為 `ubuntu:latest` 容器映像生成 SBOM：
 
 ```console
 $ syft ubuntu
@@ -54,7 +54,7 @@ libattr1             1:2.5.1-1build1                          deb
 libaudit-common      1:3.0.7-1build1                          deb
 libaudit1            1:3.0.7-1build1                          deb
 libblkid1            2.37.2-4ubuntu3                          deb
-libbz2-1.0           1.0.8-5build1                            deb
+libbz2-1.0           1.0.8-5build1                             deb
 libc-bin             2.35-0ubuntu3.1                          deb
 libc6                2.35-0ubuntu3.1                          deb
 libcap-ng0           0.7.9-2.2build3                          deb
@@ -105,13 +105,13 @@ libsystemd0          249.11-0ubuntu3.6                        deb
 libtasn1-6           4.18.0-4build1                           deb
 libtinfo6            6.3-2                                    deb
 libtirpc-common      1.3.2-2ubuntu0.1                         deb
-libtirpc3            1.3.2-2ubuntu0.1                         deb
+libtirpc3            1.3.2-2ubuntu0.1                          deb
 libudev1             249.11-0ubuntu3.6                        deb
 libunistring2        1.0-1                                    deb
 libuuid1             2.37.2-4ubuntu3                          deb
 libxxhash0           0.8.1-1                                  deb
 libzstd1             1.4.8+dfsg-3build1                       deb
-login                1:4.8.1-2ubuntu2                         deb
+login                1:4.8.1-2ubuntu2                          deb
 logsave              1.46.5-2ubuntu1.1                        deb
 lsb-base             11.1.0ubuntu4                            deb
 mawk                 1.3.4.20200120-3                         deb
@@ -131,103 +131,103 @@ util-linux           2.37.2-4ubuntu3                          deb
 zlib1g               1:1.2.11.dfsg-2ubuntu9.2                 deb
 ```
 
-We see that the SBOM not only contains the packages and libraries installed inside the container image,
-but also list their types and versions.
-We can use now cross-reference this list with a vulnerability database to see whether we have any vulnerabilities inside the container.
+我們看到 SBOM 不僅包含容器映像內安裝的套件和庫，
+還列出了它們的類型和版本。
+我們現在可以使用此列表與漏洞數據庫進行交叉引用，以查看容器內是否有任何漏洞。
 
-So what is a **Vulnerability Database**?
+那麼什麼是 **漏洞數據庫**？
 
-## Vulnerability database
+## 漏洞數據庫
 
-A vulnerability database is a collection of information about known vulnerabilities in software, hardware, and other systems.
-It typically includes details about the nature of the vulnerability, such as the type of vulnerability, the severity of the vulnerability, and the potential impact of the vulnerability.
-A vulnerability database may also include information about how the vulnerability can be exploited, and about any available patches or fixes for the vulnerability.
+漏洞數據庫是關於軟體、硬體和其他系統中已知漏洞的資訊集合。
+它通常包括有關漏洞性質的詳細資訊，例如漏洞類型、漏洞的嚴重性以及漏洞的潛在影響。
+漏洞數據庫還可能包括有關如何利用漏洞的資訊，以及有關漏洞的任何可用補丁或修復的資訊。
 
-Some vulnerability databases are [vuldb.com](https://vuldb.com/), [NIST](https://nvd.nist.gov/vuln), [cvedetails.com](https://www.cvedetails.com/) and [Snyk Vulnerability Database](https://security.snyk.io/).
+一些漏洞數據庫是 [vuldb.com](https://vuldb.com/)、[NIST](https://nvd.nist.gov/vuln)、[cvedetails.com](https://www.cvedetails.com/) 和 [Snyk Vulnerability Database](https://security.snyk.io/)。
 
-They provide APIs or raw data that you can download, and cross-reference the packages in our SBOM with the vulnerability information about.
-This way, we can find if any of our packages has vulnerabilities that we need to care about.
+它們提供 API 或可以下載的原始數據，並將我們 SBOM 中的套件與漏洞資訊進行交叉引用。
+這樣，我們可以發現我們的任何套件是否有我們需要關心的漏洞。
 
-Usually we can also find information about the library version in which this vulnerability has been introduced and whether it has been fixed in a newer version.
-Using this information, we can decide whether to update/downgrade our dependency to mitigate the vulnerability.
-As we already established in [Day 14](./day14.md), updating a dependency is not always trivial, because sometimes this update comes with behaviour or API changes.
+通常我們還可以找到有關引入此漏洞的庫版本的資訊，以及它是否在新版本中已修復。
+使用此資訊，我們可以決定是否更新/降級我們的依賴項以緩解漏洞。
+正如我們在 [Day 14](./day14.md) 中已經確定的那樣，更新依賴項並不總是簡單的，因為有時此更新會帶來行為或 API 更改。
 
-Another important piece of information about a vulnerability is its **CVSS Score**.
+關於漏洞的另一個重要資訊是它的 **CVSS 分數**。
 
 ## CVSS
 
-**CVSS** stands for **C**ommon **V**ulnerability **S**coring **S**ystem.
+**CVSS** 代表 **C**ommon **V**ulnerability **S**coring **S**ystem（通用漏洞評分系統）。
 
-It provides a way to capture the principal characteristics of a vulnerability and produce a numerical score reflecting its severity.
-The numerical score can then be translated into a qualitative representation (such as low, medium, high, and critical) to help organizations properly assess and prioritize their vulnerability management processes.
+它提供了一種捕獲漏洞主要特徵並產生反映其嚴重性的數值分數的方法。
+然後可以將數值分數轉換為定性表示（例如低、中、高和關鍵），以幫助組織正確評估和優先排序其漏洞管理流程。
 
-Basically, one vulnerability can be more severe than another.
-We need a system that can objectively rank vulnerabilities based on how easy they are to exploit and how much damage they can cause.
+基本上，一個漏洞可能比另一個漏洞更嚴重。
+我們需要一個系統，可以根據漏洞的利用難易程度和可能造成的損害程度客觀地對漏洞進行排名。
 
-This is where CVSS comes in.
+這就是 CVSS 的用武之地。
 
-CVSS v3 defines 8 criteria based on which the CVSS score is calculated.
-These criteria are:
+CVSS v3 定義了 8 個標準，基於這些標準計算 CVSS 分數。
+這些標準是：
 
-### Attack Vector
+### 攻擊向量
 
-Reflects the context by which vulnerability exploitation is possible.
+反映可以利用漏洞的上下文。
 
-Possible values: **Network(N)**, **Adjacent(A)**, **Local(L)**, **Physical(P)**
+可能的值：**Network(N)**、**Adjacent(A)**、**Local(L)**、**Physical(P)**
 
-### Attack Complexity
+### 攻擊複雜性
 
-Describes the conditions beyond the attacker's control that must exist in order to exploit the vulnerability.
+描述攻擊者控制之外必須存在的條件才能利用漏洞。
 
-Possible values: **Low(L)**, **High(H)**
+可能的值：**Low(L)**、**High(H)**
 
-### Priviledges Required
+### 所需權限
 
-Describes the level of privileges an attacker must possess before successfully exploiting the vulnerability.
+描述攻擊者在成功利用漏洞之前必須擁有的權限級別。
 
-Possible values: **None(N)**, **Low(L)**, **High(H)**
+可能的值：**None(N)**、**Low(L)**、**High(H)**
 
-### User Interaction
+### 用戶交互
 
-The requirement for a user, other than the attacker, to participate in the successful compromise of the vulnerable component.
+要求用戶（攻擊者除外）參與成功破壞易受攻擊的組件。
 
-Possible values: **None(N)**, **Required(R)**
+可能的值：**None(N)**、**Required(R)**
 
-### Scope
+### 範圍
 
-The ability for a vulnerability in one software component to impact resources beyond its means, or privileges.
+一個軟體組件中的漏洞影響超出其手段或權限的資源的能力。
 
-Possible values: **Unchanged(U)**, **Changed(C)**
+可能的值：**Unchanged(U)**、**Changed(C)**
 
-### Confidentiality
+### 機密性
 
-The impact to the confidentiality of the information resources managed by a software component due to a successfully exploited vulnerability.
+由於成功利用漏洞而對軟體組件管理的資訊資源的機密性的影響。
 
-Possible values: **None(N)**, **Low(L)**, **High(H)**
+可能的值：**None(N)**、**Low(L)**、**High(H)**
 
-### Integrity
+### 完整性
 
-The impact to integrity of a successfully exploited vulnerability.
+對成功利用漏洞的完整性的影響。
 
-Possible values: **None(N)**, **Low(L)**, **High(H)**
+可能的值：**None(N)**、**Low(L)**、**High(H)**
 
-### Availability
+### 可用性
 
-The impact to the availability of the impacted component resulting from a successfully exploited vulnerability.
+由於成功利用漏洞而對受影響組件的可用性造成的影響。
 
-Possible values: **None(N)**, **Low(L)**, **High(H)**
+可能的值：**None(N)**、**Low(L)**、**High(H)**
 
-The combination of these 8 vectors determines the CVSS score.
-It is between 0 and 10.
-0 being the lowest possible, and 10 being the highest (most critical).
+這 8 個向量的組合決定了 CVSS 分數。
+它在 0 到 10 之間。
+0 是最低可能的，10 是最高（最關鍵）。
 
-[Here](https://www.first.org/cvss/calculator/3.0) you can find a CVSS calculator, wher you can calculate the score of each vulnerability.
+[這裡](https://www.first.org/cvss/calculator/3.0) 您可以找到 CVSS 計算器，您可以在其中計算每個漏洞的分數。
 
-## Resources
+## 資源
 
 <https://www.nist.gov/itl/executive-order-improving-nations-cybersecurity>
 
 <https://www.aquasec.com/cloud-native-academy/supply-chain-security/sbom/>
 
 
-On [Day 16](day16.md) we will take a look into "Fuzzing" or Fuzz Testing. 
+在 [Day 16](day16.md) 中，我們將深入了解「Fuzzing」或模糊測試。

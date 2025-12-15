@@ -1,33 +1,33 @@
-# Day 12: Secure Coding Review
+# Day 12：安全代碼審查
 
-Secure code review is the process of examining and evaluating the security of a software application or system by reviewing the source code for potential vulnerabilities or weaknesses. This process is an essential part of ensuring that an application is secure and can withstand attacks from cyber criminals.
+安全代碼審查是通過審查源代碼以查找潛在漏洞或弱點來檢查和評估軟體應用程式或系統安全性的過程。這個過程是確保應用程式安全並能夠抵禦網路犯罪分子攻擊的重要組成部分。
 
-There are several steps involved in a secure code review process:
+安全代碼審查過程涉及幾個步驟：
 
-1. **Identify the scope of the review**: The first step is to identify the scope of the review, including the type of application being reviewed and the specific security concerns that need to be addressed.
-2. **Set up a review team**: A review team should be composed of individuals with expertise in different areas, such as security, coding, and testing. The team should also include individuals who are familiar with the application being reviewed.
-3. **Prepare the code for review**: Before the review can begin, the code needs to be prepared for review by organizing it in a way that makes it easier to understand and review. This may include breaking the code down into smaller chunks or adding comments to explain the purpose of specific sections.
-4. **Conduct the review**: During the review, the team will examine the code for vulnerabilities and weaknesses. This may include checking for insecure coding practices, such as hardcoded passwords or unencrypted data, or looking for vulnerabilities in the application’s architecture.
-5. **Document findings**: As the team identifies potential vulnerabilities or weaknesses, they should document their findings in a report. The report should include details about the vulnerability, the potential impact, and recommendations for how to fix the issue.
-6. **Remediate vulnerabilities**: Once the review is complete, the team should work with the development team to fix any vulnerabilities or weaknesses that were identified. This may involve updating the code, implementing additional security controls, or both.
+1. **確定審查範圍**：第一步是確定審查範圍，包括正在審查的應用程式類型和需要解決的特定安全問題。
+2. **組建審查團隊**：審查團隊應由在不同領域具有專業知識的個人組成，例如安全、編碼和測試。團隊還應包括熟悉正在審查的應用程式的個人。
+3. **準備代碼以供審查**：在審查開始之前，需要通過以更易於理解和審查的方式組織代碼來準備代碼以供審查。這可能包括將代碼分解為較小的塊或添加註釋來解釋特定部分的目的。
+4. **進行審查**：在審查期間，團隊將檢查代碼中的漏洞和弱點。這可能包括檢查不安全的編碼實踐，例如硬編碼密碼或未加密的數據，或查找應用程式架構中的漏洞。
+5. **記錄發現**：當團隊識別出潛在漏洞或弱點時，他們應在報告中記錄他們的發現。報告應包括有關漏洞的詳細資訊、潛在影響以及如何修復問題的建議。
+6. **修復漏洞**：審查完成後，團隊應與開發團隊合作修復已識別的任何漏洞或弱點。這可能涉及更新代碼、實施額外的安全控制，或兩者兼而有之。
 
-There are several tools and techniques that can be used to facilitate a secure code review. These may include:
+有幾種工具和技術可用於促進安全代碼審查。這些可能包括：
 
-1. **Static analysis tools**: These tools analyze the code without executing it, making them useful for identifying vulnerabilities such as buffer overflows, SQL injection, and cross-site scripting.
-2. **Dynamic analysis tools**: These tools analyze the code while it is being executed, allowing the review team to identify vulnerabilities that may not be detectable through static analysis alone.
-3. **Code review guidelines**: Many organizations have developed guidelines for conducting code reviews, which outline the types of vulnerabilities that should be looked for and the best practices for remediation.
-4. **Peer review**: Peer review is a process in which other developers review the code, providing a second set of eyes to identify potential vulnerabilities.
+1. **靜態分析工具**：這些工具在不執行代碼的情況下分析代碼，使它們對於識別緩衝區溢出、SQL 注入和跨站腳本等漏洞很有用。
+2. **動態分析工具**：這些工具在執行代碼時分析代碼，允許審查團隊識別僅通過靜態分析可能無法檢測到的漏洞。
+3. **代碼審查指南**：許多組織已經制定了進行代碼審查的指南，其中概述了應查找的漏洞類型以及修復的最佳實踐。
+4. **同行審查**：同行審查是其他開發人員審查代碼的過程，提供第二雙眼睛來識別潛在漏洞。
 
-Secure code review is an ongoing process that should be conducted at various stages throughout the development lifecycle. This includes reviewing code before it is deployed to production, as well as conducting periodic reviews to ensure that the application remains secure over time.
+安全代碼審查是一個持續的過程，應在開發生命週期的各個階段進行。這包括在代碼部署到生產環境之前審查代碼，以及進行定期審查以確保應用程式隨著時間的推移保持安全。
 
-Overall, secure code review is a critical component of ensuring that an application is secure. By identifying and addressing vulnerabilities early in the development process, organizations can reduce the risk of attacks and protect their systems and data from potential threats.
+總的來說，安全代碼審查是確保應用程式安全的重要組成部分。通過在開發過程早期識別和解決漏洞，組織可以降低攻擊風險並保護其系統和數據免受潛在威脅。
 
-I highly recommend watching this video to understand how source code analysis can lead to finding vulnerabilities in large enterprise codebases.
+我強烈建議觀看此影片，以了解源代碼分析如何導致在大型企業代碼庫中發現漏洞。
 
 [![Final video of fixing issues in your code in VS Code](https://img.youtube.com/vi/fb-t3WWHsMQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=fb-t3WWHsMQ)
-### Resources
+### 資源
 
 - [How to Analyze Code for Vulnerabilities](https://www.youtube.com/watch?v=A8CNysN-lOM&t)
 - [What Is A Secure Code Review And Its Process?](https://valuementor.com/blogs/source-code-review/what-is-a-secure-code-review-and-its-process/)
 
-In the next part [Day 13](day13.md), we will discuss Additional Secure Coding Practices with some more hands-on.
+在下一部分 [Day 13](day13.md) 中，我們將討論其他安全編碼實踐，並進行更多動手實作。

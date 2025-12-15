@@ -1,28 +1,28 @@
-# Container Image Scanning
+# 容器映像掃描
 
-A container image consists of an image manifest, a filesystem and an image configuration. [1](https://opencontainers.org/about/overview/)
+容器映像由映像清單、檔案系統和映像配置組成。[1](https://opencontainers.org/about/overview/)
 
-For example, the filesystem of a container image for a Java application will have a Linux filesystem, the JVM, and the JAR/WAR file that represents our application.
+例如，Java 應用程式的容器映像的檔案系統將具有 Linux 檔案系統、JVM 和代表我們應用程式的 JAR/WAR 檔案。
 
-If we are working with containers, an important part of our CI/CD pipeline should be the process of scanning these containers for known vulnerabilities.
-This can give us valuable information about the number of vulnerabilities we have inside our containers, and can help us prevent deploying vulnerable applications to our production environment, and being hacked because of these vulnerabilities.
+如果我們使用容器，CI/CD 管道的重要部分應該是掃描這些容器以查找已知漏洞的過程。
+這可以為我們提供有關容器內漏洞數量的寶貴資訊，並可以幫助我們防止將易受攻擊的應用程式部署到生產環境，並因這些漏洞而被駭客攻擊。
 
-Let's take for example the [Log4Shell](https://en.wikipedia.org/wiki/Log4Shell) vulnerability that was discovered in late 2021.
-Without going into too much detail, having this vulnerability in your application means that an attacker can execute arbitraty code on your servers.
-It was made worse by the fact that this vulnerability is inside one of the most popular Java libraries - [Log4j](https://logging.apache.org/log4j/2.x/).
-Pretty bad!
+讓我們以 2021 年底發現的 [Log4Shell](https://en.wikipedia.org/wiki/Log4Shell) 漏洞為例。
+不過多詳細說明，在您的應用程式中存在此漏洞意味著攻擊者可以在您的伺服器上執行任意代碼。
+更糟糕的是，此漏洞位於最受歡迎的 Java 庫之一 - [Log4j](https://logging.apache.org/log4j/2.x/) 中。
+非常糟糕！
 
-So how can we know if we are vulnerable?
+那麼我們如何知道我們是否易受攻擊？
 
-The answer is **Image Scanning**.
+答案是 **映像掃描**。
 
-The image scanning process consists of looking inside the container, getting the list of installed packages (that could be Linux packages, but also Java, Go, JavaScript packages, etc.), cross-referencing the package list against a database of known vulnerabilities for each package, and in the end producing a list of vulnerabilities for the given container image.
+映像掃描過程包括查看容器內部，獲取已安裝套件列表（可能是 Linux 套件，但也可能是 Java、Go、JavaScript 套件等），將套件列表與每個套件的已知漏洞數據庫進行交叉引用，最後為給定的容器映像生成漏洞列表。
 
-There are many open-source and proprietary image scanners, that you can install and start scanning your container images right away, either locally of your machine or in your CI/CD pipeline.
-Two of the most popular ones are [Trivy](https://github.com/aquasecurity/trivy) and [Grype](https://github.com/anchore/grype).
-Some proprietary ones are [Snyk](https://docs.snyk.io/products/snyk-container/snyk-cli-for-container-security) (requires an account, has a free tier) and [VMware Carbon Black](https://carbonblack.vmware.com/resource/carbon-black-cloud-container-security-faq#overview) (requires an account, no free tier).
+有許多開源和專有的映像掃描器，您可以安裝並立即開始掃描您的容器映像，無論是在本地機器上還是在 CI/CD 管道中。
+兩個最受歡迎的是 [Trivy](https://github.com/aquasecurity/trivy) 和 [Grype](https://github.com/anchore/grype)。
+一些專有的是 [Snyk](https://docs.snyk.io/products/snyk-container/snyk-cli-for-container-security)（需要帳戶，有免費層）和 [VMware Carbon Black](https://carbonblack.vmware.com/resource/carbon-black-cloud-container-security-faq#overview)（需要帳戶，無免費層）。
 
-Scanning a container image is as simple as installing one of these and running:
+掃描容器映像就像安裝其中一個並運行一樣簡單：
 
 ```console
 $ grype ubuntu:latest
@@ -51,22 +51,22 @@ passwd        1:4.8.1-2ubuntu2                    deb   CVE-2013-4235   Low
 zlib1g        1:1.2.11.dfsg-2ubuntu9.2            deb   CVE-2022-42800  Medium
 ```
 
-With this command we scanned the `ubuntu:latest` container image and found that it has 16 vulnerabilities.
+使用此命令，我們掃描了 `ubuntu:latest` 容器映像，發現它有 16 個漏洞。
 
-Each vulnerability has a severity, based on its [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) score.
-Severities vary from `Low` to `Critical`.
+每個漏洞都有一個嚴重性，基於其 [CVSS](https://nvd.nist.gov/vuln-metrics/cvss) 分數。
+嚴重性從 `Low` 到 `Critical` 不等。
 
-16 vulnerabilities may seem a lot, but notice that none of them has a `Critical` severity.
+16 個漏洞可能看起來很多，但請注意，它們中沒有一個具有 `Critical` 嚴重性。
 
-We also see that the `FIXED-IN` column of the results table is empty.
-This means that none of the vulnerabilities is fixed in newer versions of its package.
+我們還看到結果表的 `FIXED-IN` 列是空的。
+這意味著這些漏洞中沒有一個在其套件的新版本中得到修復。
 
-This is expected, because `ubuntu:latest` is the latest version of the official container image for Ubuntu.
-Usually these images are updated regularly, so you should not expect to see many vulnerabilities in them (atleast not ones with available fixes).
+這是預期的，因為 `ubuntu:latest` 是 Ubuntu 官方容器映像的最新版本。
+通常這些映像會定期更新，因此您不應該期望在其中看到許多漏洞（至少不是有可用修復的漏洞）。
 
-This might not be case with older images, random images, not backed by big companies or your own images if you are not taking care of them.
+對於較舊的映像、隨機映像、不受大公司支持的映像或您自己沒有維護的映像，情況可能並非如此。
 
-For example, if we scan some random image 2 year old image from the `springio` organization on Docker Hub we see that there are a lot more vulnerabilities lurking:
+例如，如果我們掃描 Docker Hub 上 `springio` 組織的某個 2 年前的隨機映像，我們會看到潛伏著更多的漏洞：
 
 ```console
 $ grype springio/petclinic:latest
@@ -136,7 +136,7 @@ libc6             2.27-3ubuntu1.4           2.27-3ubuntu1.5            deb      
 libc6             2.27-3ubuntu1.4           2.27-3ubuntu1.5            deb           CVE-2019-25013       Low
 libcom-err2       1.44.1-1ubuntu1.3         1.44.1-1ubuntu1.4          deb           CVE-2022-1304        Medium
 libext2fs2        1.44.1-1ubuntu1.3         1.44.1-1ubuntu1.4          deb           CVE-2022-1304        Medium
-libgcc1           1:8.4.0-1ubuntu1~18.04                               deb           CVE-2020-13844       Medium
+libgcc1           1:8.4.0-1ubuntu1~18.04                                 deb           CVE-2020-13844       Medium
 libgcrypt20       1.8.1-4ubuntu1.2          1.8.1-4ubuntu1.3           deb           CVE-2021-40528       Medium
 libgcrypt20       1.8.1-4ubuntu1.2          1.8.1-4ubuntu1.3           deb           CVE-2021-33560       Low
 libgmp10          2:6.1.2+dfsg-2            2:6.1.2+dfsg-2ubuntu0.1    deb           CVE-2021-43618       Low
@@ -242,38 +242,38 @@ zlib1g            1:1.2.11.dfsg-0ubuntu2    1:1.2.11.dfsg-0ubuntu2.1   deb      
 zlib1g            1:1.2.11.dfsg-0ubuntu2                               deb           CVE-2022-42800       Medium
 ```
 
-Here we not only see a lot more `Critical` vulnerabilities, but we also see that a lot of them are fixed in newer version of the dependency they are coming from.
-That means that a simple version bump of the given dependency will remove the vulnerability and make our image safer.
+在這裡，我們不僅看到更多的 `Critical` 漏洞，而且還看到其中許多在它們所來自的依賴項的新版本中得到了修復。
+這意味著簡單地提升給定依賴項的版本將消除漏洞並使我們的映像更安全。
 
-Of course, that is not always so simple.
-Sometimes, a new version of a dependency may include breaking API changes that require change in your source code, it may include a behaviour change that leads to bugs in the way we interact with the dependency, or it might introduce bugs that we want to avoid until fixed.
+當然，這並不總是那麼簡單。
+有時，依賴項的新版本可能包含需要更改源代碼的破壞性 API 更改，它可能包含導致我們與依賴項交互方式中的錯誤的行為更改，或者它可能引入我們想要避免的錯誤，直到修復。
 
-Another thing worth mentioning is that this type of scanning only detects _known_ vulnerabilities.
-That is, vulnerabilities that have been found by security researchers and that have assigned CVEs.
-There might be still vulnerabilities that are not known and are just lurking in your code/dependencies (Log4Shell has been in the wild since 2013, only found in 2021).
+另一件值得提及的事情是，這種類型的掃描只能檢測 _已知_ 漏洞。
+也就是說，由安全研究人員發現並已分配 CVE 的漏洞。
+可能仍然存在未知的漏洞，只是潛伏在您的代碼/依賴項中（Log4Shell 自 2013 年以來一直存在，直到 2021 年才被發現）。
 
-In summary, image scanning is not a silver bullet.
-If an image scanner tells you that you have 0 vulnerabilities in your image, that does not mean that you are 100% secure.
+總之，映像掃描不是萬能的。
+如果映像掃描器告訴您映像中有 0 個漏洞，這並不意味著您是 100% 安全的。
 
-Also, mitigating vulnerabilities can be as simple as bumping a version of a dependency (or downgrading one), but sometimes it can be more tricky because that version bump might require a change in your code.
+此外，緩解漏洞可能就像提升依賴項的版本（或降級一個）一樣簡單，但有時可能會更棘手，因為該版本提升可能需要更改您的代碼。
 
-## CVEs
+## CVE
 
-In the vulnerability table provided by our scanner we see something that starts with `CVE-`:
+在掃描器提供的漏洞表中，我們看到以 `CVE-` 開頭的內容：
 
 ```text
 bash  4.4.18-2ubuntu1.2  deb  CVE-2022-3715  Medium
 ```
 
-[**CVE**](https://cve.mitre.org/) stands for **C**ommon **V**ulnerability and **E**xposures.
+[**CVE**](https://cve.mitre.org/) 代表 **C**ommon **V**ulnerability and **E**xposures。
 
-It is a system that allows us to track vulnerabilities and be able to easily search for them.
+這是一個允許我們跟踪漏洞並能夠輕鬆搜索它們的系統。
 
-Each time a new vulnerability is found, it is assigned a CVE by the [CNA](https://www.cve.org/ProgramOrganization/CNAs) (CVE Numbering Authority) and associated with all components that contain that vulnerability.
+每次發現新漏洞時，它都會由 [CNA](https://www.cve.org/ProgramOrganization/CNAs)（CVE 編號機構）分配一個 CVE，並與包含該漏洞的所有組件相關聯。
 
-Once this is done, this information is propagated to the vulnerabilities databases and can be leveraged by image scanners to warn about CVEs/vulnerabilities that are present in our container.
+完成此操作後，此資訊會傳播到漏洞數據庫，並可由映像掃描器利用來警告我們容器中存在的 CVE/漏洞。
 
-## Summary
+## 總結
 
-Now we know why image scanning is important and how it can help us be more secure.
-In [Day 15](day15.md) we are going to  dive deeper into the way the image scanners work under the hood, looking into things like SBOMs and vulnerability databases.
+現在我們知道為什麼映像掃描很重要以及它如何幫助我們更安全。
+在 [Day 15](day15.md) 中，我們將更深入地了解映像掃描器的工作原理，查看 SBOM 和漏洞數據庫等內容。

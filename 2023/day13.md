@@ -1,16 +1,16 @@
-# Day 13: Additional Secure Coding Practices
+# Day 13：其他安全編碼實踐
 
-## Git Secret Scan
+## Git Secret 掃描
 
-Scanning repositories for secrets refers to the process of searching through a code repository, such as on GitHub or GitLab, for sensitive information that may have been inadvertently committed and pushed to the repository. This can include sensitive data such as passwords, API keys, and private encryption keys. 
+掃描儲存庫以查找密鑰是指搜索代碼儲存庫（例如 GitHub 或 GitLab）中可能無意中提交並推送到儲存庫的敏感資訊的過程。這可能包括敏感數據，例如密碼、API 密鑰和私有加密密鑰。
 
-The process is usually done using automated tools that scan the code for specific patterns or keywords that indicate the presence of sensitive information. The goal of this process is to identify and remove any secrets that may have been exposed in the repository, in order to protect against potential breaches or unauthorized access.
+該過程通常使用自動化工具完成，這些工具掃描代碼以查找指示存在敏感資訊的特定模式或關鍵字。此過程的目標是識別並刪除儲存庫中可能已暴露的任何密鑰，以保護免受潛在的違規或未授權訪問。
 
-### Git Secret Scan with Gitleaks
+### 使用 Gitleaks 進行 Git Secret 掃描
 
-Gitleaks is a tool that can be added to your GitHub repository as a GitHub Action, which scans your codebase for sensitive information such as credentials, tokens, and other secrets. The action runs the gitleaks tool on your codebase, which checks for any sensitive information that may have been accidentally committed to your repository.
+Gitleaks 是一個可以作為 GitHub Action 添加到您的 GitHub 儲存庫的工具，它掃描您的代碼庫以查找敏感資訊，例如憑證、令牌和其他密鑰。該操作在您的代碼庫上運行 gitleaks 工具，檢查可能意外提交到您的儲存庫的任何敏感資訊。
 
-To set up Gitleaks GitHub Action, you need to create a new workflow file in your repository's `.github/workflows/git-secret-scan.yml` directory. The workflow file should contain the following:
+要設置 Gitleaks GitHub Action，您需要在儲存庫的 `.github/workflows/git-secret-scan.yml` 目錄中創建一個新的工作流程檔案。工作流程檔案應包含以下內容：
 
 ```yaml
 name: gitleaks
@@ -31,34 +31,34 @@ jobs:
 ```
 
 
-This workflow does the following:
+此工作流程執行以下操作：
 
-1. Defines a workflow called `Dependency-Check` that runs on every push to the `main` branch.
-2. Specifies that the workflow should run on the `ubuntu-latest` runner.
-3. Runs gitleaks scan for the entire repository
-4. This action will fail if it detects any secret.
+1. 定義一個名為 `Dependency-Check` 的工作流程，在每次推送到 `main` 分支時運行。
+2. 指定工作流程應在 `ubuntu-latest` 運行器上運行。
+3. 為整個儲存庫運行 gitleaks 掃描
+4. 如果檢測到任何密鑰，此操作將失敗。
 
-In my demo, I have added AWS Keys in .env file and because of that the pipeline faild.
+在我的演示中，我在 .env 檔案中添加了 AWS 密鑰，因此管道失敗了。
 
 ![](images/day13-1.png)
 
-Other Git Scanner tools
+其他 Git 掃描工具
 
 - [**AWS git-secrets**](https://github.com/awslabs/git-secrets)
 - **[GitGuardian ggshield](https://github.com/GitGuardian/ggshield)**
 - **[TruffleHog](https://github.com/trufflesecurity/trufflehog)**
 
-### Resources
+### 資源
 - [Gitleaks GitHub](https://github.com/zricethezav/gitleaks)
 - [Gitleaks GitHub Action](https://github.com/gitleaks/gitleaks-action)
-## Create better Dockerfile with Hadolint
+## 使用 Hadolint 創建更好的 Dockerfile
 
-Hadolint is a linter for Dockerfiles that checks for common mistakes and provides suggestions for improvement. It can be used directly from the command line, integrated into a CI/CD pipeline, or integrated into code editors and IDEs for real-time linting.
+Hadolint 是一個用於 Dockerfile 的 linter，它檢查常見錯誤並提供改進建議。它可以直接從命令行使用，整合到 CI/CD 管道中，或整合到代碼編輯器和 IDE 中以進行實時 linting。
 
-To set up linting with hadolint in Github Actions, you can use the following steps:
+要在 Github Actions 中使用 hadolint 設置 linting，您可以按照以下步驟操作：
 
-1. Create a new workflow file in your repository, for example `.github/workflows/dockerfile-lint.yml`
-2. In this file, add the following code to set up the Github Actions workflow:
+1. 在您的儲存庫中創建一個新的工作流程檔案，例如 `.github/workflows/dockerfile-lint.yml`
+2. 在此檔案中，添加以下代碼以設置 Github Actions 工作流程：
 
 ```yaml
 name: Lint Dockerfile
@@ -76,14 +76,14 @@ jobs:
           dockerfile: Dockerfile
 ```
 
-1. This workflow will run on every push to the "main" branch, and will run the hadolint command on the "Dockerfile" file.
-2. Commit the new workflow file and push it to your repository.
-3. Next time you push changes to the "main" branch, Github Actions will run the linting job and provide feedback if any issues are found with your Dockerfile.
+1. 此工作流程將在每次推送到「main」分支時運行，並將在「Dockerfile」檔案上運行 hadolint 命令。
+2. 提交新的工作流程檔案並將其推送到您的儲存庫。
+3. 下次您將更改推送到「main」分支時，Github Actions 將運行 linting 作業，如果發現您的 Dockerfile 有任何問題，將提供反饋。
 
-### Resources
+### 資源
 
 - [Hadolint GitHub](https://github.com/hadolint/hadolint)
 - [Hadolint Online](https://hadolint.github.io/hadolint/)
 - [Top 20 Dockerfile best practices](https://sysdig.com/blog/dockerfile-best-practices/)
 
-Next up we will be starting our **Continuous Build, Integration, Testing** with [Day 14](day14.md) covering Container Image Scanning from [Anton Sankov](https://twitter.com/a_sankov). 
+接下來，我們將開始我們的 **持續構建、整合、測試**，從 [Day 14](day14.md) 開始，涵蓋來自 [Anton Sankov](https://twitter.com/a_sankov) 的容器映像掃描。

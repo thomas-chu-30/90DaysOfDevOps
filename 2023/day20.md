@@ -1,107 +1,107 @@
-# IAST and DAST in conjunction - lab time
+# IAST 和 DAST 結合使用 - 實驗時間
 
-After learning what IAST and DAST are it's time to get our hands dirty and perform an exercise in which we use these processes to find vulnerabilities in real applications.
+在學習了 IAST 和 DAST 是什麼之後，是時候動手實踐並執行一個練習，在這個練習中我們使用這些過程在真實應用程式中查找漏洞。
 
-**NOTE:** There are no open-source IAST implementations, so we will have to use a commerical solution.
-Don't worry, there is a free-tier, so you will be able to follow the lab without paying anything.
+**注意：** 沒有開源 IAST 實現，因此我們必須使用商業解決方案。
+別擔心，有一個免費層，因此您可以在不支付任何費用的情況下跟隨實驗。
 
-This lab is based on this [repo](https://github.com/rstatsinger/contrast-java-webgoat-docker).
+本實驗基於此 [儲存庫](https://github.com/rstatsinger/contrast-java-webgoat-docker)。
 
-It contains a vulnerable Java application to be tested and exploited, Docker and Docker Compose for easy setup and [Contrast Community Edition](https://www.contrastsecurity.com/contrast-community-edition?utm_campaign=ContrastCommunityEdition&utm_source=GitHub&utm_medium=WebGoatLab) for IAST solution.
+它包含一個易受攻擊的 Java 應用程式以供測試和利用，Docker 和 Docker Compose 用於輕鬆設置，以及 [Contrast Community Edition](https://www.contrastsecurity.com/contrast-community-edition?utm_campaign=ContrastCommunityEdition&utm_source=GitHub&utm_medium=WebGoatLab) 用於 IAST 解決方案。
 
-## Prerequisites
+## 先決條件
 
 - [Docker](https://www.docker.com/products/docker-desktop/)
 - [Docker Compose](https://docs.docker.com/compose/)
-- Contrast CE account. Sign up for free [here](https://www.contrastsecurity.com/contrast-community-edition?utm_campaign=ContrastCommunityEdition&utm_source=GitHub&utm_medium=WebGoatLab).
+- Contrast CE 帳戶。在此處免費註冊 [here](https://www.contrastsecurity.com/contrast-community-edition?utm_campaign=ContrastCommunityEdition&utm_source=GitHub&utm_medium=WebGoatLab)。
 
-**NOTE:** The authors of this article and of the 90 Days of DevOps program are in way associated or affilited with Contrast Security.
-We are using this commercial solution, because there is not an open-source one, and because this one has a free-tier that does not require paying or providing a credit card.
+**注意：** 本文的作者和 90 Days of DevOps 計劃的作者與 Contrast Security 沒有任何關聯或隸屬關係。
+我們使用此商業解決方案，因為沒有開源解決方案，並且因為這個有一個不需要支付或提供信用卡的免費層。
 
-1. As there are no open-source IAST implementation will use a commercial one with some free licenses. For this purpose, you will need 2 componenets:
-   IAST solution from here - <https://github.com/rstatsinger/contrast-java-webgoat-docker>. You need docker and docker-compose installed in mac or linux enviroment (this lab is tested on Mint). Please follow the README to create account in Contrast.
+1. 由於沒有開源 IAST 實現，我們將使用一個具有一些免費許可證的商業實現。為此，您需要 2 個組件：
+   來自這裡的 IAST 解決方案 - <https://github.com/rstatsinger/contrast-java-webgoat-docker>。您需要在 mac 或 linux 環境中安裝 docker 和 docker-compose（本實驗在 Mint 上進行測試）。請按照 README 在 Contrast 中創建帳戶。
 
-## Getting started
+## 開始使用
 
-To start, clone the [repository](https://github.com/rstatsinger/contrast-java-webgoat-docker).
+首先，克隆 [儲存庫](https://github.com/rstatsinger/contrast-java-webgoat-docker)。
 
-Get your credentials from Contrast Security.
-Click on your name in the top-right corner -> `Organization Settings` -> `Agent`.
-Get the values for `Agent Username`, `Agent Service Key` and `API Key`.
+從 Contrast Security 獲取您的憑證。
+點擊右上角您的姓名 -> `Organization Settings` -> `Agent`。
+獲取 `Agent Username`、`Agent Service Key` 和 `API Key` 的值。
 
-Replace these values in the `.env.template` file in the newly cloned repository.
+在新克隆的儲存庫中的 `.env.template` 檔案中替換這些值。
 
-**NOTE:** These values are secret.
-Do not commit them to Git.
-It's best to put the `.env.template` under `.gitignore` so that you don't commit these values by mistake.
+**注意：** 這些值是機密的。
+不要將它們提交到 Git。
+最好將 `.env.template` 放在 `.gitignore` 下，這樣您就不會意外提交這些值。
 
-## Running the vulnerable application
+## 運行易受攻擊的應用程式
 
-To run the vulnerable application, run:
+要運行易受攻擊的應用程式，請運行：
 
 ```sh
 ./run.sh
 ```
 
-or
+或
 
 ```sh
 docker compose up
 ```
 
-Once ready, the application UI will be accessible on <http://localhost:8080/WebGoat>.
+準備就緒後，應用程式 UI 將在 <http://localhost:8080/WebGoat> 上可訪問。
 
-## Do some damage
+## 造成一些損害
 
-Now that we have a vulnerable application let's try to exploit it.
+現在我們有了一個易受攻擊的應用程式，讓我們嘗試利用它。
 
-1. Install ZAP Proxy from [here](https://www.zaproxy.org/download/)
+1. 從 [這裡](https://www.zaproxy.org/download/) 安裝 ZAP Proxy
 
-   An easy way to do that is via a DAST scanner.
-   One such scanner is [ZAP Proxy](https://www.zaproxy.org/).
-   It is a free and open-source web app scanner.
+   一種簡單的方法是通過 DAST 掃描器。
+   其中一個掃描器是 [ZAP Proxy](https://www.zaproxy.org/)。
+   它是一個免費的開源 Web 應用程式掃描器。
 
-2. Install `zap-cli` from [here](https://github.com/Grunny/zap-cli)
+2. 從 [這裡](https://github.com/Grunny/zap-cli) 安裝 `zap-cli`
 
-   Next, install `zap-cli`.
-   `zap-cli` is an open-source CLI for ZAP Proxy.
+   接下來，安裝 `zap-cli`。
+   `zap-cli` 是 ZAP Proxy 的開源 CLI。
 
-3. Run ZAP proxy
+3. 運行 ZAP proxy
 
-   Run ZAP Proxy from its installed location.
-   In Linux Mint it is by default in `/opt/zaproxy`.
-   In MacOS it is in `Applications`.
+   從其安裝位置運行 ZAP Proxy。
+   在 Linux Mint 中，默認情況下它在 `/opt/zaproxy`。
+   在 MacOS 中，它在 `Applications` 中。
 
-4. Set env variables for `ZAP_API_KEY` and `ZAP_PORT`
+4. 為 `ZAP_API_KEY` 和 `ZAP_PORT` 設置環境變數
 
-   Get these values from ZAP Proxy.
-   Go to `Options...` -> `API` to get the API Key.
+   從 ZAP Proxy 獲取這些值。
+   轉到 `Options...` -> `API` 以獲取 API 密鑰。
 
-   Go to `Options...` -> `Network` -> `Local Servers/Proxies` to configure and obtain the port.
+   轉到 `Options...` -> `Network` -> `Local Servers/Proxies` 以配置並獲取端口。
 
-5. Run several commands with `zap-cli`
+5. 使用 `zap-cli` 運行幾個命令
 
-   For example:
+   例如：
 
    ```sh
    zap-cli quick-scan -s all --ajax-spider -r http://127.0.0.1:8080/WebGoat/login.mvc
    ```
 
-   Alternatively, you can follow the instructions in the [repo](https://github.com/rstatsinger/contrast-java-webgoat-docker/blob/master/Lab-WebGoat.pdf)
-   to cause some damage to the vulnerable application.
+   或者，您可以按照 [儲存庫](https://github.com/rstatsinger/contrast-java-webgoat-docker/blob/master/Lab-WebGoat.pdf) 中的說明
+   對易受攻擊的應用程式造成一些損害。
 
-6. Observe findings in Constrast
+6. 在 Constrast 中觀察發現
 
-   Either way, if you go to the **Vulnerabilities** tab for your application in Contrast you should be able to see that Contrast detected the vulnerabilities
-   and is warning you to take some action.
+   無論哪種方式，如果您轉到 Contrast 中應用程式的 **Vulnerabilities** 標籤，您應該能夠看到 Contrast 檢測到了漏洞
+   並警告您採取一些行動。
 
-## Bonus: Image Scanning
+## 獎勵：映像掃描
 
-We saw how an IAST solution helped us detect attacks by observing the behaviour of the application.
-Let's see whether we could have done something to prevent these attacks in the first place.
+我們看到 IAST 解決方案如何通過觀察應用程式的行為幫助我們檢測攻擊。
+讓我們看看我們是否可以在第一時間做一些事情來防止這些攻擊。
 
-The vulnerable application we used for this demo was packages as a container.
-Let's scan this container via the `grype` scanner we learned about in Days [14](day14.md) and [15](day15.md) and see the results.
+我們用於此演示的易受攻擊的應用程式被打包為容器。
+讓我們通過我們在 [Day 14](day14.md) 和 [Day 15](day15.md) 中學習的 `grype` 掃描器掃描此容器，看看結果。
 
 ```sh
 $ grype contrast-java-webgoat-docker-webgoat
@@ -138,18 +138,18 @@ curl                 7.64.0-4+deb10u3                                deb        
 <truncated>
 ```
 
-As we can see this image is full with vulnerabilities.
+正如我們所看到的，此映像充滿了漏洞。
 
-If we dive into each one we will see we have vulnerabilities like RCE (Remote Code Execution), SQL Injection, XML External Entity Vulnerability, etc.
+如果我們深入研究每一個，我們會看到我們有像 RCE（遠程代碼執行）、SQL 注入、XML 外部實體漏洞等漏洞。
 
-## Week Summary
+## 週總結
 
-IAST and DAST are important methods that can help us find vulnerabilities in our application via monitoring its behaviour.
-This is done once the application is already deployed.
+IAST 和 DAST 是重要的方法，可以幫助我們通過監控應用程式的行為在應用程式中查找漏洞。
+這是在應用程式已經部署後完成的。
 
-Container Image Scanning can help us find vulnerabilities in our application based on the library that are present inside the container.
+容器映像掃描可以幫助我們根據容器內存在的庫在應用程式中查找漏洞。
 
-Image Scanning and IAST/DAST are not mutually-exclusive.
-They both have their place in a Secure SDLC and can help us find different problems before the attackers do.
+映像掃描和 IAST/DAST 不是相互排斥的。
+它們在安全 SDLC 中都有自己的位置，可以幫助我們在攻擊者之前發現不同的問題。
 
-See you on [Day 21](day21.md).
+在 [Day 21](day21.md) 見。

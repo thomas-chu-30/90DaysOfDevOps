@@ -1,11 +1,11 @@
-# Fuzzing
+# 模糊測試
 
-Fuzzing, also known as "fuzz testing," is a software testing technique that involves providing invalid, unexpected, or random data as input to a computer program.
-The goal of fuzzing is to identify security vulnerabilities and other bugs in the program by causing it to crash or exhibit unintended behaviour.
+模糊測試，也稱為「模糊測試」，是一種軟體測試技術，涉及向電腦程式提供無效、意外或隨機數據作為輸入。
+模糊測試的目標是通過導致程式崩潰或表現出意外行為來識別程式中的安全漏洞和其他錯誤。
 
-Fuzzing can be performed manually or by using a testing library/framework to craft the inputs for us.
+模糊測試可以手動執行，也可以使用測試庫/框架為我們製作輸入。
 
-To better understand fuzzing let's go with an example, imagine this code:
+為了更好地理解模糊測試，讓我們舉一個例子，想像這段代碼：
 
 ```go
 func DontPanic(s string) {
@@ -23,40 +23,40 @@ func DontPanic(s string) {
 }
 ```
 
-This is a Go function that accepts a `string` as the one and only argument.
+這是一個 Go 函數，接受一個 `string` 作為唯一參數。
 
-Looking at the functions it looks like the function will `panic` (e.g. crash) in only one condition - if the provided input is the word `fuzz`.
+查看函數，看起來函數只會在一種情況下 `panic`（例如崩潰）- 如果提供的輸入是單詞 `fuzz`。
 
-Obviously, this function is really simple and by just looking at it we can see its behaviour.
-However, in more complex systems such fail points may not be obvious, and may be missed by the person testing it/writing the unit test cases.
+顯然，這個函數非常簡單，通過查看它我們可以看到它的行為。
+然而，在更複雜的系統中，這樣的失敗點可能並不明顯，並且可能被測試它/編寫單元測試用例的人遺漏。
 
-This is where fuzzing comes in handy.
+這就是模糊測試派上用場的地方。
 
-The Go Fuzzing library (part of the standard language library since Go 1.18) generates many inputs for a test case, and then based on the coverage and the results determine which inputs are "interesting".
+Go 模糊測試庫（自 Go 1.18 以來是標準語言庫的一部分）為測試用例生成許多輸入，然後根據覆蓋率和結果確定哪些輸入是「有趣的」。
 
-If we write a fuzz test for this function what will happen is:
+如果我們為這個函數編寫模糊測試，將會發生什麼：
 
-1. The fuzzing library will start providing random strings starting from smaller strings and increasing their size.
-2. Once the library provides a string of length 4 it will notice a change in the test-coverage (`if (len(s) == 4)` is now `true`) and will continue to generate inputs with this length.
-3. Once the library provides a string of length 4 that starts with `f` it will notice another change in the test-coverage (`if s[0] == "f"` is now `true`) and will continue to generate inputs that start with `f`.
-4. The same thing will repeat for `u` and the double `z`.
-5. Once it provides `fuzz` as input the function will panic and the test will fail.
-6. We have _fuzzed_ successfully!
+1. 模糊測試庫將開始提供隨機字串，從較小的字串開始並增加它們的大小。
+2. 一旦庫提供長度為 4 的字串，它會注意到測試覆蓋率的變化（`if (len(s) == 4)` 現在是 `true`），並將繼續生成此長度的輸入。
+3. 一旦庫提供長度為 4 且以 `f` 開頭的字串，它會注意到測試覆蓋率的另一個變化（`if s[0] == "f"` 現在是 `true`），並將繼續生成以 `f` 開頭的輸入。
+4. 對於 `u` 和雙 `z` 會重複相同的事情。
+5. 一旦它提供 `fuzz` 作為輸入，函數就會 panic，測試將失敗。
+6. 我們已經成功 _模糊測試_ 了！
 
-Another good practice for fuzzing is to save the inputs that made the code crash and run them every time to make sure that the original error we caught via fuzzing will never be introduced into our code again.
+模糊測試的另一個最佳實踐是保存使代碼崩潰的輸入，並每次都運行它們，以確保我們通過模糊測試捕獲的原始錯誤永遠不會再次引入我們的代碼。
 
-This could again be a feature of the fuzzing framework.
+這也可能是模糊測試框架的一個功能。
 
-Most fuzzing libraries allow us to add specific values we want to test with.
-This also helps the libraries because it shows them values we already know are "interesting" so they can model the generated values on them.
+大多數模糊測試庫允許我們添加我們想要測試的特定值。
+這也有助於庫，因為它向它們顯示我們已經知道是「有趣的」值，因此它們可以根據這些值對生成的值進行建模。
 
-## When fuzzing is not enough
+## 當模糊測試不夠時
 
-Fuzzing is a useful technique, but there are situations in which it might not be helpful.
+模糊測試是一種有用的技術，但在某些情況下它可能沒有幫助。
 
-For example, if the input that fails our code is too specific and there are no clues to help, the fuzzing library might not be able to guess it.
+例如，如果使我們的代碼失敗的輸入過於具體並且沒有線索可以幫助，模糊測試庫可能無法猜測它。
 
-If we change the example code from the previous paragraph to something like this:
+如果我們將上一段中的示例代碼更改為如下內容：
 
 ```go
 func DontPanic(s input) {
@@ -66,7 +66,7 @@ func DontPanic(s input) {
 }
 ```
 
-or just:
+或者只是：
 
 ```go
 func DontPanic(s input) {
@@ -76,21 +76,21 @@ func DontPanic(s input) {
 }
 ```
 
-then fuzzing won't help us, because there's a small chance it will generate the exact string `fuzz` without having any clues,
-and none of the inputs that triggered a code-coverage change in the previous case (string of size 4, string of size 4 starting with `z`, etc.) will trigger a code-coverage now (because we only have one `if` check, compared to 5 in the previous example).
+那麼模糊測試不會幫助我們，因為它生成確切字串 `fuzz` 的機會很小，沒有任何線索，
+並且在上一種情況下觸發代碼覆蓋率變化的輸入（大小為 4 的字串、以 `z` 開頭的大小為 4 的字串等）都不會觸發代碼覆蓋率（因為我們只有一個 `if` 檢查，而上一示例中有 5 個）。
 
-So it's important to understand that while fuzzing is a good way to detect anomalies and corner-cases in your code it is not a silver-bullet for 100% correct code.
+因此，重要的是要理解，雖然模糊測試是檢測代碼中異常和邊緣情況的好方法，但它不是 100% 正確代碼的萬能藥。
 
-## Practical example
+## 實際示例
 
-If you want to get your hands dirty with fuzzing in Go check out [my repo with examples on the topic](https://github.com/asankov/go-fuzzing-101/tree/v1).
+如果您想親自動手進行 Go 中的模糊測試，請查看 [我在該主題上的示例儲存庫](https://github.com/asankov/go-fuzzing-101/tree/v1)。
 
-It contains the example I used in this article + a fuzz test that triggers a failure, and instructions on how to run the test yourself.
+它包含我在本文中使用的示例 + 觸發失敗的模糊測試，以及如何自己運行測試的說明。
 
-## Resources
+## 資源
 
 - <https://en.wikipedia.org/wiki/Fuzzing>
 - [Fuzzing in Go by Valentin Deleplace, Devoxx Belgium 2022](https://www.youtube.com/watch?v=Zlf3s4EjnFU)
 - [Write applications faster and securely with Go by Cody Oss, Go Day 2022](https://www.youtube.com/watch?v=aw7lFSFGKZs)
 
-See you on [Day 17](day17.md).
+在 [Day 17](day17.md) 見。
