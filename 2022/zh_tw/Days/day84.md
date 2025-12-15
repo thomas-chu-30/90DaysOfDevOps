@@ -1,67 +1,66 @@
 ---
-title: '#90DaysOfDevOps - The Big Picture: Data Management - Day 84'
+title: '#90DaysOfDevOps - 概述：數據管理 - 第 84 天'
 published: false
-description: 90DaysOfDevOps - The Big Picture Data Management
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - 概述數據管理
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048747
 ---
-## The Big Picture: Data Management
+
+## 概述：數據管理
 
 ![](Images/Day84_Data1.png)
 
-Data Management is by no means a new wall to climb, although we do know that data is more important than it maybe was a few years ago. Valuable and ever changing it can also be a massive nightmare when we are talking about automation and continuously integrate, test and deploy frequent software releases. Enter the persistent data and underlying data services often the main culprit when things go wrong. 
+數據管理絕不是一個新的牆要爬，儘管我們確實知道數據比幾年前可能更重要。有價值且不斷變化，當我們談論自動化和持續整合、測試和部署頻繁的軟體發布時，它也可能是一個巨大的噩夢。輸入持久數據和底層數據服務通常是出錯時的主要罪魁禍首。
 
-But before I get into the Cloud-Native Data Management, we need to go up a level. We have touched on many different platforms throughout this challenge. Be it Physical, Virtual, Cloud and Cloud-Native obviously including Kubernetes there is none of these platforms that provide the lack of requirement for data management. 
+但在我進入雲原生數據管理之前，我們需要提升一個級別。我們在整個挑戰中觸及了許多不同的平台。無論是物理、虛擬、雲還是雲原生，顯然包括 Kubernetes，這些平台都沒有提供缺乏數據管理要求。
 
-Whatever our business it is more than likely you will find a database lurking in the environment somewhere, be it for the most mission critical system in the business or at least some cog in the chain is storing that persistent data on some level of system. 
+無論我們的業務是什麼，你很可能會在某個環境中找到一個資料庫，無論是業務中最關鍵的系統，還是至少鏈中的某個齒輪在某個級別的系統上存儲該持久數據。
 
-### DevOps and Data 
+### DevOps 和數據
 
-Much like the very start of this series where we spoke about the DevOps principles, in order for a better process when it comes to data you have to include the right people. This might be the DBAs but equally that is going to include people that care about the backup of those data services as well. 
+就像本系列開始時我們談論 DevOps 原則一樣，為了在數據方面有更好的過程，你必須包括合適的人員。這可能是 DBA，但同樣，這將包括關心這些數據服務備份的人。
 
-Secondly we also need to identify the different data types, domains, boundaries that we have associated with our data. This way it is not just dealt with in a silo approach amongst Database administrators, storage engineers or Backup focused engineers. This way the whole team can determine the best route of action when it comes to developing and hosting applications for the wider business and focus on the data architecture vs it being an after thought. 
+其次，我們還需要識別與數據相關的不同數據類型、域和邊界。這樣，它就不只是在資料庫管理員、儲存工程師或專注於備份的工程師之間以孤島方式處理。這樣，整個團隊可以確定在為更廣泛的業務開發和託管應用程式時的最佳行動路線，並專注於數據架構，而不是事後才想到。
 
-Now, this can span many different areas of the data lifecycle, we could be talking about data ingest, where and how will data be ingested into our service or application? How will the service, application or users access this data. But then it also requires us to understand how we will secure the data and then how will we protect that data. 
+現在，這可以跨越數據生命週期的許多不同領域，我們可能談論數據攝取，數據將在哪裡以及如何攝取到我們的服務或應用程式中？服務、應用程式或用戶將如何訪問此數據？但它還要求我們了解如何保護數據，然後如何保護該數據。
 
-### Data Management 101 
+### 數據管理 101
 
-Data management according to the [Data Management Body of Knowledge](https://www.dama.org/cpages/body-of-knowledge) is “the development, execution and supervision of plans, policies, programs and practices that control, protect, deliver and enhance the value of data and information assets.” 
+根據[數據管理知識體系](https://www.dama.org/cpages/body-of-knowledge)，數據管理是「控制、保護、交付和增強數據和資訊資產價值的計劃、政策、程式和實踐的開發、執行和監督。」
 
-- Data is the most important aspect of your business - Data is only one part of your overall business. I have seen the term "Data is the lifeblood of our business" and most likely absolutely true. Which then got me thinking about blood being pretty important to the body but alone it is nothing we still need the aspects of the body to make the blood something other than a liquid. 
+- 數據是業務最重要的方面 - 數據只是整體業務的一部分。我見過「數據是我們業務的生命線」這個術語，很可能確實如此。這讓我思考血液對身體非常重要，但單獨它什麼都不是，我們仍然需要身體的方面來使血液成為液體以外的東西。
 
-- Data quality is more important than ever - We are having to treat data as a business asset, meaning that we have to give it the considerations it needs and requires to work with our automation and DevOps principles. 
+- 數據質量比以往任何時候都更重要 - 我們必須將數據視為業務資產，這意味著我們必須給予它與自動化和 DevOps 原則一起工作所需的考慮和要求。
 
-- Accessing data in a timely fashion - Nobody has the patience to not have access to the right data at the right time to make effective decisions. Data must be available in a streamlined and timely manher regardless of presentation. 
+- 及時訪問數據 - 沒有人有耐心在正確的時間無法訪問正確的數據來做出有效的決策。無論呈現方式如何，數據都必須以簡化和及時的方式提供。
 
-- Data Management has to be an enabler to DevOps - I mentioned streamline previously, we have to include the data management requirements into our cycle and ensure not just availablity of that data but also include other important policy based protection of those data points along with fully tested recovery models with that as well. 
+- 數據管理必須成為 DevOps 的推動者 - 我之前提到了簡化，我們必須將數據管理要求納入我們的週期，並確保不僅該數據的可用性，而且還包括其他重要的基於策略的保護這些數據點，以及完全測試的恢復模型。
 
-### DataOps 
+### DataOps
 
-Both DataOps and DevOps apply the best practices of technology development and operations to improve quality, increase speed, reduce security threats, delight customers and provide meaningful and challenging work for skilled professionals. DevOps and DataOps share goals to accelerate product delivery by automating as many process steps as possible. For DataOps, the objective is a resilient data pipeline and trusted insights from data analytics. 
+DataOps 和 DevOps 都應用技術開發和運營的最佳實踐來提高質量、提高速度、減少安全威脅、取悅客戶並為熟練的專業人員提供有意義和具有挑戰性的工作。DevOps 和 DataOps 共享通過自動化盡可能多的流程步驟來加速產品交付的目標。對於 DataOps，目標是彈性數據管道和來自數據分析的可信見解。
 
-Some of the most common higher level areas that focus on DataOps are going to be Machine Learning, Big Data and Data Analytics including Artifical Intelligence. 
+一些最常見的更高級別領域，專注於 DataOps 的將是機器學習、大數據和數據分析，包括人工智能。
 
-### Data Management is the management of information
+### 數據管理是資訊的管理
 
-My focus throughout this section is not going to be getting into Machine Learning or Articial Intelligence but to focus on the protecting the data from a data protection point of view, the title of this subsection is "Data management is the management of information" and we can relate that information = data. 
+我在本節中的重點不會是進入機器學習或人工智能，而是從數據保護的角度保護數據，本小節的標題是「數據管理是資訊的管理」，我們可以將該資訊 = 數據聯繫起來。
 
-Three key areas that we should consider along this journey with data are: 
+我們應該在數據之旅中考慮的三個關鍵領域是：
 
-- Accuracy - Making sure that production data is accurate, equally we need to ensure that our data in the form of backups are also working and tested against recovery to be sure if a failure or a reason comes up we need to be able to get back up and running as fast as possible. 
-  
-- Consistent - If our data services span multiple locations then for production we need to make sure we have consistency across all data locations so that we are getting accurate data, this also spans into data protection when it comes to protecting these data services especially data services we need to ensure consistency at different levels to make sure we are taking a good clean copy of that data for our backups, replicas etc. 
+- 準確性 - 確保生產數據準確，同樣我們需要確保我們以備份形式存在的數據也能正常工作並針對恢復進行測試，以確保如果出現故障或原因，我們需要能夠盡快恢復並運行。
+- 一致性 - 如果我們的數據服務跨越多個位置，那麼對於生產，我們需要確保在所有數據位置都有一致性，以便我們獲得準確的數據，這也延伸到數據保護，當涉及到保護這些數據服務時，特別是數據服務，我們需要確保在不同級別的一致性，以確保我們為備份、副本等獲取該數據的良好乾淨副本。
+- 安全性 - 訪問控制，但同樣只是保持數據，一般來說，這是目前全球的一個主題主題。確保合適的人員可以訪問你的數據至關重要，這再次導致數據保護，我們必須確保只有所需的人員才能訪問備份以及從這些備份恢復的能力，以及克隆和提供業務數據的其他版本。
 
-- Secure - Access Control but equally just keeping data in general is a topical theme at the moment across the globe. Making sure the right people have access to your data is paramount, again this leads into data protection where we must make sure that only the required personnel have access to backups and the ability to restore from those as well clone and provide other versions of the business data. 
+更好的數據 = 更好的決策
 
-Better Data = Better Decisions 
+### 數據管理日
 
-### Data Management Days 
+在接下來的 6 節中，我們將更仔細地研究資料庫、備份和恢復、災難恢復和應用程式移動性，所有這些都帶有演示和實際操作的元素。
 
-During the next 6 sessions we are going to be taking a closer look at Databases, Backup & Recovery, Disaster Recovery, Application Mobility all with an element of demo and hands on throughout. 
-
-## Resources 
+## 資源
 
 - [Kubernetes Backup and Restore made easy!](https://www.youtube.com/watch?v=01qcYSck1c4&t=217s)
 - [Kubernetes Backups, Upgrades, Migrations - with Velero](https://www.youtube.com/watch?v=zybLTQER0yY)
@@ -69,8 +68,4 @@ During the next 6 sessions we are going to be taking a closer look at Databases,
 - [Disaster Recovery vs. Backup: What's the difference?](https://www.youtube.com/watch?v=07EHsPuKXc0)
 - [Veeam Portability & Cloud Mobility](https://www.youtube.com/watch?v=hDBlTdzE6Us&t=3s)
 
-See you on [Day 85](day85.md)
-
-
-
-
+我們[第 85 天](day85.md)見

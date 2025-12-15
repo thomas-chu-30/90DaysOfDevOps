@@ -1,99 +1,100 @@
 ---
-title: '#90DaysOfDevOps - Data & Application Mobility - Day 90'
+title: '#90DaysOfDevOps - 數據和應用程式移動性 - 第 90 天'
 published: false
-description: 90DaysOfDevOps - Data & Application Mobility
+description: 90DaysOfDevOps - 數據和應用程式移動性
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048748
 ---
-## Data & Application Mobility
 
-Day 90 of the #90DaysOfDevOps Challenge! In this final session I am going to cover mobility of our data and applications. I am specifically going to focus on Kubernetes but the requirement across platforms and between platforms is something that is an ever-growing requirement and is seen in the field. 
+## 數據和應用程式移動性
 
-The use case being "I want to move my workload, application and data from one location to another" for many different reasons, could be cost, risk or to provide the business with a better service. 
+#90DaysOfDevOps 挑戰的第 90 天！在這最後一節中，我將涵蓋數據和應用程式的移動性。我將特別專注於 Kubernetes，但跨平台和平台之間的移動性要求是一個不斷增長的要求，並且在現場看到。
 
-In this session we are going to take our workload and we are going to look at moving a Kubernetes workload from one cluster to another, but in doing so we are going to change how our application is on the target location. 
+用例是「我想將工作負載、應用程式和數據從一個位置移動到另一個位置」，原因很多，可能是成本、風險或為業務提供更好的服務。
 
-It in fact uses a lot of the characteristics that we went through with [Disaster Recovery](day89.md)
+在本節中，我們將採用工作負載，我們將查看將 Kubernetes 工作負載從一個集群移動到另一個集群，但在這樣做時，我們將更改應用程式在目標位置上的方式。
 
-### **The Requirement**
+它使用了我們在[災難恢復](day89.md)中經歷的許多特徵
 
-Our current Kubernetes cluster cannot handle demand and our costs are rocketing through the roof, it is a business decision that we wish to move our production Kubernetes cluster to our Disaster Recovery location, located on a different public cloud which will provide the ability to expand but also at a cheaper rate. We could also take advantage of some of the native cloud services available in the target cloud. 
+### **要求**
 
-Our current mission critical application (Pac-Man) has a database (MongoDB) and is running on slow storage, we would like to move to a newer faster storage tier. 
+我們當前的 Kubernetes 集群無法處理需求，我們的成本正在飆升，這是一個業務決定，我們希望將生產 Kubernetes 集群移動到災難恢復位置，位於不同的公共雲上，這將提供擴展能力，但也以更便宜的價格。我們還可以利用目標雲中可用的一些原生雲服務。
 
-The current Pac-Man (NodeJS) front-end is not scaling very well, and we would like to increase the number of available pods in the new location. 
+我們當前的關鍵任務應用程式（Pac-Man）有一個資料庫（MongoDB），並且在慢速存儲上運行，我們希望移動到更新的更快存儲層。
 
-### Getting to IT
+當前的 Pac-Man（NodeJS）前端擴展不是很好，我們希望在新位置增加可用 Pod 的數量。
 
-We have our brief and in fact we have our imports already hitting the Disaster Recovery Kubernetes cluster. 
+### 開始
 
-The first job we need to do is remove the restore operation we carried out on Day 89 for the Disaster Recovery testing. 
+我們有我們的簡報，事實上，我們的導入已經到達災難恢復 Kubernetes 集群。
 
-We can do this using `kubectl delete ns pacman` on the "standby" minikube cluster. 
+我們需要做的第一項工作是刪除我們在第 89 天為災難恢復測試執行的恢復操作。
+
+我們可以使用 `kubectl delete ns pacman` 在「standby」minikube 集群上執行此操作。
 
 ![](Images/Day90_Data1.png)
 
-To get started head into the Kasten K10 Dashboard, select the Applications card. From the dropdown choose "Removed"
+要開始，請進入 Kasten K10 儀表板，並選擇 Applications 卡片。從下拉列表中選擇「Removed」
 
 ![](Images/Day90_Data2.png)
 
-We then get a list of the available restore points. We will select the one that is available as this contains our mission critical data. (In this example we only have a single restore point.)
+然後我們獲得可用恢復點的列表。我們將選擇可用的那個，因為它包含我們的關鍵任務數據。（在此範例中，我們只有一個恢復點。）
 
 ![](Images/Day90_Data3.png)
 
-When we worked on the Disaster Recovery process, we left everything as default. However these additional restore options are there if you have a Disaster Recovery process that requires the transformation of your application. In this instance we have the requirement to change our storage and number of replicas. 
+當我們處理災難恢復過程時，我們將所有內容保留為預設值。但是，如果你有一個需要轉換應用程式的災難恢復過程，這些額外的恢復選項就在那裡。在這種情況下，我們有要求更改存儲和副本數量。
 
 ![](Images/Day90_Data4.png)
 
-Select the "Apply transforms to restored resources" option. 
+選擇「Apply transforms to restored resources」選項。
 
 ![](Images/Day90_Data5.png)
 
-It just so happens that the two built in examples for the transformation that we want to perform are what we need for our requirements. 
+碰巧我們想要執行的轉換的兩個內建範例是我們要求所需的。
 
 ![](Images/Day90_Data6.png)
 
-The first requirement is that on our primary cluster we were using a Storage Class called `csi-hostpath-sc` and in our new cluster we would like to use `standard` so we can make that change here. 
+第一個要求是在主集群上，我們使用稱為 `csi-hostpath-sc` 的 Storage Class，在新集群中，我們希望使用 `standard`，所以我們可以在這裡進行更改。
 
 ![](Images/Day90_Data7.png)
 
-Looks good, hit the create transform button at the bottom. 
+看起來不錯，點擊底部的創建轉換按鈕。
 
 ![](Images/Day90_Data8.png)
 
-The next requirement is that we would like to scale our Pac-Man frontend deployment to "5"
+下一個要求是我們希望將 Pac-Man 前端部署擴展到「5」
 
 ![](Images/Day90_Data9.png)
 
-If you are following along you should see both of our transforms as per below. 
+如果你正在跟隨，你應該看到我們兩個轉換，如下所示。
 
 ![](Images/Day90_Data10.png)
 
-You can now see from the below image that we are going to restore all of the artifacts listed below, if we wanted to we could also be granular about what we wanted to restore. Hit the "Restore" button
+你現在可以從下面的圖像中看到，我們將恢復下面列出的所有工件，如果我們想要，我們也可以對我們想要恢復的內容進行細粒度控制。點擊「Restore」按鈕
 
 ![](Images/Day90_Data11.png)
 
-Again, we will be asked to confirm the actions. 
+同樣，我們將被要求確認操作。
 
 ![](Images/Day90_Data12.png)
 
-The final thing to show is now if we head back into the terminal and we take a look at our cluster, you can see we have 5 pods now for the pacman pods and our storageclass is now set to standard vs the csi-hostpath-sc 
+最後要顯示的是，如果我們現在返回終端機並查看集群，你可以看到我們現在有 5 個 Pacman Pod，我們的 storageclass 現在設置為 standard vs csi-hostpath-sc
 
 ![](Images/Day90_Data13.png)
 
-There are many different options that can be achieved through transformation. This can span not only migration but also Disaster Recovery, test and development type scenarios and more. 
+可以通過轉換實現許多不同的選項。這不僅可以跨越遷移，還可以跨越災難恢復、測試和開發類型的場景等等。
 
-### API and Automation 
+### API 和自動化
 
-I have not spoken about the ability to leverage the API and to automate some of these tasks, but these options are present and throughout the UI there are breadcrumbs that provide the command sets to take advantage of the APIs for automation tasks. 
+我沒有談論利用 API 和自動化其中一些任務的能力，但這些選項存在，並且在整個 UI 中，一些麵包屑提供了利用 API 進行自動化任務的指令集。
 
-The important thing to note about Kasten K10 is that on deployment it is deployed inside the Kubernetes cluster and then can be called through the Kubernetes API. 
+關於 Kasten K10 需要注意的重要一點是，在部署時，它部署在 Kubernetes 集群內，然後可以通過 Kubernetes API 調用。
 
-This then brings us to a close on the section around Storing and Protecting your data. 
+這使我們結束了關於存儲和保護數據的部分。
 
-## Resources 
+## 資源
 
 - [Kubernetes Backup and Restore made easy!](https://www.youtube.com/watch?v=01qcYSck1c4&t=217s)
 - [Kubernetes Backups, Upgrades, Migrations - with Velero](https://www.youtube.com/watch?v=zybLTQER0yY)
@@ -101,25 +102,26 @@ This then brings us to a close on the section around Storing and Protecting your
 - [Disaster Recovery vs. Backup: What's the difference?](https://www.youtube.com/watch?v=07EHsPuKXc0)
 - [Veeam Portability & Cloud Mobility](https://www.youtube.com/watch?v=hDBlTdzE6Us&t=3s)
 
-### **Closing**
+### **結束語**
 
-As I wrap up this challenge, I want to continue to ask for feedback to make sure that the information is always relevant. 
+當我結束這個挑戰時，我想繼續徵求反饋，以確保資訊始終相關。
 
-I also appreciate there are a lot of topics that I was not able to cover or not able to dive deeper into around the topics of DevOps. 
+我也感謝有很多主題我無法涵蓋或無法深入探討圍繞 DevOps 主題的內容。
 
-This means that we can always take another attempt that this challenge next year and find another 90 day's worth of content and walkthroughs to work through. 
+這意味著我們總是可以明年再次嘗試這個挑戰，並找到另一個 90 天的內容和演練來完成。
 
-### What is next? 
+### 下一步是什麼？
 
-Firstly, a break from writing for a little while, I started this challenge on the 1st January 2022 and I have finished on the 31st March 2022 19:50 BST! It has been a slog. But as I say and have said for a long time, if this content helps one person, then it is always worth learning in public! 
+首先，休息一段時間不寫作，我在 2022 年 1 月 1 日開始這個挑戰，並在 2022 年 3 月 31 日 19:50 BST 完成！這是一個艱苦的工作。但正如我所說並長期以來所說，如果這些內容幫助一個人，那麼公開學習總是值得的！
 
-I have some ideas on where to take this next and hopefully it has a life outside of a GitHub repository and we can look at creating an eBook and possibly even a physical book. 
+我對下一步該做什麼有一些想法，希望它在 GitHub 儲存庫之外有生命，我們可以考慮創建電子書，甚至可能是實體書。
 
-I also know that we need to revisit each post and make sure everything is grammatically correct before making anything like that happen. If anyone does know about how to take markdown to print or to an eBook it would be greatly appreciated feedback. 
+我也知道我們需要重新審視每個帖子，並在實現任何類似的事情之前確保所有內容在語法上都是正確的。如果有人確實知道如何將 markdown 轉換為打印或電子書，將非常感謝反饋。
 
-As always keep the issues and PRs coming. 
+一如既往，保持問題和 PR 的到來。
 
-Thanks! 
+謝謝！
 @MichaelCade1
+
 - [GitHub](https://github.com/MichaelCade)
 - [Twitter](https://twitter.com/MichaelCade1)

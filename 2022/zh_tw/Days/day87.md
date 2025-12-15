@@ -1,34 +1,35 @@
 ---
-title: "#90DaysOfDevOps - Hands-On Backup & Recovery - Day 87"
+title: '#90DaysOfDevOps - 實際操作備份和恢復 - 第 87 天'
 published: false
-description: "90DaysOfDevOps - Hands-On Backup & Recovery"
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - 實際操作備份和恢復
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048717
 ---
-## Hands-On Backup & Recovery
 
-In the last session we touched on [Kopia](https://kopia.io/) an Open-Source backup tool that we used to get some important data off to a local NAS and off to some cloud based object storage. 
+## 實際操作備份和恢復
 
-In this section, I want to get into the world of Kubernetes backup. It is a platform we covered [The Big Picture: Kubernetes](Days/day49.md) earlier in the challenge. 
+在上一節中，我們觸及了 [Kopia](https://kopia.io/) 一個開源備份工具，我們使用它將一些重要數據發送到本地 NAS 和一些基於雲的物件存儲。
 
-We will again be using our minikube cluster but this time we are going to take advantage of some of those addons that are available. 
+在本節中，我想進入 Kubernetes 備份的世界。這是我們在挑戰早期涵蓋的平台 [The Big Picture: Kubernetes](Days/day49.md)。
 
-### Kubernetes cluster setup 
+我們將再次使用 minikube 集群，但這次我們將利用一些可用的附加組件。
 
-To set up our minikube cluster we will be issuing the `minikube start --addons volumesnapshots,csi-hostpath-driver --apiserver-port=6443 --container-runtime=containerd -p 90daysofdevops --kubernetes-version=1.21.2` you will notice that we are using the `volumesnapshots` and `csi-hostpath-driver` as we will take full use of these for when we are taking our backups. 
+### Kubernetes 集群設置
 
-At this point I know we have not deployed Kasten K10 yet but we want to issue the following command when your cluster is up, but we want to annotate the volumesnapshotclass so that Kasten K10 can use this. 
+要設置 minikube 集群，我們將發出 `minikube start --addons volumesnapshots,csi-hostpath-driver --apiserver-port=6443 --container-runtime=containerd -p 90daysofdevops --kubernetes-version=1.21.2`，你會注意到我們正在使用 `volumesnapshots` 和 `csi-hostpath-driver`，因為我們將在進行備份時充分利用這些。
 
-```
+此時我知道我們還沒有部署 Kasten K10，但我們想在集群啟動時發出以下指令，但我們想註釋 volumesnapshotclass，以便 Kasten K10 可以使用它。
+
+```Shell
 kubectl annotate volumesnapshotclass csi-hostpath-snapclass \
     k10.kasten.io/is-snapshot-class=true
 ```
 
-We are also going to change over the default storageclass from the standard default storageclass to the csi-hostpath storageclass using the following. 
+我們還將使用以下內容將預設 storageclass 從標準預設 storageclass 更改為 csi-hostpath storageclass。
 
-```
+```Shell
 kubectl patch storageclass csi-hostpath-sc -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
 kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
@@ -36,37 +37,37 @@ kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storagecla
 
 ![](Images/Day87_Data1.png)
 
-### Deploy Kasten K10 
+### 部署 Kasten K10
 
-Add the Kasten Helm repository
+添加 Kasten Helm 儲存庫
 
 `helm repo add kasten https://charts.kasten.io/`
 
-We could use `arkade kasten install k10` here as well but for the purpose of the demo we will run through the following steps. [More Details](https://blog.kasten.io/kasten-k10-goes-to-the-arkade)
+我們也可以在這裡使用 `arkade kasten install k10`，但為了演示的目的，我們將運行以下步驟。[更多詳細資訊](https://blog.kasten.io/kasten-k10-goes-to-the-arkade)
 
-Create the namespace and deploy K10, note that this will take around 5 mins 
+創建命名空間並部署 K10，請注意這將需要大約 5 分鐘
 
 `helm install k10 kasten/k10 --namespace=kasten-io --set auth.tokenAuth.enabled=true --set injectKanisterSidecar.enabled=true --set-string injectKanisterSidecar.namespaceSelector.matchLabels.k10/injectKanisterSidecar=true --create-namespace`
 
 ![](Images/Day87_Data1.png)
 
-You can watch the pods come up by running the following command.
+你可以通過運行以下指令來觀察 Pod 啟動。
 
 `kubectl get pods -n kasten-io -w`
 
 ![](Images/Day87_Data3.png)
 
-Port forward to access the K10 dashboard, open a new terminal to run the below command
+端口轉發以訪問 K10 儀表板，打開新終端機以運行以下指令
 
 `kubectl --namespace kasten-io port-forward service/gateway 8080:8000`
 
-The Kasten dashboard will be available at: `http://127.0.0.1:8080/k10/#/`
+Kasten 儀表板將在 `http://127.0.0.1:8080/k10/#/` 可用
 
 ![](Images/Day87_Data4.png)
 
-To authenticate with the dashboard we now need the token which we can get with the following commands. 
+要使用儀表板進行身份驗證，我們現在需要可以通過以下指令獲取的令牌。
 
-```
+```Shell
 TOKEN_NAME=$(kubectl get secret --namespace kasten-io|grep k10-k10-token | cut -d " " -f 1)
 TOKEN=$(kubectl get secret --namespace kasten-io $TOKEN_NAME -o jsonpath="{.data.token}" | base64 --decode)
 
@@ -76,109 +77,109 @@ echo $TOKEN
 
 ![](Images/Day87_Data5.png)
 
-Now we take this token and we input that into our browser, you will then be prompted for an email and company name. 
+現在我們獲取此令牌並將其輸入到瀏覽器中，然後你將被提示輸入電子郵件和公司名稱。
 
 ![](Images/Day87_Data6.png)
 
-Then we get access to the Kasten K10 dashboard. 
+然後我們可以訪問 Kasten K10 儀表板。
 
 ![](Images/Day87_Data7.png)
 
-### Deploy our stateful application 
+### 部署我們的有狀態應用程式
 
-Use the stateful application that we used in the Kubernetes section. 
+使用我們在 Kubernetes 部分中使用的有狀態應用程式。
 
 ![](Images/Day55_Kubernetes1.png)
 
-You can find the YAML configuration file for this application here[pacman-stateful-demo.yaml](Days/Kubernetes/pacman-stateful-demo.yaml)
+你可以在這裡找到此應用程式的 YAML 配置檔案-> [pacman-stateful-demo.yaml](Kubernetes/pacman-stateful-demo.yaml)
 
 ![](Images/Day87_Data8.png)
 
-We can use `kubectl get all -n pacman` to check on our pods coming up. 
+我們可以使用 `kubectl get all -n pacman` 來檢查我們的 Pod 啟動。
 
 ![](Images/Day87_Data9.png)
 
-In a new terminal we can then port forward the pacman front end. `kubectl port-forward svc/pacman 9090:80 -n pacman`
+在新終端機中，我們可以端口轉發 pacman 前端。`kubectl port-forward svc/pacman 9090:80 -n pacman`
 
-Open another tab on your browser to http://localhost:9090/ 
+在瀏覽器上打開另一個標籤頁到 http://localhost:9090/
 
 ![](Images/Day87_Data10.png)
 
-Take the time to clock up some high scores in the backend MongoDB database. 
+花時間在後端 MongoDB 資料庫中記錄一些高分。
 
 ![](Images/Day87_Data11.png)
 
-### Protect our High Scores 
+### 保護我們的高分
 
-Now we have some mission critical data in our database and we do not want to lose it. We can use Kasten K10 to protect this whole application. 
+現在我們在資料庫中有一些關鍵任務數據，我們不想失去它。我們可以使用 Kasten K10 來保護整個應用程式。
 
-If we head back into the Kasten K10 dashboard tab you will see that our number of application has now increased from 1 to 2 with the addition of our pacman application to our Kubernetes cluster. 
+如果我們返回 Kasten K10 儀表板標籤頁，你會看到我們的應用程式數量現在已從 1 增加到 2，因為我們的 Pacman 應用程式已添加到 Kubernetes 集群中。
 
 ![](Images/Day87_Data12.png)
 
-If you click on the Applications card you will see the automatically discovered applications in our cluster. 
+如果你點擊 Applications 卡片，你將看到在集群中自動發現的應用程式。
 
 ![](Images/Day87_Data13.png)
 
-With Kasten K10 we have the ability to leverage storage based snapshots as well export our copies out to object storage options. 
+使用 Kasten K10，我們可以利用基於存儲的快照，並將副本導出到物件存儲選項。
 
-For the purpose of the demo, we will create a manual storage snapshot in our cluster and then we can add some rogue data to our high scores to simulate an accidental mistake being made or is it? 
+對於演示，我們將在集群中創建手動存儲快照，然後我們可以在高分中添加一些惡意數據，以模擬意外錯誤或不是嗎？
 
-Firstly we can use the manual snapshot option below. 
+首先，我們可以使用下面的手動快照選項。
 
 ![](Images/Day87_Data14.png)
 
-For the demo I am going to leave everything as the default 
+對於演示，我將保留所有預設值
 
 ![](Images/Day87_Data15.png)
 
-Back on the dashboard you get a status report on the job as it is running and then when complete it should look as successful as this one. 
+回到儀表板，你會在作業運行時獲得狀態報告，然後完成時應該看起來像這個一樣成功。
 
 ![](Images/Day87_Data16.png)
 
-### Failure Scenario 
+### 故障場景
 
-We can now make that fatal change to our mission critical data by simply adding in a prescriptive bad change to our application. 
+我們現在可以通過簡單地在應用程式中添加規定的不良更改來對關鍵任務數據進行致命更改。
 
-As you can see below we have two inputs that we probably dont want in our production mission critical database.
+正如你可以從下面看到的，我們有兩個輸入，我們可能不希望在生產關鍵任務資料庫中。
 
 ![](Images/Day87_Data17.png)
 
-### Restore the data
+### 恢復數據
 
-Obviously this is a simple demo and in a way not realistic although have you seen how easy it is to drop databases? 
+這是一個簡單的演示，在某種程度上不現實，儘管你見過刪除資料庫有多容易嗎？
 
-Now we want to get that high score list looking a little cleaner and how we had it before the mistakes were made. 
+現在我們想讓高分列表看起來更乾淨一些，以及我們在犯錯誤之前擁有的樣子。
 
-Back in the Applications card and on the pacman tab we now have 1 restore point we can use to restore from. 
+回到 Applications 卡片和 Pacman 標籤頁，我們現在有 1 個恢復點可以使用來恢復。
 
 ![](Images/Day87_Data18.png)
 
-When you select restore you can see all the associated snapshots and exports to that application. 
+當你選擇恢復時，你可以看到與該應用程式關聯的所有快照和導出。
 
 ![](Images/Day87_Data19.png)
 
-Select that restore and a side window will appear, we will keep the default settings and hit restore. 
+選擇該恢復，將出現一個側邊窗口，我們將保留預設設置並點擊恢復。
 
 ![](Images/Day87_Data20.png)
 
-Confirm that you really want to make this happen. 
+確認你想要執行此操作。
 
 ![](Images/Day87_Data21.png)
 
-You can then go back to the dashboard and see the progress of the restore. You should see something like this. 
+然後你可以返回儀表板並查看恢復的進度。你應該看到類似這樣的內容。
 
 ![](Images/Day87_Data22.png)
 
-But more importantly how is our High-Score list looking in our mission critical application. You will have to start the port forward again to pacman as we previously covered. 
+但更重要的是，我們關鍵任務應用程式中的高分列表看起來如何。你必須再次啟動 Pacman 的端口轉發，正如我們之前涵蓋的那樣。
 
 ![](Images/Day87_Data23.png)
 
-A super simple demo and only really touching the surface of what Kasten K10 can really achieve when it comes to backup. I will be creating some more in depth video content on some of these areas in the future. We will also be using Kasten K10 to highlight some of the other prominent areas around Data Management when it comes to Disaster Recovery and the mobility of your data. 
+一個超級簡單的演示，只是真正觸及了 Kasten K10 在備份方面可以實現的表面。我將在未來創建一些更深入的視頻內容，涉及其中一些領域。我們還將使用 Kasten K10 來突出數據管理方面的其他突出領域，當涉及到災難恢復和數據的移動性時。
 
-Next we will take a look at Application consistency. 
+接下來，我們將查看應用程式一致性。
 
-## Resources 
+## 資源
 
 - [Kubernetes Backup and Restore made easy!](https://www.youtube.com/watch?v=01qcYSck1c4&t=217s)
 - [Kubernetes Backups, Upgrades, Migrations - with Velero](https://www.youtube.com/watch?v=zybLTQER0yY)
@@ -186,4 +187,4 @@ Next we will take a look at Application consistency.
 - [Disaster Recovery vs. Backup: What's the difference?](https://www.youtube.com/watch?v=07EHsPuKXc0)
 - [Veeam Portability & Cloud Mobility](https://www.youtube.com/watch?v=hDBlTdzE6Us&t=3s)
 
-See you on [Day 88](day88.md)
+我們[第 88 天](day88.md)見

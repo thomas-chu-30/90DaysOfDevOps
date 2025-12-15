@@ -1,135 +1,139 @@
 ---
-title: "#90DaysOfDevOps - Data Services - Day 85"
+title: '#90DaysOfDevOps - 數據服務 - 第 85 天'
 published: false
-description: "90DaysOfDevOps - Data Services"
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - 數據服務
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048781
 ---
-## Data Services
 
-Databases are going to be the most common data service that we come across in our environments. I wanted to take this session to explore some of those different types of Databases and some of the use cases they each have. Some we have used and seen throughout the course of the challenge. 
+## 數據服務
 
-From an application development point of view choosing the right data service or database is going to be a huge decision when it comes to the performance and scalability of your application. 
+資料庫將是我們在環境中遇到的最常見的數據服務。我想利用本節來探索其中一些不同類型的資料庫以及它們各自的一些用例。我們在整個挑戰中使用和看到了一些。
+
+從應用程式開發的角度來看，選擇正確的數據服務或資料庫將是應用程式性能和可擴展性的巨大決定。
 
 https://www.youtube.com/watch?v=W2Z7fbCLSTw
 
-### Key-value
+### 鍵值
 
-A key-value database is a type of nonrelational database that uses a simple key-value method to store data. A key-value database stores data as a collection of key-value pairs in which a key serves as a unique identifier. Both keys and values can be anything, ranging from simple objects to complex compound objects. Key-value databases are highly partitionable and allow horizontal scaling at scales that other types of databases cannot achieve.
+鍵值資料庫是一種非關係型資料庫，使用簡單的鍵值方法來存儲數據。鍵值資料庫將數據存儲為鍵值對的集合，其中鍵用作唯一標識符。鍵和值都可以是任何東西，從簡單物件到複雜的複合物件。鍵值資料庫高度可分區，允許在其他類型的資料庫無法達到的規模上進行水平擴展。
 
-An example of a Key-Value database is Redis. 
+鍵值資料庫的一個範例是 Redis。
 
-*Redis is an in-memory data structure store, used as a distributed, in-memory key–value database, cache and message broker, with optional durability. Redis supports different kinds of abstract data structures, such as strings, lists, maps, sets, sorted sets, HyperLogLogs, bitmaps, streams, and spatial indices.*
+_Redis 是一個內存數據結構存儲，用作分佈式、內存鍵值資料庫、緩存和消息代理，具有可選的持久性。Redis 支持不同類型的抽象數據結構，如字串、列表、映射、集合、排序集合、HyperLogLogs、位圖、流和空間索引。_
 
 ![](Images/Day85_Data1.png)
 
-As you can see from the description of Redis this means that our database is fast but we are limited on space as a trade off. Also no queries or joins which means data modelling options are very limited. 
+正如你可以從 Redis 的描述中看到的，這意味著我們的資料庫很快，但我們在空間上受到限制作為權衡。此外，沒有查詢或連接，這意味著數據建模選項非常有限。
 
-Best for: 
-- Caching 
-- Pub/Sub
-- Leaderboards 
-- Shopping carts
+最適合：
 
-Generally used as a cache above another persistent data layer. 
+- 緩存
+- 發布/訂閱
+- 排行榜
+- 購物車
 
-### Wide Column
+通常用作另一個持久數據層之上的緩存。
 
-A wide-column database is a NoSQL database that organises data storage into flexible columns that can be spread across multiple servers or database nodes, using multi-dimensional mapping to reference data by column, row, and timestamp.
+### 寬列
 
-*Cassandra is a free and open-source, distributed, wide-column store, NoSQL database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.*
+寬列資料庫是一個 NoSQL 資料庫，它將數據存儲組織成靈活的列，可以分佈在多個伺服器或資料庫節點上，使用多維映射通過列、行和時間戳來引用數據。
+
+_Cassandra 是一個免費和開源的分佈式寬列存儲 NoSQL 資料庫管理系統，旨在處理跨許多商品伺服器的大量數據，提供高可用性，沒有單點故障。_
 
 ![](Images/Day85_Data2.png)
 
-No schema which means can handle unstructured data however this can be seen as a benefit to some workloads. 
+無模式，這意味著可以處理非結構化數據，但這可以被視為某些工作負載的好處。
 
-Best for: 
-- Time-Series 
-- Historical Records 
-- High-Write, Low-Read 
+最適合：
 
-### Document
+- 時間序列
+- 歷史記錄
+- 高寫入、低讀取
 
-A document database (also known as a document-oriented database or a document store) is a database that stores information in documents. 
+### 文檔
 
-*MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas. MongoDB is developed by MongoDB Inc. and licensed under the Server Side Public License.*
+文檔資料庫（也稱為面向文檔的資料庫或文檔存儲）是將資訊存儲在文檔中的資料庫。
+
+_MongoDB 是一個源可用的跨平台面向文檔的資料庫程式。分類為 NoSQL 資料庫程式，MongoDB 使用類似 JSON 的文檔和可選模式。MongoDB 由 MongoDB Inc. 開發，並在伺服器端公共許可證下獲得許可。_
 
 ![](Images/Day85_Data3.png)
 
-NoSQL document databases allow businesses to store simple data without using complex SQL codes. Quickly store with no compromise to reliability. 
+NoSQL 文檔資料庫允許企業存儲簡單數據，而無需使用複雜的 SQL 代碼。快速存儲，不影響可靠性。
 
-Best for: 
+最適合：
 
-- Most Applications 
-- Games 
-- Internet of Things 
+- 大多數應用程式
+- 遊戲
+- 物聯網
 
-### Relational
+### 關係型
 
-If you are new to databases but you know of them my guess is that you have absolutely come across a relational database. 
+如果你對資料庫不熟悉，但你知道它們，我猜你遇到過關係型資料庫。
 
-A relational database is a digital database based on the relational model of data, as proposed by E. F. Codd in 1970. A system used to maintain relational databases is a relational database management system. Many relational database systems have an option of using the SQL for querying and maintaining the database.
+關係型資料庫是基於數據關係模型的數字資料庫，由 E. F. Codd 在 1970 年提出。用於維護關係型資料庫的系統是關係型資料庫管理系統。許多關係型資料庫系統都有使用 SQL 查詢和維護資料庫的選項。
 
-*MySQL is an open-source relational database management system. Its name is a combination of "My", the name of co-founder Michael Widenius's daughter, and "SQL", the abbreviation for Structured Query Language.*
+_MySQL 是一個開源關係型資料庫管理系統。它的名稱是「My」（聯合創始人 Michael Widenius 的女兒的名字）和「SQL」（結構化查詢語言的縮寫）的組合。_
 
-MySQL is one example of a relational database there are lots of other options. 
+MySQL 是關係型資料庫的一個範例，還有很多其他選項。
 
 ![](Images/Day85_Data4.png)
 
-Whilst researching relational databases the term or abbreviation **ACID** has been mentioned a lot, (atomicity, consistency, isolation, durability) is a set of properties of database transactions intended to guarantee data validity despite errors, power failures, and other mishaps. In the context of databases, a sequence of database operations that satisfies the ACID properties (which can be perceived as a single logical operation on the data) is called a transaction. For example, a transfer of funds from one bank account to another, even involving multiple changes such as debiting one account and crediting another, is a single transaction. 
+在研究關係型資料庫時，術語或縮寫 **ACID** 被多次提及，（原子性、一致性、隔離性、持久性）是一組資料庫事務屬性，旨在保證數據有效性，儘管有錯誤、電源故障和其他事故。在資料庫的上下文中，滿足 ACID 屬性的資料庫操作序列（可以被視為數據上的單個邏輯操作）稱為事務。例如，從一個銀行帳戶到另一個銀行帳戶的資金轉移，即使涉及多個更改，如借記一個帳戶和貸記另一個帳戶，也是一個事務。
 
-Best for: 
-- Most Applications (It has been around for years, doesn't mean it is the best)
+最適合：
 
-It is not ideal for unstructured data or the ability to scale is where some of the other NoSQL mentions give a better ability to scale for certain workloads. 
+- 大多數應用程式（它已經存在多年，並不意味著它是最好的）
 
-### Graph
+對於非結構化數據或擴展能力，它不是理想的，其中一些其他 NoSQL 提到的為某些工作負載提供了更好的擴展能力。
 
-A graph database stores nodes and relationships instead of tables, or documents. Data is stored just like you might sketch ideas on a whiteboard. Your data is stored without restricting it to a pre-defined model, allowing a very flexible way of thinking about and using it.
+### 圖
 
-*Neo4j is a graph database management system developed by Neo4j, Inc. Described by its developers as an ACID-compliant transactional database with native graph storage and processing*
+圖資料庫存儲節點和關係而不是表或文檔。數據的存儲就像你可能在白板上草擬想法一樣。你的數據存儲時不受預定義模型的限制，允許非常靈活地思考和使用它。
 
-Best for: 
+_Neo4j 是由 Neo4j, Inc. 開發的圖資料庫管理系統。其開發人員將其描述為具有原生圖存儲和處理的 ACID 兼容事務資料庫_
 
-- Graphs
-- Knowledge Graphs
-- Recommendation Engines
+最適合：
 
-### Search Engine
+- 圖
+- 知識圖
+- 推薦引擎
 
-In the last section we actually used a Search Engine database in the way of Elasticsearch. 
+### 搜索引擎
 
-A search-engine database is a type of non-relational database that is dedicated to the search of data content. Search-engine databases use indexes to categorise the similar characteristics among data and facilitate search capability.
+在上一節中，我們以 Elasticsearch 的方式使用了搜索引擎資料庫。
 
-*Elasticsearch is a search engine based on the Lucene library. It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents.*
+搜索引擎資料庫是一種非關係型資料庫，專用於搜索數據內容。搜索引擎資料庫使用索引對數據中的相似特徵進行分類並促進搜索能力。
 
-Best for: 
+_Elasticsearch 是一個基於 Lucene 庫的搜索引擎。它提供了一個分佈式、多租戶功能的全文搜索引擎，具有 HTTP Web 界面和無模式 JSON 文檔。_
 
-- Search Engines 
-- Typeahead 
-- Log search
+最適合：
 
-### Multi-model
+- 搜索引擎
+- 自動完成
+- 日誌搜索
 
-A multi-model database is a database management system designed to support multiple data models against a single, integrated backend. In contrast, most database management systems are organized around a single data model that determines how data can be organized, stored, and manipulated.Document, graph, relational, and key–value models are examples of data models that may be supported by a multi-model database. 
+### 多模型
 
-*Fauna is a flexible, developer-friendly, transactional database delivered as a secure and scalable cloud API with native GraphQL.*
+多模型資料庫是一個資料庫管理系統，旨在支持針對單一、整合後端的多個數據模型。相比之下，大多數資料庫管理系統都圍繞單一數據模型組織，該模型確定如何組織、存儲和操作數據。文檔、圖、關係和鍵值模型是可能由多模型資料庫支持的數據模型的範例。
 
-Best for: 
+_Fauna 是一個靈活、開發人員友好的事務資料庫，作為安全且可擴展的雲 API 交付，具有原生 GraphQL。_
 
-- You are not stuck to having to choose a data model
-- ACID Compliant
-- Fast 
-- No provisioning overhead
-- How do you want to consume your data and let the cloud do the heavy lifting
+最適合：
 
-That is going to wrap up this database overview session, no matter what industry you are in you are going to come across one area of databases. We are then going to take some of these examples and look at the data management and in particular the protection and storing of these data services later on in the section. 
+- 你不必選擇數據模型
+- ACID 兼容
+- 快速
+- 無配置開銷
+- 你想如何消費數據，讓雲做繁重的工作
 
-There are a ton of resources I have linked below, you could honestly spend 90 years probably deep diving into all database types and everything that comes with this. 
+這將結束這個資料庫概述部分，無論你從事什麼行業，你都會遇到資料庫的一個領域。然後我們將採用其中一些範例，並在本節後續部分查看數據管理，特別是這些數據服務的保護和存儲。
 
-## Resources 
+我在下面連結了大量資源，你可以誠實地花 90 年時間深入研究所有資料庫類型以及隨之而來的一切。
+
+## 資源
 
 - [Redis Crash Course - the What, Why and How to use Redis as your primary database](https://www.youtube.com/watch?v=OqCK95AS-YE)
 - [Redis: How to setup a cluster - for beginners](https://www.youtube.com/watch?v=GEg7s3i6Jak)
@@ -145,5 +149,4 @@ There are a ton of resources I have linked below, you could honestly spend 90 ye
 - [FaunaDB Basics - The Database of your Dreams](https://www.youtube.com/watch?v=2CipVwISumA)
 - [Fauna Crash Course - Covering the Basics](https://www.youtube.com/watch?v=ihaB7CqJju0)
 
-
-See you on [Day 86](day86.md)
+我們[第 86 天](day86.md)見

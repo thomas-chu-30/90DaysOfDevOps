@@ -1,70 +1,70 @@
 ---
-title: '#90DaysOfDevOps - Fluentd & FluentBit - Day 81'
+title: '#90DaysOfDevOps - Fluentd & FluentBit - 第 81 天'
 published: false
 description: 90DaysOfDevOps - Fluentd & FluentBit
-tags: "devops, 90daysofdevops, learning"
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048716
 ---
+
 ## Fluentd & FluentBit
 
-Another data collector that I wanted to explore as part of this observability section was [Fluentd](https://docs.fluentd.org/). An Open-Source unified logging layer. 
+我想在本可觀察性部分探索的另一個數據收集器是 [Fluentd](https://docs.fluentd.org/)。一個開源的統一日誌層。
 
-Fluentd has four key features that makes it suitable to build clean, reliable logging pipelines:
+Fluentd 有四個關鍵功能，使其適合構建乾淨、可靠的日誌管道：
 
-Unified Logging with JSON: Fluentd tries to structure data as JSON as much as possible. This allows Fluentd to unify all facets of processing log data: collecting, filtering, buffering, and outputting logs across multiple sources and destinations. The downstream data processing is much easier with JSON, since it has enough structure to be accessible without forcing rigid schemas.
+使用 JSON 統一日誌：Fluentd 嘗試盡可能將數據結構化為 JSON。這允許 Fluentd 統一處理日誌數據的所有方面：收集、過濾、緩衝和跨多個來源和目標輸出日誌。下游數據處理使用 JSON 要容易得多，因為它有足夠的結構可以訪問，而不會強制使用嚴格的模式。
 
-Pluggable Architecture: Fluentd has a flexible plugin system that allows the community to extend its functionality. Over 300 community-contributed plugins connect dozens of data sources to dozens of data outputs, manipulating the data as needed. By using plugins, you can make better use of your logs right away.
+可插拔架構：Fluentd 有一個靈活的插件系統，允許社群擴展其功能。超過 300 個社群貢獻的插件將數十個數據源連接到數十個數據輸出，根據需要操作數據。通過使用插件，你可以立即更好地利用日誌。
 
-Minimum Resources Required: A data collector should be lightweight so that it runs comfortably on a busy machine. Fluentd is written in a combination of C and Ruby, and requires minimal system resources. The vanilla instance runs on 30-40MB of memory and can process 13,000 events/second/core.
+所需的最少資源：數據收集器應該是輕量級的，以便在繁忙的機器上舒適地運行。Fluentd 是用 C 和 Ruby 的組合編寫的，需要最少的系統資源。標準實例在 30-40MB 內存上運行，可以處理每秒/核心 13,000 個事件。
 
-Built-in Reliability: Data loss should never happen. Fluentd supports memory- and file-based buffering to prevent inter-node data loss. Fluentd also supports robust failover and can be set up for high availability.
+內建可靠性：不應該發生數據丟失。Fluentd 支持基於內存和文件的緩衝，以防止節點間數據丟失。Fluentd 還支持強大的故障轉移，可以設置為高可用性。
 
-[Installing Fluentd](https://docs.fluentd.org/quickstart#step-1-installing-fluentd)
+[安裝 Fluentd](https://docs.fluentd.org/quickstart#step-1-installing-fluentd)
 
-### How apps log data? 
+### 應用程式如何記錄數據？
 
-- Write to files. `.log` files (difficult to analyse without a tool and at scale)
-- Log directly to a database (each application must be configured with the correct format)
-- Third party applications (NodeJS, NGINX, PostgreSQL)
+- 寫入檔案。`.log` 檔案（沒有工具和規模很難分析）
+- 直接記錄到資料庫（每個應用程式必須配置正確的格式）
+- 第三方應用程式（NodeJS、NGINX、PostgreSQL）
 
-This is why we want a unified logging layer. 
+這就是為什麼我們想要一個統一日誌層。
 
-FluentD allows for the 3 logging data types shown above and gives us the ability to collect, process and send those to a destination, this could be sending them logs to Elastic, MongoDB, Kafka databases for example. 
+FluentD 允許上述 3 種日誌數據類型，並為我們提供收集、處理和將它們發送到目標的能力，例如將日誌發送到 Elastic、MongoDB 或 Kafka 資料庫。
 
-Any Data, Any Data source can be sent to FluentD and that can be sent to any destination. FluentD is not tied to any particular source or destination. 
+任何數據、任何數據源都可以發送到 FluentD，並且可以發送到任何目標。FluentD 不綁定到任何特定的來源或目標。
 
-In my research of Fluentd I kept stumbling across Fluent bit as another option and it looks like if you were looking to deploy a logging tool into your Kubernetes environment then fluent bit would give you that capability, even though fluentd can also be deployed to containers as well as servers. 
+在我對 Fluentd 的研究中，我不斷遇到 Fluent bit 作為另一個選項，看起來如果你想將日誌工具部署到 Kubernetes 環境中，那麼 fluent bit 會為你提供該功能，儘管 fluentd 也可以部署到容器以及伺服器。
 
 [Fluentd & Fluent Bit](https://docs.fluentbit.io/manual/about/fluentd-and-fluent-bit)
 
-Fluentd and Fluentbit will use the input plugins to transform that data to Fluent Bit format, then we have output plugins to whatever that output target is such as elasticsearch. 
+Fluentd 和 Fluentbit 將使用輸入插件將該數據轉換為 Fluent Bit 格式，然後我們有輸出插件到任何輸出目標，例如 elasticsearch。
 
-We can also use tags and matches between configurations. 
+我們還可以在配置之間使用標籤和匹配。
 
-I cannot see a good reason for using fluentd and it sems that Fluent Bit is the best way to get started. Although they can be used together in some architectures. 
+我看不到使用 fluentd 的好理由，似乎 Fluent Bit 是開始的最佳方式。儘管它們可以在某些架構中一起使用。
 
-### Fluent Bit in Kubernetes 
+### Kubernetes 中的 Fluent Bit
 
-Fluent Bit in Kubernetes is deployed as a DaemonSet, which means it will run on each node in the cluster. Each Fluent Bit pod on each node will then read each container on that node and gather all of the logs available. It will also gather the metadata from the Kubernetes API Server.  
+Kubernetes 中的 Fluent Bit 作為 DaemonSet 部署，這意味著它將在集群中的每個節點上運行。每個節點上的每個 Fluent Bit Pod 然後將讀取該節點上的每個容器並收集所有可用的日誌。它還將從 Kubernetes API Server 收集元數據。
 
-Kubernetes annotations can be used within the configuration YAML of our applications. 
+Kubernetes 註釋可以在應用程式的配置 YAML 中使用。
 
-
-First of all we can deploy from the fluent helm repository. `helm repo add fluent https://fluent.github.io/helm-charts` and then install using the `helm install fluent-bit fluent/fluent-bit` command. 
+首先，我們可以從 fluent helm 儲存庫部署。`helm repo add fluent https://fluent.github.io/helm-charts`，然後使用 `helm install fluent-bit fluent/fluent-bit` 指令安裝。
 
 ![](Images/Day81_Monitoring1.png)
 
-In my cluster I am also running prometheus in my default namespace (for test purposes) we need to make sure our fluent-bit pod is up and running. we can do this using `kubectl get all | grep fluent` this is going to show us our running pod, service and daemonset that we mentioned earlier. 
+在我的集群中，我還在我的預設命名空間中運行 Prometheus（用於測試目的），我們需要確保我們的 fluent-bit Pod 啟動並運行。我們可以使用 `kubectl get all | grep fluent` 來執行此操作，這將向我們顯示我們運行的 Pod、服務和我們之前提到的 daemonset。
 
 ![](Images/Day81_Monitoring2.png)
 
-So that fluentbit knows where to get logs from we have a configuration file, in this Kubernetes deployment of fluentbit we have a configmap which resembles the configuration file. 
+為了讓 fluentbit 知道從哪裡獲取日誌，我們有一個配置檔案，在這個 Kubernetes 的 fluentbit 部署中，我們有一個類似配置檔案的 configmap。
 
 ![](Images/Day81_Monitoring3.png)
 
-That ConfigMap will look something like: 
+該 ConfigMap 將看起來像：
 
 ```
 Name:         fluent-bit
@@ -116,7 +116,7 @@ fluent-bit.conf:
     Read_From_Tail On
 
 [FILTER]
-    Name kubernetes
+    Name Kubernetes
     Match kube.*
     Merge_Log On
     Keep_Log Off
@@ -141,28 +141,26 @@ fluent-bit.conf:
 Events:  <none>
 ```
 
-We can now port-forward our pod to our localhost to ensure that we have connectivity. Firstly get the name of your pod with `kubectl get pods | grep fluent` and then use `kubectl port-forward fluent-bit-8kvl4 2020:2020` open a web browser to http://localhost:2020/ 
+我們現在可以將 Pod 端口轉發到 localhost 以確保我們有連接性。首先使用 `kubectl get pods | grep fluent` 獲取 Pod 的名稱，然後使用 `kubectl port-forward fluent-bit-8kvl4 2020:2020` 打開網頁瀏覽器到 `http://localhost:2020/`
 
 ![](Images/Day81_Monitoring4.png)
 
-I also found this really great medium article covering more about [Fluent Bit](https://medium.com/kubernetes-tutorials/exporting-kubernetes-logs-to-elasticsearch-using-fluent-bit-758e8de606af)
+我還發現了這篇很棒的中型文章，涵蓋了更多關於 [Fluent Bit](https://medium.com/kubernetes-tutorials/exporting-kubernetes-logs-to-elasticsearch-using-fluent-bit-758e8de606af) 的內容
 
-## Resources 
+## 資源
 
 - [Understanding Logging: Containers & Microservices](https://www.youtube.com/watch?v=MMVdkzeQ848)
 - [The Importance of Monitoring in DevOps](https://www.devopsonline.co.uk/the-importance-of-monitoring-in-devops/)
-- [Understanding Continuous Monitoring in DevOps?](https://medium.com/devopscurry/understanding-continuous-monitoring-in-devops-f6695b004e3b) 
-- [DevOps Monitoring Tools](https://www.youtube.com/watch?v=Zu53QQuYqJ0) 
+- [Understanding Continuous Monitoring in DevOps?](https://medium.com/devopscurry/understanding-continuous-monitoring-in-devops-f6695b004e3b)
+- [DevOps Monitoring Tools](https://www.youtube.com/watch?v=Zu53QQuYqJ0)
 - [Top 5 - DevOps Monitoring Tools](https://www.youtube.com/watch?v=4t71iv_9t_4)
-- [How Prometheus Monitoring works](https://www.youtube.com/watch?v=h4Sl21AKiDg) 
+- [How Prometheus Monitoring works](https://www.youtube.com/watch?v=h4Sl21AKiDg)
 - [Introduction to Prometheus monitoring](https://www.youtube.com/watch?v=5o37CGlNLr8)
 - [Promql cheat sheet with examples](https://www.containiq.com/post/promql-cheat-sheet-with-examples)
 - [Log Management for DevOps | Manage application, server, and cloud logs with Site24x7](https://www.youtube.com/watch?v=J0csO_Shsj0)
 - [Log Management what DevOps need to know](https://devops.com/log-management-what-devops-teams-need-to-know/)
 - [What is ELK Stack?](https://www.youtube.com/watch?v=4X0WLg05ASw)
-- [Fluentd simply explained](https://www.youtube.com/watch?v=5ofsNyHZwWE&t=14s) 
-- [ Fluent Bit explained | Fluent Bit vs Fluentd ](https://www.youtube.com/watch?v=B2IS-XS-cc0)
+- [Fluentd simply explained](https://www.youtube.com/watch?v=5ofsNyHZwWE&t=14s)
+- [Fluent Bit explained | Fluent Bit vs Fluentd](https://www.youtube.com/watch?v=B2IS-XS-cc0)
 
-
-See you on [Day 82](day82.md)
-
+我們[第 82 天](day82.md)見

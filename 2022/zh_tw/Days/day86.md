@@ -1,175 +1,176 @@
 ---
-title: '#90DaysOfDevOps - Backup all the platforms - Day 86'
+title: '#90DaysOfDevOps - 備份所有平台 - 第 86 天'
 published: false
-description: 90DaysOfDevOps - Backup all the platforms
+description: 90DaysOfDevOps - 備份所有平台
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1049058
 ---
-## Backup all the platforms
 
-During this whole challenge we have discussed many different platforms and environments. One thing all of those have in common is the fact they all need some level of data protection!
+## 備份所有平台
 
-Data Protection has been around for many many years but the wealth of data that we have today and the value that this data brings means we have to make sure we are not only resilient to infrastructure failure by having multiple nodes and high availablity across applications but we must also consider that we need a copy of that data, that important data in a safe and secure location if a failure scenario was to occur. 
+在整個挑戰中，我們討論了許多不同的平台和環境。所有這些都有一個共同點，那就是它們都需要某種級別的數據保護！
 
-We hear a lot these days it seems about cybercrime and ransomware, and don't get me wrong this is a massive threat and I stand by the fact that you will be attacked by ransomware. It is not a matter of if it is a matter of when. So even more reason to make sure you have your data secure for when that time arises. However the most common cause for data loss is not ransomware or cybercrime it is simply accidental deletion! 
+數據保護已經存在很多很多年了，但我們今天擁有的數據財富以及這些數據帶來的價值意味著我們必須確保我們不僅通過擁有多個節點和跨應用程式的高可用性來抵禦基礎設施故障，而且我們還必須考慮如果發生故障情況，我們需要在安全可靠的位置擁有該數據、重要數據的副本。
 
-We have all done it, deleted something we shouldn't have and had that instant regret. 
+我們現在似乎聽到了很多關於網絡犯罪和勒索軟體的消息，不要誤會我的意思，這是一個巨大的威脅，我堅持這樣一個事實，即你將受到勒索軟體的攻擊。這不是是否的問題，而是何時的問題。因此，更有理由確保在該時間到來時你的數據是安全的。然而，數據丟失的最常見原因不是勒索軟體或網絡犯罪，而是簡單的意外刪除！
 
-With all of the technology and automation we have discussed during the challenge, the requirement to protect any stateful data or even complex stateless configuration is still there, regardless of platform. 
+我們都做過，刪除了我們不應該刪除的東西，並立即後悔。
+
+通過我們在挑戰期間討論的所有技術和自動化，保護任何有狀態數據甚至複雜的無狀態配置的要求仍然存在，無論平台如何。
 
 ![](Images/Day86_Data1.png)
 
-But we should be able to perform that protection of the data with automation in mind and being able to integrate into our workflows. 
+但我們應該能夠考慮自動化來執行該數據保護，並能夠將其整合到我們的工作流程中。
 
-If we look at what backup is: 
+如果我們看看備份是什麼：
 
-*In information technology, a backup, or data backup is a copy of computer data taken and stored elsewhere so that it may be used to restore the original after a data loss event. The verb form, referring to the process of doing so, is "back up", whereas the noun and adjective form is "backup".*
+_在資訊技術中，備份或數據備份是計算機數據的副本，在其他地方獲取和存儲，以便在數據丟失事件後可以用於恢復原始數據。動詞形式，指的是這樣做的過程，是「back up」，而名詞和形容詞形式是「backup」。_
 
-If we break this down to the simplest form, a backup is a copy and paste of data to a new location. Simply put I could take a backup right now by copying a file from my C: drive to my D: drive and I would then have a copy in case something happened to the C: drive or something was edited wrongly within the files. I could revert back to the copy I have on the D: drive. Now if my computer dies where both the C & D drives live then I am not protected so I have to consider a solution or a copy of data outside of my system maybe onto a NAS drive in my house? But then what happens if something happens to my house, maybe I need to consider storing it on another system in another location, maybe the cloud is an option. Maybe I could store a copy of my important files in several locations to mitigate against the risk of failure? 
+如果我們將其分解為最簡單的形式，備份是將數據複製並粘貼到新位置。簡單地說，我可以通過將檔案從 C: 驅動器複製到 D: 驅動器來立即進行備份，然後我將有一個副本，以防 C: 驅動器發生某些事情或檔案中的某些內容被錯誤編輯。我可以恢復到 D: 驅動器上的副本。現在，如果我的計算機死了，C 和 D 驅動器都住在那裡，那麼我沒有受到保護，所以我必須考慮一個解決方案或系統外數據的副本，也許到我房子裡的 NAS 驅動器？但是如果我的房子發生某些事情，也許我需要考慮將它存儲在另一個位置的另一個系統上，也許雲是一個選項。也許我可以將重要檔案的副本存儲在多個位置以降低故障風險？
 
-### 3-2-1 Backup Methodolgy 
+### 3-2-1 備份方法
 
-Now seems a good time to talk about the 3-2-1 rule or backup methodology. I actually did a [lightening talk](https://www.youtube.com/watch?v=5wRt1bJfKBw) covering this topic. 
+現在似乎是談論 3-2-1 規則或備份方法的好時機。我做了一個[閃電演講](https://www.youtube.com/watch?v=5wRt1bJfKBw)涵蓋這個主題。
 
-We have already mentioned before some of the extreme ends of why we need to protect our data but a few more are listed below: 
+我們之前已經提到了一些關於為什麼需要保護數據的極端原因，但下面列出了更多：
 
 ![](Images/Day86_Data2.png)
 
-Which then allows me to talk about the 3-2-1 methodology. My first copy or backup of my data should be as close to my production system as possible, the reason for this is based on speed to recovery and again going back to that original point about accidental deletion this is going to be the most common reason for recovery. But I want to be storing that on a suitable second media outside of the original or production system. 
+這讓我談論 3-2-1 方法。我的數據的第一個副本或備份應該盡可能接近我的生產系統，這樣做的原因是基於恢復速度，再次回到關於意外刪除的原始點，這將是最常見的恢復原因。但我希望將其存儲在原始或生產系統之外的合適的第二媒體上。
 
-We then want to make sure we also send a copy of our data external or offsite this is where a second location comes in be it another house, building, data centre or the public cloud. 
+然後我們想確保我們還將數據副本發送到外部或異地，這是第二個位置出現的地方，無論是另一個房子、建築物、數據中心還是公共雲。
 
 ![](Images/Day86_Data3.png)
 
-### Backup Responsibility 
+### 備份責任
 
-We have most likely heard all of the myths when it comes to not having to backup, things like "Everything is stateless" I mean if everything is stateless then what is the business? no databases? word documents? Obviously there is a level of responsibility on every individual within the business to ensure they are protected but it is going to come down most likely to the operations teams to provide the backup process for the mission critical applications and data. 
+我們很可能都聽說過關於不需要備份的所有神話，比如「一切都是無狀態的」我的意思是如果一切都是無狀態的，那麼業務是什麼？沒有資料庫？Word 文檔？企業中的每個人都有一級責任來確保他們受到保護，但這很可能會歸結為運營團隊為關鍵任務應用程式和數據提供備份過程。
 
-Another good one is that "High availability is my backup, we have built in multiple nodes into our cluster there is no way this is going down!" apart from when you make a mistake to the database and this is replicated over all the nodes in the cluster, or there is fire, flood or blood scenario that means the cluster is no longer available and with it the important data. It's not about being stubborn it is about being aware of the data and the services, absolutely everyone should factor in high availability and fault tollerance into their architecture but that does not substitute the need for backup! 
+另一個好的是「高可用性是我的備份，我們已經在集群中構建了多個節點，這不可能會宕機！」除了當你對資料庫犯錯誤並且這在集群中的所有節點上複製時，或者有火災、洪水或血液情況，這意味著集群不再可用，隨之而來的是重要數據。這不是關於固執，而是關於了解數據和服務，絕對每個人都應該將高可用性和容錯納入他們的架構，但這不能替代備份的需要！
 
-Replication can also seem to give us the offsite copy of the data and maybe that cluster mentioned above does live across multiple locations, however the first accidental mistake would still be replicated there. But again a Backup requirement should stand alongside application replication or system replication within the environment. 
+複製也可能似乎為我們提供了數據的異地副本，也許上面提到的集群確實跨越多個位置，但是，第一個意外錯誤仍然會在那裡複製。但是，備份要求應該與環境內的應用程式複製或系統複製並存。
 
-Now with all this said you can go to the extreme the other end as well and send copies of data to too many locations which is going to not only cost but also increase risk about being attacked as your surface area is now massively expanded. 
+現在，說了這麼多，你也可以走向另一個極端，將數據副本發送到太多位置，這不僅會花費成本，還會增加被攻擊的風險，因為你的表面積現在大大擴展了。
 
-Anyway, who looks after backup? It will be different within each business but someone should be taking it upon themselves to understand the backup requirements. But also understand the recovery plan! 
+無論如何，誰負責備份？這在每個企業中都會不同，但應該有人承擔理解備份要求的責任。但也要了解恢復計劃！
 
-### Nobody cares till everybody cares 
+### 沒人在乎，直到每個人都在乎
 
-Backup is a prime example, nobody cares about backup until you need to restore something. Alongside the requirement to back our data up we also need to consider how we restore! 
+備份是一個典型的例子，沒人關心備份，直到你需要恢復某些東西。除了備份數據的要求外，我們還需要考慮如何恢復！
 
-With our text document example we are talking very small files so the ability to copy back and forth is easy and fast. But if we are talking about 100GB plus files then this is going to take time. Also we have to consider the level in which we need to recover, if we take a virtual machine for example. 
+對於我們的文字文檔範例，我們談論的是非常小的檔案，因此來回複製的能力很容易且快速。但如果我們談論的是 100GB 以上的檔案，那麼這將需要時間。此外，我們必須考慮需要恢復的級別，如果我們以虛擬機器為例。
 
-We have the whole Virtual Machine, we have the Operating System, Application installation and then if this is a database server then we will have some database files as well. If we have made a mistake and inserted the wrong line of code into our database I probably don't need to restore the whole virtual machine, I want to be granular on what I recover back. 
+我們有整個虛擬機器，我們有作業系統、應用程式安裝，然後如果這是資料庫伺服器，我們還將有一些資料庫檔案。如果我們犯了錯誤並在資料庫中插入了錯誤的代碼行，我可能不需要恢復整個虛擬機器，我想對我恢復的內容進行細粒度控制。
 
-### Backup Scenario 
+### 備份場景
 
-I want to now start building on a scenario to protect some data, specifically I want to protect some files on my local machine (in this case Windows but the tool I am going to use is in fact not only free and open-source but also cross platform) I would like to make sure they are protected to a NAS device I have locally in my home but also into an Object Storage bucket in the cloud. 
+我想現在開始構建一個場景來保護一些數據，具體來說，我想保護本地機器上的一些檔案（在這種情況下是 Windows，但我將使用的工具不僅是免費和開源的，而且是跨平台的）我想確保它們受到保護到我在家中本地擁有的 NAS 設備，但也進入雲中的物件存儲桶。
 
-I want to backup this important data, it just so happens to be the repository for the 90DaysOfDevOps, which yes this is also being sent to GitHub which is probably where you are reading this now but what if my machine was to die and GitHub was down? How would anyone be able to read the content but also how would I potentially be able to restore that data to another service. 
+我想備份這個重要數據，它恰好是 90DaysOfDevOps 的儲存庫，是的，它也被發送到 GitHub，這可能是你現在閱讀的地方，但如果我的機器死了，GitHub 也宕機了怎麼辦？任何人如何能夠閱讀內容，而且我如何能夠將該數據恢復到另一個服務？
 
 ![](Images/Day86_Data5.png)
 
-There are lots of tools that can help us achieve this but I am going to be using a a tool called [Kopia](https://kopia.io/) an Open-Source backup tool which will enable us to encrypt, dedupe and compress our backups whilst being able to send them to many locations. 
+有很多工具可以幫助我們實現這一點，但我將使用一個名為 [Kopia](https://kopia.io/) 的開源備份工具，它將使我們能夠加密、去重和壓縮備份，同時能夠將它們發送到許多位置。
 
-You will find the releases to download [here](https://github.com/kopia/kopia/releases) at the time of writing I will be using v0.10.6. 
+你可以在[這裡](https://github.com/kopia/kopia/releases)找到要下載的發布版本，在撰寫本文時，我將使用 v0.10.6。
 
-### Installing Kopia 
+### 安裝 Kopia
 
-There is a Kopia CLI and GUI, we will be using the GUI but know that you can have a CLI version of this as well for those Linux servers that do not give you a GUI. 
+有一個 Kopia CLI 和 GUI，我們將使用 GUI，但知道你也可以為那些不提供 GUI 的 Linux 伺服器擁有 CLI 版本。
 
-I will be using `KopiaUI-Setup-0.10.6.exe`
+我將使用 `KopiaUI-Setup-0.10.6.exe`
 
-Really quick next next installation and then when you open the application you are greeted with the choice of selecting your storage type that you wish to use as your backup repository. 
+真正快速的下一步安裝，然後當你打開應用程式時，你會看到選擇你希望用作備份儲存庫的存儲類型的選擇。
 
 ![](Images/Day86_Data6.png)
 
-### Setting up a Repository 
+### 設置儲存庫
 
-Firstly we would like to setup a repository using our local NAS device and we are going to do this using SMB, but we could also use NFS I believe. 
+首先，我們想使用本地 NAS 設備設置儲存庫，我們將使用 SMB 來執行此操作，但我相信我們也可以使用 NFS。
 
 ![](Images/Day86_Data7.png)
 
-On the next screen we are going to define a password, this password is used to encrypt the repository contents. 
+在下一個螢幕上，我們將定義密碼，此密碼用於加密儲存庫內容。
 
 ![](Images/Day86_Data8.png)
 
-Now that we have the repository configured we can trigger an adhoc snapshot to start writing data to our it. 
+現在我們已經配置了儲存庫，我們可以觸發臨時快照來開始將數據寫入其中。
 
 ![](Images/Day86_Data9.png)
 
-First up we need to enter a path to what we want to snapshot and our case we want to take a copy of our `90DaysOfDevOps` folder. We will get back to the scheduling aspect shortly. 
+首先，我們需要輸入要快照的路徑，在我們的情況下，我們想複製 `90DaysOfDevOps` 資料夾。我們很快就會回到調度方面。
 
 ![](Images/Day86_Data10.png)
 
-We can define our snapshot retention. 
+我們可以定義快照保留。
 
 ![](Images/Day86_Data11.png)
 
-Maybe there are files or file types that we wish to exclude. 
+也許有一些檔案或檔案類型我們希望排除。
 
 ![](Images/Day86_Data12.png)
 
-If we wanted to define a schedule we could this on this next screen, when you first create this snapshot this is the opening page to define. 
+如果我們想定義一個計劃，我們可以在下一個螢幕上執行此操作，當你首次創建此快照時，這是定義的打開頁面。
 
 ![](Images/Day86_Data13.png)
 
-And you will see a number of other settings that can be handled here. 
+你將看到可以在這裡處理的其他幾個設置。
 
 ![](Images/Day86_Data14.png)
 
-Select snapshot now and the data will be written to your repository. 
+選擇立即快照，數據將寫入你的儲存庫。
 
 ![](Images/Day86_Data15.png)
 
-### Offsite backup to S3 
+### 異地備份到 S3
 
-With Kopia we can through the UI it seems only have one repository configured at a time. But through the UI we can be creative and basically have multiple repository configuration files to choose from to achieve our goal of having a copy local and offsite in Object Storage. 
+使用 Kopia，我們可以通過 UI 似乎一次只能配置一個儲存庫。但通過 UI，我們可以發揮創意，擁有多個儲存庫配置檔案可供選擇，以實現我們在物件存儲中擁有本地和異地副本的目標。
 
-The Object Storage I am choosing to send my data to is going to Google Cloud Storage. I firstly logged into my Google Cloud Platform account and created myself a storage bucket. I already had the Google Cloud SDK installed on my system but running the `gcloud auth application-default login` authenticated me with my account. 
+我選擇將數據發送到的物件存儲是 Google Cloud Storage。我首先登入我的 Google Cloud Platform 帳戶並創建了一個存儲桶。我已經在系統上安裝了 Google Cloud SDK，但運行 `gcloud auth application-default login` 對我進行了身份驗證。
 
 ![](Images/Day86_Data16.png)
 
-I then used the CLI of Kopia to show me the current status of my repository after we added our SMB repository in the previous steps. I did this using the `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config repository status` command. 
+然後我使用 Kopia 的 CLI 來顯示我在上一步中添加 SMB 儲存庫後儲存庫的當前狀態。我使用 `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config repository status` 指令執行此操作。
 
 ![](Images/Day86_Data17.png)
 
-We are now ready to replace for the purpose of the demo the configuration for the repository, what we would probably do if we wanted a long term solution to hit both of these repositories is we would create an `smb.config` file and a `object.config` file and be able to run both of these commands to send our copies of data to each location. To add our repository we ran `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config repository create gcs --bucket 90daysofdevops`
+我們現在準備為演示替換儲存庫的配置，如果我們想要一個長期解決方案來命中這兩個儲存庫，我們可能會做的是我們將創建一個 `smb.config` 檔案和一個 `object.config` 檔案，並能夠運行這兩個指令來將數據副本發送到每個位置。要添加我們的儲存庫，我們運行了 `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config repository create gcs --bucket 90daysofdevops`
 
-The above command is taking into account that the Google Cloud Storage bucket we created is called `90daysofdevops`
+上面的指令考慮到我們創建的 Google Cloud Storage 桶稱為 `90daysofdevops`
 
 ![](Images/Day86_Data18.png)
 
-Now that we have created our new repository we can then run the `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config repository status` command again and will now show the GCS repository configuration. 
+現在我們已經創建了新儲存庫，我們可以運行 `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config repository status` 指令，現在將顯示 GCS 儲存庫配置。
 
 ![](Images/Day86_Data19.png)
 
-Next thing we need to do is create a snapshot and send that to our newly created repository. Using the `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config kopia snapshot create "C:\Users\micha\demo\90DaysOfDevOps"` command we can kick off this process. You can see in the below browser that our Google Cloud Storage bucket now has kopia files based on our backup in place.  
+我們接下來需要做的是創建快照並將其發送到我們新創建的儲存庫。使用 `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config kopia snapshot create "C:\Users\micha\demo\90DaysOfDevOps"` 指令，我們可以啟動此過程。你可以在下面的瀏覽器中看到我們的 Google Cloud Storage 桶現在有基於我們備份的 kopia 檔案。
 
 ![](Images/Day86_Data20.png)
 
-With the above process we are able to settle our requirement of sending our important data to 2 different locations, 1 of which is offsite in Google Cloud Storage and of course we still have our production copy of our data on a different media type. 
+通過上述過程，我們可以滿足將重要數據發送到 2 個不同位置的要求，其中 1 個在 Google Cloud Storage 中異地，當然我們仍然在不同的媒體類型上擁有數據的生產副本。
 
-### Restore
+### 恢復
 
-Restore is another consideration and is very important, Kopia gives us the capability to not only restore to the existing location but also to a new location. 
+恢復是另一個考慮因素，非常重要，Kopia 為我們提供了不僅恢復到現有位置而且恢復到新位置的能力。
 
-If we run the command `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config snapshot list` this will list the snapshots that we have currently in our configured repository (GCS) 
+如果我們運行指令 `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config snapshot list`，這將列出我們當前在配置的儲存庫（GCS）中擁有的快照
 
 ![](Images/Day86_Data21.png)
 
-We can then mount those snapshots directly from GCS using the `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config mount all Z:` command.
+然後我們可以使用 `"C:\Program Files\KopiaUI\resources\server\kopia.exe" --config-file=C:\Users\micha\AppData\Roaming\kopia\repository.config mount all Z:` 指令直接從 GCS 掛載這些快照。
 
 ![](Images/Day86_Data22.png)
 
-We could also restore the snapshot contents using `kopia snapshot restore kdbd9dff738996cfe7bcf99b45314e193` 
+我們還可以使用 `kopia snapshot restore kdbd9dff738996cfe7bcf99b45314e193` 恢復快照內容
 
-Obviously the commands above are very long and this is because I was using the KopiaUI version of the kopia.exe as explained at the top of the walkthrough you can download the kopia.exe and put into a path so you can just use the `kopia` command. 
+上面的指令非常長，這是因為我使用的是 KopiaUI 版本的 kopia.exe，正如在演練頂部解釋的那樣，你可以下載 kopia.exe 並將其放入路徑中，這樣你就可以只使用 `kopia` 指令。
 
-In the next session we will be focusing in on protecting workloads within Kubernetes. 
+在下一節中，我們將專注於保護 Kubernetes 內的工作負載。
 
-## Resources 
+## 資源
 
 - [Kubernetes Backup and Restore made easy!](https://www.youtube.com/watch?v=01qcYSck1c4&t=217s)
 - [Kubernetes Backups, Upgrades, Migrations - with Velero](https://www.youtube.com/watch?v=zybLTQER0yY)
@@ -177,4 +178,4 @@ In the next session we will be focusing in on protecting workloads within Kubern
 - [Disaster Recovery vs. Backup: What's the difference?](https://www.youtube.com/watch?v=07EHsPuKXc0)
 - [Veeam Portability & Cloud Mobility](https://www.youtube.com/watch?v=hDBlTdzE6Us&t=3s)
 
-See you on [Day 87](day87.md)
+我們[第 87 天](day87.md)見
