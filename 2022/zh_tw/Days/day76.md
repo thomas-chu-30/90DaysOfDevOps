@@ -1,74 +1,75 @@
 ---
-title: '#90DaysOfDevOps - ArgoCD Overview - Day 76'
+title: '#90DaysOfDevOps - ArgoCD 概述 - 第 76 天'
 published: false
-description: 90DaysOfDevOps - ArgoCD Overview
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - ArgoCD 概述
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048809
 ---
-## ArgoCD Overview
 
-“Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes”
+## ArgoCD 概述
 
-Version control is the key here, ever made a change to your environment on the fly and have no recollection of that change and because the lights are on and everything is green you continue to keep plodding along? Ever made a change and broke everything or some of everything? You might have known you made the change and you can quickly roll back your change, that bad script or misspelling. Now ever done this a massive scale and maybe it was not you or maybe it was not found straight away and now the business is suffering. Therefore, version control is important. Not only that but “Application definitions, configurations, and environments should be declarative, and version controlled.” On top of this (which comes from ArgoCD), they also mention that “Application deployment and lifecycle management should be automated, auditable, and easy to understand.”
+「Argo CD 是一個聲明式、GitOps 持續交付工具，用於 Kubernetes」
 
-From an Operations background but having played a lot around Infrastructure as Code this is the next step to ensuring all of that good stuff is taken care of along the way with continuous deployment/delivery workflows.
+版本控制是這裡的關鍵，曾經對環境進行即興更改並且沒有回憶起該更改，因為燈亮著並且一切都是綠色的，你繼續繼續前進？曾經進行更改並破壞一切或部分一切？你可能知道你進行了更改，你可以快速回滾更改，那個壞腳本或拼寫錯誤。現在曾經大規模地這樣做，也許不是你，或者也許沒有立即發現，現在業務正在遭受損失。因此，版本控制很重要。不僅如此，「應用程式定義、配置和環境應該是聲明式的，並且版本控制。」除此之外（來自 ArgoCD），他們還提到「應用程式部署和生命週期管理應該是自動化的、可審計的，並且易於理解。」
 
-[What is ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
+從運營背景但已經在基礎設施即代碼方面做了很多工作，這是確保所有這些好東西在持續部署/交付工作流程中得到照顧的下一步。
 
-### Deploying ArgoCD 
+[什麼是 ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 
-We are going to be using our trusty minikube Kubernetes cluster locally again for this deployment. 
+### 部署 ArgoCD
 
-```
+我們將再次在本地使用值得信賴的 minikube Kubernetes 集群進行此部署。
+
+```Shell
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
 ![](Images/Day76_CICD1.png)
 
-Make sure all the ArgoCD pods are up and running with `kubectl get pods -n argocd`
+確保所有 ArgoCD Pod 都啟動並運行 `kubectl get pods -n argocd`
 
 ![](Images/Day76_CICD2.png)
 
-Also let's check everything that we deployed in the namespace with `kubectl get all -n argocd` 
+另外，讓我們檢查我們在命名空間中部署的所有內容 `kubectl get all -n argocd`
 
 ![](Images/Day76_CICD3.png)
 
-When the above is looking good, we then should consider accessing this via the port forward. Using the `kubectl port-forward svc/argocd-server -n argocd 8080:443` command. Do this in a new terminal. 
+當上面看起來不錯時，我們然後應該考慮通過端口轉發訪問它。使用 `kubectl port-forward svc/argocd-server -n argocd 8080:443` 指令。在新終端機中執行此操作。
 
-Then open a new web browser and head to https://localhost:8080 
+然後打開新的網頁瀏覽器並前往 `https://localhost:8080`
 
 ![](Images/Day76_CICD4.png)
 
-To log in you will need a username of admin and then to grab your created secret as your password use the `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo` 
+要登入，你需要用戶名 admin，然後獲取你創建的密鑰作為密碼，使用 `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo`
 
 ![](Images/Day76_CICD5.png)
 
-Once you have logged in you will have your blank CD canvas. 
+一旦你登入，你將擁有空白的 CD 畫布。
 
 ![](Images/Day76_CICD6.png)
 
-### Deploying our application 
+### 部署我們的應用程式
 
-Now we have ArgoCD up and running we can now start using it to deploy our applications from our Git repositories as well as Helm. 
+現在我們已經啟動並運行了 ArgoCD，我們現在可以開始使用它從 Git 儲存庫以及 Helm 部署應用程式。
 
-The application I want to deploy is Pac-Man, yes that's right the famous game and something I use in a lot of demos when it comes to data management, this will not be the last time we see Pac-Man. 
+我想部署的應用程式是 Pac-Man，是的，沒錯，著名的遊戲，我在很多演示中使用它來進行數據管理，這不會是我們最後一次看到 Pac-Man。
 
-You can find the repository for [Pac-Man](https://github.com/MichaelCade/pacman-tanzu.git) here.
+你可以在這裡找到 [Pac-Man](https://github.com/MichaelCade/pacman-tanzu.git) 的儲存庫。
 
-Instead of going through each step using screen shots I thought it would be easier to create a walkthrough video covering the steps taken for this one particular application deployment. 
+與其使用截圖逐步進行，我認為創建一個演練視頻來涵蓋此特定應用程式部署所採取的步驟會更容易。
 
 [ArgoCD Demo - 90DaysOfDevOps](https://www.youtube.com/watch?v=w6J413_j0hA)
 
-Note - During the video there is a service that is never satisfied as the app health being healthy this is because the LoadBalancer type set for the pacman service is in a pending state, in Minikube we do not have a loadbalancer configured. If you would like to test this you could change the YAML for the service to ClusterIP and use port forwarding to play the game. 
+注意 - 在視頻中，有一個服務永遠不滿足，因為應用程式健康狀況是健康的，這是因為為 Pacman 服務設置的 LoadBalancer 類型是 pending，在 Minikube 中我們沒有配置負載平衡器。如果你想測試這個，你可以將服務的 YAML 更改為 ClusterIP 並使用端口轉發來玩遊戲。
 
-This wraps up the CICD Pipelines section, I feel there is a lot of focus on this area in the industry at the moment and you will also hear terms around GitOps also related to the methodologies used within CICD in general. 
+這結束了 CICD Pipelines 部分，我感覺目前業界對這個領域有很多關注，你還會聽到圍繞 GitOps 的術語，也與 CICD 中一般使用的方法相關。
 
-The next section we move into is around Observability, another concept or area that is not new but it is more and more important as we look at our environments in a different way. 
+下一節我們進入的是圍繞可觀察性，另一個概念或領域並不新鮮，但隨著我們以不同方式看待環境，它變得越來越重要。
 
-## Resources
+## 資源
 
 - [Jenkins is the way to build, test, deploy](https://youtu.be/_MXtbjwsz3A)
 - [Jenkins.io](https://www.jenkins.io/)
@@ -79,4 +80,4 @@ The next section we move into is around Observability, another concept or area t
 - [GitHub Actions](https://www.youtube.com/watch?v=R8_veQiYBjI)
 - [GitHub Actions CI/CD](https://www.youtube.com/watch?v=mFFXuXjVgkU)
 
-See you on [Day 76](day76.md)
+我們[第 77 天](day77.md)見

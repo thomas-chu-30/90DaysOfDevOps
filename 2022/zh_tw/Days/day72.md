@@ -1,103 +1,104 @@
 ---
-title: '#90DaysOfDevOps - Getting hands on with Jenkins - Day 72'
+title: '#90DaysOfDevOps - 實際操作 Jenkins - 第 72 天'
 published: false
-description: 90DaysOfDevOps - Getting hands on with Jenkins
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - 實際操作 Jenkins
+tags: 'DevOps, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048829
 ---
-## Getting hands on with Jenkins 
 
-The plan today is to get some hands on with Jenkins and make something happen as part of our CI pipeline, looking at some example code bases that we can use. 
+## 實際操作 Jenkins
 
-### What is a pipeline? 
+今天的計劃是實際操作 Jenkins，並作為 CI pipeline 的一部分讓某些事情發生，查看一些我們可以使用的範例代碼庫。
 
-Before we start we need to know what is a pipeline when it comes to CI, and we already covered this in the session yesterday with the following image. 
+### 什麼是 pipeline？
+
+在開始之前，我們需要知道當談到 CI 時什麼是 pipeline，我們已經在昨天的課程中使用以下圖像涵蓋了這一點。
 
 ![](Images/Day71_CICD4.png)
 
-We want to take the processes or steps above and we want to automate them to get an outcome eventually meaning that we have a deployed application that we can then ship to our customers, end users etc. 
+我們想採用上述過程或步驟，我們想自動化它們以最終獲得結果，這意味著我們有一個可以交付給客戶、最終用戶等的已部署應用程式。
 
-This automated process enables us to have a version control through to our users and customers. Every change, feature enhancement, bug fix etc goes through this automated process confirming that everything is fine without too much manual intervention to ensure our code is good. 
+這個自動化過程使我們能夠通過版本控制到達用戶和客戶。每個更改、功能增強、錯誤修復等都通過這個自動化過程，確認一切正常，無需太多手動干預來確保我們的代碼是好的。
 
-This process involves building the software in a reliable and repeatable manner, as well as progressing the built software (called a "build") through multiple stages of testing and deployment.
+這個過程涉及以可靠和可重複的方式構建軟體，以及通過多個測試和部署階段推進構建的軟體（稱為「構建」）。
 
-A jenkins pipeline, is written into a text file called a Jenkinsfile. Which itself should be committed to a source control repository. This is also known as Pipeline as code, we could also very much liken this to Infrastructure as code which we covered a few weeks back. 
+Jenkins pipeline 被寫入稱為 Jenkinsfile 的文字檔案中。它本身應該提交到源控制儲存庫。這也被稱為 Pipeline as code，我們也可以非常類似地將其與我們幾週前涵蓋的 Infrastructure as code 進行比較。
 
-[Jenkins Pipeline Definition](https://www.jenkins.io/doc/book/pipeline/#ji-toolbar) 
+[Jenkins Pipeline 定義](https://www.jenkins.io/doc/book/pipeline/#ji-toolbar)
 
-### Deploying Jenkins 
+### 部署 Jenkins
 
-I had some fun deploying Jenkins, You will notice from the [documentation](https://www.jenkins.io/doc/book/installing/) that there are many options on where you can install Jenkins. 
+我在部署 Jenkins 時有一些樂趣，你會注意到從[文件](https://www.jenkins.io/doc/book/installing/)中，你可以在哪裡安裝 Jenkins 有很多選項。
 
-Given that I have minikube on hand and we have used this a number of times I wanted to use this for this task also. (also it is free!) Although the steps given in the  [Kubernetes Installation](https://www.jenkins.io/doc/book/installing/kubernetes/) had me hitting a wall and not getting things up and running, you can compare the two when I document my steps here. 
+考慮到我手頭有 minikube，我們已經多次使用它，我也想將此用於此任務。（也是免費的！）儘管 [Kubernetes 安裝](https://www.jenkins.io/doc/book/installing/kubernetes/)中給出的步驟讓我碰壁並且沒有讓事情啟動並運行，你可以在我在這裡記錄我的步驟時比較兩者。
 
-The first step is to get our minikube cluster up and running, we can simply do this with the `minikube start` command. 
+第一步是啟動並運行 minikube 集群，我們可以簡單地使用 `minikube start` 指令執行此操作。
 
 ![](Images/Day72_CICD1.png)
 
-I have added a folder with all the YAML configuration and values that can be found [here](days/CICD/Jenkins) Now that we have our cluster we can run the following to create our jenkins namespace. `kubectl create -f jenkins-namespace.yml`
+我添加了一個包含所有 YAML 配置和值的資料夾，可以在[這裡](CICD/Jenkins)找到。現在我們有了集群，我們可以運行以下內容來創建 jenkins 命名空間。`kubectl create -f jenkins-namespace.yml`
 
 ![](Images/Day72_CICD2.png)
 
-We will be using Helm to deploy jenkins into our cluster, we covered helm in the Kubernetes section. We firstly need to add the jenkinsci helm repository `helm repo add jenkinsci https://charts.jenkins.io` then update our charts `helm repo update`. 
+我們將使用 Helm 將 Jenkins 部署到集群中，我們在 Kubernetes 部分涵蓋了 helm。我們首先需要添加 jenkinsci helm 儲存庫 `helm repo add jenkinsci https://charts.jenkins.io`，然後更新我們的 charts `helm repo update`。
 
 ![](Images/Day72_CICD3.png)
 
-The idea behind Jenkins is that it is going to save state for its pipelines, you can run the above helm installation without persistence but if those pods are rebooted, changed or modified then any pipeline or configuration you have made will be lost. We will create a volume for persistence using the jenkins-volume.yml file with the `kubectl apply -f jenkins-volume.yml` command. 
+Jenkins 背後的想法是它將為其 pipelines 保存狀態，你可以在沒有持久性的情況下運行上述 helm 安裝，但如果這些 Pod 重新啟動、更改或修改，那麼你創建的任何 pipeline 或配置都將丟失。我們將使用 jenkins-volume.yml 檔案創建一個用於持久性的卷，使用 `kubectl apply -f jenkins-volume.yml` 指令。
 
 ![](Images/Day72_CICD4.png)
 
-We also need a service account which we can create using this yaml file and command. `kubectl apply -f jenkins-sa.yml` 
+我們還需要一個服務帳戶，我們可以使用此 YAML 檔案和指令創建。`kubectl apply -f jenkins-sa.yml`
 
 ![](Images/Day72_CICD5.png)
 
-At this stage we are good to deploy using the helm chart, we will firstly define our chart using `chart=jenkinsci/jenkins` and then we will deploy using this command where the jenkins-values.yml contain the persistence and service accounts that we previously deployed to our cluster. `helm install jenkins -n jenkins -f jenkins-values.yml $chart`
+在這個階段，我們可以使用 helm chart 進行部署，我們首先使用 `chart=jenkinsci/jenkins` 定義我們的 chart，然後我們將使用此指令進行部署，其中 jenkins-values.yml 包含我們之前部署到集群的持久性和服務帳戶。`helm install jenkins -n jenkins -f jenkins-values.yml $chart`
 
 ![](Images/Day72_CICD6.png)
 
-At this stage our pods will be pulling the image but the pod will not have access to the storage so no configuration can be started in terms of getting Jenkins up and running. 
+在這個階段，我們的 Pod 將拉取圖像，但 Pod 將無法訪問儲存，因此無法開始配置以啟動和運行 Jenkins。
 
-This is where the documentation did not help me massively understand what needed to happen. But we can see that we have no permission to start our jenkins install. 
+這就是文件沒有幫助我大量理解需要發生什麼的地方。但我們可以看到我們沒有權限啟動 Jenkins 安裝。
 
 ![](Images/Day72_CICD7.png)
 
-In order to fix the above or resolve, we need to make sure we provide access or the right permission in order for our jenkins pods to be able to write to this location that we have suggested. We can do this by using the `minikube ssh` which will put us into the minikube docker container we are running on, and then using `sudo chown -R 1000:1000 /data/jenkins-volume` we can ensure we have permissions set on our data volume. 
+要修復上述問題或解決它，我們需要確保我們提供訪問權限或正確的權限，以便我們的 Jenkins Pod 能夠寫入我們建議的此位置。我們可以通過使用 `minikube ssh` 來執行此操作，這將使我們進入我們正在運行的 minikube docker 容器，然後使用 `sudo chown -R 1000:1000 /data/jenkins-volume`，我們可以確保在數據卷上設置了權限。
 
 ![](Images/Day72_CICD8.png)
 
-The above process should fix the pods, however if not you can force the pods to be refreshed with the  `kubectl delete pod jenkins-0 -n jenkins` command. At this point you should have 2/2 running pods called jenkins-0. 
+上述過程應該修復 Pod，但是，如果沒有，你可以使用 `kubectl delete pod jenkins-0 -n jenkins` 指令強制刷新 Pod。此時，你應該有 2/2 運行的 Pod，稱為 jenkins-0。
 
 ![](Images/Day72_CICD9.png)
 
-We now need our admin password and we can this using the following command. `kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/chart-admin-password && echo`
+我們現在需要管理員密碼，我們可以使用以下指令獲取此密碼。`kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/chart-admin-password && echo`
 
 ![](Images/Day72_CICD10.png)
 
-Now open a new terminal as we are going to use the `port-forward` command to allow us to gain access from our workstation. `kubectl --namespace jenkins port-forward svc/jenkins 8080:8080`
+現在打開一個新終端機，因為我們將使用 `port-forward` 指令允許我們從工作站獲得訪問權限。`kubectl --namespace jenkins port-forward svc/jenkins 8080:8080`
 
 ![](Images/Day72_CICD11.png)
 
-We should now be able to open a browser and login to http://localhost:8080 and authenticate with the username: admin and password we gathered in a previous step. 
+我們現在應該能夠打開瀏覽器並登入 `http://localhost:8080`，並使用用戶名：admin 和我們在上一步中收集的密碼進行身份驗證。
 
 ![](Images/Day72_CICD12.png)
 
-When we have authenticated, our Jenkins welcome page should look something like this: 
+當我們進行身份驗證後，我們的 Jenkins 歡迎頁面應該看起來像這樣：
 
 ![](Images/Day72_CICD13.png)
 
-From here, I would suggest heading to "Manage Jenkins" and you will see "Manage Plugins" which will have some updates available. Select all of those plugins and choose "Download now and install after restart" 
+從這裡，我建議前往「Manage Jenkins」，你會看到「Manage Plugins」，這將有一些可用的更新。選擇所有這些插件並選擇「Download now and install after restart」
 
 ![](Images/Day72_CICD14.png)
 
-If you want to go even further and automate the deployment of Jenkins using a shell script this great repository was shared with me on twitter [mehyedes/nodejs-k8s](https://github.com/mehyedes/nodejs-k8s/blob/main/docs/automated-setup.md)
+如果你想更進一步並使用 shell 腳本自動化 Jenkins 的部署，這個很棒的儲存庫在 Twitter 上與我分享 [mehyedes/nodejs-k8s](https://github.com/mehyedes/nodejs-k8s/blob/main/docs/automated-setup.md)
 
+### Jenkinsfile
 
-### Jenkinsfile 
-Now we have Jenkins deployed in our Kubernetes cluster, we can now go back and think about this Jenkinsfile. 
+現在我們已經在 Kubernetes 集群中部署了 Jenkins，我們現在可以回去思考這個 Jenkinsfile。
 
-Every Jenkinsfile will likely start like this, Which is firstly where you would define your steps of your pipeline, in this instance you have Build > Test > Deploy. But we are not really doing anything other than using the `echo` command to call out the specific stages. 
+每個 Jenkinsfile 可能都會這樣開始，這首先是你定義 pipeline 步驟的地方，在這種情況下，你有 Build > Test > Deploy。但除了使用 `echo` 指令調用特定階段外，我們沒有做任何其他事情。
 
 ```
 
@@ -126,29 +127,30 @@ pipeline {
 }
 
 ```
-In our Jenkins dashboard, select "New Item" give the item a name, I am going to "echo1" I am going to suggest that this is a Pipeline. 
+
+在我們的 Jenkins 儀表板中，選擇「New Item」給項目一個名稱，我將使用「echo1」，我將建議這是一個 Pipeline。
 
 ![](Images/Day72_CICD15.png)
 
-Hit Ok and you will then have the tabs (General, Build Triggers, Advanced Project Options and Pipeline) for a simple test we are only interested in Pipeline. Under Pipeline you have the ability to add a script, we can copy and paste the above script into the box. 
+點擊確定，然後你將有標籤（General、Build Triggers、Advanced Project Options 和 Pipeline），對於簡單測試，我們只對 Pipeline 感興趣。在 Pipeline 下，你可以添加腳本，我們可以將上面的腳本複製並粘貼到框中。
 
-As we said above this is not going to do much but it will show us the stages of our Build > Test > Deploy
+正如我們上面所說，這不會做太多，但它會向我們展示 Build > Test > Deploy 的階段
 
 ![](Images/Day72_CICD16.png)
 
-Click Save, We can now run our build using the build now highlighted below. 
+點擊保存，我們現在可以使用下面突出顯示的 build now 運行構建。
 
 ![](Images/Day72_CICD17.png)
 
-We should also open a terminal and run the `kubectl get pods -n jenkins` to see what happens there. 
+我們還應該打開終端機並運行 `kubectl get pods -n jenkins` 來查看那裡發生了什麼。
 
 ![](Images/Day72_CICD18.png)
 
-Ok, very simple stuff but we can now see that our Jenkins deployment and installation is working correctly and we can start to see the building blocks of the CI pipeline here. 
+好的，非常簡單的東西，但我們現在可以看到我們的 Jenkins 部署和安裝正常工作，我們可以開始在這裡看到 CI pipeline 的構建塊。
 
-In the next section we will be building a Jenkins Pipeline. 
+在下一節中，我們將構建一個 Jenkins Pipeline。
 
-## Resources
+## 資源
 
 - [Jenkins is the way to build, test, deploy](https://youtu.be/_MXtbjwsz3A)
 - [Jenkins.io](https://www.jenkins.io/)
@@ -159,4 +161,4 @@ In the next section we will be building a Jenkins Pipeline.
 - [GitHub Actions](https://www.youtube.com/watch?v=R8_veQiYBjI)
 - [GitHub Actions CI/CD](https://www.youtube.com/watch?v=mFFXuXjVgkU)
 
-See you on [Day 73](day73.md)
+我們[第 73 天](day73.md)見

@@ -1,63 +1,64 @@
 ---
-title: '#90DaysOfDevOps - GitHub Actions Overview - Day 75'
+title: '#90DaysOfDevOps - GitHub Actions 概述 - 第 75 天'
 published: false
-description: 90DaysOfDevOps - GitHub Actions Overview
+description: 90DaysOfDevOps - GitHub Actions 概述
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1049070
 ---
-## GitHub Actions Overview
 
-In this section I wanted to move on and take a look at maybe a different approach to what we just spent time on. GitHub Actions is where we will focus on in this session. 
+## GitHub Actions 概述
 
-GitHub Actions is a CI/CD platform that allows us to build, test and deploy amongst other tasks our pipeline. It has the concept of workflows that build and test against a GitHub repository. You could also use GitHub Actions to drive other workflows based on events that happen within your repository. 
+在本節中，我想繼續並查看我們剛剛花時間做的事情的不同方法。GitHub Actions 是我們在本節中將專注的內容。
 
-### Workflows
+GitHub Actions 是一個 CI/CD 平台，允許我們在 pipeline 中構建、測試和部署以及其他任務。它具有構建和測試 GitHub 儲存庫的工作流程概念。你還可以使用 GitHub Actions 根據儲存庫中發生的事件驅動其他工作流程。
 
-Overall, in GitHub Actions our task is called a **Workflow**. 
+### 工作流程
 
-- A **workflow** is the configurable automated process. 
-- Defined as YAML files.
-- Contain and run one or more **jobs**
-- Will run when triggered by an **event** in your repository or can be ran manually 
-- You can multiple workflows per repository
-- A **workflow** will contain a **job** and then **steps** to achieve that **job**
-- Within our **workflow** we will also have a **runner** on which our **workflow** runs. 
+總的來說，在 GitHub Actions 中，我們的任務稱為**工作流程**。
 
-For example, you can have one **workflow** to build and test pull requests, another **workflow** to deploy your application every time a release is created, and still another **workflow** that adds a label every time someone opens a new issue.
+- **工作流程**是可配置的自動化過程。
+- 定義為 YAML 檔案。
+- 包含並運行一個或多個**作業**
+- 將在儲存庫中的**事件**觸發時運行，或可以手動運行
+- 每個儲存庫可以有多個工作流程
+- **工作流程**將包含**作業**，然後是實現該**作業**的**步驟**
+- 在我們的**工作流程**中，我們還將有一個**運行器**，我們的**工作流程**在其上運行。
 
-### Events 
+例如，你可以有一個**工作流程**來構建和測試 pull requests，另一個**工作流程**在每次創建發布時部署應用程式，還有另一個**工作流程**在有人打開新問題時添加標籤。
 
-Events are a specific event in a repository that triggers the workflow to run. 
+### 事件
 
-### Jobs 
+事件是儲存庫中觸發工作流程運行的特定事件。
 
-A job is a set of steps in the workflow that execute on a runner. 
+### 作業
 
-### Steps
+作業是工作流程中在運行器上執行的步驟集。
 
-Each step within the job can be a shell script that gets executed, or an action. Steps are executed in order and they are dependant on each other. 
+### 步驟
 
-### Actions 
+作業中的每個步驟可以是執行的 shell 腳本或操作。步驟按順序執行，它們相互依賴。
 
-A repeatable custom application used for frequently repeated tasks. 
+### 操作
 
-### Runners
+可重複的自定義應用程式用於頻繁重複的任務。
 
-A runner is a server that runs the workflow, each runner runs a single job at a time. GitHub Actions provides the ability to run Ubuntu Linux, Microsoft Windows, and macOS runners. You can also host your own on specific OS or hardware. 
+### 運行器
 
-Below you can see how this looks, we have our event triggering our workflow > our workflow consists of two jobs > within our jobs we then have steps and then we have actions. 
+運行器是運行工作流程的伺服器，每個運行器一次運行一個作業。GitHub Actions 提供運行 Ubuntu Linux、Microsoft Windows 和 macOS 運行器的能力。你還可以在特定 OS 或硬體上託管自己的運行器。
+
+下面你可以看到這看起來如何，我們有觸發工作流程的事件 > 我們的工作流程由兩個作業組成 > 在我們的作業中，我們有步驟，然後我們有操作。
 
 ![](Images/Day75_CICD1.png)
 
-### YAML 
+### YAML
 
-Before we get going with a real use case lets take a quick look at the above image in the form of an example YAML file. 
+在我們開始實際用例之前，讓我們快速查看上面圖像的 YAML 檔案範例形式。
 
-I have added # to comment in where we can find the components of the YAML workflow. 
+我已經添加了 # 到註釋，我們可以在其中找到 YAML 工作流程的組件。
 
-```
+```Yaml
 #Workflow
 name: 90DaysOfDevOps
 #Event
@@ -78,19 +79,19 @@ jobs:
       - run: bats -v
 ```
 
-### Getting Hands-On with GitHub Actions 
+### 實際操作 GitHub Actions
 
-I think there are a lot of options when it comes to GitHub Actions, yes it will satisfy your CI/CD needs when it comes to Build, Test, Deploying your code and the continued steps thereafter. 
+我認為當談到 GitHub Actions 時有很多選項，是的，當談到構建、測試和部署代碼以及之後的持續步驟時，它將滿足你的 CI/CD 需求。
 
-I can see lots of options and other automated tasks that we could use GitHub Actions for. 
+我可以看到很多選項和其他自動化任務，我們可以使用 GitHub Actions 來完成。
 
-### Using GitHub Actions for Linting your code 
+### 使用 GitHub Actions 進行代碼 Linting
 
-One option is making sure your code is clean and tidy within your repository. This will be our first example demo. 
+一個選項是確保儲存庫中的代碼乾淨整潔。這將是我們的第一個範例演示。
 
-I am going to be using some example code linked in one of the resources for this section, we are going to use `github/super-linter` to check against our code. 
+我將使用本節資源中連結的一些範例代碼，我們將使用 `GitHub/super-linter` 來檢查我們的代碼。
 
-```
+```Yaml
 name: Super-Linter
 
 on: push
@@ -111,67 +112,67 @@ jobs:
 ```
 
 **github/super-linter**
-You can see from the above that for one of our steps we have an action called github/super-linter and this is referring to a step that has already been written by the community. You can find out more about this here [Super-Linter](https://github.com/github/super-linter)
+你可以從上面看到，對於我們的一個步驟，我們有一個名為 GitHub/super-linter 的操作，這是指向已經由社群編寫的步驟。你可以在這裡找到更多關於此的資訊 [Super-Linter](https://github.com/github/super-linter)
 
-"This repository is for the GitHub Action to run a Super-Linter. It is a simple combination of various linters, written in bash, to help validate your source code."
+「此儲存庫用於運行 Super-Linter 的 GitHub Action。它是用 bash 編寫的各種 linters 的簡單組合，以幫助驗證源代碼。」
 
-Also in the code snippet above it mentions GITHUB_TOKEN so I was interested to find out why and what this does and needed for. 
+同樣在上面的代碼片段中，它提到了 GITHUB_TOKEN，所以我有興趣找出為什麼以及它做什麼和需要什麼。
 
-"NOTE: If you pass the Environment variable `GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}` in your workflow, then the GitHub Super-Linter will mark the status of each individual linter run in the Checks section of a pull request. Without this you will only see the overall status of the full run. **There is no need to set the GitHub Secret as it is automatically set by GitHub, it only needs to be passed to the action.**" 
+「注意：如果你在工作流程中傳遞環境變數 `GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}`，那麼 GitHub Super-Linter 將在 pull request 的 Checks 部分標記每個 linter 運行的狀態。沒有這個，你只會看到完整運行的整體狀態。**不需要設置 GitHub Secret，因為它是由 GitHub 自動設置的，只需要傳遞給操作。**」
 
-The bold text being important to note at this stage. We are using it but we do not need to set any environment variable within our repository. 
+粗體文字在這個階段很重要。我們正在使用它，但我們不需要在儲存庫內設置任何環境變數。
 
-We will use our repository that we used in our Jenkins demo to test against.[Jenkins-HelloWorld](https://github.com/MichaelCade/Jenkins-HelloWorld)
+我們將使用在 Jenkins 演示中使用的儲存庫進行測試。[Jenkins-HelloWorld](https://github.com/MichaelCade/Jenkins-HelloWorld)
 
-Here is our repository as we left it in the Jenkins sessions. 
+這是我們在 Jenkins 課程中留下的儲存庫。
 
 ![](Images/Day75_CICD2.png)
 
-In order for us to take advantage we have to use the Actions tab above to choose from the marketplace which I will cover shortly or we can create our own files using our super-linter code above, in order to create your own you must create a new file in your repository at this exact location. `.github/workflows/workflow_name` obviously making sure the workflow_name is something useful for you recognise, within here we can have many different workflows performing different jobs and tasks against our repository. 
+為了利用這一點，我們必須使用上面的 Actions 標籤從市場中選擇，我將很快涵蓋，或者我們可以使用上面的 super-linter 代碼創建我們的檔案，要創建你自己的，你必須在儲存庫中的確切位置創建新檔案。`.github/workflows/workflow_name` 顯然確保 workflow_name 對你來說是有用的識別，在這裡我們可以有很多不同的工作流程對我們的儲存庫執行不同的作業和任務。
 
-We are going to create `.github/workflows/super-linter.yml`
+我們將創建 `.github/workflows/super-linter.yml`
 
 ![](Images/Day75_CICD3.png)
 
-We can then paste our code and commit the code to our repository, if we then head to the Actions tab we will now see our Super-Linter workflow listed as per below, 
+然後我們可以粘貼我們的代碼並將代碼提交到儲存庫，如果我們然後前往 Actions 標籤，我們現在將看到我們的 Super-Linter 工作流程列在下面，
 
 ![](Images/Day75_CICD4.png)
 
-We defined in our code that this workflow would run when we pushed anything to our repository, so in pushing the super-linter.yml to our repository we triggered the workflow. 
+我們在代碼中定義，當我們向儲存庫推送任何內容時，此工作流程將運行，因此在將 super-linter.yml 推送到儲存庫時，我們觸發了工作流程。
 
 ![](Images/Day75_CICD5.png)
 
-As you can see from the above we have some errors most likely with my hacking ability vs coding ability. 
+正如你可以從上面看到的，我們有一些錯誤，很可能是我的黑客能力與我的編碼能力相比。
 
-Although actually it was not my code at least not yet, in running this and getting an error I found this [issue](https://github.com/github/super-linter/issues/2255)
+雖然這不是我的代碼，至少還沒有，在運行這個並得到錯誤時，我發現了這個[問題](https://github.com/github/super-linter/issues/2255)
 
-Take #2 I changed the version of Super-Linter from version 3 to 4 and have ran the task again. 
+第二次嘗試，我將 Super-Linter 的版本從版本 3 更改為 4，並再次運行了任務。
 
 ![](Images/Day75_CICD6.png)
 
-As expected my hacker coding brought up some issues and you can see them here in the [workflow](https://github.com/MichaelCade/Jenkins-HelloWorld/runs/5600278515?check_suite_focus=true)
+正如預期的那樣，我的黑客編碼帶來了一些問題，你可以在[工作流程](https://github.com/MichaelCade/Jenkins-HelloWorld/runs/5600278515?check_suite_focus=true)中看到它們
 
-I wanted to show the look now on our repository when something within the workflow has failed or reported back an error.
+我想展示當工作流程中的某些內容失敗或報告錯誤時，我們儲存庫現在的樣子。
 
 ![](Images/Day75_CICD7.png)
 
-Now if we resolve the issue with my code and push the changes our workflow will run again (you can see from the image it took a while to iron out our "bugs") Deleting a file is probably not recommended but it is a very quick way to show the issue being resolved. 
+現在如果我們解決代碼中的問題並推送更改，我們的工作流程將再次運行（你可以從圖像中看到，解決我們的「錯誤」需要一段時間）刪除檔案可能不推薦，但這是顯示問題已解決的非常快速的方法。
 
 ![](Images/Day75_CICD8.png)
 
-If you hit the new workflow button highlighted above, this is going to open the door to a huge plethora of actions. One thing you might have noticed throughout this challenge is that we don't want to reinvent the wheel we want to stand on the shoulders of giants and share our code, automations and skills far and wide to make our lives easier. 
+如果你點擊上面突出顯示的新工作流程按鈕，這將為大量操作打開大門。你可能在整個挑戰中注意到的一件事是，我們不想重新發明輪子，我們想站在巨人的肩膀上，廣泛分享我們的代碼、自動化和技能，使我們的生活更輕鬆。
 
 ![](Images/Day75_CICD9.png)
 
-Oh, I didn't show you the green tick on the repository when our workflow was successful. 
+哦，我沒有向你展示當我們的工作流程成功時儲存庫上的綠色勾號。
 
 ![](Images/Day75_CICD10.png)
 
-I think that covers things from a foundational point of view for GitHub Actions but if you are anything like me then you are probably seeing how else GitHub Actions can be used to automate a lot of tasks. 
+我認為這從基礎角度涵蓋了 GitHub Actions 的內容，但如果你像我一樣，那麼你可能會看到 GitHub Actions 還可以用於自動化許多其他任務。
 
-Next up we will cover another area of CD, we will be looking into ArgoCD to deploy our applications out into our environments. 
+接下來，我們將涵蓋 CD 的另一個領域，我們將研究 ArgoCD 以將應用程式部署到我們的環境中。
 
-## Resources
+## 資源
 
 - [Jenkins is the way to build, test, deploy](https://youtu.be/_MXtbjwsz3A)
 - [Jenkins.io](https://www.jenkins.io/)
@@ -182,4 +183,4 @@ Next up we will cover another area of CD, we will be looking into ArgoCD to depl
 - [GitHub Actions](https://www.youtube.com/watch?v=R8_veQiYBjI)
 - [GitHub Actions CI/CD](https://www.youtube.com/watch?v=mFFXuXjVgkU)
 
-See you on [Day 76](day76.md)
+我們[第 76 天](day76.md)見
