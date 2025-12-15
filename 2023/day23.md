@@ -1,40 +1,40 @@
-# Artifacts Scan
+# 工件掃描
 
-In the previous two days we learned why and how to scan container images.
+在過去的兩天中，我們學習了為什麼以及如何掃描容器映像。
 
-However, usually our infrastructure consists of more than just container images.
-Yes, our services will run as containers, but around them we can also have other artifacts like:
+然而，通常我們的基礎設施不僅僅是容器映像。
+是的，我們的服務將作為容器運行，但在它們周圍我們還可以有其他工件，例如：
 
-- Kubernetes manifests
-- Helm templates
-- Terraform code
+- Kubernetes 清單
+- Helm 模板
+- Terraform 代碼
 
-For maximum security, you would be scanning all the artifacts that you use for your environment, not only your container images.
+為了最大安全性，您將掃描用於環境的所有工件，而不僅僅是容器映像。
 
-The reason for that is that even if you have the most secure Docker images with no CVEs,
-but run then on an insecure infrastructure with bad Kubernetes configuration,
-then your environment will not be secure.
+原因是即使您有最安全的 Docker 映像且沒有 CVE，
+但在具有不良 Kubernetes 配置的不安全基礎設施上運行它們，
+那麼您的環境將不安全。
 
-**Each system is as secure as its weakest link.**
+**每個系統都與其最薄弱的環節一樣安全。**
 
-Today we are going to take a look at different tools for scanning artifacts different than container images.
+今天我們將查看用於掃描除容器映像之外的不同工件的不同工具。
 
-## Kubernetes manifests
+## Kubernetes 清單
 
-Scanning Kubernetes manifests can expose misconfigurations and security bad practices like:
+掃描 Kubernetes 清單可以暴露錯誤配置和安全不良實踐，例如：
 
-- running containers as root
-- running containers with no resource limits
-- giving too much and too powerful capabilities to the containers
-- hardcoding secrets in the templates, etc.
+- 以 root 身份運行容器
+- 在沒有資源限制的情況下運行容器
+- 給容器太多和太強大的功能
+- 在模板中硬編碼密鑰等
 
-All of these are part of the security posture of our Kubernetes workloads, and having a bad posture in security is just as bad as having a bad posture in real-life.
+所有這些都是我們 Kubernetes 工作負載安全態勢的一部分，在安全方面有不良態勢就像在現實生活中有不良態勢一樣糟糕。
 
-One popular open-source tool for scanning Kubernetes manifests is [KubeSec](https://kubesec.io/).
+一個流行的用於掃描 Kubernetes 清單的開源工具是 [KubeSec](https://kubesec.io/)。
 
-It outputs a list of misconfiguration.
+它輸出一系列錯誤配置。
 
-For example, this Kubernetes manifest taken from their docs has a lot of misconfigurations like missing memory limits, running as root, etc.
+例如，這個來自其文檔的 Kubernetes 清單有很多錯誤配置，如缺少內存限制、以 root 身份運行等。
 
 ```yaml
 apiVersion: v1
@@ -49,7 +49,7 @@ spec:
         runAsNonRoot: false
 ```
 
-Let's scan it and look at the results.
+讓我們掃描它並查看結果。
 
 ```shell
 $ kubesec scan kubesec-test.yaml
@@ -115,48 +115,48 @@ $ kubesec scan kubesec-test.yaml
 ]
 ```
 
-As we see it produced 12 warnings about thing in this manifests we would want to change.
-Each warning has an explanation telling us WHY we need to fix it.
+正如我們看到的，它產生了 12 個關於此清單中我們想要更改的警告。
+每個警告都有一個解釋，告訴我們為什麼需要修復它。
 
-### Others
+### 其他
 
-Other such tools include [kube-bench](https://github.com/aquasecurity/kube-bench), [kubeaudit](https://github.com/Shopify/kubeaudit) and [kube-score](https://github.com/zegl/kube-score).
+其他此類工具包括 [kube-bench](https://github.com/aquasecurity/kube-bench)、[kubeaudit](https://github.com/Shopify/kubeaudit) 和 [kube-score](https://github.com/zegl/kube-score)。
 
-They work in the same or similar manner.
-You give them a resource to analyze and they output a list of things to fix.
+它們以相同或類似的方式工作。
+您給它們一個資源進行分析，它們輸出一系列要修復的東西。
 
-They can be used in a CI setup.
-Some of them can also be used as [Kubernetes validating webhook](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/), and can block resources from being created if they violate a policy.
+它們可以在 CI 設置中使用。
+其中一些還可以用作 [Kubernetes 驗證 webhook](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/)，如果資源違反策略，可以阻止創建資源。
 
-## Helm templates
+## Helm 模板
 
-[Helm](https://helm.sh/) templates are basically templated Kubernetes resources that can be reused and configured with different values.
+[Helm](https://helm.sh/) 模板基本上是模板化的 Kubernetes 資源，可以使用不同的值重用和配置。
 
-There are some tools like [Snyk](https://docs.snyk.io/products/snyk-infrastructure-as-code/scan-kubernetes-configuration-files/scan-and-fix-security-issues-in-helm-charts) that have *some* support for scanning Helm templates for misconfigurations the same way we are scanning Kubernetes resources.
+有一些工具，如 [Snyk](https://docs.snyk.io/products/snyk-infrastructure-as-code/scan-kubernetes-configuration-files/scan-and-fix-security-issues-in-helm-charts)，對掃描 Helm 模板以查找錯誤配置有 *一些* 支持，就像我們掃描 Kubernetes 資源一樣。
 
-However, the best way to approach this problem is to just scan the final templated version of your Helm charts.
-E.g. use the `helm template` to substitute the templated values with actual ones and just scan that via the tools provided above.
+然而，解決這個問題的最佳方法是只掃描 Helm charts 的最終模板化版本。
+例如，使用 `helm template` 將模板化值替換為實際值，然後通過上面提供的工具掃描它。
 
 ## Terraform
 
-The most popular tool for scanning misconfigurations in Terraform code is [tfsec](https://github.com/aquasecurity/tfsec).
+用於掃描 Terraform 代碼中錯誤配置的最受歡迎的工具是 [tfsec](https://github.com/aquasecurity/tfsec)。
 
-It uses static analysis to spot potential issues in your code.
+它使用靜態分析來發現代碼中的潛在問題。
 
-It support multiple cloud providers and points out issues specific to the one you are using.
+它支持多個雲提供商，並指出特定於您正在使用的提供商的問題。
 
-For example, it has checks for [using the default VPC in AWS](https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-default-vpc/),
-[hardcoding secrets in the EC2 user data](https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-secrets-in-launch-template-user-data/),
-or [allowing public access to your ECR container images](https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ecr/no-public-access/).
+例如，它有檢查 [在 AWS 中使用默認 VPC](https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-default-vpc/)，
+[在 EC2 用戶數據中硬編碼密鑰](https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ec2/no-secrets-in-launch-template-user-data/)，
+或 [允許對您的 ECR 容器映像進行公共訪問](https://aquasecurity.github.io/tfsec/v1.28.1/checks/aws/ecr/no-public-access/)。
 
-It allow you to enable/disable checks and to ignore warnings via inline comments.
+它允許您通過內聯註釋啟用/禁用檢查並忽略警告。
 
-It also allows you to define your own policies via [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/).
+它還允許您通過 [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/) 定義自己的策略。
 
-## Summary
+## 總結
 
-A Secure SDLC would include scanning of all artifacts that end up in our production environment, not just the container images.
+安全 SDLC 將包括掃描最終進入生產環境的所有工件，而不僅僅是容器映像。
 
-Today we learned how to scan non-container artifacts like Kubernetes manifests, Helm charts and Terraform code.
-The tools we looked at are free and open-source and can be integrated into any workflow or CI pipeline.
-See you on [Day 24](day24.md).
+今天我們學習了如何掃描非容器工件，如 Kubernetes 清單、Helm charts 和 Terraform 代碼。
+我們查看的工具是免費和開源的，可以整合到任何工作流程或 CI 管道中。
+在 [Day 24](day24.md) 見。

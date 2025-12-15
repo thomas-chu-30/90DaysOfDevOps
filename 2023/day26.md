@@ -1,130 +1,130 @@
-# Containers Vulnerability Scanning
+# 容器漏洞掃描
 
-[Yesterday](day25.md) we learned that vulnerability scanning is the process of scanning a network or system to identify any existing security vulnerabilities.
-We also learned that Containers Vulnerability Scanning is a subset of Systems Vulnerability Scanning, e.g. we are only scanning the "containers" part of our system.
+[昨天](day25.md) 我們了解到漏洞掃描是掃描網路或系統以識別任何現有安全漏洞的過程。
+我們還了解到容器漏洞掃描是系統漏洞掃描的子集，例如我們只掃描系統的「容器」部分。
 
-In [Day 14](day14.md) we learned what container image vulnerability scanning and how it makes us more secure.
-Then in [Day 15](day15.md) we learned more about that and on Days [21](day21.md) and [22](day22.md) we learned how to integrate the scanning process into our CI/CD pipelines
-so that it is automatic and enforced.
+在 [Day 14](day14.md) 中，我們了解了什麼是容器映像漏洞掃描以及它如何使我們更安全。
+然後在 [Day 15](day15.md) 中，我們了解更多關於這方面的內容，在第 [21](day21.md) 和 [22](day22.md) 天，我們學習了如何將掃描過程整合到我們的 CI/CD 管道中
+以便它是自動的和強制執行的。
 
-Today, we are going to look at other techniques of scanning and securing containers.
-Vulnerability scanning is important, but is not a silver bullet and not a guarantee that you are secure.
+今天，我們將查看掃描和保護容器的其他技術。
+漏洞掃描很重要，但不是萬能的，也不是保證您安全的保證。
 
-There are a few reasons for that.
+有幾個原因。
 
-First, image scanning only shows you the list of _known_ vulnerabilities.
-There might be many vulnerabilities which have not been discovered, but are still there and could be exploited.
+首先，映像掃描只顯示 _已知_ 漏洞的列表。
+可能有許多尚未發現的漏洞，但它們仍然存在並且可能被利用。
 
-Second, the security of our deployments depends not only on the image and number of vulnerabilities, but also on the way we deploy that image.
-For example, if we deploy an insecure application on the open internet where everyone has access to it, or leave the default SSH port and password of our VM,
-then it does not matter whether our container has vulnerabilities or not, because the attackers will use the other holes in our system to get in.
+其次，我們部署的安全性不僅取決於映像和漏洞數量，還取決於我們部署該映像的方式。
+例如，如果我們在開放的互聯網上部署不安全的應用程式，每個人都可以訪問它，或者留下我們 VM 的默認 SSH 端口和密碼，
+那麼我們的容器是否有漏洞並不重要，因為攻擊者將使用我們系統中的其他漏洞進入。
 
-That is why today we are going to take a look at few other aspects of containers vulnerability scanning.
+這就是為什麼今天我們將查看容器漏洞掃描的其他幾個方面。
 
-## Host Security
+## 主機安全
 
-Containers run on hosts.
+容器在主機上運行。
 
-Docker containers run on hosts that have the Docker Daemon installed.
-Same is true for containerd, podman, cri-o, and other container runtimes.
+Docker 容器在安裝了 Docker Daemon 的主機上運行。
+對於 containerd、podman、cri-o 和其他容器運行時也是如此。
 
-If your host is not secured, and someone manages to break it, they will probably have access to your containers and be able to start, stop, modify them, etc.
+如果您的主機不安全，並且有人設法破壞它，他們可能會訪問您的容器並能夠啟動、停止、修改它們等。
 
-That is why it's important to secure the host and secure it well.
+這就是為什麼保護主機並保護好它很重要。
 
-Securing VMs is a deep topic I will not go into today, but the most basic things you can do are:
+保護 VM 是一個深入的主題，我今天不會深入探討，但您可以做的最基本的事情是：
 
-- limit the visibility of the machine on the public network
-- if possible use a Load Balancer to access your containers, and make the host machine not visible on the public internet
-- close all unnecessary ports
-- use strong password for SSH and RDP
+- 限制機器在公共網路上的可見性
+- 如果可能，使用負載平衡器訪問您的容器，並使主機在公共互聯網上不可見
+- 關閉所有不必要的端口
+- 為 SSH 和 RDP 使用強密碼
 
-In the bottom of the article I will link 2 articles from AWS and VMware about VM security.
+在文章底部，我將連結來自 AWS 和 VMware 的 2 篇關於 VM 安全的文章。
 
-## Network Security
+## 網路安全
 
-Network security is another deep topic, which we will look into in better detail [tomorrow](day27.md).
+網路安全是另一個深入的主題，我們將在 [明天](day27.md) 更詳細地查看。
 
-At a minimum, you should not have network exposure you don't need.
-E.g. if Container A does not need to make network calls to Container B, it should not be able to make this calls at a first place.
+至少，您不應該有不需要的網路暴露。
+例如，如果容器 A 不需要對容器 B 進行網路調用，它首先不應該能夠進行此調用。
 
-In Docker you can define [different network drivers](https://docs.docker.com/network/) that can help you with this.
-In Kubernetes there are [network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) that limit which container has access to what.
+在 Docker 中，您可以定義 [不同的網路驅動程序](https://docs.docker.com/network/)，這可以幫助您做到這一點。
+在 Kubernetes 中有 [網路策略](https://kubernetes.io/docs/concepts/services-networking/network-policies/)，限制哪些容器可以訪問什麼。
 
-## Security misconfiguration
+## 安全錯誤配置
 
-When working with containers, there are a few security misconfiguration which you can make that can put you in danger of being hacked.
+在使用容器時，有一些安全錯誤配置可能會使您面臨被駭客攻擊的危險。
 
-### Capabilities
+### 功能
 
-One such thing is giving your container excessive capabilities.
+這樣一件事是給您的容器過多的功能。
 
-[Linux capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html) determine what syscalls you container can execute.
+[Linux 功能](https://man7.org/linux/man-pages/man7/capabilities.7.html) 確定您的容器可以執行哪些系統調用。
 
-The best practice is to be aware of the capabilities your containers need and assign them only them.
-That way you will be sure that a left-over capability that was never needed was not abused by an attacker.
+最佳實踐是了解您的容器需要的功能，並僅分配它們。
+這樣您將確保一個從不需要的剩餘功能不會被攻擊者濫用。
 
-In practice, it is hard to know what capabilities exactly your containers need, because that involves complex monitoring of your container over time.
-Even the developers that wrote the code are probably not aware of what capabilities exactly are needed to perform the actions that they code is doing.
-That is so, because capabilities are a low-level construct and developers usually write higher-level code.
+實際上，很難確切知道您的容器需要什麼功能，因為這涉及長時間對容器進行複雜的監控。
+即使是編寫代碼的開發人員也可能不知道執行其代碼正在執行的操作確切需要什麼功能。
+這是因為功能是低級構造，開發人員通常編寫高級代碼。
 
-However, it is good to know which capabilities you should avoid assigning to your containers, because they are too overpowered and give it too many permissions.
+然而，了解您應該避免分配給容器的功能是很好的，因為它們太強大並給它太多權限。
 
-One such capability is `CAP_SYS_ADMIN` which is way overpowered and can do a lot of things.
-Even the Linux docs of this capability warn you that you should not be using this capability if you can avoid it.
+這樣一個功能是 `CAP_SYS_ADMIN`，它非常強大並且可以做很多事情。
+即使是此功能的 Linux 文檔也警告您，如果可以避免，不應該使用此功能。
 
-### Running as root
+### 以 root 身份運行
 
-Running containers as root is a really bad practice and it should be avoided as much as possible.
+以 root 身份運行容器是一個非常糟糕的做法，應該盡可能避免。
 
-Of course, there might be situations in which you _must_ run containers as root.
-One such example are the core components of Kubernetes, which run as root containers, because they need to have a lot of priviledges on the host.
+當然，可能有一些情況您 _必須_ 以 root 身份運行容器。
+這樣一個例子是 Kubernetes 的核心組件，它們以 root 容器運行，因為它們需要在主機上擁有大量權限。
 
-However, if you are running a simple web server, or something like this, you should not have the need to run the container as root.
+然而，如果您正在運行一個簡單的 Web 伺服器或類似的東西，您不應該需要以 root 身份運行容器。
 
-Running a container as root means that basically you are throwing away all the isolation containers give you, as a root container have almost full control over the host.
+以 root 身份運行容器意味著基本上您正在丟棄容器為您提供的所有隔離，因為 root 容器幾乎完全控制主機。
 
-A lot of container runtime vulnerabilities are only applicable if containers are running as root.
+許多容器運行時漏洞只有在容器以 root 身份運行時才適用。
 
-Tools like [falco](https://github.com/falcosecurity/falco) and [kube-bench](https://github.com/aquasecurity/kube-bench) will warn you if you are running containers as root, so that you can take actions and change that.
+像 [falco](https://github.com/falcosecurity/falco) 和 [kube-bench](https://github.com/aquasecurity/kube-bench) 這樣的工具會警告您是否以 root 身份運行容器，以便您可以採取行動並更改它。
 
-### Resource limits
+### 資源限制
 
-Not defining resource limits for your containers can lead to a DDoS attack that brings down your whole infrastructure.
+不為容器定義資源限制可能導致 DDoS 攻擊，使您的整個基礎設施癱瘓。
 
-When you are being DDoS-ed the workload starts consuming more memory and CPU.
-If that workload is a container with no limits, at some point it will drain all the available resources from the host and there will be none left for the other containers on that host.
-At some point, the whole host might go down, which will lead to more pressure on your other hosts and can have a domino effect on your whole infra.
+當您受到 DDoS 攻擊時，工作負載開始消耗更多內存和 CPU。
+如果該工作負載是一個沒有限制的容器，在某個時候它將耗盡主機的所有可用資源，並且不會為該主機上的其他容器留下任何資源。
+在某個時候，整個主機可能會關閉，這將導致您的其他主機上的更多壓力，並可能對您的整個基礎設施產生多米諾骨牌效應。
 
-If you have sensible limits for your container, it will consume them, but the orchestrator would not give him more.
-At some point, the container will die due to lack of resources, but nothing else will happen.
-Your host and other containers will be safe.
+如果您對容器有合理的限制，它將消耗它們，但編排器不會給它更多。
+在某個時候，容器將由於缺乏資源而死亡，但不會發生其他任何事情。
+您的主機和其他容器將是安全的。
 
-## Summary
+## 總結
 
-Containers Vulnerability Scanning is more than just scanning for CVEs.
-It includes things like proper configuration, host security, network configuration, etc.
+容器漏洞掃描不僅僅是掃描 CVE。
+它包括適當的配置、主機安全、網路配置等。
 
-There is not one tool that can help with this, but there are open source solutions that you can combine to achieve the desired results.
+沒有一個工具可以幫助解決這個問題，但有開源解決方案可以組合使用以達到預期的結果。
 
-Most of these lessons are useful no matter the orchestrator you are using.
-You can be using Kubernetes, OpenShift, AWS ECS, Docker Compose, VMs with Docker, etc.
-The basics are the same, and you should adapt them to the platform you are using.
+無論您使用什麼編排器，這些課程中的大多數都是有用的。
+您可以使用 Kubernetes、OpenShift、AWS ECS、Docker Compose、帶有 Docker 的 VM 等。
+基礎是相同的，您應該將它們適應您正在使用的平台。
 
-Some orchestrators give you more features than others.
-For example, Kubernetes has [dynamic admission controllers](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/) that lets you define custom checks for your resources.
-As far as I am aware, Docker Compose does not have something like this, but if you know what you want to achieve it should not be difficult to write your own.
+一些編排器為您提供比其他編排器更多的功能。
+例如，Kubernetes 有 [動態准入控制器](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/)，允許您為資源定義自定義檢查。
+據我所知，Docker Compose 沒有這樣的東西，但如果您知道您想要實現什麼，編寫自己的應該不困難。
 
-## Resources
+## 資源
 
-[This article](https://sysdig.com/blog/container-security-best-practices/) by Sysdig contains many best practices for containers vulnerability scanning.
+Sysdig 的 [這篇文章](https://sysdig.com/blog/container-security-best-practices/) 包含許多容器漏洞掃描的最佳實踐。
 
-Some of them like container image scanning and Infrastructure-as-Code scanning we already mentioned in previous days.
-It also includes other useful things like [Host scanning](https://sysdig.com/blog/vulnerability-assessment/#host), [real-time logging and monitoring](https://sysdig.com/blog/container-security-best-practices/#13) and [security misconfigurations](https://sysdig.com/blog/container-security-best-practices/#11).
+其中一些如容器映像掃描和基礎設施即代碼掃描我們已經在之前的日子中提到過。
+它還包括其他有用的東西，如 [主機掃描](https://sysdig.com/blog/vulnerability-assessment/#host)、[實時日誌記錄和監控](https://sysdig.com/blog/container-security-best-practices/#13) 和 [安全錯誤配置](https://sysdig.com/blog/container-security-best-practices/#11)。
 
-More on VM security:
+更多關於 VM 安全：
 
 <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security.html>
 
 <https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.security.doc/GUID-60025A18-8FCF-42D4-8E7A-BB6E14708787.html>
-See you on [Day 27](day27.md).
+在 [Day 27](day27.md) 見。

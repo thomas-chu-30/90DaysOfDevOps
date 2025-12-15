@@ -1,63 +1,63 @@
-# Network Vulnerability Scan
+# 網路漏洞掃描
 
-On [Day 25](day25.md) we learned that vulnerability scanning is the process of scanning a network or system to identify any existing security vulnerabilities.
-We also learned that Network Vulnerability Scanning is a subset of Systems Vulnerability Scanning, e.g. we are only scanning the network part of our system.
+在 [Day 25](day25.md) 中，我們了解到漏洞掃描是掃描網路或系統以識別任何現有安全漏洞的過程。
+我們還了解到網路漏洞掃描是系統漏洞掃描的子集，例如我們只掃描系統的網路部分。
 
-Today we are going to dive deeper into what Network Vulnerability Scanning is and how we can do it.
+今天我們將深入了解什麼是網路漏洞掃描以及如何進行。
 
-## Network Vulnerability Scanning
+## 網路漏洞掃描
 
-**Network vulnerability scanning** is the process of identifying weaknesses on a network that is a potential target for exploitation by threat actors.
+**網路漏洞掃描**是識別網路上弱點的過程，這些弱點是威脅行為者可能利用的潛在目標。
 
-Once upon a time, before the cloud, network security was easy (sort of, good security is never easy).
-You build a huge firewall around your data center, allow traffic only to the proper entrypoints and assume that everything that managed to get inside is legitimate.
+曾經，在雲之前，網路安全很容易（某種程度上，良好的安全從來都不容易）。
+您在數據中心周圍構建一個巨大的防火牆，只允許流量到適當的入口點，並假設設法進入內部的所有內容都是合法的。
 
-This approach has one huge flaw - if an attacker managed to get through the wall, there are no more lines of defence to stop them.
+這種方法有一個巨大的缺陷 - 如果攻擊者設法穿過牆，就沒有更多的防線來阻止他們。
 
-Nowadays, such an approach would work even less.
-With the cloud and microservices architecture, the actors in a network has grown exponentially.
+如今，這種方法甚至更不起作用。
+隨著雲和微服務架構，網路中的參與者呈指數級增長。
 
-This requires us to change our mindset and adopt new processes and tools in building secure systems.
+這要求我們改變思維方式，並在構建安全系統時採用新流程和工具。
 
-One such process is **Network Vulnerability Scanning**.
-The tool that does that is called **Network Vulnerability Scanner**.
+這樣一個過程是 **網路漏洞掃描**。
+執行此操作的工具稱為 **網路漏洞掃描器**。
 
-## How does network vulnerability scanning work?
+## 網路漏洞掃描如何工作？
 
-Vulnerability scanning software relies on a database of known vulnerabilities and automated tests for them.
-A scanner would scan a wide range of devices and hosts on your networks, identifying the device type and operating system, and probing for relevant vulnerabilities.
+漏洞掃描軟體依賴於已知漏洞數據庫和針對它們的自動化測試。
+掃描器將掃描您網路上的各種設備和主機，識別設備類型和操作系統，並探測相關漏洞。
 
-A scan may be purely network-based, conducted from the wider internet (external scan) or from inside your local intranet (internal scan).
-It may be a deep inspection that is possible when the scanner has been provided with credentials to authenticate itself as a legitimate user of the host or device.
+掃描可能純粹是基於網路的，從更廣泛的互聯網（外部掃描）或從您的本地內聯網內部（內部掃描）進行。
+當掃描器已提供憑證以將自己驗證為主機或設備的合法用戶時，它可能是深度檢查。
 
-## Vulnerability management
+## 漏洞管理
 
-After a scan has been performed and has found vulnerabilities, the next step is to address them.
-This is the vulnerability management phase.
+執行掃描並發現漏洞後，下一步是解決它們。
+這是漏洞管理階段。
 
-A vulnerability could be marked as false positive, e.g. the scanner reported something that is not true.
-It could be acknowledged and then assessed by the security team.
+漏洞可能被標記為誤報，例如掃描器報告了不真實的東西。
+它可能被確認，然後由安全團隊評估。
 
-Many vulnerabilities can be addressed by patching, but not all.
-A cost/benefit analysis should be part of the process because not all vulnerabilities are security risks in every environment, and there may be business reasons why you can’t install a given patch.
-It would be useful if the scanner reports alternative means to remediate the vulnerability (e.g., disabling a service or blocking a port via firewall).
+許多漏洞可以通過修補來解決，但不是全部。
+成本/效益分析應該是流程的一部分，因為並非所有漏洞在每個環境中都是安全風險，並且可能有業務原因導致您無法安裝給定的補丁。
+如果掃描器報告修復漏洞的替代方法（例如，禁用服務或通過防火牆阻止端口），這將很有用。
 
-## Caveats
+## 注意事項
 
-Similar to container image vulnerability scanning, network vulnerability scanning tests your system for _known_ vulnerabilities.
-So it will not find anything that is not already reporter.
+與容器映像漏洞掃描類似，網路漏洞掃描測試您的系統以查找 _已知_ 漏洞。
+所以它不會找到任何尚未報告的東西。
 
-Also, it will not protect you from something like exposing your admin panel to the internet and using the default password.
-(Although I would assume that some network scanner are smart enough to test for well-known endpoints that should not be exposed).
+此外，它不會保護您免受將管理面板暴露到互聯網並使用默認密碼之類的事情。
+（儘管我假設一些網路掃描器足夠聰明，可以測試不應該暴露的知名端點）。
 
-At the end of the day, it's up to you to know your system, and to know the way to test it, and protect it.
-Tools only go so far.
+歸根結底，由您來了解您的系統，並了解測試和保護它的方法。
+工具只能做到這麼多。
 
-## Network Scanners
+## 網路掃描器
 
-Here is a list of network scanners that can be used for that purpose.
+以下是用於此目的的網路掃描器列表。
 
-**NOTE:** The tools on this list are not free and open-source, but most of them have free trials, which you can use to evaluate them.
+**注意：** 此列表上的工具不是免費和開源的，但它們中的大多數都有免費試用，您可以使用它們來評估它們。
 
 - [Intruder Network Vulnerability Scanner](https://www.intruder.io/network-vulnerability-scanner)
 - [SecPod SanerNow Vulnerability Management](https://www.secpod.com/vulnerability-management/)
@@ -66,21 +66,21 @@ Here is a list of network scanners that can be used for that purpose.
 - [Microsoft Defender for Endpoint](https://www.microsoft.com/en-us/security/business/endpoint-security/microsoft-defender-endpoint)
 - [Rapid7 InsightVM](https://www.rapid7.com/products/insightvm/)
 
-## Summary
+## 總結
 
-As with all the security processes we talked about in the previous day, network scanning is not a silver bullet.
-Utilizing a network scanner would not make you secure if you are not taking care of the other aspects of systems security.
+與我們在前一天談論的所有安全流程一樣，網路掃描不是萬能的。
+如果您不照顧系統安全的其他方面，使用網路掃描器不會使您安全。
 
-Also, using a tool like a network scanner does not mean that you don't need a security team.
+此外，使用像網路掃描器這樣的工具並不意味著您不需要安全團隊。
 
-Quite, the opposite, a good Secure SDLC starts with enabling the security team to run that kind of tool againts the system.
-Then they would also be responsible for triaging the results and working with the revelant teams that need to fix the vulnerabilities.
-That will be done by either patching up the system, closing a hole that is not necessary, or re-architecturing the system in a more secure manner.
+恰恰相反，良好的安全 SDLC 從啟用安全團隊針對系統運行該類工具開始。
+然後他們還將負責對結果進行分類，並與需要修復漏洞的相關團隊合作。
+這將通過修補系統、關閉不必要的漏洞或以更安全的方式重新架構系統來完成。
 
-## Resources
+## 資源
 
 <https://www.comparitech.com/net-admin/free-network-vulnerability-scanners/>
 
 <https://www.rapid7.com/solutions/network-vulnerability-scanner/>
 
-See you on [Day 28](day28.md).
+在 [Day 28](day28.md) 見。

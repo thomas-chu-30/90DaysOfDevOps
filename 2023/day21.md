@@ -1,43 +1,43 @@
-# Continuous Image Repository Scan
+# 持續映像儲存庫掃描
 
-In [Day 14](day14.md), we learned what container image scanning is and why it's important.
-We also learned about tools like Grype and Trivy that help us scan our container images.
+在 [Day 14](day14.md) 中，我們學習了什麼是容器映像掃描以及為什麼它很重要。
+我們還了解了像 Grype 和 Trivy 這樣的工具，它們幫助我們掃描容器映像。
 
-However, in modern SDLCs, a DevSecOps engineer would rarely scan container images by hand, e.g., they would not be running Grype and Trivy locally and looking at every single vulnerability.
-Instead, they would have the image scanning configured as part of the CI/CD pipeline.
-This way, they would be sure that all the images that are being built by the pipelines are also scanned by the image scanner.
-These results could then be sent by another system, where the DevSecOps engineers could look at them and take some action depending on the result.
+然而，在現代 SDLC 中，DevSecOps 工程師很少會手動掃描容器映像，例如，他們不會在本地運行 Grype 和 Trivy 並查看每個漏洞。
+相反，他們會將映像掃描配置為 CI/CD 管道的一部分。
+這樣，他們可以確保所有由管道構建的映像也會被映像掃描器掃描。
+然後這些結果可以由另一個系統發送，DevSecOps 工程師可以在那裡查看它們並根據結果採取一些行動。
 
-A sample CI/CD pipeline could look like this:
+示例 CI/CD 管道可能如下所示：
 
-0. _Developer pushes code_
-1. Lint the code
-2. Build the code
-3. Test the code
-4. Build the artifacts (container images, helm charts, etc.)
-5. Scan the artifacts
-6. (Optional) Send the scan results somewhere
-7. (Optional) Verify the scan results and fail the pipeline if the verification fails
-8. Push the artifacts to a repository
+0. _開發人員推送代碼_
+1. Lint 代碼
+2. 構建代碼
+3. 測試代碼
+4. 構建工件（容器映像、helm charts 等）
+5. 掃描工件
+6. （可選）將掃描結果發送到某處
+7. （可選）驗證掃描結果，如果驗證失敗則使管道失敗
+8. 將工件推送到儲存庫
 
-A failure in the scan or verify steps (steps 6 and 7) would mean that our container will not be pushed to our repository, and we cannot use the code we submitted.
+掃描或驗證步驟（步驟 6 和 7）的失敗意味著我們的容器不會被推送到我們的儲存庫，我們無法使用我們提交的代碼。
 
-Today, we are going to take a look at how we can set up such a pipeline and what would be a sensible configuration for one.
+今天，我們將了解如何設置這樣的管道以及什麼樣的配置是合理的。
 
-## Setting up a CI/CD pipeline with Grype
+## 使用 Grype 設置 CI/CD 管道
 
-Let's take a look at the [Grype](https://github.com/anchore/grype) scanner.
-Grype is an open-source scanner maintained by the company [Anchore](https://anchore.com/).
+讓我們看一下 [Grype](https://github.com/anchore/grype) 掃描器。
+Grype 是由 [Anchore](https://anchore.com/) 公司維護的開源掃描器。
 
-### Scanning an image with Grype
+### 使用 Grype 掃描映像
 
-Scanning a container image with Grype is as simple as running:
+使用 Grype 掃描容器映像就像運行一樣簡單：
 
 ```shell
 grype <IMAGE>
 ```
 
-For example, if we want to scan the `ubuntu:20.04` image, we can run:
+例如，如果我們想掃描 `ubuntu:20.04` 映像，我們可以運行：
 
 ```shell
 $ grype ubuntu:20.04
@@ -71,33 +71,33 @@ ncurses-bin   6.2-0ubuntu2                        deb   CVE-2022-29458  Negligib
 passwd        1:4.8.1-1ubuntu5.20.04.4            deb   CVE-2013-4235   Low
 ```
 
-Of course, you already know that because we did it on [Day 14](day14.md).
+當然，您已經知道這一點，因為我們在 [Day 14](day14.md) 中做過。
 
-However, this command will only output the vulnerabilities and exit with a success code.
-So if this were in a CI/CD pipeline, the pipeline would be successful even if we have many vulnerabilities.
+然而，此命令只會輸出漏洞並以成功代碼退出。
+因此，如果這在 CI/CD 管道中，即使我們有許多漏洞，管道也會成功。
 
-The person running the pipeline would have to open it, see the logs and manually determine whether the results are OK.
-This is tedious and error prone.
+運行管道的人必須打開它，查看日誌並手動確定結果是否正常。
+這很繁瑣且容易出錯。
 
-Let's see how we can enforce some rules for the results that come out of the scan.
+讓我們看看如何為掃描結果強制執行一些規則。
 
-### Enforcing rules for the scanned images
+### 為掃描的映像強制執行規則
 
-As we already established, just scanning the image does not do much except for giving us visibility into the number of vulnerabilities we have inside the image.
-But what if we want to enforce a set of rules for our container images?
+正如我們已經確定的，僅僅掃描映像除了讓我們了解映像中漏洞的數量之外，並沒有多大作用。
+但是如果我們想為容器映像強制執行一組規則怎麼辦？
 
-For example, a good rule would be "an image should not have critical vulnerabilities" or "an image should not have vulnerabilities with available fixes."
+例如，一個好的規則是「映像不應該有關鍵漏洞」或「映像不應該有可用修復的漏洞」。
 
-Fortunately for us, this is also something that Grype supports out of the box.
-We can use the `--fail-on <SEVERITY>` flag to tell Grype to exit with a non-zero exit code if, during the scan, it found vulnerabilities with a severity higher or equal to the one we specified.
-This will fail our pipeline, and the engineer would have to look at the results and fix something in order to make it pass.
+幸運的是，這也是 Grype 開箱即用支持的東西。
+我們可以使用 `--fail-on <SEVERITY>` 標誌告訴 Grype，如果在掃描期間發現嚴重性高於或等於我們指定的漏洞，則以非零退出代碼退出。
+這將使我們的管道失敗，工程師必須查看結果並修復某些內容才能使其通過。
 
-Let's tried it out.
-We are going to use the `springio/petclinic:latest` image, which we already found has many vulnerabilities.
-You can go back to [Day 14](day14.md) or scan it yourself to see how much exactly.
+讓我們試試看。
+我們將使用 `springio/petclinic:latest` 映像，我們已經發現它有很多漏洞。
+您可以返回 [Day 14](day14.md) 或自己掃描它以查看確切有多少。
 
-We want to fail the pipeline if the image has `CRITICAL` vulnerabilities.
-We are going to run the can like this:
+如果映像有 `CRITICAL` 漏洞，我們希望管道失敗。
+我們將這樣運行掃描：
 
 ```shell
 $ grype springio/petclinic:latest --fail-on critical
@@ -118,48 +118,48 @@ $ echo $?
 1
 ```
 
-We see two things here:
+我們在這裡看到兩件事：
 
-- apart from the results, Grype also outputted an error that is telling us that this scan violated the rule we had defined (no CRITICAL vulnerabilities)
-- Grype exited with exit code 1, which indicates failure.
-  If this were a CI pipeline, it would have failed.
+- 除了結果之外，Grype 還輸出了一個錯誤，告訴我們此掃描違反了我們定義的規則（沒有 CRITICAL 漏洞）
+- Grype 以退出代碼 1 退出，這表示失敗。
+  如果這是一個 CI 管道，它會失敗。
 
-When this happens, we will be blocked from merging our code and pushing our container to the registry.
-This means that we need to take some action to fix the failure so that we can finish our task and push our change.
+當這種情況發生時，我們將被阻止合併我們的代碼並將我們的容器推送到註冊表。
+這意味著我們需要採取一些行動來修復失敗，以便我們可以完成任務並推送我們的更改。
 
-Let's see what our options are.
+讓我們看看我們的選項是什麼。
 
-### Fixing the pipeline
+### 修復管道
 
-Once we encounter a vulnerability that is preventing us from publishing our container, we have a few ways we can go depending on the vulnerability.
+一旦我們遇到阻止我們發布容器的漏洞，我們有幾種方法可以根據漏洞進行處理。
 
-#### 1. The vulnerability has a fix
+#### 1. 漏洞有修復
 
-The best-case scenario is when this vulnerability is already fixed in a newer version of the library we depend on.
+最好的情況是此漏洞在我們依賴的庫的新版本中已經修復。
 
-One such vulnerability is this one:
+這樣一個漏洞是這個：
 
 ```text
 NAME      INSTALLED FIXED-IN TYPE         VULNERABILITY       SEVERITY
 snakeyaml 1.27      1.31     java-archive GHSA-3mc7-4q67-w48m High
 ```
 
-This is a `High` severity vulnerability.
-It's coming from the Java package `snakeyaml`, version `1.27`.
-Grype is telling us that this vulnerability is fixed in version `1.31` of the same library.
+這是一個 `High` 嚴重性漏洞。
+它來自 Java 套件 `snakeyaml`，版本 `1.27`。
+Grype 告訴我們此漏洞在同一庫的版本 `1.31` 中已修復。
 
-In this case, we can just upgrade the version of this library in our `pom.xml` or `build.gradle` file,
-test our code to make sure nothing breaks with the new version,
-and submit the code again.
+在這種情況下，我們可以在 `pom.xml` 或 `build.gradle` 檔案中升級此庫的版本，
+測試我們的代碼以確保新版本不會破壞任何東西，
+然後再次提交代碼。
 
-This will build a new version of our container, re-scan it, and hopefully, this time, the vulnerability will not come up, and our scan will be successful.
+這將構建我們容器的新版本，重新掃描它，希望這次漏洞不會出現，我們的掃描將成功。
 
-### 2. The vulnerability does not have a fix, but it's not dangerous
+### 2. 漏洞沒有修復，但它不危險
 
-Sometimes a vulnerability we encounter will not have a fix available.
-These are so-called zero-day vulnerabilities that are disclosed before a fix is available.
+有時我們遇到的漏洞將沒有可用的修復。
+這些是所謂的零日漏洞，在修復可用之前被披露。
 
-We can see two of those in the initial scan results:
+我們可以在初始掃描結果中看到其中兩個：
 
 ```text
 NAME        INSTALLED FIXED-IN TYPE         VULNERABILITY    SEVERITY
@@ -167,15 +167,15 @@ spring-core 5.3.6              java-archive CVE-2016-1000027 Critical
 spring-core 5.3.6              java-archive CVE-2022-22965   Critical
 ```
 
-When we encounter such a vulnerability, we need to evaluate how severe it is and calculate the risk of releasing our software with that vulnerability in it.
+當我們遇到這樣的漏洞時，我們需要評估它的嚴重程度並計算在軟體中包含該漏洞的發布風險。
 
-We can determine that the vulnerability does not constitute any danger to our software and its consumers.
-One such case might be when a vulnerability requires physical access to the servers to be exploited.
-If we are sure that our physical servers are secure enough and an attacker cannot get access to them, we can safely ignore this vulnerability.
+我們可以確定該漏洞不會對我們的軟體及其用戶構成任何危險。
+這樣一種情況可能是當漏洞需要物理訪問伺服器才能被利用時。
+如果我們確信我們的物理伺服器足夠安全，攻擊者無法訪問它們，我們可以安全地忽略此漏洞。
 
-In this case, we can tell Grype to ignore this vulnerability and not fail the scan because of it.
+在這種情況下，我們可以告訴 Grype 忽略此漏洞，不要因為它而使掃描失敗。
 
-We can do this via the `grype.yaml` configuration file, where we can list vulnerabilities we want to ignore:
+我們可以通過 `grype.yaml` 配置文件來做到這一點，我們可以在其中列出我們想要忽略的漏洞：
 
 ```yaml
 ignore:
@@ -193,38 +193,37 @@ ignore:
       type: gem
 ```
 
-Putting this in our configuration file and re-running the scan will make our pipeline green.
+將此放在我們的配置檔案中並重新運行掃描將使我們的管道變綠。
 
-However, it is crucial that we keep track of this file and not ignore vulnerabilities that have a fix.
-For example, when a fix for this vulnerability is released, it's best we upgrade our dependency and remove this vulnerability from our application.
+然而，重要的是我們要跟踪此檔案，不要忽略有修復的漏洞。
+例如，當此漏洞的修復發布時，最好我們升級我們的依賴項並從我們的應用程式中刪除此漏洞。
 
-That way, we will ensure that our application is as secure as possible and there are no vulnerabilities that can turn out to be more severe than we initially thought.
+這樣，我們將確保我們的應用程式盡可能安全，並且沒有漏洞可能比我們最初認為的更嚴重。
 
-### 3. Vulnerability does not have a fix, and IT IS dangerous
+### 3. 漏洞沒有修復，而且它確實危險
 
-The worst-case scenario is if we encounter a vulnerability that does not have a fix, and it is indeed dangerous, and there is a possibility to be exploited.
+最壞的情況是如果我們遇到一個沒有修復的漏洞，而且它確實危險，並且有可能被利用。
 
-In that case, there is no right move.
-The best thing we can do is sit down with our security team and come up with an action plan.
+在這種情況下，沒有正確的舉動。
+我們能做的最好的事情是與我們的安全團隊坐下來制定行動計劃。
 
-We might decide it's best to do nothing while the vulnerability is fixed.
-We might decide to manually patch some stuff so that we remove at least some part of the danger.
-It really depends on the situation.
+我們可能決定在漏洞修復之前最好什麼都不做。
+我們可能決定手動修補一些東西，以便我們至少消除部分危險。
+這真的取決於情況。
 
-Sometimes, a zero-day vulnerability is already in your application that is deployed.
-In that case, freezing deploys won't help because your app is already vulnerable.
+有時，零日漏洞已經在您部署的應用程式中。
+在這種情況下，凍結部署不會有幫助，因為您的應用程式已經易受攻擊。
 
-That was the case with the Log4Shell vulnerability that was discovered in late 2021 but has been present in Log4j since 2013.
-Luckily, there was a fix available within hours, but next time we might not be this lucky.
+這就是 Log4Shell 漏洞的情況，該漏洞在 2021 年底被發現，但自 2013 年以來一直存在於 Log4j 中。
+幸運的是，幾個小時內就有修復可用，但下次我們可能不會這麼幸運。
 
-## Summary
+## 總結
 
-As we already learned in [Day 14](day14.md), scanning your container images for vulnerabilities is important as it can give you valuable insights about
-the security posture of your images.
+正如我們在 [Day 14](day14.md) 中已經學到的，掃描容器映像以查找漏洞很重要，因為它可以為您提供有關映像安全態勢的寶貴見解。
 
-Today we learned that it's even better to have it as part of your CI/CD pipeline and to enforce some basic rules about what vulnerabilities you have inside your images.
+今天我們了解到，將其作為 CI/CD 管道的一部分並為映像中的漏洞強制執行一些基本規則會更好。
 
-Finally, we discussed the steps we can take when we find a vulnerability.
+最後，我們討論了當我們發現漏洞時可以採取的步驟。
 
-Tomorrow we are going to take a look at container registries that enable this scanning out of the box and also at scanning other types of artifacts.
-See you on [Day 22](day22.md).
+明天我們將查看開箱即用支持此掃描的容器註冊表，以及掃描其他類型的工件。
+在 [Day 22](day22.md) 見。

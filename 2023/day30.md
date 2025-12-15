@@ -1,70 +1,70 @@
-# Recap
+# 回顧
 
-We were deep yesterday in setting up Falco in our Minikube. It is a great tool for detecting application and container behavior during runtime. We took its output and exported it to our Prometheus instance in the cluster and viewed the results in a dedicated Grafana dashboard.
+我們昨天深入設置了 Minikube 中的 Falco。這是一個在運行時檢測應用程式和容器行為的優秀工具。我們將其輸出導出到集群中的 Prometheus 實例，並在專用的 Grafana 儀表板中查看結果。
 
-Today, we are going to set up some rules and alerts in Falco and see how detection and alerting work.
+今天，我們將在 Falco 中設置一些規則和警報，並查看檢測和警報如何工作。
 
-Is your coffee around? Have your hacker hoodie on you? Let's do it 😈
+您的咖啡在身邊嗎？您有駭客連帽衫嗎？讓我們開始吧 😈
 
-# Runtime detection with Falco
+# 使用 Falco 進行運行時檢測
 
-Falco is a powerful open-source tool that is designed for Kubernetes runtime security. Here are some reasons why Falco is a good choice for securing your Kubernetes environment. Falco provides real-time detection of security threats and potential vulnerabilities in your Kubernetes environment. It uses a rule-based engine to detect and alert suspicious activity, allowing you to quickly respond to security incidents. 
+Falco 是一個強大的開源工具，專為 Kubernetes 運行時安全而設計。以下是 Falco 是保護 Kubernetes 環境的好選擇的一些原因。Falco 提供對 Kubernetes 環境中安全威脅和潛在漏洞的實時檢測。它使用基於規則的引擎來檢測和警報可疑活動，允許您快速響應安全事件。
 
-Falco allows you to create custom rules that are tailored to the specific needs of your environment. This allows you to detect and respond to security threats and potential vulnerabilities in a way that is tailored to your unique needs. Falco provides rich metadata about security events, including information about the container, pod, namespace, and other details. This makes it easy to investigate and respond to security incidents.
+Falco 允許您創建針對環境特定需求定制的自定義規則。這允許您以適合您獨特需求的方式檢測和響應安全威脅和潛在漏洞。Falco 提供有關安全事件的豐富元數據，包括有關容器、pod、命名空間和其他詳細資訊的資訊。這使得調查和響應安全事件變得容易。
 
-## Using built-in rules to detect malicious events
+## 使用內建規則檢測惡意事件
 
-By this time you should have all the moving parts in place:
+此時您應該已經準備好所有移動部件：
 * Prometheus
 * Grafana
 * Falco
 
-Let's do something that is somewhat unusual for a production system. We will open a shell on a workload and install a package during runtime of the container.
+讓我們做一些對生產系統來說有點不尋常的事情。我們將在工作負載上打開一個 shell，並在容器的運行時安裝一個套件。
 
-Let's install a minimalistic Nginx deployment:
+讓我們安裝一個極簡的 Nginx 部署：
 ```bash
 kubectl create deployment nginx --image=nginx:1.19
 ```
 
-Now open a shell inside the Pod of the Nginx deployment:
+現在在 Nginx 部署的 Pod 內打開一個 shell：
 ```bash
 kubectl exec -it `kubectl get pod | grep nginx | awk '{print $1}'` -- bash
 ```
 
-And install a "curl" on the Pod using APT:
+並使用 APT 在 Pod 上安裝「curl」：
 ```bash
 apt update && apt install -y curl
 ```
 
-Since we are using Falco to monitor application behavior it should see all these activities, and it does! Let's go to our Grafana back (see previous days to see how to reconnect).
+由於我們使用 Falco 監控應用程式行為，它應該看到所有這些活動，並且確實如此！讓我們回到我們的 Grafana（參見前幾天以了解如何重新連接）。
 
-In Grafana, go to the "explore" screen. Make sure that you use the Prometheus data source. 
+在 Grafana 中，轉到「explore」屏幕。確保您使用 Prometheus 數據源。
 
-In the query builder select metric "falco_events" and label filter "k8s_pod_name" and set the filter to your Nginx Pod name.
+在查詢構建器中選擇指標「falco_events」和標籤過濾器「k8s_pod_name」，並將過濾器設置為您的 Nginx Pod 名稱。
 
-You will now see all the Falco events from this Pod
+您現在將看到來自此 Pod 的所有 Falco 事件
 
 ![](images/day30-1.png)
 
-Note the rules that cause the events, among them you'll see "Launch Package Management Process in Container" rule that failed. This event was generated due to our `apt install` command above.
+注意導致事件的規則，其中您會看到「Launch Package Management Process in Container」規則失敗。此事件是由於我們上面的 `apt install` 命令生成的。
 
 
-Take note here to appreciate the potential here. By installing this well proven open-source stack you can create a complete runtime monitoring system and know what is happening in real-time in the systems you want to monitor an protect! 
+請注意這裡以欣賞這裡的潛力。通過安裝這個經過驗證的開源堆疊，您可以創建一個完整的運行時監控系統，並實時了解您想要監控和保護的系統中正在發生的事情！
 
 
-## Creating custom rules
+## 創建自定義規則
 
 
-Let's say you or your security team wants to know if a the CLI tool `curl`  has been invoked in one of Pods (which should rarely happen in a production cluster, but an attacker would use it to report back information to her/himself).
+假設您或您的安全團隊想知道是否在 Pod 之一中調用了 CLI 工具 `curl`（這在生產集群中應該很少發生，但攻擊者會使用它向自己報告資訊）。
 
-We need to write a "Falco rule" to detect it.
+我們需要編寫一個「Falco 規則」來檢測它。
 
-Here are the basic steps to add a custom Falco rule:
+以下是添加自定義 Falco 規則的基本步驟：
 
-### Create the rule
-First, create a new rule file that defines the behavior you want to detect. Falco rules are written in YAML format and typically include a description of the behavior, a set of conditions that trigger the rule, and an output message that is generated when the rule is triggered. 
+### 創建規則
+首先，創建一個新的規則檔案，定義您想要檢測的行為。Falco 規則以 YAML 格式編寫，通常包括行為的描述、觸發規則的一組條件，以及觸發規則時生成的輸出消息。
 
-To detect that the "apt" command is executed using a Falco rule, you could create a new rule file with the following content:
+要使用 Falco 規則檢測執行「apt」命令，您可以創建一個具有以下內容的新規則檔案：
 
 ```yaml
 customRules:
@@ -76,41 +76,41 @@ customRules:
       priority: WARNING
 ```
 
-Let's dive a little bit into what we have here.
+讓我們深入了解一下我們在這裡有什麼。
 
-Falco instruments events in the Linux kernel and sends them to its rule engine. The rule engine goes over all the rules and tries to match them to the event. If a matching event is found, Falco itself fires a rule based event. These are the entries we see in Prometheus/Grafana. In our custom rule, the `condition` field if the "heart" of the rule and it is used to match the rule to the event. 
+Falco 在 Linux 內核中檢測事件並將它們發送到其規則引擎。規則引擎遍歷所有規則並嘗試將它們與事件匹配。如果找到匹配的事件，Falco 本身會觸發基於規則的事件。這些是我們在 Prometheus/Grafana 中看到的條目。在我們的自定義規則中，`condition` 欄位是規則的「心臟」，它用於將規則與事件匹配。
 
-In this case, we have used a macro called `spawned_process` which evaluates to `true` if the event is system call from the user-space to the kernel for spawning a new process (`execve` and friends). The second condition is on the name of the new process, which matches `curl`.
+在這種情況下，我們使用了一個名為 `spawned_process` 的宏，如果事件是用戶空間到內核的系統調用以生成新進程（`execve` 和朋友），則它評估為 `true`。第二個條件是新進程的名稱，它匹配 `curl`。
 
-To install this new rule, use the following Helm command to add it to our current deployment:
+要安裝此新規則，請使用以下 Helm 命令將其添加到我們當前的部署中：
 ```bash
 helm upgrade --install  falco falcosecurity/falco --set driver.kind=ebpf --set-file certs.server.key=$PWD/server.key,certs.server.crt=$PWD/server.crt,certs.ca.crt=$PWD/ca.crt --set falco.grpc.enabled=true,falco.grpcOutput.enabled=true,falco.grpc_output.enabled=true -f <PATH_TO_RULE_YAML>
 ```
 
-Make sure that Falco Pod restarted and running correctly.
+確保 Falco Pod 已重啟並正常運行。
 
-Let's return to our shell inside the Nginx pod.
+讓我們返回到 Nginx pod 內的 shell。
 ```bash
 kubectl exec -it `kubectl get pod | grep nginx | awk '{print $1}'` -- bash
 ```
 
-We have installed here `curl` before, so we can invoke it now and simulate a malicious behavior.
+我們之前在這裡安裝了 `curl`，所以我們現在可以調用它並模擬惡意行為。
 ```bash
 curl https://google.com
 ```
 
-Falco with our new rule should have picked up this event, so you should go back to Grafana and check the Falco dashboard:
+帶有我們新規則的 Falco 應該已經捕獲了此事件，因此您應該返回 Grafana 並檢查 Falco 儀表板：
 
 
 ![](images/day30-2.png)
 
-Voila!
+完成了！
 
-You have implemented and applied a custom rule in Falco!!!
+您已經在 Falco 中實現並應用了自定義規則！！！
 
-I hope this part gave you an insight into how this system works.
+我希望這一部分讓您深入了解這個系統是如何工作的。
 
-# Next 
+# 接下來
 
-Tomorrow we will move away from the world of applications and go to the network layer, see you then!
-Unto [Day 31](day31.md).
+明天我們將遠離應用程式的世界，轉向網路層，到時見！
+直到 [Day 31](day31.md)。

@@ -1,85 +1,85 @@
-# Systems Vulnerability Scanning
+# 系統漏洞掃描
 
-## What is systems vulnerability scanning?
+## 什麼是系統漏洞掃描？
 
-Vulnerability scanning is the process of scanning a network or system to identify any existing security vulnerabilities.
+漏洞掃描是掃描網路或系統以識別任何現有安全漏洞的過程。
 
-It is a proactive measure used to detect any weaknesses that an attacker may exploit to gain unauthorised access to a system or network.
+這是一種主動措施，用於檢測攻擊者可能利用來獲得對系統或網路的未授權訪問的任何弱點。
 
-Vulnerability scanning can be either manual or automated.
-It can involve scanning for known vulnerabilities, analysing the configuration of a system or network, or using an automated tool to detect any possible vulnerabilities.
+漏洞掃描可以是手動的或自動的。
+它可以涉及掃描已知漏洞、分析系統或網路的配置，或使用自動化工具來檢測任何可能的漏洞。
 
-## How do you perform a vulnerability scan?
+## 如何執行漏洞掃描？
 
-A vulnerability scan is typically performed with specialised software that searches for known weaknesses and security issues in the system.
+漏洞掃描通常使用專門的軟體執行，該軟體搜索系統中已知的弱點和安全問題。
 
-The scan typically looks for missing patches, known malware, open ports, weak passwords, and other security risks.
+掃描通常查找缺失的補丁、已知惡意軟體、開放端口、弱密碼和其他安全風險。
 
-Once the scan is complete, the results are analysed to determine which areas of the system need to be addressed to improve its overall security.
+掃描完成後，分析結果以確定系統的哪些區域需要解決以改善其整體安全性。
 
-## What are the types of vulnerability scans?
+## 漏洞掃描的類型是什麼？
 
-There are two main types of vulnerability scan: unauthenticated and authenticated.
+有兩種類型的漏洞掃描：未驗證和已驗證。
 
-Unauthenticated scans are conducted without any credentials and, as such, can only provide limited information about potential vulnerabilities.
-This type of scan helps identify low-hanging fruit, such as unpatched systems or open ports.
+未驗證掃描是在沒有任何憑證的情況下進行的，因此只能提供有關潛在漏洞的有限資訊。
+這種類型的掃描有助於識別低懸的果實，例如未修補的系統或開放端口。
 
-Authenticated scans, on the other hand, are conducted with administrative credentials.
-This allows the scanning tool to provide much more comprehensive information about potential vulnerabilities, including those that may not be easily exploitable.
+另一方面，已驗證掃描是使用管理憑證進行的。
+這允許掃描工具提供有關潛在漏洞的更全面的資訊，包括那些可能不容易利用的漏洞。
 
-In the next two days we are going to take a look at containers and network vulnerability scan, which are more specific subsets of system vulnerability scanning.
+在接下來的兩天中，我們將查看容器和網路漏洞掃描，它們是系統漏洞掃描的更特定子集。
 
-## Why are vulnerability scans important?
+## 為什麼漏洞掃描很重要？
 
-Vulnerabilities are widespread across organisations of all sizes.
-New ones are discovered constantly or can be introduced due to system changes.
+漏洞在各個規模的組織中都很普遍。
+新的漏洞不斷被發現，或者可能由於系統更改而引入。
 
-Criminal hackers use automated tools to identify and exploit known vulnerabilities and access unsecured systems, networks or data.
+犯罪駭客使用自動化工具來識別和利用已知漏洞並訪問不安全的系統、網路或數據。
 
-Exploiting vulnerabilities with automated tools is simple: attacks are cheap, easy to run and indiscriminate, so every Internet-facing organisation is at risk.
+使用自動化工具利用漏洞很簡單：攻擊很便宜、易於運行且不加選擇，因此每個面向互聯網的組織都面臨風險。
 
-All it takes is one vulnerability for an attacker to access your network.
+攻擊者只需要一個漏洞就可以訪問您的網路。
 
-This is why applying patches to fix these security vulnerabilities is essential.
-Updating your software, firmware and operating systems to the newest versions will help protect your organisation from potential vulnerabilities.
+這就是為什麼應用補丁來修復這些安全漏洞至關重要。
+將您的軟體、固件和操作系統更新到最新版本將有助於保護您的組織免受潛在漏洞的影響。
 
-Worse, most intrusions are not discovered until it is too late. According to the global median, dwell time between the start of a cyber intrusion and its identification is 24 days.
+更糟糕的是，大多數入侵直到為時已晚才被發現。根據全球中位數，網路入侵開始與其識別之間的停留時間是 24 天。
 
-## What does a vulnerability scan test?
+## 漏洞掃描測試什麼？
 
-Automated vulnerability scanning tools scan for open ports and detect common services running on those ports.
-They identify any configuration issues or other vulnerabilities on those services and look at whether best practice is being followed, such as using TLSv1.2 or higher and strong cipher suites.
+自動化漏洞掃描工具掃描開放端口並檢測在這些端口上運行的常見服務。
+它們識別這些服務上的任何配置問題或其他漏洞，並查看是否遵循最佳實踐，例如使用 TLSv1.2 或更高版本以及強密碼套件。
 
-A vulnerability scanning report is then generated to highlight the items that have been identified.
-By acting on these findings, an organisation can improve its security posture.
+然後生成漏洞掃描報告以突出顯示已識別的項目。
+通過對這些發現採取行動，組織可以改善其安全態勢。
 
-## Who conducts vulnerability scans?
+## 誰執行漏洞掃描？
 
-IT departments usually undertake vulnerability scanning if they have the expertise and software to do so, or they can call on a third-party security service provider.
+IT 部門通常在他們有專業知識和軟體的情況下進行漏洞掃描，或者他們可以求助於第三方安全服務提供商。
 
-Vulnerability scans are also performed by attackers who scour the Internet to find entry points into systems and networks.
+攻擊者也會執行漏洞掃描，他們在互聯網上搜索以找到進入系統和網路的入口點。
 
-Many companies have bug bounty programs, that allow ethical hackers to report vulnerabilities and gain money for that.
-Usually the bug bounty programs have boundaries, e.g. they define what is allowed and what is not.
+許多公司都有漏洞賞金計劃，允許道德駭客報告漏洞並為此獲得金錢。
+通常漏洞賞金計劃有邊界，例如它們定義了什麼是允許的，什麼是不允許的。
 
-Participating in big bounty programs must be done responsibly.
-Hacking is a crime, and if you are caught you cannot just claim that you did it for good, or that you were not going to exploit your findings.
+參與大型賞金計劃必須負責任地完成。
+駭客攻擊是犯罪，如果您被抓到，您不能只是聲稱您這樣做是為了好的，或者您不會利用您的發現。
 
-## How often should you conduct a vulnerability scan?
+## 您應該多久執行一次漏洞掃描？
 
-Vulnerability scans should be performed regularly so you can detect new vulnerabilities quickly and take appropriate action.
+應該定期執行漏洞掃描，以便您可以快速檢測新漏洞並採取適當的行動。
 
-This will help identify your security weaknesses and the extent to which you are open to attack.
+這將有助於識別您的安全弱點以及您對攻擊的開放程度。
 
-## Penetration testing
+## 滲透測試
 
-Penetration testing is the next step after vulnerability scanning.
-In penetration testing professional ethical hackers combine the results of automated scans with their expertise to reveal vulnerabilities that may not be identified by scans alone.
+滲透測試是漏洞掃描之後的下一步。
+在滲透測試中，專業的道德駭客將自動化掃描的結果與他們的專業知識相結合，以揭示可能僅通過掃描無法識別的漏洞。
 
-Penetration testers will also consider your environment (a significant factor in determining vulnerabilities’ true severity) and upgrade or downgrade the score as appropriate.
+滲透測試人員還會考慮您的環境（確定漏洞真實嚴重性的重要因素）並適當地升級或降級分數。
 
-A scan can detect something that is a vulnerability, but cannot be actively exploited, because of the way it is incorporated into our system.
-This makes the vulnerability a low priority one, because why fix something that presents no danger to you.
+掃描可以檢測到某些是漏洞但無法主動利用的東西，因為它被整合到我們的系統中的方式。
+這使得漏洞成為低優先級，因為為什麼要修復對您沒有危險的東西。
 
-If an issue comes up in penetration testing then that means that this issue is exploitable, and probably a high priority - if the penetration testers managed to exploit it, so will the hackers.
-See you on [Day 26](day26.md).
+如果問題在滲透測試中出現，那麼這意味著這個問題是可以利用的，並且可能是高優先級 - 如果滲透測試人員設法利用它，駭客也會這樣做。
+在 [Day 26](day26.md) 見。
