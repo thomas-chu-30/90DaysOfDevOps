@@ -1,145 +1,145 @@
 ---
-title: '#90DaysOfDevOps - Deploying your first Kubernetes Cluster - Day 51'
+title: '#90DaysOfDevOps - 部署你的第一個 Kubernetes 集群 - 第 51 天'
 published: false
-description: 90DaysOfDevOps - Deploying your first Kubernetes Cluster
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - 部署你的第一個 Kubernetes 集群
+tags: 'DevOps, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048778
 ---
-## Deploying your first Kubernetes Cluster 
 
-In this post we are going get a Kubernetes cluster up and running on our local machine using minikube, this will give us a baseline Kubernetes cluster for the rest of the Kubernetes section, although we will look at deploying a Kubernetes cluster also in VirtualBox later on. The reason for choosing this method vs spinning a managed Kubernetes cluster up in the public cloud is that this is going to cost money even with the free tier, I shared some blogs though if you would like to spin up that environment in the previous section [Day 50](day50.md). 
+## 部署你的第一個 Kubernetes 集群
 
-### What is Minikube? 
+在這篇文章中，我們將使用 minikube 在本地機器上啟動並運行 Kubernetes 集群，這將為我們在 Kubernetes 部分的其餘部分提供一個基線 Kubernetes 集群，儘管我們稍後也會在 VirtualBox 中部署 Kubernetes 集群。選擇這種方法與在公共雲中啟動託管 Kubernetes 集群相比的原因是，即使使用免費層，這也會花費金錢，不過如果你想在上一節 [第 50 天](day50.md) 中啟動該環境，我分享了一些部落格。
 
-*“minikube quickly sets up a local Kubernetes cluster on macOS, Linux, and Windows. We proudly focus on helping application developers and new Kubernetes users.”*
+### 什麼是 Minikube？
 
-You might not fit into the above but I have found minikube is a great little tool if you just want to test something out in a Kubernetes fashion, you can easily deploy and app and they have some amazing add ons which I will also cover. 
+> 「minikube 在 macOS、Linux 和 Windows 上快速設置本地 Kubernetes 集群。我們自豪地專注於幫助應用程式開發人員和新的 Kubernetes 用戶。」
 
-To begin with regardless of your workstation OS, you can run minikube. First, head over to the [project page here](https://minikube.sigs.k8s.io/docs/start/). The first option you have is choosing your installation method. I did not use this method, but you might choose to vs my way (my way is coming up). 
+你可能不適合上述情況，但我發現 minikube 是一個很棒的小工具，如果你只想以 Kubernetes 方式測試某些東西，你可以輕鬆部署應用程式，它們有一些令人驚嘆的附加元件，我也將涵蓋這些。
 
-mentioned below it states that you need to have a “Container or virtual machine manager, such as: Docker, Hyperkit, Hyper-V, KVM, Parallels, Podman, VirtualBox, or VMware” this is where MiniKube will run and the easy option and unless stated in the repository I am using Docker. You can install Docker on your system using the following [link](https://docs.docker.com/get-docker/).
+首先，無論你的工作站 OS 是什麼，你都可以運行 minikube。首先，前往[這裡的專案頁面](https://minikube.sigs.k8s.io/docs/start/)。你的第一個選項是選擇安裝方法。我沒有使用這種方法，但你可能會選擇與我的方式相比（我的方式即將到來）。
+
+下面提到，你需要有一個「容器或虛擬機器管理器，例如 Docker、Hyper kit、Hyper-V、KVM、Parallels、Podman、VirtualBox 或 VMware」，這是 MiniKube 將運行的位置，簡單的選項，除非在儲存庫中說明，否則我使用 Docker。你可以使用以下[連結](https://docs.docker.com/get-docker/)在系統上安裝 Docker。
 
 ![](Images/Day51_Kubernetes1.png)
 
-### My way of installing minikube and other prereqs…
+### 我安裝 minikube 和其他先決條件的方式…
 
-I have been using arkade for some time now to get all those Kubernetes tools and CLIs, you can see the installation steps on this [github repository](https://github.com/alexellis/arkade) for getting started with Arkade. I have also mentioned this in other blog posts where I needed something installing. The simplicity of just hitting arkade get and then seeing if your tool or cli is available is handy. In the Linux section we spoke about package manager and the process for getting our software, you can think about Arkade as that marketplace for all your apps and clis for Kubernetes. A very handy little tool to have on your systems, written in Golang and cross platform. 
+我已經使用 arkade 一段時間來獲取所有這些 Kubernetes 工具和 CLI，你可以在這個 [github 儲存庫](https://github.com/alexellis/arkade) 上查看安裝步驟以開始使用 Arkade。我也在其他需要安裝某些東西的部落格文章中提到了這一點。只需點擊 arkade get 然後查看你的工具或 cli 是否可用的簡單性很方便。在 Linux 部分，我們談到了套件管理器以及獲取軟體的過程，你可以將 Arkade 視為所有應用程式和 Kubernetes CLI 的市場。在你的系統上擁有的非常方便的小工具，用 Golang 編寫且跨平台。
 
 ![](Images/Day51_Kubernetes2.png)
 
-As part of the long list of available apps within arkade minikube is one of them so with a simple `arkade get minikube` command we are now downloading the binary and we are good to go.
+作為 arkade 中可用應用程式長列表的一部分，minikube 是其中之一，因此使用簡單的 `arkade get minikube` 指令，我們現在正在下載二進位檔，我們可以開始了。
 
 ![](Images/Day51_Kubernetes3.png)
 
-We will also need kubectl as part of our tooling so you can also get this via arkade or I believe that the minikube documentation brings this down as part of the curl commands mentioned above. We will cover more on kubectl later on in the post. 
+我們還需要 kubectl 作為我們工具的一部分，所以你也可以通過 arkade 獲取它，或者我相信 minikube 文件會將其作為上面提到的 curl 指令的一部分下載。我們稍後會在文章中更多地介紹 kubectl。
 
-### Getting a Kubernetes cluster up and running
+### 啟動並運行 Kubernetes 集群
 
-For this particular section I want to cover the options available to us when it comes to getting a Kubernetes cluster up and running on your local machine. We could simply run the following command and it would spin up a cluster for you to use.
+對於這個特定部分，我想涵蓋在本地機器上啟動並運行 Kubernetes 集群時可用的選項。我們可以簡單地運行以下指令，它會為你啟動一個集群。
 
-minikube is used on the command line, and simply put once you have everything installed you can run `minikube start` to deploy your first Kubernetes cluster. You will see below that the Docker Driver is the default as to where we will be running our nested virtualisation node. I mentioned at the start of the post the other options available, the other options help when you want to expand what this local Kubernetes cluster needs to look like. 
+minikube 在命令列上使用，簡單地說，一旦你安裝了所有內容，你就可以運行 `minikube start` 來部署你的第一個 Kubernetes 集群。你將在下面看到 Docker Driver 是預設值，這是我們將運行嵌套虛擬化節點的位置。我在文章開頭提到了其他可用選項，當你想要擴展此本地 Kubernetes 集群需要什麼樣子時，其他選項會有所幫助。
 
-A single Minikube cluster is going to consist of a single docker container in this instance which will have the control plane node and worker node in one instance. Where as typically you would separate those nodes out. Something we will cover in the next section where we look at still home lab type Kubernetes environments but a little closer to production architecture. 
+單個 Minikube 集群在此實例中將由單個 docker 容器組成，該容器將在一個實例中具有控制平面節點和工作節點。而通常你會分離這些節點。我們將在下一節中涵蓋這一點，我們將查看仍然是家庭實驗室類型的 Kubernetes 環境，但更接近生產架構。
 
 ![](Images/Day51_Kubernetes4.png)
 
-I have mentioned this a few times now, I really like minikube because of the addons available, the ability to deploy a cluster with a simple command including all the required addons from the start really helps me deploy the same required setup everytime.
+我已經提到過幾次，我喜歡 minikube 是因為可用的附加元件，能夠使用簡單的指令部署集群，包括從一開始就需要的所有附加元件，這有助於我每次都部署相同的所需設置。
 
-Below you can see a list of those addons, I generally use the `csi-hostpath-driver` and the `volumesnapshots` addons but you can see the long list below. Sure these addons can generally be deployed using Helm again something we will cover later on in the Kubernetes section but this makes things much simpler. 
+下面你可以看到這些附加元件的列表，我通常使用 `CSI-host path-driver` 和 `volumesnapshots` 附加元件，但你可以看到下面的長列表。當然，這些附加元件通常可以使用 Helm 再次部署，這是我們稍後在 Kubernetes 部分將涵蓋的內容，但這使事情變得更加簡單。
 
 ![](Images/Day51_Kubernetes5.png)
 
-I am also defining in our project some additional configuration, apiserver is set to 6433 instead of a random API port, I define the container runtime also to containerd however docker is default and CRI-O is also available. I am also setting a specific Kubernetes version. 
+我還在我的專案中定義了一些額外的配置，apiserver 設置為 6433 而不是隨機 API 端口，我還將容器運行時定義為 containerd，但是 docker 是預設值，CRI-O 也可用。我還設置了特定的 Kubernetes 版本。
 
 ![](Images/Day51_Kubernetes6.png)
 
-Now we are ready to deploy our first Kubernetes cluster using minikube. I mentioned before though that you will also need `kubectl` to interact with your cluster. You can get kubectl installed using arkade with the command `arkade get kubectl`  
+現在我們準備使用 minikube 部署我們的第一個 Kubernetes 集群。不過我之前提到，你還需要 `kubectl` 來與集群交互。你可以使用 arkade 安裝 kubectl，指令為 `arkade get kubectl`
 
 ![](Images/Day51_Kubernetes7.png)
 
-or you can download cross platform from the following 
+或者你可以從以下位置下載跨平台版本
 
 - [Linux](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux)
 - [macOS](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos)
 - [Windows](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows)
 
-Once you have kubectl installed we can then interact with our cluster with a simple command like `kubectl get nodes`
+一旦你安裝了 kubectl，我們就可以使用像 `kubectl get nodes` 這樣的簡單指令與集群交互。
 
 ![](Images/Day51_Kubernetes8.png)
 
-### What is kubectl?
+### 什麼是 kubectl？
 
-We now have our minikube | Kubernetes cluster up and running and I have asked you to install both Minikube where I have explained at least what it does but I have not really explained what kubectl is and what it does. 
+我們現在已經啟動並運行了 minikube | Kubernetes 集群，我已經要求你安裝 Minikube，我至少解釋了它的作用，但我沒有解釋 kubectl 是什麼以及它的作用。
 
-kubectl is a cli that is used or allows you to interact with Kubernetes clusters, we are using it here for interacting with our minikube cluster but we would also use kubectl for interacting with our enterprise clusters across the public cloud. 
+kubectl 是一個用於或允許你與 Kubernetes 集群交互的 cli，我們在這裡使用它來與我們的 minikube 集群交互，但我們也會使用 kubectl 來與公共雲中的企業集群交互。
 
-We use kubectl to deploy applications, inspect and manage cluster resources. A much better [Overview of kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) can be found here on the Kubernetes official documentation. 
+我們使用 kubectl 來部署應用程式並檢查和管理集群資源。可以在 Kubernetes 官方文件上找到更好的 [kubectl 概述](https://kubernetes.io/docs/reference/kubectl/overview/)。
 
-kubectl interacts with the API server found on the Control Plane node which we breifly covered in an earlier post. 
+kubectl 與我們在早期文章中簡要介紹的控制平面節點上找到的 API 伺服器交互。
 
-### kubectl cheat sheet
+### kubectl 速查表
 
-Along with the official documentation, I have also found myself with this page open all the time when looking for kubectl commands. [Unofficial Kubernetes](https://unofficial-kubernetes.readthedocs.io/en/latest/)
+除了官方文件外，我在尋找 kubectl 指令時也一直打開這個頁面。[Unofficial Kubernetes](https://unofficial-kubernetes.readthedocs.io/en/latest/)
 
-|Listing Resources               |                                           |
-| ------------------------------ | ----------------------------------------- |
-|kubectl get nodes               |List all nodes in cluster                  |  
-|kubectl get namespaces          |List all namespaces in cluster             |  
-|kubectl get pods                |List all pods in default namespace cluster |
-|kubectl get pods -n name        |List all pods in "name" namespace          |
-|kubectl get pods -n name        |List all pods in "name" namespace          |
+| 列出資源              |                                            |
+| --------------------- | ------------------------------------------ |
+| kubectl get nodes     | 列出集群中的所有節點                       |
+| kubectl get namespaces | 列出集群中的所有命名空間                   |
+| kubectl get pods      | 列出預設命名空間集群中的所有 Pod            |
+| kubectl get pods -n name | 列出「name」命名空間中的所有 Pod            |
 
-|Creating Resources              |                                           |
-| ------------------------------ | ----------------------------------------- |
-|kubectl create namespace name   |Create a namespace called "name"           |  
-|kubectl create -f [filename]    |Create a resource from a JSON or YAML file:| 
+| 創建資源                    |                                             |
+| --------------------------- | ------------------------------------------- |
+| kubectl create namespace name | 創建一個名為「name」的命名空間              |
+| kubectl create -f [filename] | 從 JSON 或 YAML 檔案創建資源：              |
 
-|Editing Resources               |                                           |
-| ------------------------------ | ----------------------------------------- |
-|kubectl edit svc/servicename    |To edit a service                          |
+| 編輯資源                |                   |
+| ----------------------- | ----------------- |
+| kubectl edit svc/servicename | 編輯服務 |
 
-|More detail on Resources        |                                                        |
-| ------------------------------ | ------------------------------------------------------ |
-|kubectl describe nodes          | display the state of any number of resources in detail,|
+| 資源的更多詳細資訊 |                                                         |
+| ------------------ | ------------------------------------------------------- |
+| kubectl describe nodes | 詳細顯示任意數量資源的狀態， |
 
-|Delete Resources                |                                                        |
-| ------------------------------ | ------------------------------------------------------ |
-|kubectl delete pod              | Remove resources, this can be from stdin or file       |
+| 刪除資源          |                                                  |
+| ----------------- | ------------------------------------------------ |
+| kubectl delete pod | 移除資源，這可以從 stdin 或檔案中進行 |
 
-You will find yourself wanting to know the short names for some of the kubectl commands, for example `-n` is the short name for `namespace` which makes it easier to type a command but also if you are scripting anything you can have much tidier code.
+你會發現自己想知道某些 kubectl 指令的簡短名稱，例如 `-n` 是 `namespace` 的簡短名稱，這使得鍵入指令更容易，而且如果你正在編寫任何腳本，你可以擁有更整潔的程式碼。
 
-| Short name           | Full name                    |
-| -------------------- | ---------------------------- |
-|  csr                 |  certificatesigningrequests  |
-|  cs                  |  componentstatuses           |
-|  cm                  |  configmaps                  |
-|  ds                  |  daemonsets                  |
-|  deploy              |  deployments                 |
-|  ep                  |  endpoints                   |
-|  ev                  |  events                      |
-|  hpa                 |  horizontalpodautoscalers    |
-|  ing                 |  ingresses                   |
-|  limits              |  limitranges                 |
-|  ns                  |  namespaces                  |
-|  no                  |  nodes                       |
-|  pvc                 |  persistentvolumeclaims      |
-|  pv                  |  persistentvolumes           |
-|  po                  |  pods                        |
-|  pdb                 |  poddisruptionbudgets        |
-|  psp                 |  podsecuritypolicies         |
-|  rs                  |  replicasets                 |
-|  rc                  |  replicationcontrollers      |
-|  quota               |  resourcequotas              |
-|  sa                  |  serviceaccounts             |
-|  svc                 |  services                    |
+| 簡短名稱 | 完整名稱                  |
+| -------- | ------------------------- |
+| csr      | certificatesigningrequests |
+| cs       | componentstatuses          |
+| cm       | configmaps                 |
+| ds       | daemonsets                 |
+| deploy   | deployments                |
+| ep       | endpoints                  |
+| ev       | events                     |
+| hpa      | horizontalpodautoscalers   |
+| ing      | ingresses                  |
+| limits   | limitranges                |
+| ns       | namespaces                 |
+| no       | nodes                      |
+| pvc      | persistentvolumeclaims     |
+| pv       | persistentvolumes          |
+| po       | pods                       |
+| pdb      | poddisruptionbudgets       |
+| psp      | podsecuritypolicies        |
+| rs       | replicasets                |
+| rc       | replicationcontrollers     |
+| quota    | resourcequotas             |
+| sa       | serviceaccounts            |
+| svc      | services                   |
 
-The final thing to add here is that I created another project around minikube to help me quickly spin up demo environments to display data services and protecting those workloads with Kasten K10, [Project Pace](https://github.com/MichaelCade/project_pace) can be found there and would love your feedback or interaction, it also displays or includes some automated ways of deploying your minikube clusters and creating different data services applications. 
+最後要補充的是，我創建了另一個圍繞 minikube 的專案，以幫助我快速啟動演示環境來顯示數據服務並使用 Kasten K10 保護這些工作負載，[Project Pace](https://github.com/MichaelCade/project_pace) 可以在那裡找到，我很樂意收到你的反饋或互動，它還顯示或包括一些自動化方式來部署你的 minikube 集群並創建不同的數據服務應用程式。
 
-Next up, we will get in to deploying multiple nodes into virtual machines using VirtualBox but we are going to hit the easy button there like we did in the Linux section where we used vagrant to quickly spin up the machines and deploy our software how we want them. 
+接下來，我們將使用 VirtualBox 將多個節點部署到虛擬機器中，但我們將在那裡按下簡單按鈕，就像我們在 Linux 部分所做的那樣，我們使用 vagrant 快速啟動機器並按照我們想要的方式部署軟體。
 
-I added this list to the post yesterday which are walkthrough blogs I have done around different Kubernetes clusters being deployed. 
+我昨天將此列表添加到文章中，這些是我圍繞部署不同 Kubernetes 集群所做的演練部落格。
 
 - [Kubernetes playground – How to choose your platform](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-1)
 - [Kubernetes playground – Setting up your cluster](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-2)
@@ -150,27 +150,29 @@ I added this list to the post yesterday which are walkthrough blogs I have done 
 - [Kubernetes, How to – AWS Bottlerocket + Amazon EKS](https://vzilla.co.uk/vzilla-blog/kubernetes-how-to-aws-bottlerocket-amazon-eks)
 - [Getting started with CIVO Cloud](https://vzilla.co.uk/vzilla-blog/getting-started-with-civo-cloud)
 - [Minikube - Kubernetes Demo Environment For Everyone](https://vzilla.co.uk/vzilla-blog/project_pace-kasten-k10-demo-environment-for-everyone)
+- [Minikube - Deploy Minikube Using Vagrant and Ansible on VirtualBox](https://medium.com/techbeatly/deploy-minikube-using-vagrant-and-ansible-on-virtualbox-infrastructure-as-code-2baf98188847)
 
-### What we will cover in the series on Kubernetes 
+### 我們將在 Kubernetes 系列中涵蓋的內容
 
-We have started covering some of these mentioned below but we are going to get more hands on tomorrow with our second cluster deployment then we can start deploying applications into our clusters. 
+我們已經開始涵蓋下面提到的一些內容，但我們明天將在第二個集群部署中進行更多實際操作，然後我們可以開始將應用程式部署到我們的集群中。
 
-- Kubernetes Architecture 
-- Kubectl Commands 
-- Kubernetes YAML 
-- Kubernetes Ingress 
+- Kubernetes 架構
+- Kubectl 指令
+- Kubernetes YAML
+- Kubernetes Ingress
 - Kubernetes Services
-- Helm Package Manager 
-- Persistant Storage 
-- Stateful Apps 
+- Helm 套件管理器
+- 持久儲存
+- 有狀態應用程式
 
-## Resources 
+## 資源
 
-If you have FREE resources that you have used then please feel free to add them in here via a PR to the repository and I will be happy to include them. 
+如果你有使用過的免費資源，請隨時通過 PR 將它們添加到儲存庫中，我很樂意包含它們。
 
 - [Kubernetes Documentation](https://kubernetes.io/docs/home/)
 - [TechWorld with Nana - Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]](https://www.youtube.com/watch?v=X48VuDVv0do)
 - [TechWorld with Nana - Kubernetes Crash Course for Absolute Beginners](https://www.youtube.com/watch?v=s_o8dwzRlu4)
 - [Kunal Kushwaha - Kubernetes Tutorial for Beginners | What is Kubernetes? Architecture Simplified!](https://www.youtube.com/watch?v=KVBON1lA9N8)
+- [Techbeatly - Deploy Minikube Using Vagrant and Ansible on VirtualBox](https://www.youtube.com/watch?v=xPLQqHbp9BM&t=371s)
 
-See you on [Day 52](day52.md) 
+我們[第 52 天](day52.md)見

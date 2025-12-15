@@ -1,63 +1,64 @@
 ---
-title: '#90DaysOfDevOps - Setting up a multinode Kubernetes Cluster - Day 52'
+title: '#90DaysOfDevOps - 設置多節點 Kubernetes 集群 - 第 52 天'
 published: false
-description: 90DaysOfDevOps - Setting up a multinode Kubernetes Cluster
+description: 90DaysOfDevOps - 設置多節點 Kubernetes 集群
 tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1049050
 ---
-## Setting up a multinode Kubernetes Cluster 
 
-I wanted this title to be "Setting up a multinode Kubernetes cluster with Vagrant" but thought it might be a little too long! 
+## 設置多節點 Kubernetes 集群
 
-In the session yesterday we used a cool project to deploy our first Kubernetes cluster and get a little hands on with the most important CLI tool you will come across when using Kubernetes (kubectl). 
+我想將這個標題設為「使用 Vagrant 設置多節點 Kubernetes 集群」，但認為可能有點太長了！
 
-Here we are going to use VirtualBox as our base but as mentioned the last time we spoke about Vagrant back in the Linux section we can really use any hypervisor or virtualisation tool supported. It was [Day 14](day14.md) when we went through and deployed an Ubuntu machine for the Linux section. 
+在昨天的課程中，我們使用了一個很酷的專案來部署我們的第一個 Kubernetes 集群，並對使用 Kubernetes 時會遇到的最重要的 CLI 工具（kubectl）進行了一些實際操作。
 
-### A quick recap on Vagrant 
+在這裡，我們將使用 VirtualBox 作為基礎，但正如我們在 Linux 部分最後一次談論 Vagrant 時提到的，我們可以使用任何支持的虛擬機管理程式或虛擬化工具。那是 [第 14 天](day14.md)，當時我們為 Linux 部分部署了 Ubuntu 機器。
 
-Vagrant is a CLI utility that manages the lifecyle of your virtual machines. We can use vagrant to spin up and down virtual machines across many different platforms including vSphere, Hyper-v, Virtual Box and also Docker. It does have other providers but we will stick with that we are using Virtual Box here so we are good to go. 
+### 快速回顧 Vagrant
 
-I am going to be using a baseline this [blog and repository](https://devopscube.com/kubernetes-cluster-vagrant/) to walk through the configuration. I would however advise that if this is your first time deploying a Kubernetes cluster then maybe also look into how you would do this manually and then at least you know what this looks like. Although I will say that this Day 0 operations and effort is being made more efficient with every release of Kubernetes. I liken this very much to the days of VMware and ESX and how you would need at least a day to deploy 3 ESX servers now we can have that up and running in an hour. We are heading in that direction when it comes to Kubernetes. 
+Vagrant 是一個管理虛擬機器生命週期的 CLI 實用程式。我們可以使用 vagrant 在許多不同平台上啟動和關閉虛擬機器，包括 vSphere、Hyper-v、Virtual Box 和 Docker。它確實有其他提供者，但我們將堅持在這裡使用 Virtual Box，所以我們可以開始了。
 
-### Kubernetes Lab environment 
+我將使用這個[部落格和儲存庫](https://devopscube.com/kubernetes-cluster-vagrant/)作為基線來演練配置。但是，我建議如果這是你第一次部署 Kubernetes 集群，那麼也許也要研究如何手動執行此操作，然後至少你知道這是什麼樣子。雖然我會說，隨著 Kubernetes 的每個版本發布，這個 Day 0 操作和努力變得更加高效。我將這與 VMware 和 ESX 的日子進行比較，以及你如何需要至少一天來部署 3 個 ESX 伺服器，現在我們可以在一個小時內啟動並運行。當談到 Kubernetes 時，我們正朝著那個方向前進。
 
-I have uploaded in [Kubernetes folder](days/kubernetes) the vagrantfile that we will be using to build out our environment. Grab this and navigate to this directory in your terminal. I am again using Windows so I will be using PowerShell to perform my workstation commands with vagrant. If you do not have vagrant then you can use arkade, we covered this yesterday when installing minikube and other tools. A simple command `arkade get vagrant` should see you download and install the latest version of vagrant. 
+### Kubernetes 實驗室環境
 
-When you are in your directory then you can simply run `vagrant up` and if all is configured correctly then you should see the following kick off in your terminal. 
+我已經在 [Kubernetes 資料夾](Kubernetes) 中上傳了我們將用於構建環境的 vagrantfile。獲取這個並在終端機中導航到此目錄。我再次使用 Windows，所以我將使用 PowerShell 來執行我的工作站指令與 vagrant。如果你沒有 vagrant，那麼你可以使用 arkade，我們昨天在安裝 minikube 和其他工具時涵蓋了這一點。一個簡單的指令 `arkade get vagrant` 應該會看到你下載並安裝最新版本的 vagrant。
+
+當你在目錄中時，你可以簡單地運行 `vagrant up`，如果所有配置都正確，那麼你應該在終端機中看到以下啟動。
 
 ![](Images/Day52_Kubernetes1.png)
 
- In the terminal you are going to see a number of steps taking place, but in the meantime let's take a look at what we are actually building here. 
+在終端機中，你將看到幾個步驟正在進行，但與此同時，讓我們看看我們在這裡構建的內容。
 
 ![](Images/Day52_Kubernetes2.png)
 
-From the above you can see that we are going to build out 3 virtual machines, we will have a control plane node and then two worker nodes. If you head back to [Day 49](Days/day49.md) You will see some more description on these areas we see in the image. 
+從上面你可以看到我們將構建 3 個虛擬機器，我們將有一個控制平面節點，然後是兩個工作節點。如果你回到 [第 49 天](day49.md)，你將看到我們在圖像中看到的這些區域的更多描述。
 
-Also in the image we indicate that our kubectl access will come from outside of the cluster and hit that kube apiserver when in fact as part of the vagrant provisioning we are deploying kubectl on each of these nodes so that we can access the cluster from within each of our nodes. 
+同樣在圖像中，我們表示我們的 kubectl 訪問將來自集群外部並命中 kube apiserver，而實際上作為 vagrant 配置的一部分，我們在這些節點中的每一個上部署 kubectl，以便我們可以從每個節點內部訪問集群。
 
-The process of building out this lab could take anything from 5 minutes to 30 minutes depending on your setup. 
+構建此實驗室的過程可能需要 5 分鐘到 30 分鐘，具體取決於你的設置。
 
-I am going to cover the scripts shortly as well but you will notice if you look into the vagrant file that we are calling on 3 scripts as part of the deployment and this is really where the cluster is created. We have seen how easy it is to use vagrant to deploy our virtual machines and OS installations using vagrant boxes but having the ability to run a shell script as part of the deployment process is where it gets quite interesting around automating these lab build outs. 
+我很快也會涵蓋腳本，但如果你查看 vagrant 檔案，你會注意到我們正在調用 3 個腳本作為部署的一部分，這實際上是創建集群的地方。我們已經看到使用 vagrant 部署虛擬機器和使用 vagrant boxes 進行 OS 安裝是多麼容易，但能夠在部署過程中運行 shell 腳本是自動化這些實驗室構建變得非常有趣的地方。
 
-Once complete we can then ssh to one of our nodes `vagrant ssh master` from the terminal should get you access, default username and password is `vagrant/vagrant` 
+完成後，我們可以 ssh 到我們的一個節點 `vagrant ssh master`，從終端機應該可以讓你訪問，預設用戶名和密碼是 `vagrant/vagrant`
 
-You can also use `vagrant ssh node01` and `vagrant ssh node02` to gain access to the worker nodes should you wish. 
+你也可以使用 `vagrant ssh node01` 和 `vagrant ssh node02` 來訪問工作節點，如果你希望的話。
 
 ![](Images/Day52_Kubernetes3.png)
 
-Now we are in one of the above nodes in our new cluster we can issue `kubectl get nodes` to show our 3 node cluster and the status of this. 
+現在我們在新集群的上述節點之一中，我們可以發出 `kubectl get nodes` 來顯示我們的 3 節點集群及其狀態。
 
 ![](Images/Day52_Kubernetes4.png)
 
-At this point we have a running 3 node cluster, with 1 control plane node and 2 worker nodes. 
+此時，我們有一個運行的 3 節點集群，有 1 個控制平面節點和 2 個工作節點。
 
-### Vagrantfile and Shell Script walkthrough 
+### Vagrantfile 和 Shell 腳本演練
 
-If we take a look at our vagrantfile, you will see that we are defining a number of worker nodes, networking IP addresses for the bridged network within VirtualBox and then some naming. Another you will notice is that we are also calling upon some scripts that we want to run on specific hosts. 
+如果我們看一下我們的 vagrantfile，你會看到我們正在定義幾個工作節點、VirtualBox 內橋接網路的網路 IP 地址，然後是一些命名。另一個你會注意到的是，我們也在調用一些我們想在特定主機上運行的腳本。
 
-``` 
+```
 NUM_WORKER_NODES=2
 IP_NW="10.0.0."
 IP_START=10
@@ -98,52 +99,53 @@ Vagrant.configure("2") do |config|
       end
     end
   end
-  ```
-Lets break down those scripts that are being ran. We have three scripts listed in the above VAGRANTFILE to run on specific nodes. 
+```
+
+讓我們分解正在運行的那些腳本。我們在上面的 VAGRANTFILE 中列出了三個腳本，在特定節點上運行。
 
 `master.vm.provision "shell", path: "scripts/common.sh"`
 
-This script above is going to focus on getting the nodes ready, it is going to be ran on all 3 of our nodes and it will remove any existing Docker components and reinstall Docker and ContainerD as well as kubeadm, kubelet and kubectl. This script will also update existing software packages on the system. 
+上面的腳本將專注於讓節點準備好，它將在我們所有 3 個節點上運行，它將移除任何現有的 Docker 組件並重新安裝 Docker 和 ContainerD 以及 kubeadm、kubelet 和 kubectl。此腳本還將更新系統上的現有軟體套件。
 
 `master.vm.provision "shell", path: "scripts/master.sh"`
 
-The master.sh script will only run on the control plane node, this script is going to create the Kubernetes cluster using kubeadm commands. It will also prepare the config context for access to this cluster which we will cover next. 
+master.sh 腳本只會在控制平面節點上運行，此腳本將使用 kubeadm 指令創建 Kubernetes 集群。它還將準備配置上下文以訪問此集群，我們接下來將涵蓋這一點。
 
 `node.vm.provision "shell", path: "scripts/node.sh"`
 
-This is simply going to take the config created by the master and join our nodes to the Kubernetes cluster, this join process again uses kubeadm and another script which can be found in the config folder. 
+這只是將獲取主節點創建的配置並將我們的節點加入 Kubernetes 集群，此加入過程再次使用 kubeadm 和另一個可以在 config 資料夾中找到的腳本。
 
-### Access to the Kubernetes cluster 
+### 訪問 Kubernetes 集群
 
- Now we have two clusters deployed we have our minikube cluster that we deployed in the previous section and we have the new 3 node cluster we just deployed to VirtualBox.
+現在我們已經部署了兩個集群，我們有在上一節中部署的 minikube 集群，還有我們剛剛部署到 VirtualBox 的新 3 節點集群。
 
- Also in that config file that you will also have access to on the machine you ran vagrant from consists of how we can gain access to our cluster from our workstation. 
+此外，你將在機器上訪問的配置檔案，你從中運行 vagrant，包含我們如何從工作站訪問集群。
 
- Before we show that let me touch on the context. 
+在我們展示之前，讓我談談上下文。
 
 ![](Images/Day52_Kubernetes5.png)
 
-Context is important, the ability to access your Kubernetes cluster from your desktop or laptop is required. Lots of different options out there and people use obviously different operating systems as their daily drivers.
+上下文很重要，從桌面或筆記型電腦訪問 Kubernetes 集群的能力是必需的。那裡有很多不同的選項，人們使用不同的作業系統作為他們的日常驅動程式。
 
-By default, the Kubernetes CLI client (kubectl) uses the C:\Users\username\.kube\config to store the Kubernetes cluster details such as endpoint and credentials. If you have deployed a cluster you will be able to see this file in that location. But if you have been using maybe the master node to run all of your kubectl commands so far via SSH or other methods then this post will hopefully help you get to grips with being able to connect with your workstation.
+預設情況下，Kubernetes CLI 客戶端（kubectl）使用 C:\Users\username\.kube\config 來儲存 Kubernetes 集群詳細資訊，例如端點和憑證。如果你已部署集群，你將能夠在該位置看到此檔案。但如果你一直在使用主節點通過 SSH 或其他方法運行所有 kubectl 指令，那麼這篇文章希望有助於你掌握能夠與工作站連接的能力。
 
-We then need to grab the kubeconfig file from the cluster or we can also get this from our config file once deployed, grab the contents of this file either via SCP or just open a console session to your master node and copy to the local windows machine. 
+然後我們需要從集群獲取 kubeconfig 檔案，或者我們也可以在部署後從配置檔案中獲取它，通過 SCP 獲取此檔案的內容，或者只是打開一個控制台會話到主節點並複製到本地 Windows 機器。
 
 ![](Images/Day52_Kubernetes6.png)
 
-We then want to take a copy of that config file and move to our `$HOME/.kube/config` location. 
+然後我們想要獲取該配置檔案的副本並將其移動到我們的 `$HOME/.kube/config` 位置。
 
 ![](Images/Day52_Kubernetes7.png)
 
-Now from your local workstation you will be able to run `kubectl cluster-info` and `kubectl get nodes` to validate that you have access to your cluster. 
+現在從你的本地工作站，你將能夠運行 `kubectl cluster-info` 和 `kubectl get nodes` 來驗證你對集群的訪問。
 
 ![](Images/Day52_Kubernetes8.png)
 
-This not only allows for connectivity and control from your windows machine but this then also allows us to do some port forwarding to access certain services from our windows machine
+這不僅允許從 Windows 機器進行連接和控制，而且還允許我們進行一些端口轉發以從 Windows 機器訪問某些服務
 
-If you are interested in how you would manage multiple clusters on your workstation then I have a more detailed walkthrough [here](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-6). 
+如果你對如何在工作站上管理多個集群感興趣，那麼我在[這裡](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-6)有更詳細的演練。
 
-I have added this list which are walkthrough blogs I have done around different Kubernetes clusters being deployed. 
+我已經添加了這個列表，這些是我圍繞部署不同 Kubernetes 集群所做的演練部落格。
 
 - [Kubernetes playground – How to choose your platform](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-1)
 - [Kubernetes playground – Setting up your cluster](https://vzilla.co.uk/vzilla-blog/building-the-home-lab-kubernetes-playground-part-2)
@@ -155,26 +157,26 @@ I have added this list which are walkthrough blogs I have done around different 
 - [Getting started with CIVO Cloud](https://vzilla.co.uk/vzilla-blog/getting-started-with-civo-cloud)
 - [Minikube - Kubernetes Demo Environment For Everyone](https://vzilla.co.uk/vzilla-blog/project_pace-kasten-k10-demo-environment-for-everyone)
 
-### What we will cover in the series on Kubernetes 
+### 我們將在 Kubernetes 系列中涵蓋的內容
 
-We have started covering some of these mentioned below but we are going to get more hands on tomorrow with our second cluster deployment then we can start deploying applications into our clusters. 
+我們已經開始涵蓋下面提到的一些內容，但我們明天將在第二個集群部署中進行更多實際操作，然後我們可以開始將應用程式部署到我們的集群中。
 
-- Kubernetes Architecture 
-- Kubectl Commands 
-- Kubernetes YAML 
-- Kubernetes Ingress 
+- Kubernetes 架構
+- Kubectl 指令
+- Kubernetes YAML
+- Kubernetes Ingress
 - Kubernetes Services
-- Helm Package Manager 
-- Persistant Storage 
-- Stateful Apps 
+- Helm 套件管理器
+- 持久儲存
+- 有狀態應用程式
 
-## Resources 
+## 資源
 
-If you have FREE resources that you have used then please feel free to add them in here via a PR to the repository and I will be happy to include them. 
+如果你有使用過的免費資源，請隨時通過 PR 將它們添加到儲存庫中，我很樂意包含它們。
 
 - [Kubernetes Documentation](https://kubernetes.io/docs/home/)
 - [TechWorld with Nana - Kubernetes Tutorial for Beginners [FULL COURSE in 4 Hours]](https://www.youtube.com/watch?v=X48VuDVv0do)
 - [TechWorld with Nana - Kubernetes Crash Course for Absolute Beginners](https://www.youtube.com/watch?v=s_o8dwzRlu4)
 - [Kunal Kushwaha - Kubernetes Tutorial for Beginners | What is Kubernetes? Architecture Simplified!](https://www.youtube.com/watch?v=KVBON1lA9N8)
 
-See you on [Day 53](day53.md) 
+我們[第 53 天](day53.md)見

@@ -1,32 +1,32 @@
 ---
-title: '#90DaysOfDevOps - HashiCorp Configuration Language (HCL) - Day 58'
+title: '#90DaysOfDevOps - HashiCorp 配置語言 (HCL) - 第 58 天'
 published: false
-description: 90DaysOfDevOps - HashiCorp Configuration Language (HCL)
-tags: "devops, 90daysofdevops, learning"
+description: 90DaysOfDevOps - HashiCorp 配置語言 (HCL)
+tags: 'devops, 90daysofdevops, learning'
 cover_image: null
 canonical_url: null
 id: 1048741
 ---
-## HashiCorp Configuration Language (HCL)
 
-Before we start making stuff with Terraform we have to dive a little into HashiCorp Configuration Language (HCL). So far during our challenge we have looked at a few different scripting and programming languages and here is another one. We touched on the [Go programming language](Days/day07.md) then [bash scripts](Days/day19.md) we even touched on a little python when it came to [network automation](Days/day27.md)
+## HashiCorp 配置語言 (HCL)
 
-Now we must cover HashiCorp Configuration Language (HCL) if this is the first time you are seeing the language it might look a little daunting but its quite simple and very powerful.
+在我們開始使用 Terraform 製作東西之前，我們必須稍微深入了解 HashiCorp 配置語言 (HCL)。到目前為止，在我們的挑戰中，我們已經研究了一些不同的腳本和程式語言，這是另一個。我們觸及了 [Go 程式語言](day07.md)，然後是 [bash 腳本](day19.md)，當談到[網路自動化](day27.md)時，我們甚至觸及了一點 python。
 
-As we move through this section, we are going to be using examples that we can run locally on our system regardless of what OS you are using, we will be using virtualbox, albeit not the infrastructure platform you would usually be using with Terraform. However running this locally, it is free and will allow us to achieve what we are looking for in this post. We could also extend this posts concepts to docker or Kubernetes as well. 
+現在我們必須涵蓋 HashiCorp 配置語言 (HCL)，如果這是你第一次看到這種語言，它可能看起來有點令人生畏，但它非常簡單且非常強大。
 
-In general though, you would or should be using Terraform to deploy your infrastructure in the public cloud (AWS, Google, Microsoft Azure) but then also in your virtualisation environments such as (VMware, Microsoft Hyper-V, Nutanix AHV). In the public cloud Terraform allows for us to do a lot more than just Virtual Machine automated deployment, we can create all the required infrastructure such as PaaS workloads and all of the networking required assets such as VPCs and Security Groups. 
+當我們在本節中移動時，我們將使用可以在系統上本地運行的範例，無論你使用什麼 OS，我們將使用 VirtualBox，儘管這不是你通常與 Terraform 一起使用的基礎設施平台。但是，在本地運行這是免費的，將允許我們實現我們在這篇文章中尋找的內容。我們也可以將這篇文章的概念擴展到 docker 或 Kubernetes。
 
-There are two important aspects to Terraform, we have the code which we are going to get into in this post and then we also have the state. Both of these together could be called the Terraform core. We then have the environment we wish to speak to and deploy into, which is executed using Terraform providers, briefly mentioned in the last session, but we have an AWS provider, we have an Azure providers etc. There are hundreds. 
+不過，總的來說，你會或應該使用 Terraform 在公共雲（AWS、Google、Microsoft Azure）中部署基礎設施，但也在虛擬化環境中，如（VMware、Microsoft Hyper-V、Nutanix AHV）。在公共雲中，Terraform 允許我們做的遠不止虛擬機器自動部署，我們可以創建所有必需的基礎設施，如 PaaS 工作負載和所有必需的網路資產，如 VPC 和安全組。
 
-### Basic Terraform Usage
+Terraform 有兩個重要方面，我們有代碼，我們將在這篇文章中深入了解，然後我們還有狀態。這兩者一起可以稱為 Terraform 核心。然後我們有希望與之通信並部署到的環境，這使用 Terraform 提供者執行，在上一節中簡要提到，但我們有 AWS 提供者，我們有 Azure 提供者等。有數百個。
 
-Let's take a look at a Terraform `.tf` file to see how they are made up. The first example we will walk through will in fact be code to deploy resources to AWS, this would then also require the AWS CLI to be installed on your system and configured for your account. 
+### 基本 Terraform 用法
 
+讓我們看一下 Terraform `.tf` 檔案，看看它們是如何組成的。我們將演練的第一個範例將是將資源部署到 AWS 的代碼，這還需要在系統上安裝並為帳戶配置 AWS CLI。
 
-### Providers
+### 提供者
 
-At the top of our `.tf` file structure, generally called `main.tf` at least until we make things more complex. Here we will define the providers that we have mentioned before. Our source of the aws provider as you can see is `hashicorp/aws` this means the provider is maintained or has been published by hashicorp themselves. By default you will reference providers that are available from the [Terraform Registry](https://registry.terraform.io/), you also have the ability to write your own providers, and use these locally, or self-publish to the Terraform Registry.
+在我們的 `.tf` 檔案結構的頂部，通常稱為 `main.tf`，至少直到我們使事情變得更加複雜。在這裡，我們將定義我們之前提到的提供者。正如你所看到的，AWS 提供者的來源是 `hashicorp/aws`，這意味著提供者由 hashicorp 自己維護或已發布。預設情況下，你將引用 [Terraform Registry](https://registry.terraform.io/) 中可用的提供者，你也可以編寫自己的提供者，並在本地使用它們，或自行發布到 Terraform Registry。
 
 ```
 terraform {
@@ -38,22 +38,22 @@ terraform {
   }
 }
 ```
-We might also add in a region as well here to determine which AWS region we would like to provision to we can do this by adding the following: 
+
+我們也可能在這裡添加一個區域，以確定我們希望配置到哪個 AWS 區域，我們可以通過添加以下內容來執行此操作：
 
 ```
 provider "aws" {
-  region = "ap-southeast-1" //region where resources need to be deployed
+  region = "ap-southeast-1" //需要部署資源的區域
 }
 ```
 
-### Resources 
+### Terraform 資源
 
-- Another important component of a terraform config file which describes one or more infrastructure objects like EC2, Load Balancer, VPC, etc.
+- terraform 配置檔案的另一個重要組件，它描述一個或多個基礎設施物件，如 EC2、負載平衡器、VPC 等。
 
-- A resource block  declares a resource of a given type ("aws_instance") with a given local name ("90daysofdevops"). 
+- 資源塊聲明給定類型（"aws_instance"）的資源，具有給定的本地名稱（"90daysofdevops"）。
 
-- The resource type and name together serve as an identifier for a given resource.
-
+- 資源類型和名稱一起作為給定資源的標識符。
 
 ```
 resource "aws_instance" "90daysofdevops" {
@@ -78,9 +78,9 @@ resource "aws_instance" "90daysofdevops" {
 }
 ```
 
-You can see from the above we are also running a `yum` update and installing `httpd` into our ec2 instance. 
+你可以從上面看到，我們還在運行 `yum` 更新並將 `httpd` 安裝到我們的 ec2 實例中。
 
-If we now look at the complete main.tf file it might look something like this. 
+如果我們現在查看完整的 main.tf 檔案，它可能看起來像這樣。
 
 ```
 terraform {
@@ -117,15 +117,15 @@ resource "aws_instance" "90daysofdevops" {
   tags = {
     Name = "Created by Terraform"
 
-
   tags = {
     Name = "ExampleAppServerInstance"
   }
 }
 ```
-The above code will go and deploy a very simple web server as an ec2 instance in AWS, the great thing about this and any other configuration like this is that we can repeat this and we will get the same output every single time. Other than the chance that I have messed up the code there is no human interaction with the above. 
 
-We can take a look at a super simple example, one that you will likely never use but let's humour it anyway. Like with all good scripting and programming language we should start with a hello-world scenario. 
+上面的代碼將在 AWS 中作為 ec2 實例部署一個非常簡單的 Web 伺服器，這和任何其他類似配置的好處是我們可以重複這個，我們每次都會得到相同的輸出。除了我搞砸代碼的機會之外，上面沒有人類交互。
+
+我們可以看一下一個超級簡單的範例，一個你可能永遠不會使用的範例，但讓我們無論如何都幽默一下。就像所有好的腳本和程式語言一樣，我們應該從 hello-world 場景開始。
 
 ```
 terraform {
@@ -140,66 +140,67 @@ output "hello_world" {
   value = "Hello, 90DaysOfDevOps from Terraform"
 }
 ```
-You will find this file in the IAC folder under hello-world, but out of the box this is not going to simply work there are some commans we need to run in order to use our terraform code. 
 
-In your terminal navigate to your folder where the main.tf has been created, this could be from this repository or you could create a new one using the code above. 
+你會在 IAC 資料夾下的 hello-world 中找到此檔案，但開箱即用，這不會簡單地工作，有一些指令我們需要運行來使用 terraform 代碼。
 
-When in that folder we are going to run `terraform init` 
+在你的終端機中導航到已創建 main.tf 的資料夾，這可能來自此儲存庫，或者你可以使用上面的代碼創建一個新的。
 
-We need to perform this on any directory where we have or before we run any terraform code. Initialising a configuration directory downloads and installs the providers defined in the configuration, in this case we have no providers but in the example above this would download the aws provider for this configuration.  
+當在該資料夾中時，我們將運行 `terraform init`
+
+我們需要在任何我們有或運行任何 terraform 代碼之前執行此操作。初始化配置目錄下載並安裝配置中定義的提供者，在這種情況下，我們沒有提供者，但在上面的範例中，這將為此配置下載 AWS 提供者。
 
 ![](Images/Day58_IAC1.png)
 
-The next command will be `terraform plan` 
+下一個指令將是 `terraform plan`
 
-The `terraform plan` command creates an execution plan, which lets you preview the changes that Terraform plans to make to your infrastructure.
+`terraform plan` 指令創建一個執行計劃，讓你預覽 Terraform 計劃對基礎設施進行的更改。
 
-You can simply see below that with our hello-world example we are going to see an output if this was an AWS ec2 instance we would see all the steps that we will be creating. 
+你可以簡單地在下面看到，使用我們的 hello-world 範例，我們將看到輸出，如果這是一個 AWS ec2 實例，我們將看到我們將創建的所有步驟。
 
 ![](Images/Day58_IAC2.png)
 
-At this point we have initialised our repository and we have our providers downloaded where required, we have run a test walkthrough to make sure this is what we want to see so now we can run and deploy our code. 
+此時，我們已經初始化了儲存庫，並且在需要的地方下載了提供者，我們已經運行了測試演練以確保這是我們想要看到的，所以現在我們可以運行並部署代碼。
 
-`terraform apply` allows us to do this there is a built in safety measure to this command and this will again give you a plan view on what is going to happen which warrants a response from you to say yes to continue. 
+`terraform apply` 允許我們執行此操作，此指令有一個內建的安全措施，這將再次為你提供計劃視圖，說明將要發生什麼，這需要你做出回應以說「是」繼續。
 
 ![](Images/Day58_IAC3.png)
 
-When we type in yes to the enter a value, and our code is deployed. Obviously not that exciting but you can see we have the output that we defined in our code. 
+當我們鍵入 yes 輸入值時，我們的代碼被部署。不是那麼令人興奮，但你可以看到我們有在代碼中定義的輸出。
 
 ![](Images/Day58_IAC4.png)
 
-Now we have not deployed anything, we have not added, changed or destroyed anything but if we did then we would see that indicated also in the above. If however we had deployed something and we wanted to get rid of everything we deployed we can use the `terraform destroy` command. Again this has that safety where you have to type yes although you can use `--auto-approve` on the end of your `apply` and `destroy` commands to bypass that manual intervention. But I would advise only using this shortcut when in learning and testing as everything will dissappear sometimes faster than it was built. 
+現在我們沒有部署任何東西，我們沒有添加、更改或銷毀任何東西，但如果我們這樣做了，我們也會在上面看到這一點。但是，如果我們已經部署了某些東西，我們想要擺脫我們部署的所有東西，我們可以使用 `terraform destroy` 指令。同樣，這有安全性，你必須鍵入 yes，儘管你可以在 `apply` 和 `destroy` 指令的末尾使用 `--auto-approve` 來繞過手動干預。但我建議只在學習和測試時使用此捷徑，因為一切都會消失，有時比構建時更快。
 
-From this there are really 4 commands we have covered from the Terraform CLI. 
+從這個，我們已經涵蓋了 Terraform CLI 的 4 個指令。
 
-- `terraform init` = get your project folder ready with providers 
-- `terraform plan` = show what is going to be created, changed during the next command based on our code. 
-- `terraform apply` = will go and deploy the resources defined in our code. 
-- `terraform destroy` = will destroy the resources we have created in our project
+- `terraform init` = 使用提供者準備專案資料夾
+- `terraform plan` = 顯示將要創建和更改的內容，基於我們的代碼在下一個指令期間。
+- `terraform apply` = 將繼續部署代碼中定義的資源。
+- `terraform destroy` = 將銷毀我們在專案中創建的資源
 
-We also covered two important aspects of our code files. 
+我們還涵蓋了代碼檔案的兩個重要方面。
 
-- providers = how does terraform speak to the end platform via APIs 
-- resources = what it is we want to deploy with code
+- providers = terraform 如何通過 API 與終端平台通信
+- resources = 我們想用代碼部署的內容
 
-Another thing to note when running `terraform init` take a look at the tree on the folder before and after to see what happens and where we store providers and modules. 
+運行 `terraform init` 時要注意的另一件事是查看資料夾前後的樹狀結構，看看發生了什麼以及我們在哪裡存儲提供者和模組。
 
-### Terraform state 
+### Terraform 狀態
 
-We also need to be aware of the state file that is created also inside our directory and for this hello world example our state file is simple. This is a JSON file which is the representation of the world according to Terraform. The state will happily show off your sensitive data so be careful and as a best practice put your `.tfstate` files in your `.gitignore` folder before uploading to GitHub. 
+我們還需要了解在目錄內創建的狀態檔案，對於這個 hello world 範例，我們的狀態檔案很簡單。這是一個 JSON 檔案，它是根據 Terraform 的世界表示。狀態會樂意展示你的敏感數據，所以要小心，作為最佳實踐，在上傳到 GitHub 之前將 `.tfstate` 檔案放在 `.gitignore` 資料夾中。
 
-By default the state file as you can see lives inside the same directory as your project code, but it can also be stored remotely as an option. In a production environment this is likely going to be a shared location such as an S3 bucket. 
+預設情況下，狀態檔案如你所見存在於與專案代碼相同的目錄中，但它也可以作為選項遠程存儲。在生產環境中，這很可能是一個共享位置，如 S3 儲存桶。
 
-Another option could be Terraform Cloud, this is a paid for managed service. (Free up to 5 users)
+另一個選項可能是 Terraform Cloud，這是一個付費託管服務。（最多 5 個用戶免費）
 
-The pros for storing state in a remote location is that we get: 
+在遠程位置存儲狀態的優點是我們得到：
 
-- Sensitive data encrypted 
-- Collaboration 
-- Automation 
-- However it could bring increase complexity
+- 敏感數據加密
+- 協作
+- 自動化
+- 但是，它可能會帶來增加的複雜性
 
-```
+```JSON
 {
   "version": 4,
   "terraform_version": "1.1.6",
@@ -215,9 +216,9 @@ The pros for storing state in a remote location is that we get:
 }
 ```
 
+## 資源
 
-## Resources 
-I have listed a lot of resources down below and I think this topic has been covered so many times out there, If you have additional resources be sure to raise a PR with your resources and I will be happy to review and add them to the list. 
+我在下面列出了很多資源，我認為這個主題已經被涵蓋了很多次，如果你有其他資源，請務必通過 PR 提出你的資源，我很樂意審查並將它們添加到列表中。
 
 - [What is Infrastructure as Code? Difference of Infrastructure as Code Tools](https://www.youtube.com/watch?v=POPP2WTJ8es)
 - [Terraform Tutorial | Terraform Course Overview 2021](https://www.youtube.com/watch?v=m3cKkYXl-8o)
@@ -225,9 +226,9 @@ I have listed a lot of resources down below and I think this topic has been cove
 - [Terraform Course - From BEGINNER to PRO!](https://www.youtube.com/watch?v=7xngnjfIlK4&list=WL&index=141&t=16s)
 - [HashiCorp Terraform Associate Certification Course](https://www.youtube.com/watch?v=V4waklkBC38&list=WL&index=55&t=111s)
 - [Terraform Full Course for Beginners](https://www.youtube.com/watch?v=EJ3N-hhiWv0&list=WL&index=39&t=27s)
-- [KodeKloud -  Terraform for DevOps Beginners + Labs: Complete Step by Step Guide!](https://www.youtube.com/watch?v=YcJ9IeukJL8&list=WL&index=16&t=11s)
+- [KodeKloud - Terraform for DevOps Beginners + Labs: Complete Step by Step Guide!](https://www.youtube.com/watch?v=YcJ9IeukJL8&list=WL&index=16&t=11s)
 - [Terraform Simple Projects](https://terraform.joshuajebaraj.com/)
 - [Terraform Tutorial - The Best Project Ideas](https://www.youtube.com/watch?v=oA-pPa0vfks)
 - [Awesome Terraform](https://github.com/shuaibiyy/awesome-terraform)
 
-See you on [Day 59](day59.md)
+我們[第 59 天](day59.md)見
